@@ -70,42 +70,78 @@
             background: linear-gradient(to right, transparent, rgba(255,255,255,0.2), transparent);
             margin: 2.5rem 0;
         }
+        /* CSS Khusus Google Classroom Hub */
+        .gclassroom-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .btn-gclassroom {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 1.25rem;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            color: #ffffff;
+            text-align: center;
+            background: linear-gradient(135deg, #059669 0%, #047857 100%);
+            box-shadow: 0 4px 15px rgba(5, 150, 105, 0.2);
+            text-decoration: none;
+        }
+        .btn-gclassroom:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(5, 150, 105, 0.4);
+            filter: brightness(1.1);
+        }
+        .btn-gclassroom .gc-main {
+            font-size: 1.1rem;
+            font-weight: 800;
+            letter-spacing: 1px;
+            margin-bottom: 0.25rem;
+        }
+        .btn-gclassroom .gc-sub {
+            font-size: 0.85rem;
+            opacity: 0.9;
+            font-weight: 500;
+            line-height: 1.3;
+        }
     </style>
 </head>
 <body>
 
-    <!-- LANDING PAGE (HALAMAN UTAMA PROFIL GURU) -->
     <div id="landing-page" class="landing-hero">
         <h1>Retno Ariyanti Nurningtias, S.Pd., Gr.</h1>
         <p>Platform Pembelajaran Inklusif Kurikulum TI — SMK AMI Deltamas</p>
         
-        <!-- ZONA GERBANG FONDASI & K3 LAB (HALAMAN TERPISAH) -->
         <div class="k3-container">
             <h3 class="k3-title">🛡️ Gerbang Pembiasaan Karakter & K3 Lab (Pra-Syarat Belajar)</h3>
             <div class="k3-grid">
                 
-                <!-- Button 1: Aku dan PC -->
                 <a href="k3_akupc.html" class="btn-k3-link">
                     <span class="k3-icon">🧘‍♂️</span>
                     <span class="k3-btn-title">Aku dan PC</span>
                     <span class="k3-btn-desc">Kesehatan, Kerapihan & Sikap Dasar Kerja</span>
                 </a>
                 
-                <!-- Button 2: Sterilisasi Meja Kerja -->
                 <a href="k3_sterilisasi.html" class="btn-k3-link">
                     <span class="k3-icon">🚫💧</span>
                     <span class="k3-btn-title">Sterilisasi Meja Kerja</span>
                     <span class="k3-btn-desc">Aturan Makan, Minum & Pengamanan Kabel</span>
                 </a>
                 
-                <!-- Button 3: Piket & Tanggung Jawab -->
                 <a href="k3_piket.html" class="btn-k3-link">
                     <span class="k3-icon">🧹</span>
                     <span class="k3-btn-title">Piket & Tanggung Jawab</span>
                     <span class="k3-btn-desc">Peminjaman Barang & Kebersihan Fasilitas</span>
                 </a>
                 
-                <!-- Button 4: Refleks Tanggap Darurat -->
                 <a href="k3_darurat.html" class="btn-k3-link">
                     <span class="k3-icon">🚨</span>
                     <span class="k3-btn-title">Refleks Tanggap Darurat</span>
@@ -118,7 +154,6 @@
         <hr class="section-separator">
         <h3 class="k3-title" style="margin-bottom: 1.5rem;">📚 Kurikulum Pembelajaran Berkelanjutan</h3>
 
-        <!-- Pilihan Navigasi Pemisah Semester 1 - 6 -->
         <div class="semester-grid">
             <button onclick="window.location.href='semester1.html'" class="btn-semester">
                 <span class="sem-number">SEMESTER 1</span>
@@ -151,7 +186,7 @@
             </button>
         </div>
 
-        <div class="k3-container" style="margin-top: 3rem; margin-bottom: 4rem;">
+        <div class="k3-container" style="margin-top: 3rem; margin-bottom: 2rem;">
             <h4 class="k3-title">🚀 Softskill Accelerator Hub</h4>
             <p style="color: #cbd5e1; margin-top: -0.75rem; margin-bottom: 1.5rem; font-size: 0.9rem; opacity: 0.8;">
                 Asah Kemampuan Komunikasi Lisan & Standardisasi Dokumen Industri Anda
@@ -209,9 +244,43 @@
                 line-height: 1.3;
             }
         </style>
+
+        <hr class="section-separator">
+
+        <div class="k3-container" style="margin-bottom: 4rem;">
+            <h3 class="k3-title">🌐 Google Classroom Hub</h3>
+            <div class="gclassroom-grid">
+                
+                <a href="#" target="_blank" class="btn-gclassroom">
+                    <span class="gc-main">PARTICIPATE</span>
+                    <span class="gc-sub">1 Angkatan 1/8<br>TA 2025</span>
+                </a>
+                
+                <a href="#" target="_blank" class="btn-gclassroom">
+                    <span class="gc-main">INTERACTIVE</span>
+                    <span class="gc-sub">2 Angkatan 1/8<br>TA 2025</span>
+                </a>
+                
+                <a href="#" target="_blank" class="btn-gclassroom">
+                    <span class="gc-main">CONTRIBUTION</span>
+                    <span class="gc-sub">2 1 Angkatan 2/9<br>TA 2026</span>
+                </a>
+                
+                <a href="#" target="_blank" class="btn-gclassroom">
+                    <span class="gc-main">INVOLVEMENT</span>
+                    <span class="gc-sub">2 2 Angkatan 2/9<br>TA 2026</span>
+                </a>
+                
+                <a href="#" target="_blank" class="btn-gclassroom">
+                    <span class="gc-main">SYNERGY</span>
+                    <span class="gc-sub">2 3 Angkatan 2/9<br>TA 2026</span>
+                </a>
+                
+            </div>
+        </div>
+
     </div>
 
-    <!-- SEMESTER PAGE (KONTEN PLAYER CADANGAN) -->
     <div id="semester-page" class="hidden">
         <header class="app-header">
             <div class="header-left">
