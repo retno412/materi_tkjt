@@ -1,0 +1,39 @@
+{
+  "modul_k3_assessment": {
+    "target_pengguna": "Siswa Baru Fase E SMK",
+    "kriteria_kelulusan_lab": "Siswa wajib menyetujui seluruh pakta integritas fisik dan digital",
+    "checklist_kesiapan": [
+      {
+        "id": "chk_postur",
+        "kategori": "Aku dan PC",
+        "pertanyaan": "Apakah jarak mata Anda ke monitor saat ini minimal sepanjang satu lengan tangan (50-70cm) dan posisi duduk tegak?",
+        "wajib": true
+      },
+      {
+        "id": "chk_kerapihan",
+        "kategori": "Aku dan PC",
+        "pertanyaan": "Apakah Anda sudah berkomitmen membuat folder folder dengan pola [NamaSiswa]_X-RPL tanpa menaruh file acak di desktop?",
+        "wajib": true
+      },
+      {
+        "id": "chk_cairan",
+        "kategori": "Sterilisasi Meja Kerja",
+        "pertanyaan": "Apakah meja kerja Anda saat ini sudah bersih 100% dari botol minum, gelas, plastik makanan, dan camilan?",
+        "wajib": true
+      },
+      {
+        "id": "chk_peminjaman",
+        "kategori": "Piket & Tanggung Jawab",
+        "pertanyaan": "Jika Anda meminjam komponen praktik lab sesi ini, apakah Anda siap mencatat di logbook dan menaruhnya kembali ke tempat asalnya secara mandiri?",
+        "wajib": true
+      },
+      {
+        "id": "chk_bawah_sadar",
+        "kategori": "Refleks Tanggap Darurat",
+        "pertanyaan": "Apabila Anda mencium bau hangus komponen terbakar, apakah Anda berani langsung melapor tanpa menunggu ditanya?",
+        "wajib": true
+      }
+    ],
+    "pakta_integritas": "Saya menyatakan paham bahwa melanggar aturan keselamatan lab komputer dapat merugikan keselamatan jiwa saya, keselamatan rekan sekelas saya, serta merusak aset pendidikan sekolah. Saya siap belajar dengan disiplin, integritas, dan penuh tanggung jawab."
+  }
+}

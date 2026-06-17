@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Platform Belajar Inklusif - Retno Ariyanti</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* CSS Tambahan khusus Halaman Utama untuk menyelaraskan Tombol K3 Terpisah */
+        .k3-container {
+            width: 100%;
+            max-width: 1200px;
+            margin: -1rem auto 3rem auto;
+            padding: 0 1rem;
+            text-align: center;
+        }
+        .k3-title {
+            color: #ffffff;
+            font-size: 1.1rem;
+            margin-bottom: 1.25rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: 700;
+            opacity: 0.9;
+        }
+        .k3-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 1.25rem;
+        }
+        .btn-k3-link {
+            background: linear-gradient(135deg, rgba(30, 41, 59, 0.8) 0%, rgba(15, 23, 42, 0.9) 100%);
+            border: 2px dashed #4f46e5;
+            border-radius: 14px;
+            color: #ffffff;
+            padding: 1.5rem 1.25rem;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+            text-decoration: none;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+        .btn-k3-link:hover {
+            transform: translateY(-5px);
+            border-style: solid;
+            border-color: #6366f1;
+            box-shadow: 0 12px 24px rgba(79, 70, 229, 0.3);
+            background: linear-gradient(135deg, #4f46e5 0%, #3730a3 100%);
+        }
+        .btn-k3-link .k3-icon {
+            font-size: 2.2rem;
+            margin-bottom: 0.25rem;
+        }
+        .btn-k3-link .k3-btn-title {
+            font-weight: 800;
+            font-size: 1.05rem;
+            letter-spacing: -0.02em;
+        }
+        .btn-k3-link .k3-btn-desc {
+            font-size: 0.8rem;
+            opacity: 0.75;
+            line-height: 1.4;
+        }
+        .section-separator {
+            border: 0;
+            height: 1px;
+            background: linear-gradient(to right, transparent, rgba(255,255,255,0.2), transparent);
+            margin: 2.5rem 0;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- LANDING PAGE (HALAMAN UTAMA PROFIL GURU) -->
+    <div id="landing-page" class="landing-hero">
+        <h1>Retno Ariyanti Nurningtias, S.Pd., Gr.</h1>
+        <p>Platform Pembelajaran Inklusif Kurikulum TI — SMK AMI Deltamas</p>
+        
+        <!-- ZONA GERBANG FONDASI & K3 LAB (HALAMAN TERPISAH) -->
+        <div class="k3-container">
+            <h3 class="k3-title">🛡️ Gerbang Pembiasaan Karakter & K3 Lab (Pra-Syarat Belajar)</h3>
+            <div class="k3-grid">
+                
+                <!-- Button 1: Aku dan PC -->
+                <a href="k3_akupc.html" class="btn-k3-link">
+                    <span class="k3-icon">🧘‍♂️</span>
+                    <span class="k3-btn-title">Aku dan PC</span>
+                    <span class="k3-btn-desc">Kesehatan, Kerapihan & Sikap Dasar Kerja</span>
+                </a>
+                
+                <!-- Button 2: Sterilisasi Meja Kerja -->
+                <a href="k3_sterilisasi.html" class="btn-k3-link">
+                    <span class="k3-icon">🚫💧</span>
+                    <span class="k3-btn-title">Sterilisasi Meja Kerja</span>
+                    <span class="k3-btn-desc">Aturan Makan, Minum & Pengamanan Kabel</span>
+                </a>
+                
+                <!-- Button 3: Piket & Tanggung Jawab -->
+                <a href="k3_piket.html" class="btn-k3-link">
+                    <span class="k3-icon">🧹</span>
+                    <span class="k3-btn-title">Piket & Tanggung Jawab</span>
+                    <span class="k3-btn-desc">Peminjaman Barang & Kebersihan Fasilitas</span>
+                </a>
+                
+                <!-- Button 4: Refleks Tanggap Darurat -->
+                <a href="k3_darurat.html" class="btn-k3-link">
+                    <span class="k3-icon">🚨</span>
+                    <span class="k3-btn-title">Refleks Tanggap Darurat</span>
+                    <span class="k3-btn-desc">Deteksi Dini Korsleting & Bahaya Fatal</span>
+                </a>
+                
+            </div>
+        </div>
+
+        <hr class="section-separator">
+        <h3 class="k3-title" style="margin-bottom: 1.5rem;">📚 Kurikulum Pembelajaran Berkelanjutan</h3>
+
+        <!-- Pilihan Navigasi Pemisah Semester 1 - 6 -->
+        <div class="semester-grid">
+            <button onclick="window.location.href='semester1.html'" class="btn-semester">
+                <span class="sem-number">SEMESTER 1</span>
+                <span class="sem-title">Computational Thinking, Dasar Web & Algoritma</span>
+            </button>
+            
+            <button onclick="window.location.href='semester2.html'" class="btn-semester">
+                <span class="sem-number">SEMESTER 2</span>
+                <span class="sem-title">Infrastruktur Linux, Database Relasional & IoT</span>
+            </button>
+            
+            <button onclick="window.location.href='semester3.html'" class="btn-semester">
+                <span class="sem-number">SEMESTER 3</span>
+                <span class="sem-title">Grafis 2D, Struktur Data & Integrasi Model AI/ML</span>
+            </button>
+            
+            <button onclick="window.location.href='semester4.html'" class="btn-semester">
+                <span class="sem-number">SEMESTER 4</span>
+                <span class="sem-title"> Web Service API, Komputasi Numerik & Advanced Data Mining</span>
+            </button>
+            
+            <button onclick="window.location.href='semester5.html'" class="btn-semester">
+                <span class="sem-number">SEMESTER 5</span>
+                <span class="sem-title">Komputasi 3D, Manipulasi Data R, & Segmentasi Pasar AI</span>
+            </button>
+            
+            <button onclick="window.location.href='semester6.html'" class="btn-semester">
+                <span class="sem-number">SEMESTER 6</span>
+                <span class="sem-title">Sistem Real-Time IoT, Proteksi Fraud AI, & Framework React Python</span>
+            </button>
+        </div>
+
+        <div class="k3-container" style="margin-top: 3rem; margin-bottom: 4rem;">
+            <h4 class="k3-title">🚀 Softskill Accelerator Hub</h4>
+            <p style="color: #cbd5e1; margin-top: -0.75rem; margin-bottom: 1.5rem; font-size: 0.9rem; opacity: 0.8;">
+                Asah Kemampuan Komunikasi Lisan & Standardisasi Dokumen Industri Anda
+            </p>
+            <div class="k3-grid">
+                <button onclick="window.location.href='public-speaking.html'" class="btn-softskill btn-ps">
+                    <span class="sem-number">🗣️ LISAN</span>
+                    <span class="sem-title">Public Speaking & Presentasi Pitching</span>
+                </button>
+                
+                <button onclick="window.location.href='manajemen-laporan.html'" class="btn-softskill btn-ml">
+                    <span class="sem-number">📝 TULISAN</span>
+                    <span class="sem-title">Manajemen Laporan & Dokumen Teknis</span>
+                </button>
+            </div>
+        </div>
+
+        <style>
+            .btn-softskill {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                padding: 1.5rem;
+                border-radius: 12px;
+                border: 1px solid rgba(255, 255, 255, 0.1);
+                cursor: pointer;
+                transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+                color: #ffffff;
+                text-align: center;
+            }
+            .btn-ps {
+                background: linear-gradient(135deg, #ec4899 0%, #be185d 100%);
+                box-shadow: 0 4px 15px rgba(236, 72, 153, 0.2);
+            }
+            .btn-ml {
+                background: linear-gradient(135deg, #06b6d4 0%, #0e7490 100%);
+                box-shadow: 0 4px 15px rgba(6, 182, 212, 0.2);
+            }
+            .btn-softskill:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 8px 25px rgba(255, 255, 255, 0.15);
+                filter: brightness(1.1);
+            }
+            .btn-softskill .sem-number {
+                font-size: 0.8rem;
+                font-weight: 800;
+                letter-spacing: 1.5px;
+                opacity: 0.9;
+                margin-bottom: 0.5rem;
+            }
+            .btn-softskill .sem-title {
+                font-size: 1.1rem;
+                font-weight: 700;
+                line-height: 1.3;
+            }
+        </style>
+    </div>
+
+    <!-- SEMESTER PAGE (KONTEN PLAYER CADANGAN) -->
+    <div id="semester-page" class="hidden">
+        <header class="app-header">
+            <div class="header-left">
+                <button onclick="kembaliKeLanding()" class="btn-back">⬅ Menu Utama</button>
+                <h2 id="judul-semester"></h2>
+            </div>
+            <span class="badge-cloud">✨ Cloud-Ready Pedagogy</span>
+        </header>
+
+        <div class="main-layout">
+            <div class="sidebar">
+                <h3>📅 Garis Waktu Belajar (18 Minggu)</h3>
+                <div id="daftar-minggu"></div>
+            </div>
+
+            <div class="content-area">
+                <div id="placeholder-konten" class="placeholder-text">
+                    <span>💡</span>
+                    <p>Silakan pilih minggu pada menu kiri untuk meninjau rincian tugas pengerjaan sesian.</p>
+                </div>
+
+                <div id="detail-konten" class="hidden">
+                    <div class="modul-header">
+                        <span id="tag-minggu"></span>
+                        <h2 id="modul-title"></h2>
+                    </div>
+
+                    <div>
+                        <h3 class="section-title">🛠️ Panduan Eksekusi Praktik Lintas Perangkat</h3>
+                        <div class="device-grid">
+                            <div class="box-env box-laptop">
+                                <h4>💻 Lingkungan Kerja Laptop</h4>
+                                <p id="instruksi-laptop"></p>
+                            </div>
+                            <div class="box-env box-mobile">
+                                <h4>📱 Lingkungan Kerja Smartphone</h4>
+                                <p id="instruksi-smartphone"></p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <h3 class="section-title">📅 Rincian Alur Capaian Target Sesian</h3>
+                        <div id="container-target-sesian" class="daily-grid"></div>
+                    </div>
+
+                    <div class="info-footer-grid">
+                        <div class="footer-info-card"><b>What</b><p id="modul-what"></p></div>
+                        <div class="footer-info-card"><b>Why</b><p id="modul-why"></p></div>
+                        <div class="footer-info-card"><b>How</b><p id="modul-how"></p></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let db = null;
+        async function initApp() {
+            try {
+                const response = await fetch('kurikulum.json');
+                if(response.ok) db = await response.json();
+            } catch(error) {
+                console.log("Database opsional kurikulum.json");
+            }
+        }
+        window.onload = initApp;
+
+        function kembaliKeLanding() {
+            document.getElementById('semester-page').classList.add('hidden');
+            document.getElementById('landing-page').classList.remove('hidden');
+        }
+    </script>
+</body>
+</html>

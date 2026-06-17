@@ -1,0 +1,192 @@
+{
+  "1": {
+    "nama": "Semester 1: Fondasi Logika & Algoritma (PPLG/TJKT)",
+    "weeks": [
+      {
+        "w": 1,
+        "title": "Orientasi Kursus & Menyiapkan Lingkungan Kerja (Setup Tools)",
+        "device_instruction": {
+          "laptop": "Gunakan VS Code lokal untuk manajemen file proyek dan kontrol repositori Git.",
+          "smartphone": "Gunakan aplikasi Spck Code Editor (Android/iOS) atau platform online OneCompiler untuk menulis kode."
+        },
+        "daily_targets": [
+          {"task": "Sesi 1: Pengenalan Silabus & Diskusi Peluang Karir TI", "mode": "INDIVIDU"},
+          {"task": "Sesi 2: Registrasi Akun GitHub & Pengenalan Menu Repositori via Browser", "mode": "INDIVIDU"},
+          {"task": "Sesi 3: Setup Ekosistem Coding di Perangkat Laptop / Smartphone", "mode": "INDIVIDU"},
+          {"task": "Sesi 4: Praktik Struktur Dokumen HTML Pertama di Editor Perangkat", "mode": "INDIVIDU"},
+          {"task": "Sesi 5: Sinkronisasi Kode 'Hello World' Lintas Perangkat Teman Sebaya", "mode": "KELOMPOK"}
+        ],
+        "what": "Mengenal ekosistem pengembangan perangkat lunak dan mempersiapkan lingkungan belajar.",
+        "why": "Memastikan semua siswa memiliki media praktik yang siap pakai di perangkatnya.",
+        "how": "Membuka platform coding terpilih dan melakukan konfigurasi layout dasar.",
+        "repo": "├── .gitignore\n└── index.html",
+        "commit": "feat: setup initial multi-device cloud and local workspace"
+      },
+      {
+        "w": 9,
+        "title": "UTS - Evaluasi Portofolio Halaman Web Statis Kreatif",
+        "device_instruction": {
+          "laptop": "Membangun layout responsif utuh menggunakan kombinasi Flexbox/CSS Grid.",
+          "smartphone": "Menyusun tata letak komponen grid konten web statis melalui editor mobile."
+        },
+        "daily_targets": [
+          {"task": "Sesi 1: Analisis Soal Kasus UTS & Pembuatan Wireframe Sketsa", "mode": "INDIVIDU"},
+          {"task": "Sesi 2: Coding Struktur Kerangka HTML Secara Mandiri", "mode": "INDIVIDU"},
+          {"task": "Sesi 3: Styling Detail Menggunakan Properti CSS Kreatif", "mode": "INDIVIDU"},
+          {"task": "Sesi 4: Pengujian Validasi Responsivitas di Layar HP & Laptop", "mode": "KELOMPOK"},
+          {"task": "Sesi 5: Final Presentasi Karya Mandiri di Hadapan Guru", "mode": "INDIVIDU"}
+        ],
+        "what": "Uji kompetensi tengah semester untuk membuat landing page responsif.",
+        "why": "Mengukur kedalaman pemahaman materi dasar web design siswa.",
+        "how": "Menggabungkan kemampuan HTML & CSS dalam satu proyek tema bebas.",
+        "repo": "└── uts_web_statis/\n    ├── index.html\n    └── style.css",
+        "commit": "chore: complete static landing page project for UTS assignment"
+      },
+      {
+        "w": 16,
+        "title": "PROJECT OUTPUT: Chatbot Helpdesk Multi-Platform",
+        "device_instruction": {
+          "laptop": "Menggabungkan komponen UI, mengintegrasikan file JSON, dan melakukan deployment.",
+          "smartphone": "Menyusun teks objek data dan struktur JSON menggunakan Spck Editor atau menguji alur logika chat via Replit Mobile."
+        },
+        "daily_targets": [
+          {"task": "Sesi 1: Pembentukan Tim & Brainstorming Topik Alur Chatbot", "mode": "KELOMPOK"},
+          {"task": "Sesi 2: Penyusunan Dataset Kamus Respon Menggunakan Format Data JSON", "mode": "KELOMPOK"},
+          {"task": "Sesi 3: Coding Logika Alur Pencocokan Karakter Teks Chat", "mode": "INDIVIDU"},
+          {"task": "Sesi 4: Integrasi Skrip Tampilan Antarmuka Chatbot", "mode": "KELOMPOK"},
+          {"task": "Sesi 5: Upload Berkas Bersama ke GitHub Proyek Organisasi Sekolah", "mode": "KELOMPOK"}
+        ],
+        "what": "Membangun Chatbot Helpdesk yang menggabungkan Python Logic dan JSON Database.",
+        "why": "Melatih kolaborasi tim dengan perangkat yang beragam.",
+        "how": "Kolaborasi pembagian tugas data entry (HP) dan compiler (Laptop).",
+        "repo": "chatbot_project/\n├── app.py\n├── data.json\n└── README.md",
+        "commit": "release: stable version of team chatbot project"
+      }
+    ]
+  },
+  "2": {
+    "nama": "Semester 2: Hardware & Infrastruktur Elektronika (ELIND)",
+    "weeks": [
+      {
+        "w": 1,
+        "title": "Sistem Bilangan & Arsitektur Mikrokontroler ESP32",
+        "device_instruction": {
+          "laptop": "Gunakan Arduino IDE, VS Code + PlatformIO, atau simulator online Wokwi.",
+          "smartphone": "Gunakan Wokwi Simulator langsung dari Google Chrome HP untuk merangkai komponen virtual."
+        },
+        "daily_targets": [
+          {"task": "Sesi 1: Teori Gerbang Logika & Arus Lemah Elektronika", "mode": "INDIVIDU"},
+          {"task": "Sesi 2: Praktik Konversi Manual Desimal ke Sistem Bilangan Biner", "mode": "INDIVIDU"},
+          {"task": "Sesi 3: Analisis Lembar Data Fungsi Pinout Board ESP32", "mode": "INDIVIDU"},
+          {"task": "Sesi 4: Simulasi Rangkaian Digital Sederhana di Platform Wokwi", "mode": "INDIVIDU"},
+          {"task": "Sesi 5: Diskusi Kelompok Mengenai Error Alur Tegangan Pin", "mode": "KELOMPOK"}
+        ],
+        "what": "Dasar digital dan hardware mikrokontroler.",
+        "why": "Fondasi utama sebelum melangkah ke pemrograman IoT nyata.",
+        "how": "Mempelajari datasheet pinout dan melakukan simulasi sirkuit.",
+        "repo": "hardware_study/\n└── esp32_pinout.md",
+        "commit": "docs: add hardware specification and logic gate notes"
+      }
+    ]
+  },
+  "3": {
+    "nama": "Semester 3: Jaringan Komputer Tingkat Lanjut (TJKT)",
+    "weeks": [
+      {
+        "w": 1,
+        "title": "Routing Statis & Subnetting CIDR",
+        "device_instruction": {
+          "laptop": "Gunakan Cisco Packet Tracer lokal atau simulator berbasis web.",
+          "smartphone": "Gunakan Packet Tracer Mobile atau lembar kerja simulasi topologi online."
+        },
+        "daily_targets": [
+          {"task": "Sesi 1: Konsep Dasar IP Addressing & Perhitungan Subnetting CIDR", "mode": "INDIVIDU"},
+          {"task": "Sesi 2: Desain Topologi Jaringan Router Jamak", "mode": "INDIVIDU"},
+          {"task": "Sesi 3: Konfigurasi IP Gateway pada Setiap Interface Perangkat", "mode": "INDIVIDU"},
+          {"task": "Sesi 4: Pengisian Tabel Routing Statis Jalur Komunikasi", "mode": "INDIVIDU"},
+          {"task": "Sesi 5: Pengujian Ping Test & Troubleshooting Koneksi Antar Subnet", "mode": "KELOMPOK"}
+        ],
+        "what": "Mengatur rute pengiriman paket data antar jaringan lokal yang berbeda segmen.",
+        "why": "Memastikan infrastruktur jaringan dapat terhubung secara efisien.",
+        "how": "Mengisi tabel routing statis berdasarkan skenario topologi.",
+        "repo": "networking/\n└── static_routing_topology.pkt",
+        "commit": "feat: configure static routing for multi-subnet lab environment"
+      }
+    ]
+  },
+  "4": {
+    "nama": "Semester 4: Administrasi Sistem Jaringan & Server",
+    "weeks": [
+      {
+        "w": 1,
+        "title": "Deployment Linux Server & Konfigurasi SSH",
+        "device_instruction": {
+          "laptop": "Akses server menggunakan Terminal bawaan atau PuTTY.",
+          "smartphone": "Gunakan aplikasi JuiceSSH atau Termius untuk remote server via cloud."
+        },
+        "daily_targets": [
+          {"task": "Sesi 1: Pengenalan Arsitektur Server OS Linux Debian/Ubuntu", "mode": "INDIVIDU"},
+          {"task": "Sesi 2: Praktik Manajemen User, Hak Akses, dan Sudoers Privilege", "mode": "INDIVIDU"},
+          {"task": "Sesi 3: Instalasi OpenSSH-Server & Pengamanan Port Default", "mode": "INDIVIDU"},
+          {"task": "Sesi 4: Pengujian Remote Access Menggunakan Public & Private Key", "mode": "INDIVIDU"},
+          {"task": "Sesi 5: Audit Log Akses Server Berdasarkan Tanggal Masuk", "mode": "KELOMPOK"}
+        ],
+        "what": "Membangun dan mengamankan layanan remote access server berbasis Linux.",
+        "why": "Fondasi utama administrasi server jarak jauh standar industri.",
+        "how": "Konfigurasi berkas sshd_config dan restart layanan.",
+        "repo": "server_config/\n└── sshd_config_backup",
+        "commit": "secure: harden ssh configuration and disable password authentication"
+      }
+    ]
+  },
+  "5": {
+    "nama": "Semester 5: Cloud Computing & Keamanan Siber",
+    "weeks": [
+      {
+        "w": 1,
+        "title": "Konteks Kontainerisasi Menggunakan Docker",
+        "device_instruction": {
+          "laptop": "Instalasi Docker Engine lokal dan eksekusi Dockerfile.",
+          "smartphone": "Gunakan Play with Docker (PWD) melalui browser mobile."
+        },
+        "daily_targets": [
+          {"task": "Sesi 1: Memahami Perbedaan Arsitektur Virtual Machine vs Kontainer", "mode": "INDIVIDU"},
+          {"task": "Sesi 2: Eksplorasi Perintah Dasar Docker CLI (Pull, Run, PS, Images)", "mode": "INDIVIDU"},
+          {"task": "Sesi 3: Penulisan Dockerfile untuk Aplikasi Web Sederhana", "mode": "INDIVIDU"},
+          {"task": "Sesi 4: Eksekusi Build Image & Menjalankan Kontainer Berisolasi", "mode": "INDIVIDU"},
+          {"task": "Sesi 5: Orkestrasi Sederhana Multi-Kontainer Menggunakan Docker Compose", "mode": "KELOMPOK"}
+        ],
+        "what": "Membungkus aplikasi beserta dependensinya ke dalam satu unit kontainer yang ringan.",
+        "why": "Mempermudah proses deployment aplikasi agar konsisten di berbagai server cloud.",
+        "how": "Menulis instruksi Dockerfile dan menjalankannya dengan perintah build.",
+        "repo": "cloud_app/\n├── Dockerfile\n└── docker-compose.yml",
+        "commit": "feat: containerize web application environment using dockerfile"
+      }
+    ]
+  },
+  "6": {
+    "nama": "Semester 6: Produk Kreatif & Kesiapan Kerja (PKK)",
+    "weeks": [
+      {
+        "w": 1,
+        "title": "Perencanaan Portofolio Kerja & DevOps CI/CD",
+        "device_instruction": {
+          "laptop": "Setup GitHub Actions workflow berkas .github/workflows/deploy.yml.",
+          "smartphone": "Melakukan review jalannya log deployment otomatis di aplikasi GitHub Mobile."
+        },
+        "daily_targets": [
+          {"task": "Sesi 1: Audit Seluruh Repositori Hasil Belajar Sepanjang 5 Semester", "mode": "INDIVIDU"},
+          {"task": "Sesi 2: Penyusunan Resume Portofolio Profesional Berbasis Markdown", "mode": "INDIVIDU"},
+          {"task": "Sesi 3: Pengenalan Alur Pipeline Otomatis CI/CD GitHub Actions", "mode": "INDIVIDU"},
+          {"task": "Sesi 4: Integrasi Webhook Repositori ke Server Hosting Cloud Gratis", "mode": "INDIVIDU"},
+          {"task": "Sesi 5: Simulasi Deployment Otomatis Saat Terjadi Fitur Baru", "mode": "KELOMPOK"}
+        ],
+        "what": "Mengotomatiskan publikasi produk web portofolio langsung ke internet setiap ada perubahan kode.",
+        "why": "Siswa lulus memiliki portofolio hidup (live product) yang siap ditunjukkan ke HRD industri.",
+        "how": "Menyusun skrip otomatisasi YAML di dalam folder repositori proyek.",
+        "repo": ".github/\n└── workflows/\n    └── deploy.yml",
+        "commit": "ci: implement automated deployment pipeline via github actions"
+      }
+    ]
+  }
+}
