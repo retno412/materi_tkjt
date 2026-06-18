@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tech Coding Club - Course & Certification Showcase</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* Gaya Khusus Halaman Sertifikasi & Kursus */
+        body {
+            background-color: #0f172a;
+            color: #f8fafc;
+            font-family: system-ui, -apple-system, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        .club-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+        }
+        .club-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            padding-bottom: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        .btn-back {
+            background: linear-gradient(135deg, #4f46e5 0%, #3730a3 100%);
+            color: #ffffff;
+            border: none;
+            padding: 0.75rem 1.25rem;
+            border-radius: 8px;
+            cursor: pointer;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+        .btn-back:hover {
+            transform: translateX(-3px);
+            filter: brightness(1.1);
+        }
+        .club-title h1 {
+            margin: 0;
+            font-size: 2rem;
+            background: linear-gradient(to right, #ffffff, #94a3b8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Form Input Sertifikasi Baru */
+        .course-form-card {
+            background: rgba(30, 41, 59, 0.7);
+            border: 1px solid rgba(99, 102, 241, 0.2);
+            border-radius: 16px;
+            padding: 1.5rem;
+            margin-bottom: 3rem;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+        }
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+        .form-group label {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: #cbd5e1;
+        }
+        .form-group input, .form-group select {
+            background: rgba(15, 23, 42, 0.8);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 8px;
+            padding: 0.75rem;
+            color: #fff;
+            font-size: 0.9rem;
+            outline: none;
+        }
+        .form-group input:focus, .form-group select:focus {
+            border-color: #6366f1;
+        }
+        .btn-submit {
+            background: linear-gradient(135deg, #06b6d4 0%, #0891b2 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 0.75rem 1.5rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s;
+            height: 45px;
+        }
+        .btn-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(6, 182, 212, 0.4);
+        }
+
+        /* Grid Sertifikat */
+        .course-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 1.5rem;
+        }
+        .cert-card {
+            background: linear-gradient(135deg, rgba(30, 41, 59, 0.6) 0%, rgba(15, 23, 42, 0.8) 100%);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 14px;
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            position: relative;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+            animation: fadeIn 0.3s ease;
+        }
+        .cert-badge-platform {
+            position: absolute;
+            top: 1.25rem;
+            right: 1.25rem;
+            background: rgba(255,255,255,0.1);
+            padding: 0.25rem 0.6rem;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: #cbd5e1;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        .cert-info h3 {
+            margin: 0 0 0.25rem 0;
+            font-size: 1.2rem;
+            color: #ffffff;
+            max-width: 75%;
+            line-height: 1.3;
+        }
+        .student-name {
+            font-size: 0.9rem;
+            color: #38bdf8;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+        .cert-meta {
+            font-size: 0.8rem;
+            color: #94a3b8;
+            margin-bottom: 1.5rem;
+            line-height: 1.4;
+        }
+        .btn-verify {
+            background: rgba(56, 189, 248, 0.1);
+            border: 1px solid rgba(56, 189, 248, 0.3);
+            color: #38bdf8;
+            padding: 0.6rem 1rem;
+            border-radius: 8px;
+            text-decoration: none;
+            text-align: center;
+            font-size: 0.85rem;
+            font-weight: 600;
+            transition: all 0.2s;
+            display: block;
+        }
+        .btn-verify:hover {
+            background: #38bdf8;
+            color: #0f172a;
+            box-shadow: 0 4px 12px rgba(56, 189, 248, 0.3);
+        }
+        .btn-delete-cert {
+            background: none;
+            border: none;
+            color: #ef4444;
+            cursor: pointer;
+            font-size: 0.95rem;
+            opacity: 0.4;
+            transition: opacity 0.2s;
+            margin-top: 1rem;
+            align-self: flex-end;
+        }
+        .btn-delete-cert:hover { opacity: 1; }
+
+        .empty-text {
+            color: #64748b;
+            font-style: italic;
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 3rem;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.98); }
+            to { opacity: 1; transform: scale(1); }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="club-container">
+        <header class="club-header">
+            <div class="club-title">
+                <h1>📖 Tech Coding Club — Courses & Certifications</h1>
+            </div>
+            <a href="index.html" class="btn-back">⬅ Menu Utama</a>
+        </header>
+
+        <div class="course-form-card">
+            <h3 style="margin-top:0; margin-bottom:1.25rem; font-size:1.1rem; color:#f1f5f9;">➕ Tambah Kredensial / Sertifikat Siswa</h3>
+            <form id="certForm" onsubmit="saveCertificate(event)">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="cTitle">Nama Kompetensi Kredensial</label>
+                        <input type="text" id="cTitle" placeholder="Contoh: Responsive Web Design" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="cStudent">Nama Penerima / Siswa</label>
+                        <input type="text" id="cStudent" placeholder="Nama Lengkap Siswa" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="cPlatform">Platform Penerbit</label>
+                        <select id="cPlatform">
+                            <option value="freeCodeCamp">freeCodeCamp</option>
+                            <option value="Cisco Networking Acad">Cisco Networking Academy</option>
+                            <option value="Coursera">Coursera</option>
+                            <option value="Dicoding">Dicoding</option>
+                            <option value="Google Cloud Enterprise">Google Cloud Enterprise</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="cUrl">URL Verifikasi Sertifikat (Kredensial)</label>
+                        <input type="url" id="cUrl" placeholder="https://freecodecamp.org/certification/..." required>
+                    </div>
+                    <div class="form-group">
+                        <label for="cDate">Tanggal Terbit</label>
+                        <input type="date" id="cDate" required>
+                    </div>
+                    <div class="form-group" style="justify-content: flex-end;">
+                        <button type="submit" class="btn-submit">Sematkan Kredensial</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <h2 style="font-size:1.4rem; margin-bottom:1.5rem; letter-spacing:0.5px; border-left: 4px solid #06b6d4; padding-left: 0.75rem;">🛡️ Verified Member Kredensial</h2>
+        
+        <div id="courseGrid" class="course-grid">
+            </div>
+    </div>
+
+    <script>
+        // Data internal awal sebagai benchmark / contoh visual dasar tersemat
+        let certificates = JSON.parse(localStorage.getItem('club_certificates')) || [
+            {
+                id: 1,
+                title: "Responsive Web Design",
+                student: "Retno Ariyanti (Mentor Ekosistem)",
+                platform: "freeCodeCamp",
+                url: "https://www.freecodecamp.org/certification/fccdf8180ea-128a-4933-bfce",
+                date: "2025-08-14"
+            },
+            {
+                id: 2,
+                title: "CCNA: Introduction to Networks",
+                student: "Siswa TKJT Unggulan 1",
+                platform: "Cisco Networking Acad",
+                url: "https://www.credly.com",
+                date: "2026-02-20"
+            }
+        ];
+
+        function renderCertificates() {
+            const courseGrid = document.getElementById('courseGrid');
+            courseGrid.innerHTML = '';
+
+            if (certificates.length === 0) {
+                courseGrid.innerHTML = '<p class="empty-text">Belum ada kredensial sertifikat yang disematkan.</p>';
+                return;
+            }
+
+            certificates.forEach(c => {
+                const card = document.createElement('div');
+                card.className = 'cert-card';
+
+                card.innerHTML = `
+                    <span class="cert-badge-platform">${c.platform}</span>
+                    <div class="cert-info">
+                        <h3>${c.title}</h3>
+                        <div class="student-name">👤 ${c.student}</div>
+                        <div class="cert-meta">
+                            ID Kredensial Resmi Terverifikasi<br>
+                            📅 Terbit: ${formatDate(c.date)}
+                        </div>
+                    </div>
+                    <div>
+                        <a href="${c.url}" target="_blank" class="btn-verify">🔗 Verifikasi Kredensial</a>
+                        <button class="btn-delete-cert" onclick="deleteCertificate(${c.id})">🗑️ Hapus Kredensial</button>
+                    </div>
+                `;
+                courseGrid.appendChild(card);
+            });
+        }
+
+        function saveCertificate(e) {
+            e.preventDefault();
+            const newCert = {
+                id: Date.now(),
+                title: document.getElementById('cTitle').value,
+                student: document.getElementById('cStudent').value,
+                platform: document.getElementById('cPlatform').value,
+                url: document.getElementById('cUrl').value,
+                date: document.getElementById('cDate').value
+            };
+
+            certificates.unshift(newCert);
+            localStorage.setItem('club_certificates', JSON.stringify(certificates));
+            renderCertificates();
+            document.getElementById('certForm').reset();
+        }
+
+        function deleteCertificate(id) {
+            if(confirm("Apakah Anda yakin ingin menghapus data kredensial sertifikat ini?")) {
+                certificates = certificates.filter(c => c.id !== id);
+                localStorage.setItem('club_certificates', JSON.stringify(certificates));
+                renderCertificates();
+            }
+        }
+
+        function formatDate(dateString) {
+            if(!dateString) return '-';
+            const options = { year: 'numeric', month: 'short', day: 'numeric' };
+            return new Date(dateString).toLocaleDateString('id-ID', options);
+        }
+
+        // Render data saat komponen dimuat
+        renderCertificates();
+    </script>
+</body>
+</html>

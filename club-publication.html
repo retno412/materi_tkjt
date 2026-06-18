@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tech Coding Club - Publications & Karya Siswa</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* Gaya Khusus Halaman Publikasi */
+        body {
+            background-color: #0f172a;
+            color: #f8fafc;
+            font-family: system-ui, -apple-system, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        .club-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+        }
+        .club-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            padding-bottom: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        .btn-back {
+            background: linear-gradient(135deg, #4f46e5 0%, #3730a3 100%);
+            color: #ffffff;
+            border: none;
+            padding: 0.75rem 1.25rem;
+            border-radius: 8px;
+            cursor: pointer;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+        .btn-back:hover {
+            transform: translateX(-3px);
+            filter: brightness(1.1);
+        }
+        .club-title h1 {
+            margin: 0;
+            font-size: 2rem;
+            background: linear-gradient(to right, #ffffff, #94a3b8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Form Input Publikasi */
+        .pub-form-card {
+            background: rgba(30, 41, 59, 0.7);
+            border: 1px solid rgba(99, 102, 241, 0.2);
+            border-radius: 16px;
+            padding: 1.5rem;
+            margin-bottom: 3rem;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+        }
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+        .form-group label {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: #cbd5e1;
+        }
+        .form-group input {
+            background: rgba(15, 23, 42, 0.8);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 8px;
+            padding: 0.75rem;
+            color: #fff;
+            font-size: 0.9rem;
+            outline: none;
+        }
+        .form-group input:focus {
+            border-color: #6366f1;
+        }
+        .btn-submit {
+            background: linear-gradient(135deg, #ec4899 0%, #be185d 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 0.75rem 1.5rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s;
+            height: 45px;
+        }
+        .btn-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(236, 72, 153, 0.4);
+        }
+
+        /* Grid Tampilan Publikasi */
+        .pub-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+            gap: 1.5rem;
+        }
+        .pub-card {
+            background: rgba(30, 41, 59, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 14px;
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+            position: relative;
+            animation: fadeIn 0.3s ease;
+        }
+        .pub-info h3 {
+            margin: 0 0 0.5rem 0;
+            font-size: 1.25rem;
+            color: #ffffff;
+            line-height: 1.4;
+            max-width: 90%;
+        }
+        .pub-dev {
+            font-size: 0.85rem;
+            color: #f472b6;
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+        }
+        .pub-date {
+            font-size: 0.8rem;
+            color: #64748b;
+            margin-bottom: 1.25rem;
+        }
+        .btn-pub-link {
+            background: rgba(236, 72, 153, 0.1);
+            border: 1px solid rgba(236, 72, 153, 0.3);
+            color: #f472b6;
+            padding: 0.6rem 1rem;
+            border-radius: 8px;
+            text-decoration: none;
+            text-align: center;
+            font-size: 0.85rem;
+            font-weight: 600;
+            transition: all 0.2s;
+            display: block;
+        }
+        .btn-pub-link:hover {
+            background: #ec4899;
+            color: #ffffff;
+            box-shadow: 0 4px 12px rgba(236, 72, 153, 0.3);
+        }
+        .btn-delete-pub {
+            position: absolute;
+            top: 1.25rem;
+            right: 1.25rem;
+            background: none;
+            border: none;
+            color: #ef4444;
+            cursor: pointer;
+            font-size: 1rem;
+            opacity: 0.4;
+            transition: opacity 0.2s;
+        }
+        .btn-delete-pub:hover { opacity: 1; }
+
+        .empty-text {
+            color: #64748b;
+            font-style: italic;
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 3rem;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(6px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="club-container">
+        <header class="club-header">
+            <div class="club-title">
+                <h1>📰 Tech Coding Club — Showcase Publications</h1>
+            </div>
+            <a href="index.html" class="btn-back">⬅ Menu Utama</a>
+        </header>
+
+        <div class="pub-form-card">
+            <h3 style="margin-top:0; margin-bottom:1.25rem; font-size:1.1rem; color:#f1f5f9;">➕ Input Hasil Karya / Publikasi Baru</h3>
+            <form id="pubForm" onsubmit="savePublication(event)">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="pTitle">Judul Karya / Publikasi</label>
+                        <input type="text" id="pTitle" placeholder="Contoh: Pembuatan Robot Line Follower berbasis IoT" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="pDeveloper">Nama Developer / Penulis</label>
+                        <input type="text" id="pDeveloper" placeholder="Contoh: Team Inovasi PPLG Kelompok 2" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="pUrl">URL Hasil Karya (GitHub / Website Live)</label>
+                        <input type="url" id="pUrl" placeholder="https://github.com/username/repository" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="pDate">Tanggal Publikasi</label>
+                        <input type="date" id="pDate" required>
+                    </div>
+                    <div class="form-group" style="justify-content: flex-end;">
+                        <button type="submit" class="btn-submit">Publish Karya</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <h2 style="font-size:1.4rem; margin-bottom:1.5rem; letter-spacing:0.5px; border-left: 4px solid #ec4899; padding-left: 0.75rem;">🌐 Arsip Karya Digital & Eksperimen Siswa</h2>
+        
+        <div id="pubGrid" class="pub-grid">
+            </div>
+    </div>
+
+    <script>
+        // Data default sebagai contoh visual dasar tersemat
+        let publications = JSON.parse(localStorage.getItem('club_publications')) || [
+            {
+                id: 1,
+                title: "Aplikasi Pendataan Inventaris Lab Komputer Berbasis Web Dashboard",
+                developer: "Favian Zufar & Tim PPLG",
+                url: "https://github.com",
+                date: "2026-05-18"
+            },
+            {
+                id: 2,
+                title: "Rancang Bangun Otomasi Penyiraman Tanaman Berbasis Mikrokontroler & IoT",
+                developer: "Siswa Elektronika Industri (ELIND)",
+                url: "https://github.com",
+                date: "2026-04-12"
+            }
+        ];
+
+        function renderPublications() {
+            const pubGrid = document.getElementById('pubGrid');
+            pubGrid.innerHTML = '';
+
+            if (publications.length === 0) {
+                pubGrid.innerHTML = '<p class="empty-text">Belum ada publikasi hasil karya yang diinputkan.</p>';
+                return;
+            }
+
+            publications.forEach(p => {
+                const card = document.createElement('div');
+                card.className = 'pub-card';
+
+                card.innerHTML = `
+                    <button class="btn-delete-pub" onclick="deletePublication(${p.id})" title="Hapus Publikasi">🗑️</button>
+                    <div class="pub-info">
+                        <h3>${p.title}</h3>
+                        <div class="pub-dev">💻 Dev: ${p.developer}</div>
+                        <div class="pub-date">📅 Tanggal Rilis: ${formatDate(p.date)}</div>
+                    </div>
+                    <a href="${p.url}" target="_blank" class="btn-pub-link">🔗 Lihat Hasil Karya / Link URL</a>
+                `;
+                pubGrid.appendChild(card);
+            });
+        }
+
+        function savePublication(e) {
+            e.preventDefault();
+            const newPub = {
+                id: Date.now(),
+                title: document.getElementById('pTitle').value,
+                developer: document.getElementById('pDeveloper').value,
+                url: document.getElementById('pUrl').value,
+                date: document.getElementById('pDate').value
+            };
+
+            publications.unshift(newPub);
+            localStorage.setItem('club_publications', JSON.stringify(publications));
+            renderPublications();
+            document.getElementById('pubForm').reset();
+        }
+
+        function deletePublication(id) {
+            if(confirm("Apakah Anda yakin ingin menghapus data publikasi karya ini?")) {
+                publications = publications.filter(p => p.id !== id);
+                localStorage.setItem('club_publications', JSON.stringify(publications));
+                renderPublications();
+            }
+        }
+
+        function formatDate(dateString) {
+            if(!dateString) return '-';
+            const options = { year: 'numeric', month: 'long', day: 'numeric' };
+            return new Date(dateString).toLocaleDateString('id-ID', options);
+        }
+
+        // Render pertama kali saat halaman dimuat
+        renderPublications();
+    </script>
+</body>
+</html>

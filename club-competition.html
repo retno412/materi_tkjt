@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tech Coding Club - Competition Center</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* Gaya Khusus Halaman Informasi Kompetensi */
+        body {
+            background-color: #0f172a;
+            color: #f8fafc;
+            font-family: system-ui, -apple-system, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        .club-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+        }
+        .club-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            padding-bottom: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        .btn-back {
+            background: linear-gradient(135deg, #4f46e5 0%, #3730a3 100%);
+            color: #ffffff;
+            border: none;
+            padding: 0.75rem 1.25rem;
+            border-radius: 8px;
+            cursor: pointer;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+        .btn-back:hover {
+            transform: translateX(-3px);
+            filter: brightness(1.1);
+        }
+        .club-title h1 {
+            margin: 0;
+            font-size: 2rem;
+            background: linear-gradient(to right, #ffffff, #94a3b8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Form Input Kompetensi Baru */
+        .comp-form-card {
+            background: rgba(30, 41, 59, 0.7);
+            border: 1px solid rgba(99, 102, 241, 0.2);
+            border-radius: 16px;
+            padding: 1.5rem;
+            margin-bottom: 3rem;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+        }
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+        .form-group.full-width {
+            grid-column: 1 / -1;
+        }
+        .form-group label {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: #cbd5e1;
+        }
+        .form-group input, .form-group select, .form-group textarea {
+            background: rgba(15, 23, 42, 0.8);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 8px;
+            padding: 0.75rem;
+            color: #fff;
+            font-size: 0.9rem;
+            outline: none;
+            font-family: inherit;
+        }
+        .form-group textarea {
+            resize: vertical;
+            height: 80px;
+        }
+        .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+            border-color: #6366f1;
+        }
+        .btn-submit {
+            background: linear-gradient(135deg, #4f46e5 0%, #6366f1 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 0.75rem 1.5rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s;
+            height: 45px;
+            grid-column: -2 / -1;
+            justify-self: end;
+            width: 100%;
+            max-width: 200px;
+        }
+        .btn-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(99, 102, 241, 0.4);
+        }
+
+        /* Tampilan Grid Kompetensi Aktif */
+        .comp-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 1.5rem;
+        }
+        .comp-item-card {
+            background: rgba(30, 41, 59, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-top: 4px solid #4f46e5;
+            border-radius: 12px;
+            padding: 1.5rem;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            animation: fadeIn 0.3s ease;
+        }
+        .comp-main-info h3 {
+            margin: 0 0 0.5rem 0;
+            font-size: 1.3rem;
+            color: #ffffff;
+        }
+        .organizer-text {
+            font-size: 0.85rem;
+            color: #94a3b8;
+            margin-bottom: 1rem;
+            font-weight: 500;
+        }
+        .badge-row {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1.25rem;
+        }
+        .badge {
+            font-size: 0.75rem;
+            padding: 0.25rem 0.6rem;
+            border-radius: 6px;
+            font-weight: 700;
+        }
+        .badge-type { background: rgba(59, 130, 246, 0.2); color: #60a5fa; }
+        .badge-type.offline { background: rgba(245, 158, 11, 0.2); color: #fbbf24; }
+        .badge-deadline { background: rgba(239, 68, 68, 0.15); color: #f87171; }
+        
+        .comp-detail-section {
+            background: rgba(15, 23, 42, 0.5);
+            border-radius: 8px;
+            padding: 0.75rem 1rem;
+            margin-bottom: 1rem;
+            font-size: 0.85rem;
+            line-height: 1.5;
+        }
+        .comp-detail-section strong {
+            color: #cbd5e1;
+            display: block;
+            margin-bottom: 0.25rem;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .comp-detail-section p {
+            margin: 0;
+            color: #94a3b8;
+        }
+        
+        .btn-delete-comp {
+            position: absolute;
+            top: 1.25rem;
+            right: 1.25rem;
+            background: none;
+            border: none;
+            color: #ef4444;
+            cursor: pointer;
+            font-size: 1.1rem;
+            opacity: 0.4;
+            transition: opacity 0.2s;
+        }
+        .btn-delete-comp:hover { opacity: 1; }
+
+        .empty-text {
+            color: #64748b;
+            font-style: italic;
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 3rem;
+            font-size: 0.95rem;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="club-container">
+        <header class="club-header">
+            <div class="club-title">
+                <h1>🏆 Tech Coding Club — Competition Info</h1>
+            </div>
+            <a href="index.html" class="btn-back">⬅ Menu Utama</a>
+        </header>
+
+        <div class="comp-form-card">
+            <h3 style="margin-top:0; margin-bottom:1.25rem; font-size:1.1rem; color:#f1f5f9;">➕ Tambah Informasi Kompetensi Baru</h3>
+            <form id="compForm" onsubmit="saveCompetition(event)">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="cName">Nama Kompetensi / Lomba</label>
+                        <input type="text" id="cName" placeholder="Contoh: #JuaraVibeCoding 2026" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="cOrganizer">Penyelenggara</label>
+                        <input type="text" id="cOrganizer" placeholder="Contoh: IDwebhost / Kemendikbud" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="cType">Sifat Pelaksanaan</label>
+                        <select id="cType">
+                            <option value="Online">🌐 Online</option>
+                            <option value="Offline">🏢 Offline</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="cDeadline">Deadline Pengumpulan</label>
+                        <input type="date" id="cDeadline" required>
+                    </div>
+                    <div class="form-group full-width">
+                        <label for="cCriteria">Kriteria Penilaian / Persyaratan</label>
+                        <textarea id="cCriteria" placeholder="Contoh: Kreativitas UI/UX (30%), Kebersihan Kode & Struktur Database (40%), Responsivitas Aplikasi (30%). Maksimal tim 3 orang." required></textarea>
+                    </div>
+                    <div class="form-group full-width">
+                        <label for="cMethod">Cara Mengumpulkan / Tautan Pendaftaran</label>
+                        <input type="text" id="cMethod" placeholder="Contoh: Kirimkan link repository GitHub & link video demonstrasi YouTube ke form pendaftaran bit.ly/lomba-coding" required>
+                    </div>
+                    <button type="submit" class="btn-submit">Publish Info</button>
+                </div>
+            </form>
+        </div>
+
+        <h2 style="font-size:1.4rem; margin-bottom:1.5rem; letter-spacing:0.5px; border-left: 4px solid #4f46e5; padding-left: 0.75rem;">🔥 Kompetensi Aktif & Informasi Pendaftaran</h2>
+        
+        <div id="compGrid" class="comp-grid">
+            </div>
+    </div>
+
+    <script>
+        // Data default sebagai contoh inisiasi awal
+        let competitions = JSON.parse(localStorage.getItem('club_competitions')) || [
+            {
+                id: 1,
+                name: "IDwebhost Creative Web Competition",
+                organizer: "IDwebhost Indonesia",
+                type: "Online",
+                deadline: "2026-07-15",
+                criteria: "Kesesuaian tema inovasi digital, estetika desain antarmuka (UI/UX), dan fungsionalitas fitur aplikasi web tanpa bug.",
+                method: "Daftar pada dashboard resmi, unggah source code ke GitHub, dan deploy hasil aplikasi ke hosting gratis/berbayar."
+            }
+        ];
+
+        function renderCompetitions() {
+            const compGrid = document.getElementById('compGrid');
+            compGrid.innerHTML = '';
+
+            if (competitions.length === 0) {
+                compGrid.innerHTML = '<p class="empty-text">Saat ini belum ada informasi kompetensi aktif yang ditambahkan.</p>';
+                return;
+            }
+
+            competitions.forEach(c => {
+                const card = document.createElement('div');
+                card.className = 'comp-item-card';
+                if(c.type === 'Offline') card.style.borderTopColor = '#f59e0b';
+
+                card.innerHTML = `
+                    <button class="btn-delete-comp" onclick="deleteCompetition(${c.id})" title="Hapus Pengumuman">🗑️</button>
+                    <div class="comp-main-info">
+                        <h3>${c.name}</h3>
+                        <div class="organizer-text">🏢 Oleh: ${c.organizer}</div>
+                        
+                        <div class="badge-row">
+                            <span class="badge badge-type ${c.type === 'Offline' ? 'offline' : ''}">
+                                ${c.type === 'Offline' ? '🏢 Offline' : '🌐 Online'}
+                            </span>
+                            <span class="badge badge-deadline">
+                                ⏳ Batas: ${formatDate(c.deadline)}
+                            </span>
+                        </div>
+
+                        <div class="comp-detail-section">
+                            <strong>📌 Kriteria Penilaian:</strong>
+                            <p>${c.criteria}</p>
+                        </div>
+
+                        <div class="comp-detail-section" style="border-left: 2px solid #10b981;">
+                            <strong style="color: #34d399;">🚀 Cara & Alur Pengumpulan:</strong>
+                            <p>${c.method}</p>
+                        </div>
+                    </div>
+                `;
+                compGrid.appendChild(card);
+            });
+        }
+
+        function saveCompetition(e) {
+            e.preventDefault();
+            const newComp = {
+                id: Date.now(),
+                name: document.getElementById('cName').value,
+                organizer: document.getElementById('cOrganizer').value,
+                type: document.getElementById('cType').value,
+                deadline: document.getElementById('cDeadline').value,
+                criteria: document.getElementById('cCriteria').value,
+                method: document.getElementById('cMethod').value
+            };
+
+            competitions.unshift(newComp); // Tambah ke baris paling atas
+            localStorage.setItem('club_competitions', JSON.stringify(competitions));
+            renderCompetitions();
+            document.getElementById('compForm').reset();
+        }
+
+        function deleteCompetition(id) {
+            if(confirm("Apakah Anda yakin ingin menghapus info lomba ini?")) {
+                competitions = competitions.filter(c => c.id !== id);
+                localStorage.setItem('club_competitions', JSON.stringify(competitions));
+                renderCompetitions();
+            }
+        }
+
+        function formatDate(dateString) {
+            if(!dateString) return '-';
+            const options = { year: 'numeric', month: 'long', day: 'numeric' };
+            return new Date(dateString).toLocaleDateString('id-ID', options);
+        }
+
+        // Eksekusi render pertama kali saat dibuka
+        renderCompetitions();
+    </script>
+</body>
+</html>
