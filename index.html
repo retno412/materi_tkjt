@@ -112,14 +112,89 @@
             font-weight: 500;
             line-height: 1.3;
         }
+
+        /* CSS KHUSUS TECH CODING CLUB SECTION (BARU) */
+        .coding-club-section {
+            background: rgba(10, 10, 12, 0.85);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            padding: 2.5rem 1.5rem;
+            margin: 3rem auto 2rem auto;
+            max-width: 1200px;
+            width: 100%;
+            text-align: center;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+        }
+        .coding-club-title {
+            color: #ffffff;
+            font-size: 1.5rem;
+            font-weight: 800;
+            letter-spacing: 2px;
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+        }
+        .coding-club-subtitle {
+            color: #94a3b8;
+            font-size: 0.9rem;
+            margin-bottom: 2rem;
+        }
+        .coding-club-row {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+            gap: 1rem;
+            flex-wrap: wrap; /* Mencegah pecah layout di perangkat mobile */
+        }
+        .btn-club {
+            flex: 1;
+            min-width: 160px;
+            max-width: 220px;
+            background: rgba(30, 41, 59, 0.5);
+            border: 1px solid rgba(99, 102, 241, 0.3);
+            border-radius: 12px;
+            padding: 1.2rem 1rem;
+            color: #ffffff;
+            text-decoration: none;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.4rem;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .btn-club:hover {
+            transform: translateY(-4px);
+            background: #6366f1;
+            border-color: #818cf8;
+            box-shadow: 0 10px 20px rgba(99, 102, 241, 0.3);
+        }
+        .btn-club .club-icon {
+            font-size: 1.4rem;
+        }
+        .btn-club .club-text {
+            font-weight: 700;
+            font-size: 1rem;
+            letter-spacing: 0.5px;
+        }
+        .btn-club .club-desc {
+            font-size: 0.75rem;
+            opacity: 0.7;
+        }
+        .btn-club:hover .club-desc {
+            opacity: 0.9;
+        }
     </style>
 </head>
 <body>
 
+    <!-- LANDING PAGE (HALAMAN UTAMA PROFIL GURU) -->
     <div id="landing-page" class="landing-hero">
         <h1>Retno Ariyanti Nurningtias, S.Pd., Gr.</h1>
         <p>Platform Pembelajaran Inklusif Kurikulum TI — SMK AMI Deltamas</p>
         
+        <!-- ZONA GERBANG FONDASI & K3 LAB (HALAMAN TERPISAH) -->
         <div class="k3-container">
             <h3 class="k3-title">🛡️ Gerbang Pembiasaan Karakter & K3 Lab (Pra-Syarat Belajar)</h3>
             <div class="k3-grid">
@@ -247,40 +322,86 @@
 
         <hr class="section-separator">
 
-        <div class="k3-container" style="margin-bottom: 4rem;">
+        <div class="k3-container" style="margin-bottom: 2rem;">
             <h3 class="k3-title">🌐 Google Classroom Hub</h3>
             <div class="gclassroom-grid">
                 
                 <a href="#" target="_blank" class="btn-gclassroom">
                     <span class="gc-main">PARTICIPATE</span>
-                    <span class="gc-sub">1 Angkatan 1/8<br>TA 2025</span>
+                    <span class="gc-sub">Kelas 1 Angkatan 1/8<br>TA 2025</span>
                 </a>
                 
                 <a href="#" target="_blank" class="btn-gclassroom">
                     <span class="gc-main">INTERACTIVE</span>
-                    <span class="gc-sub">2 Angkatan 1/8<br>TA 2025</span>
+                    <span class="gc-sub">Kelas 2 Angkatan 1/8<br>TA 2025</span>
                 </a>
                 
                 <a href="#" target="_blank" class="btn-gclassroom">
                     <span class="gc-main">CONTRIBUTION</span>
-                    <span class="gc-sub">2 1 Angkatan 2/9<br>TA 2026</span>
+                    <span class="gc-sub">Kelas 1 Angkatan 2/9<br>TA 2026</span>
                 </a>
                 
                 <a href="#" target="_blank" class="btn-gclassroom">
                     <span class="gc-main">INVOLVEMENT</span>
-                    <span class="gc-sub">2 2 Angkatan 2/9<br>TA 2026</span>
+                    <span class="gc-sub">Kelas 2 Angkatan 2/9<br>TA 2026</span>
                 </a>
                 
                 <a href="#" target="_blank" class="btn-gclassroom">
                     <span class="gc-main">SYNERGY</span>
-                    <span class="gc-sub">2 3 Angkatan 2/9<br>TA 2026</span>
+                    <span class="gc-sub">Kelas 3 Angkatan 2/9<br>TA 2026</span>
                 </a>
                 
             </div>
         </div>
 
+        <hr class="section-separator">
+
+        <!-- SECTION BARU: TECH CODING CLUB -->
+        <div class="coding-club-section">
+            <h2 class="coding-club-title">💻 Tech Coding Club</h2>
+            <p class="coding-club-subtitle">Pusat Inkubasi Kreativitas, Kompetensi Teknis & Kolaborasi Karya Digital</p>
+            
+            <div class="coding-club-row">
+                <!-- Button 1: Project -->
+                <a href="club-project.html" class="btn-club">
+                    <span class="club-icon">📁</span>
+                    <span class="club-text">Project</span>
+                    <span class="club-desc">Galeri Dokumen & Source Code</span>
+                </a>
+
+                <!-- Button 2: Competition -->
+                <a href="club-competition.html" class="btn-club">
+                    <span class="club-icon">🏆</span>
+                    <span class="club-text">Competition</span>
+                    <span class="club-desc">Info Lomba & Mentoring</span>
+                </a>
+
+                <!-- Button 3: Course -->
+                <a href="club-course.html" class="btn-club">
+                    <span class="club-icon">📖</span>
+                    <span class="club-text">Course</span>
+                    <span class="club-desc">Modul Praktik Mandiri</span>
+                </a>
+
+                <!-- Button 4: Publication -->
+                <a href="club-publication.html" class="btn-club">
+                    <span class="club-icon">📰</span>
+                    <span class="club-text">Publication</span>
+                    <span class="club-desc">Artikel & Jurnal Siswa</span>
+                </a>
+
+                <!-- Button 5: Teams -->
+                <a href="club-teams.html" class="btn-club">
+                    <span class="club-icon">👥</span>
+                    <span class="club-text">Teams</span>
+                    <span class="club-desc">Daftar Kelompok Kerja</span>
+                </a>
+            </div>
+        </div>
+
     </div>
 
+    <!-- SEMESTER PAGE (KONTEN PLAYER CADANGAN) -->
     <div id="semester-page" class="hidden">
         <header class="app-header">
             <div class="header-left">
