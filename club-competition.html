@@ -212,6 +212,40 @@
             font-size: 0.95rem;
         }
 
+        /* Styling Footer Rahasia di Paling Bawah */
+        .secret-footer-bar {
+            margin-top: 4rem;
+            padding: 1.5rem 0;
+            border-top: 1px dashed rgba(255, 255, 255, 0.05);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .btn-secret-glow {
+            display: inline-block;
+            padding: 4px 12px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            color: transparent; /* Disamarkan (Teks tersembunyi) */
+            background-color: transparent; /* Disamarkan (Latar tersembunyi) */
+            border: 1px solid transparent;
+            border-radius: 20px;
+            text-decoration: none;
+            cursor: pointer;
+            user-select: none;
+            transition: all 0.4s ease-in-out;
+        }
+
+        /* Efek Menyala & Muncul Saat Kursor Mendekat / Hover */
+        .btn-secret-glow:hover {
+            color: #38bdf8;
+            background-color: rgba(56, 189, 248, 0.1);
+            border-color: rgba(56, 189, 248, 0.5);
+            box-shadow: 0 0 12px rgba(56, 189, 248, 0.6), 0 0 20px rgba(99, 102, 241, 0.4);
+            transform: scale(1.05);
+        }
+
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(8px); }
             to { opacity: 1; transform: translateY(0); }
@@ -270,6 +304,11 @@
         <div id="compGrid" class="comp-grid">
             <!-- Grid item disematkan secara dinamis oleh JS -->
         </div>
+
+        <!-- BARIS TAMBAHAN DI PALING BAWAH (TOMBOL RAHASIA) -->
+        <footer class="secret-footer-bar">
+            <a href="club-eligibility.html" class="btn-secret-glow" title="Check Eligibility">✦ Eligibility Portal</a>
+        </footer>
     </div>
 
     <script>
