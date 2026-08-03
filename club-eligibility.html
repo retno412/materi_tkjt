@@ -1,0 +1,785 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tech Coding Club — Test Kelayakan & Pemetaan AI</title>
+    <style>
+        :root {
+            --bg-main: #0f172a;
+            --bg-card: rgba(30, 41, 59, 0.85);
+            --accent-blue: #38bdf8;
+            --accent-indigo: #6366f1;
+            --accent-green: #10b981;
+            --accent-pink: #ec4899;
+            --accent-purple: #a855f7;
+            --accent-amber: #f59e0b;
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+            --border-color: rgba(255, 255, 255, 0.1);
+        }
+
+        body {
+            background-color: var(--bg-main);
+            color: var(--text-primary);
+            font-family: system-ui, -apple-system, sans-serif;
+            margin: 0;
+            padding: 0;
+            line-height: 1.5;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .header h1 {
+            margin: 0;
+            font-size: 1.8rem;
+            background: linear-gradient(135deg, #ffffff 0%, var(--accent-blue) 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .btn-back {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-color);
+            color: #fff;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-size: 0.85rem;
+        }
+
+        .card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+            margin-bottom: 2rem;
+        }
+
+        /* Login Section */
+        .login-box { text-align: center; padding: 3rem 1rem; }
+        .btn-google {
+            background: #ffffff;
+            color: #1f2937;
+            border: none;
+            padding: 0.85rem 1.75rem;
+            border-radius: 30px;
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+            box-shadow: 0 4px 15px rgba(255,255,255,0.2);
+            transition: all 0.2s;
+        }
+        .btn-google:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255,255,255,0.3);
+        }
+
+        /* Forms */
+        .question-group {
+            margin-bottom: 2rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+        .question-title {
+            font-size: 1.05rem;
+            font-weight: 600;
+            color: var(--accent-blue);
+            margin-bottom: 0.75rem;
+        }
+        .options-list label {
+            display: block;
+            background: rgba(15, 23, 42, 0.6);
+            border: 1px solid var(--border-color);
+            padding: 0.75rem 1rem;
+            border-radius: 8px;
+            margin-bottom: 0.5rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .options-list label:hover {
+            border-color: var(--accent-indigo);
+            background: rgba(99, 102, 241, 0.1);
+        }
+        .options-list input { margin-right: 0.75rem; }
+
+        textarea {
+            width: 100%;
+            height: 100px;
+            background: rgba(15, 23, 42, 0.8);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            color: #fff;
+            padding: 0.75rem;
+            font-family: inherit;
+            box-sizing: border-box;
+            outline: none;
+        }
+
+        .code-editor {
+            width: 100%;
+            height: 100px;
+            background: #090d16;
+            border: 1px solid var(--accent-indigo);
+            border-radius: 8px;
+            color: #38bdf8;
+            font-family: monospace;
+            padding: 0.75rem;
+            box-sizing: border-box;
+            font-size: 0.9rem;
+            resize: vertical;
+        }
+
+        .btn-action {
+            background: linear-gradient(135deg, var(--accent-indigo) 0%, #4f46e5 100%);
+            color: #fff;
+            border: none;
+            padding: 0.85rem 2rem;
+            border-radius: 8px;
+            font-weight: 700;
+            cursor: pointer;
+            font-size: 1rem;
+            width: 100%;
+            transition: all 0.2s;
+        }
+        .btn-action:hover {
+            filter: brightness(1.1);
+            transform: translateY(-2px);
+        }
+
+        /* Results & AI Box */
+        .result-box { text-align: center; }
+        .percentage-badge {
+            font-size: 3.5rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, var(--accent-blue) 0%, var(--accent-green) 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin: 0.5rem 0 1rem 0;
+        }
+        .attempt-tag {
+            display: inline-block;
+            background: rgba(236, 72, 153, 0.15);
+            color: var(--accent-pink);
+            border: 1px solid rgba(236, 72, 153, 0.3);
+            padding: 0.35rem 0.85rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 700;
+        }
+
+        .role-highlight-box {
+            background: rgba(15, 23, 42, 0.9);
+            border: 2px solid var(--accent-purple);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            text-align: left;
+        }
+        .role-title {
+            font-size: 1.35rem;
+            font-weight: 800;
+            color: var(--accent-purple);
+            margin-bottom: 0.5rem;
+        }
+
+        /* AI NLP Analysis Box */
+        .ai-analysis-box {
+            background: rgba(99, 102, 241, 0.1);
+            border: 1px dashed var(--accent-indigo);
+            border-radius: 10px;
+            padding: 1.25rem;
+            margin: 1.5rem 0;
+            text-align: left;
+        }
+        .ai-badge {
+            display: inline-block;
+            background: var(--accent-indigo);
+            color: #fff;
+            font-size: 0.75rem;
+            font-weight: 800;
+            padding: 0.2rem 0.6rem;
+            border-radius: 4px;
+            text-transform: uppercase;
+            margin-bottom: 0.5rem;
+        }
+        .keyword-tag {
+            display: inline-block;
+            background: rgba(56, 189, 248, 0.2);
+            color: var(--accent-blue);
+            border: 1px solid rgba(56, 189, 248, 0.4);
+            padding: 0.2rem 0.5rem;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            margin: 0.2rem;
+            font-weight: 600;
+        }
+
+        /* Progress Bars */
+        .skill-bar-container {
+            margin-top: 1.5rem;
+            text-align: left;
+            background: rgba(15, 23, 42, 0.6);
+            padding: 1.25rem;
+            border-radius: 10px;
+            border: 1px solid var(--border-color);
+        }
+        .skill-item { margin-bottom: 1rem; }
+        .skill-label {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.88rem;
+            font-weight: 600;
+            margin-bottom: 0.35rem;
+        }
+        .progress-bg {
+            width: 100%;
+            height: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 5px;
+            overflow: hidden;
+        }
+        .progress-fill {
+            height: 100%;
+            border-radius: 5px;
+            transition: width 0.8s ease-in-out;
+        }
+
+        .hidden { display: none; }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header class="header">
+            <div>
+                <h1>⚡ Tech Coding Club — AI Assessment & Mapping</h1>
+                <p style="margin:0; font-size:0.85rem; color: var(--text-secondary);">Uji Kelayakan, Analisis AI Esai, & Pemetaan Posisi Lomba</p>
+            </div>
+            <a href="index.html" class="btn-back">⬅ Kembali</a>
+        </header>
+
+        <!-- TAMPILAN 1: LOGIN GMAIL -->
+        <div id="loginSection" class="card login-box">
+            <h2 style="margin-top:0;">Autentikasi Akun Siswa</h2>
+            <p style="color: var(--text-secondary); max-width:500px; margin: 0 auto 2rem auto; font-size:0.9rem;">
+                Masuk menggunakan akun Google/Gmail sekolah Anda untuk mencatat skor kelayakan dan analisis AI keseriusan belajar.
+            </p>
+            <button class="btn-google" onclick="simulateGoogleLogin()">
+                <svg width="20" height="20" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/></svg>
+                Masuk Akun Google / Gmail
+            </button>
+        </div>
+
+        <!-- TAMPILAN 2: READY STATE -->
+        <div id="readyState" class="card hidden" style="text-align: center;">
+            <h2 id="welcomeText">Selamat Datang!</h2>
+            <p style="color: var(--text-secondary); font-size:0.9rem;">
+                Sistem AI akan memindai <strong>Kesesuaian Skill Teknis</strong> serta <strong>Tingkat Kemandirian & Keseriusan</strong> kamu melalui esai dan tes logika.
+            </p>
+            <div id="statsBox" style="margin: 1.5rem 0;"></div>
+            <button class="btn-action" onclick="startTest()">🚀 MULAI TES KELAYAKAN & PEMETAAN AI</button>
+        </div>
+
+        <!-- TAMPILAN 3: FORM TEST -->
+        <div id="testSection" class="card hidden">
+            <h2 style="border-bottom: 1px solid var(--border-color); padding-bottom: 1rem; margin-top:0;">📋 Lembar Tes & Analisis Talenta AI</h2>
+
+            <form id="quizForm" onsubmit="calculateScore(event)">
+                
+                <!-- BAGIAN A: PEMETAAN MINAT & SPESIALISASI -->
+                <h3>Bagian A: Pemetaan Minat & Mindset Tim Lomba</h3>
+
+                <div class="question-group">
+                    <div class="question-title">1. Saat membangun produk software, bagian mana yang paling membuatmu bersemangat?</div>
+                    <div class="options-list">
+                        <label><input type="radio" name="r1" value="web" required> Merancang layout web responsif, CSS styling, dan interaksi UI/UX frontend</label>
+                        <label><input type="radio" name="r1" value="app"> Mengembangkan aplikasi smartphone (Mobile Apps) yang fleksibel di layar HP</label>
+                        <label><input type="radio" name="r1" value="cloud"> Mengatur database, server cloud, API endpoint, serta keamanan jaringan</label>
+                        <label><input type="radio" name="r1" value="game"> Membuat logika pergerakan karakter, animasi sprite, dan mekanik Game 2D/3D</label>
+                        <label><input type="radio" name="r1" value="pm"> Menyusun alur kerja project, proposal lomba, naskah presentasi, dan laporan teknis</label>
+                    </div>
+                </div>
+
+                <div class="question-group">
+                    <div class="question-title">2. Ketika tim kamu sedang krisis H-1 deadline lomba, tindakan apa yang secara alami akan kamu ambil?</div>
+                    <div class="options-list">
+                        <label><input type="radio" name="r2" value="pm" required> Merapikan slide presentasi, memeriksa dokumen proposal, dan memastikan syarat administrasi lengkap</label>
+                        <label><input type="radio" name="r2" value="web"> Memastikan tampilan website utuh, tidak ada tombol rusak, dan nyaman dilihat juri</label>
+                        <label><input type="radio" name="r2" value="app"> Memastikan file APK/Build HP lancar dan tidak crash saat dites juri</label>
+                        <label><input type="radio" name="r2" value="cloud"> Memastikan server online, domain aktif, dan database tidak mati saat diakses bersamaan</label>
+                        <label><input type="radio" name="r2" value="game"> Menyempurnakan kontrol game, lag-free, dan efek suara agar pengalaman bermain menarik</label>
+                    </div>
+                </div>
+
+                <div class="question-group">
+                    <div class="question-title">3. Tools atau software mana yang paling sering atau ingin sekali kamu kuasai secara mendalam?</div>
+                    <div class="options-list">
+                        <label><input type="radio" name="r3" value="web" required> VS Code, HTML5, Tailwind CSS, JavaScript/React/Vue</label>
+                        <label><input type="radio" name="r3" value="app"> Flutter, React Native, Android Studio, Kotlin/Swift</label>
+                        <label><input type="radio" name="r3" value="cloud"> Linux Terminal, Docker, Firebase/AWS, MySQL/PostgreSQL, Git</label>
+                        <label><input type="radio" name="r3" value="game"> Unity Engine, Godot, Construct, Blender 3D</label>
+                        <label><input type="radio" name="r3" value="pm"> Figma, Canva, Microsoft Word/Google Docs (Proposal), Trello/Notion</label>
+                    </div>
+                </div>
+
+                <!-- BAGIAN B: UJI LOGIKA & PENGETAHUAN TEKNIS -->
+                <h3>Bagian B: Pengetahuan Dasar Coding & Logika</h3>
+                
+                <div class="question-group">
+                    <div class="question-title">4. Tag HTML manakah yang digunakan untuk membuat judul utama pada sebuah halaman web?</div>
+                    <div class="options-list">
+                        <label><input type="radio" name="q1" value="a" required> &lt;p&gt;</label>
+                        <label><input type="radio" name="q1" value="b"> &lt;h1&gt;</label>
+                        <label><input type="radio" name="q1" value="c"> &lt;head&gt;</label>
+                        <label><input type="radio" name="q1" value="d"> &lt;title&gt;</label>
+                    </div>
+                </div>
+
+                <div class="question-group">
+                    <div class="question-title">5. Apabila kamu membuat variabel di JavaScript dengan sintaks `let x = 5 + "5";`, berapakah nilai dari `x`?</div>
+                    <div class="options-list">
+                        <label><input type="radio" name="q2" value="a" required> 10</label>
+                        <label><input type="radio" name="q2" value="b"> "55"</label>
+                        <label><input type="radio" name="q2" value="c"> Error / SyntaxError</label>
+                        <label><input type="radio" name="q2" value="d"> Undefined</label>
+                    </div>
+                </div>
+
+                <div class="question-group">
+                    <div class="question-title">6. Apa fungsi dari perintah `git push` pada version control sistem?</div>
+                    <div class="options-list">
+                        <label><input type="radio" name="q3" value="a" required> Mengunduh kode dari server remote ke lokal</label>
+                        <label><input type="radio" name="q3" value="b"> Mengunggah hasil perubahan komit lokal ke repository remote (misal GitHub)</label>
+                        <label><input type="radio" name="q3" value="c"> Menghapus file repositori</label>
+                    </div>
+                </div>
+
+                <!-- BAGIAN C: ESAI DENGAN ANALISIS AI -->
+                <h3>Bagian C: Esai Motivasi & Komitmen (Dianalisis oleh AI)</h3>
+
+                <div class="question-group">
+                    <div class="question-title">7. Mengapa kamu tertarik bergabung dengan Tech Coding Club dan komitmen/teknologi apa yang ingin kamu pelajari secara mandiri saat persiapan lomba?</div>
+                    <p style="font-size: 0.8rem; color: var(--text-secondary); margin-top:-0.5rem;">
+                    </p>
+                    <textarea id="qEssay" placeholder="Tuliskan alasan, teknologi yang ingin dikuasai, dan komitmen belajarmu secara detail di sini..." required></textarea>
+                </div>
+
+                <!-- BAGIAN D: PRAKTIK CODING -->
+                <h3>Bagian D: Praktik Coding Singkat</h3>
+
+                <div class="question-group">
+                    <div class="question-title">8. Praktik 1 (HTML): Buat tombol HTML yang memiliki id="btnPro" dan berisi teks "Daftar Lomba"!</div>
+                    <textarea id="codeHTML" class="code-editor" placeholder='Contoh: <button id="...">...</button>' required></textarea>
+                </div>
+
+                <div class="question-group">
+                    <div class="question-title">9. Praktik 2 (JavaScript Dasar): Tuliskan fungsi `hitung(a, b)` yang mengembalikan hasil penjumlahan `a + b`!</div>
+                    <textarea id="codeJS" class="code-editor" placeholder="function hitung(a, b) { return ...; }" required></textarea>
+                </div>
+
+                <button type="submit" class="btn-action">🤖 PROSES ANALISIS AI & KALKULASI HASIL</button>
+            </form>
+        </div>
+
+        <!-- TAMPILAN 4: HASIL EVALUASI & PEMETAAN AI -->
+        <div id="resultSection" class="card result-box hidden">
+            <h2 style="margin-top:0;">Hasil Evaluasi & Pemetaan Talenta AI</h2>
+            <div id="attemptTag" class="attempt-tag">Percobaan Ke-1</div>
+            <div id="percentText" class="percentage-badge">0%</div>
+            <p id="resultStatus" style="font-size:1.1rem; font-weight:600; margin-bottom:1.5rem;"></p>
+            
+            <!-- HASIL EKSTRAKSI KATA KUNCI & ANALISIS KEMANDIRIAN AI -->
+            <div id="aiAnalysisBox" class="ai-analysis-box">
+                <span class="ai-badge">🤖 AI Keyword & Mindset Scan</span>
+                <div id="aiCommitmentStatus" style="font-weight: 700; font-size: 1.05rem; color: var(--accent-green); margin-bottom: 0.5rem;">
+                    Status Kemandirian: Memeriksa...
+                </div>
+                <div style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 0.5rem;">
+                    <strong>Kata Kunci Skill & Komitmen Terdeteksi:</strong>
+                    <div id="keywordsList" style="margin-top: 0.3rem;">-</div>
+                </div>
+                <div id="aiFeedbackText" style="font-size: 0.85rem; color: #cbd5e1; font-style: italic;"></div>
+            </div>
+
+            <!-- BOX PEMETAAN POSISI UTAMA -->
+            <div id="roleHighlightBox" class="role-highlight-box">
+                <div style="font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px; color: var(--accent-amber); font-weight: 700;">🎯 Rekomendasi Peran Utama dalam Tim Lomba:</div>
+                <div id="primaryRoleTitle" class="role-title">Web Development Specialist</div>
+                <p id="primaryRoleDesc" style="color: #cbd5e1; font-size: 0.95rem; margin-bottom: 0;"></p>
+            </div>
+
+            <!-- VISUALISASI PROSENTASE KEAHLIAN -->
+            <div class="skill-bar-container">
+                <h3 style="margin-top:0; font-size: 1.1rem; border-bottom: 1px solid var(--border-color); padding-bottom: 0.5rem; color: var(--accent-blue);">
+                    📊 Distribusi Persentase Kecenderungan Peran Tim:
+                </h3>
+
+                <div class="skill-item">
+                    <div class="skill-label">
+                        <span>🌐 Web Developer (Frontend/Backend)</span>
+                        <span id="pctWeb">0%</span>
+                    </div>
+                    <div class="progress-bg">
+                        <div id="barWeb" class="progress-fill" style="width: 0%; background: var(--accent-blue);"></div>
+                    </div>
+                </div>
+
+                <div class="skill-item">
+                    <div class="skill-label">
+                        <span>📱 Mobile App Developer</span>
+                        <span id="pctApp">0%</span>
+                    </div>
+                    <div class="progress-bg">
+                        <div id="barApp" class="progress-fill" style="width: 0%; background: var(--accent-indigo);"></div>
+                    </div>
+                </div>
+
+                <div class="skill-item">
+                    <div class="skill-label">
+                        <span>☁️ Cloud, DevOps & Database Specialist</span>
+                        <span id="pctCloud">0%</span>
+                    </div>
+                    <div class="progress-bg">
+                        <div id="barCloud" class="progress-fill" style="width: 0%; background: var(--accent-green);"></div>
+                    </div>
+                </div>
+
+                <div class="skill-item">
+                    <div class="skill-label">
+                        <span>🎮 Game & Interactive Media Developer</span>
+                        <span id="pctGame">0%</span>
+                    </div>
+                    <div class="progress-bg">
+                        <div id="barGame" class="progress-fill" style="width: 0%; background: var(--accent-pink);"></div>
+                    </div>
+                </div>
+
+                <div class="skill-item">
+                    <div class="skill-label">
+                        <span>📊 Project Manager, UI/UX & Proposal Writer</span>
+                        <span id="pctPm">0%</span>
+                    </div>
+                    <div class="progress-bg">
+                        <div id="barPm" class="progress-fill" style="width: 0%; background: var(--accent-amber);"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- RINGKASAN TEKNIS -->
+            <div id="resultDetail" style="background: rgba(15, 23, 42, 0.6); padding: 1rem; border-radius: 8px; font-size: 0.85rem; color: var(--text-secondary); text-align: left; margin: 1.5rem 0;"></div>
+
+            <button id="retryBtn" class="btn-action" onclick="retryTest()" style="background: var(--accent-pink);">🔄 Ulangi Tes (Targetkan Kelayakan 100%)</button>
+            <a id="finishBtn" href="club-competition.html" class="btn-action hidden" style="display:inline-block; text-decoration:none; text-align:center; box-sizing:border-box;">🏆 Lanjut Ke Competition Center</a>
+        </div>
+
+    </div>
+
+    <script>
+        let userData = JSON.parse(localStorage.getItem('tcc_user_session')) || null;
+
+        function simulateGoogleLogin() {
+            const email = prompt("Simulasi Auth Google:\nMasukkan Alamat Email Gmail Siswa:", "siswa.tkjt@gmail.com");
+            if (email && email.includes("@")) {
+                userData = {
+                    email: email,
+                    name: email.split('@')[0].toUpperCase(),
+                    attempts: parseInt(localStorage.getItem('tcc_attempts_' + email)) || 0,
+                    bestScore: parseInt(localStorage.getItem('tcc_score_' + email)) || 0
+                };
+                localStorage.setItem('tcc_user_session', JSON.stringify(userData));
+                initSession();
+            } else {
+                alert("Email tidak valid!");
+            }
+        }
+
+        function initSession() {
+            if (userData) {
+                document.getElementById('loginSection').classList.add('hidden');
+                document.getElementById('readyState').classList.remove('hidden');
+                document.getElementById('welcomeText').innerText = `Selamat Datang, ${userData.name}!`;
+                
+                const savedRole = localStorage.getItem('tcc_role_' + userData.email) || 'Belum Dipetakan';
+                
+                document.getElementById('statsBox').innerHTML = `
+                    <p style="font-size:0.9rem; color: var(--text-secondary);">
+                        📧 Gmail: <strong>${userData.email}</strong><br>
+                        🔄 Percobaan dilakukan: <strong style="color:var(--accent-pink);">${userData.attempts} Kali</strong><br>
+                        🏆 Skor Kelayakan Tertinggi: <strong style="color:var(--accent-green);">${userData.bestScore}%</strong><br>
+                        🧩 Posisi Utama Tim: <strong style="color:var(--accent-amber);">${savedRole}</strong>
+                    </p>
+                `;
+            }
+        }
+
+        function startTest() {
+            document.getElementById('readyState').classList.add('hidden');
+            document.getElementById('testSection').classList.remove('hidden');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function calculateScore(e) {
+            e.preventDefault();
+            
+            let totalScore = 0;
+            let details = [];
+
+            // 1. Cek Pengetahuan Dasar (Bobot 45%)
+            const q1 = document.querySelector('input[name="q1"]:checked')?.value;
+            const q2 = document.querySelector('input[name="q2"]:checked')?.value;
+            const q3 = document.querySelector('input[name="q3"]:checked')?.value;
+
+            if (q1 === 'b') { totalScore += 15; details.push("✅ Soal 4 (HTML): Benar (+15%)"); }
+            else { details.push("❌ Soal 4 (HTML): Salah"); }
+
+            if (q2 === 'b') { totalScore += 15; details.push("✅ Soal 5 (JS Type): Benar (+15%)"); }
+            else { details.push("❌ Soal 5 (JS Type): Salah"); }
+
+            if (q3 === 'b') { totalScore += 15; details.push("✅ Soal 6 (Git): Benar (+15%)"); }
+            else { details.push("❌ Soal 6 (Git): Salah"); }
+
+            // 2. Cek Esai (Bobot Dasar 15%)
+            const essayText = document.getElementById('qEssay').value.trim();
+            if (essayText.length >= 15) {
+                totalScore += 15;
+                details.push("✅ Esai Motivasi: Memenuhi Syarat Minimal (+15%)");
+            } else {
+                details.push("❌ Esai Motivasi: Terlalu Singkat");
+            }
+
+            // 3. Cek Praktik HTML (Bobot 20%)
+            const htmlVal = document.getElementById('codeHTML').value.toLowerCase();
+            if (htmlVal.includes('<button') && htmlVal.includes('id="btnpro"') && htmlVal.includes('daftar lomba') && htmlVal.includes('</button>')) {
+                totalScore += 20;
+                details.push("✅ Praktik HTML: Struktur Sesuai (+20%)");
+            } else {
+                details.push("❌ Praktik HTML: Sintaks belum pas");
+            }
+
+            // 4. Cek Praktik JS (Bobot 20%)
+            const jsVal = document.getElementById('codeJS').value.toLowerCase();
+            if (jsVal.includes('function') && jsVal.includes('hitung') && jsVal.includes('return') && jsVal.includes('+')) {
+                totalScore += 20;
+                details.push("✅ Praktik JS: Logika Fungsi Sesuai (+20%)");
+            } else {
+                details.push("❌ Praktik JS: Sintaks fungsi belum pas");
+            }
+
+            // 5. EKSTRAKSI KATA KUNCI ESAI & ANALISIS KEMANDIRIAN (NLP AI SIMULATION)
+            const aiAnalysis = analyzeEssayNLP(essayText);
+
+            // 6. KALKULASI PEMETAAN PERAN & BOBOT KATA KUNCI
+            const r1 = document.querySelector('input[name="r1"]:checked')?.value;
+            const r2 = document.querySelector('input[name="r2"]:checked')?.value;
+            const r3 = document.querySelector('input[name="r3"]:checked')?.value;
+
+            const roleScores = { web: 10, app: 10, cloud: 10, game: 10, pm: 10 };
+            
+            if (r1) roleScores[r1] += 30;
+            if (r2) roleScores[r2] += 25;
+            if (r3) roleScores[r3] += 20;
+
+            // Tambahkan bonus poin dari ekstraksi kata kunci Esai
+            for (let key in aiAnalysis.skillBonus) {
+                roleScores[key] += aiAnalysis.skillBonus[key];
+            }
+
+            // Cari Role Tertinggi
+            let highestRoleKey = 'web';
+            let maxScore = 0;
+            for (let key in roleScores) {
+                if (roleScores[key] > maxScore) {
+                    maxScore = roleScores[key];
+                    highestRoleKey = key;
+                }
+            }
+
+            const roleMeta = {
+                web: {
+                    title: "🌐 Web Development Specialist",
+                    desc: "Sangat menonjol di bidang pengembangan web (Frontend UI & Backend API). Cocok memegang posisi utama di lomba Web Design, Software Development, & Hackathon Web."
+                },
+                app: {
+                    title: "📱 Mobile App Developer",
+                    desc: "Memiliki kecenderungan kuat pada ekosistem Mobile Apps. Sangat pas menjadi eksekutor utama di lomba App Innovation."
+                },
+                cloud: {
+                    title: "☁️ Cloud, DevOps & Infrastructure Specialist",
+                    desc: "Menyukai struktur backend, server, dan database. Sangat vital untuk menjaga keandalan sistem pada lomba Cyber Security, Cloud Computing, & Backend API."
+                },
+                game: {
+                    title: "🎮 Game & Interactive Media Developer",
+                    desc: "Unggul dalam logika mekanik visual dan interaksi game. Berpotensi tinggi memimpin lomba Game Development & Media Interaktif."
+                },
+                pm: {
+                    title: "📊 Project Manager, UI/UX & Technical Reporter",
+                    desc: "Memiliki keunggulan dalam analisis, struktur proposal, UI/UX wireframe, & alur presentasi. Peran kunci Kemenangan Utama tim di depan juri!"
+                }
+            };
+
+            // Simpan Data Ke Storage
+            userData.attempts += 1;
+            if (totalScore > userData.bestScore) {
+                userData.bestScore = totalScore;
+            }
+
+            localStorage.setItem('tcc_attempts_' + userData.email, userData.attempts);
+            localStorage.setItem('tcc_score_' + userData.email, userData.bestScore);
+            localStorage.setItem('tcc_role_' + userData.email, roleMeta[highestRoleKey].title);
+            localStorage.setItem('tcc_user_session', JSON.stringify(userData));
+
+            // Render Hasil
+            showResults(totalScore, details, roleScores, roleMeta[highestRoleKey], aiAnalysis);
+        }
+
+        // FUNGSI ANALISIS NLP AI UNTUK ESAI
+        function analyzeEssayNLP(text) {
+            const lowerText = text.toLowerCase();
+            const foundKeywords = [];
+            const skillBonus = { web: 0, app: 0, cloud: 0, game: 0, pm: 0 };
+
+            // Kamus Kata Kunci Skill
+            const dictSkill = {
+                web: ['html', 'css', 'javascript', 'js', 'react', 'vue', 'laravel', 'bootstrap', 'tailwind', 'frontend', 'backend', 'web', 'website'],
+                app: ['flutter', 'react native', 'android', 'kotlin', 'swift', 'mobile', 'aplikasi hp', 'apk'],
+                cloud: ['linux', 'docker', 'server', 'database', 'mysql', 'sql', 'aws', 'firebase', 'cloud', 'api', 'backend', 'git', 'github'],
+                game: ['unity', 'godot', 'construct', 'blender', 'game', '2d', '3d', 'animasi', 'asset'],
+                pm: ['figma', 'ui', 'ux', 'proposal', 'laporan', 'presentasi', 'trello', 'notion', 'desain', 'word', 'canva', 'manajemen']
+            };
+
+            // Kamus Kata Kunci Komitmen / Motivasi Mandiri
+            const proactiveKeywords = [
+                'otodidak', 'latihan sendiri', 'belajar mandiri', 'konsisten', 'komitmen', 
+                'pantang menyerah', 'setiap hari', 'luang', 'juara', 'lomba', 'semangat', 'bergadang', 'target'
+            ];
+
+            // Scan Skill
+            for (let category in dictSkill) {
+                dictSkill[category].forEach(kw => {
+                    if (lowerText.includes(kw) && !foundKeywords.includes(kw)) {
+                        foundKeywords.push(kw);
+                        skillBonus[category] += 15; // Tambah bonus 15 poin ke kategori terkait
+                    }
+                });
+            }
+
+            // Scan Proaktif & Kemandirian
+            let proactiveScore = 0;
+            proactiveKeywords.forEach(kw => {
+                if (lowerText.includes(kw) && !foundKeywords.includes(kw)) {
+                    foundKeywords.push(kw);
+                    proactiveScore += 1;
+                }
+            });
+
+            // Penentuan Status Keseriusan oleh AI
+            let commitmentStatus = "";
+            let feedback = "";
+
+            if (proactiveScore >= 2 || (foundKeywords.length >= 3 && text.length > 80)) {
+                commitmentStatus = "🔥 SISWA SANGAT MANDIRI & PROAKTIF (Sifat 'Self-Driven' Tinggi)";
+                feedback = "AI Detection: Siswa menyebutkan indikator belajar mandiri & spesifikasi teknologi secara eksplisit. Memiliki motivasi internal kuat tanpa perlu terus didorong oleh pembimbing.";
+            } else if (foundKeywords.length >= 1 || text.length >= 40) {
+                commitmentStatus = "⚡ SISWA BERPOTENSI (Perlu Sedikit Pengarahan Awal)";
+                feedback = "AI Detection: Siswa memiliki minat dasar dan mulai mengenali istilah teknis, namun memerlukan peta jalan (roadmap) latihan yang jelas dari klub.";
+            } else {
+                commitmentStatus = "⚠️ MOTIVASI MASIH UMUM (Memerlukan Mentoring Intensis)";
+                feedback = "AI Detection: Jawaban esai masih sangat singkat/umum. Perlu diberikan tantangan awal untuk memicu semangat belajarnya.";
+            }
+
+            return {
+                foundKeywords: foundKeywords,
+                commitmentStatus: commitmentStatus,
+                feedback: feedback,
+                skillBonus: skillBonus
+            };
+        }
+
+        function showResults(score, details, roleScores, mainRole, aiAnalysis) {
+            document.getElementById('testSection').classList.add('hidden');
+            document.getElementById('resultSection').classList.remove('hidden');
+
+            document.getElementById('attemptTag').innerText = `Percobaan Ke-${userData.attempts}`;
+            document.getElementById('percentText').innerText = `${score}%`;
+            
+            const statusEl = document.getElementById('resultStatus');
+            const retryBtn = document.getElementById('retryBtn');
+            const finishBtn = document.getElementById('finishBtn');
+
+            if (score === 100) {
+                statusEl.innerText = "🎉 SELAMAT! Anda 100% Layak Diterima Masuk Tech Coding Club!";
+                statusEl.style.color = "var(--accent-green)";
+                retryBtn.classList.add('hidden');
+                finishBtn.classList.remove('hidden');
+            } else {
+                statusEl.innerText = "⚠️ Belum Kelayakan 100%. Silakan Pelajari Kesalahan & Coba Lagi!";
+                statusEl.style.color = "var(--accent-pink)";
+                retryBtn.classList.remove('hidden');
+                finishBtn.classList.add('hidden');
+            }
+
+            // Render Output AI NLP
+            document.getElementById('aiCommitmentStatus').innerText = aiAnalysis.commitmentStatus;
+            document.getElementById('aiFeedbackText').innerText = aiAnalysis.feedback;
+            
+            if (aiAnalysis.foundKeywords.length > 0) {
+                document.getElementById('keywordsList').innerHTML = aiAnalysis.foundKeywords.map(kw => `<span class="keyword-tag">#${kw}</span>`).join(' ');
+            } else {
+                document.getElementById('keywordsList').innerText = "Tidak ada kata kunci teknis/spesifik yang terdeteksi.";
+            }
+
+            // Tampilkan Peran Utama
+            document.getElementById('primaryRoleTitle').innerText = mainRole.title;
+            document.getElementById('primaryRoleDesc').innerText = mainRole.desc;
+
+            // Render Progress Bar
+            document.getElementById('pctWeb').innerText = `${roleScores.web}%`;
+            document.getElementById('barWeb').style.width = `${Math.min(roleScores.web, 100)}%`;
+
+            document.getElementById('pctApp').innerText = `${roleScores.app}%`;
+            document.getElementById('barApp').style.width = `${Math.min(roleScores.app, 100)}%`;
+
+            document.getElementById('pctCloud').innerText = `${roleScores.cloud}%`;
+            document.getElementById('barCloud').style.width = `${Math.min(roleScores.cloud, 100)}%`;
+
+            document.getElementById('pctGame').innerText = `${roleScores.game}%`;
+            document.getElementById('barGame').style.width = `${Math.min(roleScores.game, 100)}%`;
+
+            document.getElementById('pctPm').innerText = `${roleScores.pm}%`;
+            document.getElementById('barPm').style.width = `${Math.min(roleScores.pm, 100)}%`;
+
+            document.getElementById('resultDetail').innerHTML = "<strong>Ringkasan Pengerjaan Teknis:</strong><br>" + details.join('<br>');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function retryTest() {
+            document.getElementById('quizForm').reset();
+            document.getElementById('resultSection').classList.add('hidden');
+            document.getElementById('testSection').classList.remove('hidden');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        initSession();
+    </script>
+</body>
+</html>
