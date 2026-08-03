@@ -3,29 +3,57 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tech Coding Club - Course & Certification Showcase</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Tech Coding Club — Learning Roadmap & Certification Center</title>
     <style>
-        /* Gaya Khusus Halaman Sertifikasi & Kursus */
+        :root {
+            --bg-main: #0f172a;
+            --bg-card: rgba(30, 41, 59, 0.7);
+            --accent-cyan: #06b6d4;
+            --accent-blue: #38bdf8;
+            --accent-indigo: #6366f1;
+            --accent-purple: #a855f7;
+            --accent-pink: #ec4899;
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+            --border-color: rgba(255, 255, 255, 0.08);
+        }
+
         body {
-            background-color: #0f172a;
-            color: #f8fafc;
-            font-family: system-ui, -apple-system, sans-serif;
+            background-color: var(--bg-main);
+            color: var(--text-primary);
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
             margin: 0;
             padding: 0;
+            line-height: 1.5;
         }
+
         .club-container {
-            max-width: 1200px;
+            max-width: 1280px;
             margin: 0 auto;
-            padding: 2rem 1rem;
+            padding: 2rem 1.5rem;
         }
+
+        /* Header */
         .club-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border-bottom: 1px solid rgba(255,255,255,0.1);
+            border-bottom: 1px solid var(--border-color);
             padding-bottom: 1.5rem;
-            margin-bottom: 2rem;
+            margin-bottom: 2.5rem;
+        }
+        .club-title h1 {
+            margin: 0;
+            font-size: 2.1rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #ffffff 0%, var(--accent-blue) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .club-title p {
+            margin: 0.25rem 0 0 0;
+            color: var(--text-secondary);
+            font-size: 0.95rem;
         }
         .btn-back {
             background: linear-gradient(135deg, #4f46e5 0%, #3730a3 100%);
@@ -42,53 +70,110 @@
             transform: translateX(-3px);
             filter: brightness(1.1);
         }
-        .club-title h1 {
-            margin: 0;
-            font-size: 2rem;
-            background: linear-gradient(to right, #ffffff, #94a3b8);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+
+        /* Section Titles */
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            letter-spacing: 0.5px;
+            border-left: 4px solid var(--accent-cyan);
+            padding-left: 0.75rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
         }
 
-        /* Form Input Sertifikasi Baru */
+        /* Section 1: Roadmap Leveling */
+        .roadmap-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 3.5rem;
+        }
+        .level-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 1.5rem;
+            position: relative;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(10px);
+        }
+        .level-card.foundation { border-top: 4px solid var(--accent-cyan); }
+        .level-card.specialist { border-top: 4px solid var(--accent-purple); }
+        .level-card.champion { border-top: 4px solid var(--accent-pink); }
+
+        .level-badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            margin-bottom: 0.75rem;
+        }
+        .badge-found { background: rgba(6, 182, 212, 0.15); color: var(--accent-cyan); }
+        .badge-spec { background: rgba(168, 85, 247, 0.15); color: var(--accent-purple); }
+        .badge-champ { background: rgba(236, 72, 153, 0.15); color: var(--accent-pink); }
+
+        .level-card h3 { margin: 0 0 0.5rem 0; font-size: 1.25rem; color: #fff; }
+        .level-card p { font-size: 0.875rem; color: var(--text-secondary); margin-bottom: 1rem; }
+
+        .squad-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .squad-item {
+            background: rgba(15, 23, 42, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            padding: 0.75rem;
+            margin-bottom: 0.5rem;
+            font-size: 0.85rem;
+        }
+        .squad-item strong { color: var(--accent-blue); display: block; margin-bottom: 0.25rem; }
+
+        /* Section 2: Form Input */
         .course-form-card {
-            background: rgba(30, 41, 59, 0.7);
+            background: var(--bg-card);
             border: 1px solid rgba(99, 102, 241, 0.2);
             border-radius: 16px;
             padding: 1.5rem;
-            margin-bottom: 3rem;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+            margin-bottom: 3.5rem;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
         }
         .form-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
             gap: 1rem;
             margin-bottom: 1rem;
         }
         .form-group {
             display: flex;
             flex-direction: column;
-            gap: 0.5rem;
+            gap: 0.4rem;
         }
         .form-group label {
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             font-weight: 600;
             color: #cbd5e1;
         }
         .form-group input, .form-group select {
             background: rgba(15, 23, 42, 0.8);
-            border: 1px solid rgba(255,255,255,0.1);
+            border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 8px;
-            padding: 0.75rem;
+            padding: 0.7rem;
             color: #fff;
-            font-size: 0.9rem;
+            font-size: 0.875rem;
             outline: none;
         }
         .form-group input:focus, .form-group select:focus {
-            border-color: #6366f1;
+            border-color: var(--accent-indigo);
         }
         .btn-submit {
-            background: linear-gradient(135deg, #06b6d4 0%, #0891b2 100%);
+            background: linear-gradient(135deg, var(--accent-cyan) 0%, #0891b2 100%);
             color: white;
             border: none;
             border-radius: 8px;
@@ -96,14 +181,37 @@
             font-weight: 700;
             cursor: pointer;
             transition: all 0.2s;
-            height: 45px;
+            height: 42px;
+            margin-top: auto;
         }
         .btn-submit:hover {
             transform: translateY(-2px);
             box-shadow: 0 4px 12px rgba(6, 182, 212, 0.4);
         }
 
-        /* Grid Sertifikat */
+        /* Section 3: Filter & Grid Kredensial */
+        .filter-container {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+        }
+        .filter-btn {
+            background: rgba(30, 41, 59, 0.8);
+            border: 1px solid var(--border-color);
+            color: var(--text-secondary);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .filter-btn.active, .filter-btn:hover {
+            background: var(--accent-indigo);
+            color: #ffffff;
+            border-color: var(--accent-indigo);
+        }
+
         .course-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
@@ -111,62 +219,77 @@
         }
         .cert-card {
             background: linear-gradient(135deg, rgba(30, 41, 59, 0.6) 0%, rgba(15, 23, 42, 0.8) 100%);
-            border: 1px solid rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-color);
             border-radius: 14px;
             padding: 1.5rem;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
             position: relative;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
             animation: fadeIn 0.3s ease;
         }
+        .cert-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 0.75rem;
+        }
+        .cert-squad-tag {
+            font-size: 0.7rem;
+            font-weight: 800;
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            text-transform: uppercase;
+            background: rgba(99, 102, 241, 0.2);
+            color: var(--accent-blue);
+            border: 1px solid rgba(99, 102, 241, 0.3);
+        }
         .cert-badge-platform {
-            position: absolute;
-            top: 1.25rem;
-            right: 1.25rem;
-            background: rgba(255,255,255,0.1);
-            padding: 0.25rem 0.6rem;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 0.2rem 0.5rem;
             border-radius: 6px;
             font-size: 0.75rem;
             font-weight: 700;
             color: #cbd5e1;
-            border: 1px solid rgba(255,255,255,0.1);
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
         .cert-info h3 {
             margin: 0 0 0.25rem 0;
-            font-size: 1.2rem;
+            font-size: 1.15rem;
             color: #ffffff;
-            max-width: 75%;
             line-height: 1.3;
         }
         .student-name {
-            font-size: 0.9rem;
-            color: #38bdf8;
+            font-size: 0.875rem;
+            color: var(--accent-cyan);
             font-weight: 600;
-            margin-bottom: 1rem;
+            margin-bottom: 0.75rem;
         }
         .cert-meta {
             font-size: 0.8rem;
-            color: #94a3b8;
-            margin-bottom: 1.5rem;
+            color: var(--text-secondary);
+            margin-bottom: 1.25rem;
             line-height: 1.4;
+        }
+        .cert-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
         .btn-verify {
             background: rgba(56, 189, 248, 0.1);
             border: 1px solid rgba(56, 189, 248, 0.3);
-            color: #38bdf8;
-            padding: 0.6rem 1rem;
+            color: var(--accent-blue);
+            padding: 0.5rem 0.85rem;
             border-radius: 8px;
             text-decoration: none;
-            text-align: center;
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             font-weight: 600;
             transition: all 0.2s;
-            display: block;
         }
         .btn-verify:hover {
-            background: #38bdf8;
+            background: var(--accent-blue);
             color: #0f172a;
             box-shadow: 0 4px 12px rgba(56, 189, 248, 0.3);
         }
@@ -175,16 +298,14 @@
             border: none;
             color: #ef4444;
             cursor: pointer;
-            font-size: 0.95rem;
-            opacity: 0.4;
+            font-size: 0.85rem;
+            opacity: 0.5;
             transition: opacity 0.2s;
-            margin-top: 1rem;
-            align-self: flex-end;
         }
         .btn-delete-cert:hover { opacity: 1; }
 
         .empty-text {
-            color: #64748b;
+            color: var(--text-secondary);
             font-style: italic;
             grid-column: 1 / -1;
             text-align: center;
@@ -200,13 +321,85 @@
 <body>
 
     <div class="club-container">
+        <!-- Header Utama -->
         <header class="club-header">
             <div class="club-title">
-                <h1>📖 Tech Coding Club — Courses & Certifications</h1>
+                <h1>⚡ Tech Coding Club — Learning Roadmap & Showcase</h1>
+                <p>Ekosistem Pembelajaran Berjenjang & Pusat Kredensial Talent SMK AMI Deltamas</p>
             </div>
             <a href="index.html" class="btn-back">⬅ Menu Utama</a>
         </header>
 
+        <!-- BAGIAN 1: PETA PERJALANAN BELAJAR (LEARNING ROADMAP) -->
+        <h2 class="section-title">🗺️ Peta Perjalanan Belajar (Specialist Squad Roadmap)</h2>
+        <div class="roadmap-grid">
+            
+            <!-- LEVEL 1: FOUNDATION -->
+            <div class="level-card foundation">
+                <span class="level-badge badge-found">Level 1: All Members</span>
+                <h3>🌱 Foundation & Problem Solving</h3>
+                <p>Wajib diikuti seluruh siswa baru untuk membangun logika berpikir komputasional dan pemahaman dasar koding.</p>
+                <ul class="squad-list">
+                    <li class="squad-item">
+                        <strong>Materi Utama:</strong>
+                        Computational Thinking, Algoritma Dasar, Git & GitHub Version Control, HTML5/CSS3 Fundamentals.
+                    </li>
+                    <li class="squad-item">
+                        <strong>Target Platform Kredensial:</strong>
+                        TLX TOKI (Dasar), freeCodeCamp (Responsive Web), SoloLearn.
+                    </li>
+                </ul>
+            </div>
+
+            <!-- LEVEL 2: SPECIALIZATION -->
+            <div class="level-card specialist">
+                <span class="level-badge badge-spec">Level 2: Squad Specialist</span>
+                <h3>🚀 Pemetaan Peminatan & Squad</h3>
+                <p>Siswa memilih 1 spesialisasi sesuai bakat dan passion teknis setelah lulus tahap Foundation.</p>
+                <ul class="squad-list">
+                    <li class="squad-item">
+                        <strong>🌐 Web Development Squad:</strong>
+                        JavaScript (ES6+), Node.js/Express, PHP Native/Laravel, REST API, Database (MySQL/PostgreSQL).
+                    </li>
+                    <li class="squad-item">
+                        <strong>📱 Mobile App Squad:</strong>
+                        Dart & Flutter Framework, State Management (Bloc/Provider), Local Storage, REST Integration.
+                    </li>
+                    <li class="squad-item">
+                        <strong>🎨 UI/UX & Digital Product Design:</strong>
+                        Figma, User Research, Wireframing, High-Fidelity Design, Design System, Usability Testing.
+                    </li>
+                    <li class="squad-item">
+                        <strong>🎮 Game Development Squad:</strong>
+                        Godot Engine / Unity 2D, C#, Sprite Animation, Game Physics, Game Logic & Level Design.
+                    </li>
+                    <li class="squad-item">
+                        <strong>☁️ Cloud, DevOps & Database Squad:</strong>
+                        Linux CLI, SQL Optimization, Docker Basics, Cloud Infrastructure (AWS/GCP Practitioner).
+                    </li>
+                </ul>
+            </div>
+
+            <!-- LEVEL 3: COMPETITION & CHAMPIONSHIP -->
+            <div class="level-card champion">
+                <span class="level-badge badge-champ">Level 3: Competitive Ready</span>
+                <h3>🏆 Tim Lomba & Portofolio Industri</h3>
+                <p>Siswa terpilih difokuskan untuk inkubasi kompetisi nasional dan pengerjaan proyek riil.</p>
+                <ul class="squad-list">
+                    <li class="squad-item">
+                        <strong>🧠 Competitive Programming (CP) Squad:</strong>
+                        C++ STL, Analisis Kompleksitas Big-O, Structured Data (Vector/Map/Tree), Graph, Dynamic Programming.
+                    </li>
+                    <li class="squad-item">
+                        <strong>🎯 Target Kompetisi & Lomba:</strong>
+                        LKS SMK (Web Tech / Software Application), Olimpiade Informatika (NOI/KSN), Hackathon, Game Jam.
+                    </li>
+                </ul>
+            </div>
+
+        </div>
+
+        <!-- BAGIAN 2: FORM INPUT KREDENSIAL / SERTIFIKAT SISWA -->
         <div class="course-form-card">
             <h3 style="margin-top:0; margin-bottom:1.25rem; font-size:1.1rem; color:#f1f5f9;">➕ Tambah Kredensial / Sertifikat Siswa</h3>
             <form id="certForm" onsubmit="saveCertificate(event)">
@@ -220,13 +413,28 @@
                         <input type="text" id="cStudent" placeholder="Nama Lengkap Siswa" required>
                     </div>
                     <div class="form-group">
+                        <label for="cSquad">Kategori Squad / Path</label>
+                        <select id="cSquad" required>
+                            <option value="Foundation">🌱 Foundation & Logic</option>
+                            <option value="Web Dev">🌐 Web Development</option>
+                            <option value="Mobile Dev">📱 Mobile App Dev</option>
+                            <option value="UI/UX Design">🎨 UI/UX Design</option>
+                            <option value="Game Dev">🎮 Game Development</option>
+                            <option value="Cloud/DevOps">☁️ Cloud & Database</option>
+                            <option value="Competitive Programming">🧠 Competitive Programming</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
                         <label for="cPlatform">Platform Penerbit</label>
                         <select id="cPlatform">
                             <option value="freeCodeCamp">freeCodeCamp</option>
-                            <option value="Cisco Networking Acad">Cisco Networking Academy</option>
-                            <option value="Coursera">Coursera</option>
+                            <option value="TLX TOKI">TLX TOKI</option>
                             <option value="Dicoding">Dicoding</option>
+                            <option value="Cisco Networking Acad">Cisco Networking Academy</option>
+                            <option value="HackerRank">HackerRank</option>
+                            <option value="Coursera / Meta">Coursera / Meta</option>
                             <option value="Google Cloud Enterprise">Google Cloud Enterprise</option>
+                            <option value="Sertifikat Lomba">Sertifikat Lomba / Kejuaraan</option>
                         </select>
                     </div>
                     <div class="form-group">
@@ -237,66 +445,108 @@
                         <label for="cDate">Tanggal Terbit</label>
                         <input type="date" id="cDate" required>
                     </div>
-                    <div class="form-group" style="justify-content: flex-end;">
-                        <button type="submit" class="btn-submit">Sematkan Kredensial</button>
-                    </div>
+                    <button type="submit" class="btn-submit">Sematkan Kredensial</button>
                 </div>
             </form>
         </div>
 
-        <h2 style="font-size:1.4rem; margin-bottom:1.5rem; letter-spacing:0.5px; border-left: 4px solid #06b6d4; padding-left: 0.75rem;">🛡️ Verified Member Kredensial</h2>
+        <!-- BAGIAN 3: SHOWCASE VERIFIED MEMBER KREDENSIAL -->
+        <h2 class="section-title">🛡️ Verified Member Kredensial</h2>
         
+        <!-- Filter Kategori -->
+        <div class="filter-container">
+            <button class="filter-btn active" onclick="filterSquad('All')">Semua Squad</button>
+            <button class="filter-btn" onclick="filterSquad('Foundation')">🌱 Foundation</button>
+            <button class="filter-btn" onclick="filterSquad('Web Dev')">🌐 Web Dev</button>
+            <button class="filter-btn" onclick="filterSquad('Mobile Dev')">📱 Mobile Dev</button>
+            <button class="filter-btn" onclick="filterSquad('UI/UX Design')">🎨 UI/UX</button>
+            <button class="filter-btn" onclick="filterSquad('Game Dev')">🎮 Game Dev</button>
+            <button class="filter-btn" onclick="filterSquad('Competitive Programming')">🧠 CP & Algo</button>
+        </div>
+
         <div id="courseGrid" class="course-grid">
-            </div>
+            <!-- Grid item disematkan lewat JavaScript -->
+        </div>
     </div>
 
     <script>
-        // Data internal awal sebagai benchmark / contoh visual dasar tersemat
+        // Data internal Awal (Benchmark & Benchmark Kredensial Berbagai Squad)
         let certificates = JSON.parse(localStorage.getItem('club_certificates')) || [
             {
                 id: 1,
-                title: "Responsive Web Design",
+                title: "Responsive Web Design Certification",
                 student: "Retno Ariyanti (Mentor Ekosistem)",
+                squad: "Web Dev",
                 platform: "freeCodeCamp",
                 url: "https://www.freecodecamp.org/certification/fccdf8180ea-128a-4933-bfce",
                 date: "2025-08-14"
             },
             {
                 id: 2,
+                title: "C++ Programming & STL Mastery",
+                student: "Siswa CP Squad 1",
+                squad: "Competitive Programming",
+                platform: "TLX TOKI",
+                url: "https://tlx.toki.id",
+                date: "2026-03-10"
+            },
+            {
+                id: 3,
+                title: "User Interface (UI) Design Essentials",
+                student: "Siswa Design 1",
+                squad: "UI/UX Design",
+                platform: "Dicoding",
+                url: "https://www.dicoding.com",
+                date: "2026-04-18"
+            },
+            {
+                id: 4,
                 title: "CCNA: Introduction to Networks",
                 student: "Siswa TKJT Unggulan 1",
+                squad: "Cloud/DevOps",
                 platform: "Cisco Networking Acad",
                 url: "https://www.credly.com",
                 date: "2026-02-20"
             }
         ];
 
+        let currentFilter = 'All';
+
         function renderCertificates() {
             const courseGrid = document.getElementById('courseGrid');
             courseGrid.innerHTML = '';
 
-            if (certificates.length === 0) {
-                courseGrid.innerHTML = '<p class="empty-text">Belum ada kredensial sertifikat yang disematkan.</p>';
+            const filteredData = currentFilter === 'All' 
+                ? certificates 
+                : certificates.filter(c => c.squad === currentFilter);
+
+            if (filteredData.length === 0) {
+                courseGrid.innerHTML = '<p class="empty-text">Belum ada kredensial sertifikat yang terdaftar pada kategori squad ini.</p>';
                 return;
             }
 
-            certificates.forEach(c => {
+            filteredData.forEach(c => {
                 const card = document.createElement('div');
                 card.className = 'cert-card';
 
                 card.innerHTML = `
-                    <span class="cert-badge-platform">${c.platform}</span>
-                    <div class="cert-info">
-                        <h3>${c.title}</h3>
-                        <div class="student-name">👤 ${c.student}</div>
-                        <div class="cert-meta">
-                            ID Kredensial Resmi Terverifikasi<br>
-                            📅 Terbit: ${formatDate(c.date)}
+                    <div>
+                        <div class="cert-header">
+                            <span class="cert-squad-tag">${c.squad || 'General'}</span>
+                            <span class="cert-badge-platform">${c.platform}</span>
+                        </div>
+                        <div class="cert-info">
+                            <h3>${c.title}</h3>
+                            <div class="student-name">👤 ${c.student}</div>
+                            <div class="cert-meta">
+                                ID Kredensial Resmi Terverifikasi<br>
+                                📅 Terbit: ${formatDate(c.date)}
+                            </div>
                         </div>
                     </div>
-                    <div>
+                    <div class="cert-actions">
                         <a href="${c.url}" target="_blank" class="btn-verify">🔗 Verifikasi Kredensial</a>
-                        <button class="btn-delete-cert" onclick="deleteCertificate(${c.id})">🗑️ Hapus Kredensial</button>
+                        <button class="btn-delete-cert" onclick="deleteCertificate(${c.id})">🗑️ Hapus</button>
                     </div>
                 `;
                 courseGrid.appendChild(card);
@@ -309,6 +559,7 @@
                 id: Date.now(),
                 title: document.getElementById('cTitle').value,
                 student: document.getElementById('cStudent').value,
+                squad: document.getElementById('cSquad').value,
                 platform: document.getElementById('cPlatform').value,
                 url: document.getElementById('cUrl').value,
                 date: document.getElementById('cDate').value
@@ -328,13 +579,22 @@
             }
         }
 
+        function filterSquad(squadName) {
+            currentFilter = squadName;
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            renderCertificates();
+        }
+
         function formatDate(dateString) {
             if(!dateString) return '-';
             const options = { year: 'numeric', month: 'short', day: 'numeric' };
             return new Date(dateString).toLocaleDateString('id-ID', options);
         }
 
-        // Render data saat komponen dimuat
+        // Initial Render
         renderCertificates();
     </script>
 </body>
