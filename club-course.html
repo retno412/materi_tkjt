@@ -14,6 +14,7 @@
             --accent-purple: #a855f7;
             --accent-pink: #ec4899;
             --accent-green: #10b981;
+            --accent-yellow: #f59e0b;
             --text-primary: #f8fafc;
             --text-secondary: #94a3b8;
             --border-color: rgba(255, 255, 255, 0.08);
@@ -138,19 +139,19 @@
             align-items: center;
         }
         
-        .materi-list, .platform-links, .lomba-list {
+        .materi-list, .platform-links, .lomba-list, .team-spec-list {
             list-style: none;
             padding: 0;
             margin: 0;
             font-size: 0.85rem;
         }
-        .materi-list li, .lomba-list li {
+        .materi-list li, .lomba-list li, .team-spec-list li {
             position: relative;
             padding-left: 1.2rem;
             margin-bottom: 0.5rem;
             color: #cbd5e1;
         }
-        .materi-list li::before, .lomba-list li::before {
+        .materi-list li::before, .lomba-list li::before, .team-spec-list li::before {
             content: "•";
             color: var(--accent-cyan);
             font-weight: bold;
@@ -194,7 +195,7 @@
             color: #0f172a;
         }
 
-        /* Badges Biaya Lomba */
+        /* Badges Biaya & Status Lomba */
         .badge-fee {
             font-size: 0.7rem;
             padding: 0.15rem 0.4rem;
@@ -204,7 +205,7 @@
         }
         .fee-free { background: rgba(16, 185, 129, 0.2); color: var(--accent-green); border: 1px solid rgba(16, 185, 129, 0.3); }
         .fee-paid { background: rgba(236, 72, 153, 0.2); color: var(--accent-pink); border: 1px solid rgba(236, 72, 153, 0.3); }
-        .fee-var { background: rgba(245, 158, 11, 0.2); color: #f59e0b; border: 1px solid rgba(245, 158, 11, 0.3); }
+        .fee-var { background: rgba(245, 158, 11, 0.2); color: var(--accent-yellow); border: 1px solid rgba(245, 158, 11, 0.3); }
 
         /* Section Form */
         .course-form-card {
@@ -493,7 +494,19 @@
                     </ul>
                 </div>
 
-                <!-- Sub-Block 2: Target Lomba & Ajang KSN -->
+                <!-- Sub-Block BARU: Kriteria & Spesifikasi Tim Lomba Ideal -->
+                <div class="sub-block" style="border-left: 3px solid var(--accent-purple);">
+                    <h4>👥 Spesifikasi Tim Ideal Kompetisi Inovasi & Coding:</h4>
+                    <p style="font-size:0.8rem; color:#cbd5e1; margin-top:0;">Dianalisis dari standar lomba nasional seperti <strong>JHIC 2.0 (Jagoan Hosting) & Hackathon</strong>, tim siap tanding dibentuk dari gabungan 3 peran utama (*The Triad*):</p>
+                    <ul class="team-spec-list">
+                        <li><strong>👨‍💻 The Hacker (Lead Developer / Web Specialist):</strong> Menguasai logika koding, integrasi database, & hosting deployment (HTML/CSS/JS/PHP/Laravel atau Node.js).</li>
+                        <li><strong>🎨 The Hipster (UI/UX Designer & Product Specialist):</strong> Menguasai Figma, wireframing, estetika antarmuka, serta penyusunan slide presentasi produk (*pitch deck*).</li>
+                        <li><strong>💡 The Hustler / Pitcher (Business & Impact Lead):</strong> Memahami problem-solving, analisis dampak sosial/inovasi sekolah, serta kemampuan menyampaikan gagasan/pitching di hadapan juri.</li>
+                        <li><strong>👨‍🏫 Mentor & Inovator (Guru / Staff IT):</strong> Membimbing kesesuaian solusi digital dengan kebutuhan nyata di sekolah dan mendampingi manajemen proyek tim.</li>
+                    </ul>
+                </div>
+
+                <!-- Sub-Block 2: Target LKS SMK -->
                 <div class="sub-block">
                     <h4>🎯 Target LKS SMK 2027 (Kabupaten Bekasi):</h4>
                     <p style="font-size:0.8rem; color:#38bdf8; margin-top:0;">📅 Estimasi Pelaksanaan: <strong>Februari – Maret 2027</strong></p>
@@ -509,7 +522,7 @@
                     </ul>
                 </div>
 
-                <!-- Sub-Block 3: Ajang Kompetisi Lainnya -->
+                <!-- Sub-Block 3: Ajang Kompetisi Terbuka -->
                 <div class="sub-block">
                     <h4>🌐 Ajang Kompetisi Terbuka & Event Tambahan:</h4>
                     <ul class="lomba-list">
@@ -519,12 +532,19 @@
                     </ul>
                 </div>
 
-                <!-- Sub-Block 4: Dynamic Area untuk Lomba Aktif -->
-                <div class="sub-block" style="border: 1px dashed var(--accent-pink);">
-                    <h4>🔥 Lomba Aktif / Sedang Berlangsung:</h4>
+                <!-- Sub-Block 4: Dynamic Area untuk Lomba Aktif (Termasuk JHIC 2.0) -->
+                <div class="sub-block" style="border: 1px dashed var(--accent-pink); background: rgba(236, 72, 153, 0.05);">
+                    <h4 style="color: var(--accent-pink);">🔥 Lomba Aktif / Sedang Berlangsung:</h4>
                     <ul class="lomba-list" id="activeLombaList">
-                        <li>Gemastik & Hackathon Mahasiswa/Umum (Kategori Terbuka) <span class="badge-fee fee-var">FEE VARIES</span></li>
-                        <li>Global Game Jam (Sesi Tahunan) <span class="badge-fee fee-free">FREE</span></li>
+                        <li style="line-height:1.4;">
+                            <strong>Jagoan Hosting Innovation Competition 2026 (JHIC 2.0)</strong> <span class="badge-fee fee-free">FREE (Guru/Staff)</span> <span class="badge-fee fee-var">REGULAR (Siswa)</span><br>
+                            <span style="font-size:0.78rem; color:#94a3b8;">
+                                🏆 Hadiah Total Rp70 Juta & Trofi Komdigi | Final: Yogyakarta<br>
+                                🎯 Kategori: 1) Web Sekolah, 2) Ide Bisnis Digital, 3) Penggerak Inovasi (Guru/Staff)<br>
+                                🗓️ Registrasi: 19 Juni – 14 Agustus 2026 | Link: <a href="https://s.id/JHIC2026" target="_blank" style="color:var(--accent-blue);">s.id/JHIC2026</a>
+                            </span>
+                        </li>
+                        <li style="margin-top:0.5rem;">Global Game Jam / Hackathon Terbuka <span class="badge-fee fee-free">FREE</span></li>
                     </ul>
                 </div>
 
