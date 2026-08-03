@@ -178,6 +178,15 @@
         .comp-detail-section p {
             margin: 0;
             color: #94a3b8;
+            word-break: break-word;
+        }
+        .comp-detail-section a {
+            color: #38bdf8;
+            text-decoration: underline;
+            font-weight: 600;
+        }
+        .comp-detail-section a:hover {
+            color: #7dd3fc;
         }
         
         .btn-delete-comp {
@@ -214,11 +223,12 @@
     <div class="club-container">
         <header class="club-header">
             <div class="club-title">
-                <h1>🏆 Tech Coding Club — Competition Info</h1>
+                <h1>🏆 Tech Coding Club — Competition Center</h1>
             </div>
             <a href="index.html" class="btn-back">⬅ Menu Utama</a>
         </header>
 
+        <!-- Form Tambah Informasi Kompetensi -->
         <div class="comp-form-card">
             <h3 style="margin-top:0; margin-bottom:1.25rem; font-size:1.1rem; color:#f1f5f9;">➕ Tambah Informasi Kompetensi Baru</h3>
             <form id="compForm" onsubmit="saveCompetition(event)">
@@ -248,7 +258,7 @@
                     </div>
                     <div class="form-group full-width">
                         <label for="cMethod">Cara Mengumpulkan / Tautan Pendaftaran</label>
-                        <input type="text" id="cMethod" placeholder="Contoh: Kirimkan link repository GitHub & link video demonstrasi YouTube ke form pendaftaran bit.ly/lomba-coding" required>
+                        <input type="text" id="cMethod" placeholder="Contoh: Kirimkan link repository GitHub ke form pendaftaran https://lomba.com" required>
                     </div>
                     <button type="submit" class="btn-submit">Publish Info</button>
                 </div>
@@ -258,22 +268,106 @@
         <h2 style="font-size:1.4rem; margin-bottom:1.5rem; letter-spacing:0.5px; border-left: 4px solid #4f46e5; padding-left: 0.75rem;">🔥 Kompetensi Aktif & Informasi Pendaftaran</h2>
         
         <div id="compGrid" class="comp-grid">
-            </div>
+            <!-- Grid item disematkan secara dinamis oleh JS -->
+        </div>
     </div>
 
     <script>
-        // Data default sebagai contoh inisiasi awal
-        let competitions = JSON.parse(localStorage.getItem('club_competitions')) || [
+        // Data Default Permanen (Terintegrasi dengan 8 Link Lomba Terbaru)
+        const initialCompetitions = [
             {
-                id: 1,
-                name: "IDwebhost Creative Web Competition",
+                id: 101,
+                name: "Jagoan Hosting Innovation Competition (JHIC 2.0)",
+                organizer: "Jagoan Hosting x KOMDIGI",
+                type: "Online",
+                deadline: "2026-08-14",
+                criteria: "Lomba Pengembangan Web Sekolah (3-5 orang), Ide Bisnis Digital (2-3 orang), & Penggerak Inovasi Digital (Guru/Staff IT). Total Hadiah Rp70 Juta & Trofi KOMDIGI.",
+                method: "Formulir pendaftaran dan guidebook resmi dapat diakses melalui: https://s.id/JHIC2026"
+            },
+            {
+                id: 102,
+                name: "ITtechno Cup 2026",
+                organizer: "ITtechno",
+                type: "Online",
+                deadline: "2026-09-30",
+                criteria: "Kompetensi teknologi dan koding nasional. Penilaian meliputi logika pemrograman, fungsionalitas aplikasi, dan estetika antarmuka pengguna.",
+                method: "Info lengkap & pendaftaran via portal resmi: https://itechnocup.id"
+            },
+            {
+                id: 103,
+                name: "IFEST HMTI UNTAD 2026",
+                organizer: "HMTI Universitas Tadulako",
+                type: "Online",
+                deadline: "2026-09-15",
+                criteria: "Informatics Festival & Competition nasional untuk pelajar/mahasiswa. Kriteria meliputi kreativitas karya digital, penyelesaian masalah, dan kepatuhan Juknis.",
+                method: "Pendaftaran dan pengumpulan karya melalui: https://ifest-hmti-untad.vercel.app/"
+            },
+            {
+                id: 104,
+                name: "IT Today 2026",
+                organizer: "Dept. Ilmu Komputer IPB University",
+                type: "Online",
+                deadline: "2026-08-31",
+                criteria: "Rangkaian kompetisi IT nasional (Hackathon, Competitive Programming, Data Science, & UX Design). Penilaian berbasis efisiensi kode dan inovasi ide.",
+                method: "Pendaftaran resmi & guidebook dapat diakses di: https://ittoday.web.id"
+            },
+            {
+                id: 105,
+                name: "IS Class 2026 (ISE! ITS)",
+                organizer: "Information Systems Expo - Sistem Informasi ITS",
+                type: "Online",
+                deadline: "2026-08-25",
+                criteria: "Kompetisi & pelatihan Sistem Informasi, Business Case, dan Digital Product Design bagi siswa SMA/SMK dan Mahasiswa.",
+                method: "Daftar langsung melalui link pendaftaran resmi: https://ise-its.com/go/PendaftaranISClass2026"
+            },
+            {
+                id: 106,
+                name: "IDwebhost Web Design & Coding Competition",
                 organizer: "IDwebhost Indonesia",
                 type: "Online",
-                deadline: "2026-07-15",
-                criteria: "Kesesuaian tema inovasi digital, estetika desain antarmuka (UI/UX), dan fungsionalitas fitur aplikasi web tanpa bug.",
-                method: "Daftar pada dashboard resmi, unggah source code ke GitHub, dan deploy hasil aplikasi ke hosting gratis/berbayar."
+                deadline: "2026-09-10",
+                criteria: "Kreativitas UI/UX design, kebersihan struktur kode (clean code), optimasi performa web, serta responsivitas perangkat.",
+                method: "Daftar dan unggah karya via website resmi: https://idwebhost.com/competition"
+            },
+            {
+                id: 107,
+                name: "SWITCH FEST 2026",
+                organizer: "Switch Fest Community",
+                type: "Online",
+                deadline: "2026-08-20",
+                criteria: "Kompetisi ideasi digital & pengembangan aplikasi. Mengukur inovasi teknis, dampak solusi, serta presentasi produk.",
+                method: "Pendaftaran dan penyerahan proposal/karya di: https://switchfest.my.id"
+            },
+            {
+                id: 108,
+                name: "FTI Festival 2026",
+                organizer: "FTI Universitas ISB Atma Luhur",
+                type: "Online",
+                deadline: "2026-09-05",
+                criteria: "Festival & Lomba bidang IT (Desain Grafis, Pemrograman Web, Ide Bisnis IT). Kriteria lengkap sesuai Buku Panduan.",
+                method: "Akses informasi & pendaftaran di: https://ftifestival.atmaluhur.ac.id/"
             }
         ];
+
+        // Ambil data dari LocalStorage, jika belum ada gunakan initialCompetitions
+        let competitions = JSON.parse(localStorage.getItem('club_competitions')) || initialCompetitions;
+
+        // Jika LocalStorage belum tersimpan, simpan default ini
+        if (!localStorage.getItem('club_competitions')) {
+            localStorage.setItem('club_competitions', JSON.stringify(competitions));
+        }
+
+        // Helper untuk mengubah URL teks biasa menjadi Link yang dapat diklik
+        function autoLinkify(text) {
+            const urlRegex = /(https?:\/\/[^\s]+|s\.id\/[^\s]+|itechnocup\.id|switchfest\.my.id|ittoday\.web\.id)/g;
+            return text.replace(urlRegex, function(url) {
+                let fullUrl = url;
+                if (!url.startsWith('http://') && !url.startsWith('https://')) {
+                    fullUrl = 'https://' + url;
+                }
+                return `<a href="${fullUrl}" target="_blank" rel="noopener noreferrer">${url}</a>`;
+            });
+        }
 
         function renderCompetitions() {
             const compGrid = document.getElementById('compGrid');
@@ -305,13 +399,13 @@
                         </div>
 
                         <div class="comp-detail-section">
-                            <strong>📌 Kriteria Penilaian:</strong>
+                            <strong>📌 Kriteria Penilaian / Persyaratan:</strong>
                             <p>${c.criteria}</p>
                         </div>
 
                         <div class="comp-detail-section" style="border-left: 2px solid #10b981;">
-                            <strong style="color: #34d399;">🚀 Cara & Alur Pengumpulan:</strong>
-                            <p>${c.method}</p>
+                            <strong style="color: #34d399;">🚀 Cara & Alur Pengumpulan / Tautan:</strong>
+                            <p>${autoLinkify(c.method)}</p>
                         </div>
                     </div>
                 `;
@@ -331,7 +425,7 @@
                 method: document.getElementById('cMethod').value
             };
 
-            competitions.unshift(newComp); // Tambah ke baris paling atas
+            competitions.unshift(newComp); // Tambahkan ke paling atas
             localStorage.setItem('club_competitions', JSON.stringify(competitions));
             renderCompetitions();
             document.getElementById('compForm').reset();
@@ -351,7 +445,7 @@
             return new Date(dateString).toLocaleDateString('id-ID', options);
         }
 
-        // Eksekusi render pertama kali saat dibuka
+        // Render saat pertama kali dimuat
         renderCompetitions();
     </script>
 </body>
