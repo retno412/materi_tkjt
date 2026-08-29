@@ -113,7 +113,7 @@
             line-height: 1.3;
         }
 
-        /* CSS KHUSUS TECH CODING CLUB SECTION (BARU) */
+        /* CSS KHUSUS PIXEL AND CODE SECTION (BARU) */
         .coding-club-section {
             background: rgba(10, 10, 12, 0.85);
             backdrop-filter: blur(10px);
@@ -185,9 +185,134 @@
         .btn-club:hover .club-desc {
             opacity: 0.9;
         }
+
+        /* Styling UI Admin Edit Mode */
+        .profile-floating-btn {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: rgba(30, 41, 59, 0.9);
+            color: #fff;
+            border: 1px solid #4f46e5;
+            padding: 10px 20px;
+            border-radius: 50px;
+            cursor: pointer;
+            z-index: 1000;
+            font-weight: bold;
+            backdrop-filter: blur(5px);
+            transition: all 0.3s;
+        }
+
+        .profile-floating-btn:hover {
+            background: #4f46e5;
+            transform: scale(1.05);
+        }
+
+        .admin-panel-floating {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #10b981;
+            padding: 15px 30px;
+            border-radius: 50px;
+            z-index: 1000;
+            box-shadow: 0 10px 25px rgba(16, 185, 129, 0.4);
+        }
+
+        .btn-save-admin {
+            background: transparent;
+            color: white;
+            border: none;
+            font-size: 1.1rem;
+            font-weight: 800;
+            cursor: pointer;
+        }
+
+        .admin-input-field {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.9);
+            border: 2px dashed #ec4899;
+            color: #1e293b;
+            padding: 5px;
+            border-radius: 4px;
+            font-family: inherit;
+            font-size: inherit;
+            font-weight: inherit;
+            text-align: inherit;
+        }
+
+        /* Styling Galeri & Modal Upload */
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .gallery-card {
+            background: #1e293b;
+            border: 1px solid #334155;
+            border-radius: 12px;
+            overflow: hidden;
+            text-align: left;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+        }
+
+        .gallery-img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            border-bottom: 2px solid #4f46e5;
+        }
+
+        .gallery-info {
+            padding: 1rem;
+        }
+
+        .gallery-info .uploader { font-size: 0.9rem; font-weight: 700; color: #f8fafc; }
+        .gallery-info .datetime { font-size: 0.7rem; color: #94a3b8; margin: 5px 0; font-family: monospace; }
+        .gallery-info .badge { 
+            display: inline-block; 
+            font-size: 0.7rem; 
+            padding: 3px 8px; 
+            background: #4f46e5; 
+            color: white; 
+            border-radius: 4px; 
+            font-weight: bold;
+        }
+
+        .modal-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(15, 23, 42, 0.9);
+            backdrop-filter: blur(5px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+        }
+
+        .modal-box {
+            background: #1e293b;
+            padding: 2rem;
+            border-radius: 16px;
+            border: 1px solid #4f46e5;
+            width: 90%;
+            max-width: 400px;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.5);
+        }
     </style>
 </head>
 <body>
+
+    <!-- Tombol Akses Admin -->
+    <button id="btn-profile" onclick="checkAdmin()" class="profile-floating-btn">👤 Profile</button>
+
+    <!-- Tombol Simpan (Disembunyikan secara default) -->
+    <div id="admin-panel" class="hidden admin-panel-floating">
+        <button onclick="saveChanges()" class="btn-save-admin">💾 Simpan Perubahan</button>
+    </div>
 
     <!-- LANDING PAGE (HALAMAN UTAMA PROFIL GURU) -->
     <div id="landing-page" class="landing-hero">
@@ -232,32 +357,32 @@
         <div class="semester-grid">
             <button onclick="window.location.href='semester1.html'" class="btn-semester">
                 <span class="sem-number">SEMESTER 1</span>
-                <span class="sem-title">Computational Thinking, Dasar Web & Algoritma</span>
+                <span class="sem-title" data-edit-id="sem1_title">Computational Thinking, Dasar Web & Algoritma</span>
             </button>
             
             <button onclick="window.location.href='semester2.html'" class="btn-semester">
                 <span class="sem-number">SEMESTER 2</span>
-                <span class="sem-title">Infrastruktur Linux, Database Relasional & IoT</span>
+                <span class="sem-title" data-edit-id="sem2_title">Infrastruktur Linux, Database Relasional & IoT</span>
             </button>
             
             <button onclick="window.location.href='semester3.html'" class="btn-semester">
                 <span class="sem-number">SEMESTER 3</span>
-                <span class="sem-title">Administrasi Sistem, Web Backend & Cloud Computing (AWS)</span>
+                <span class="sem-title" data-edit-id="sem3_title">Administrasi Sistem, Web Backend & Cloud Computing (AWS)</span>
             </button>
             
             <button onclick="window.location.href='semester4.html'" class="btn-semester">
                 <span class="sem-number">SEMESTER 4</span>
-                <span class="sem-title"> Web Service API, Komputasi Numerik & Advanced Data Mining</span>
+                <span class="sem-title" data-edit-id="sem4_title">Web Service API, Komputasi Numerik & Advanced Data Mining</span>
             </button>
             
             <button onclick="window.location.href='semester5.html'" class="btn-semester">
                 <span class="sem-number">SEMESTER 5</span>
-                <span class="sem-title">Komputasi 3D, Manipulasi Data R, & Segmentasi Pasar AI</span>
+                <span class="sem-title" data-edit-id="sem5_title">Komputasi 3D, Manipulasi Data R, & Segmentasi Pasar AI</span>
             </button>
             
             <button onclick="window.location.href='semester6.html'" class="btn-semester">
                 <span class="sem-number">SEMESTER 6</span>
-                <span class="sem-title">Sistem Real-Time IoT, Proteksi Fraud AI, & Framework React Python</span>
+                <span class="sem-title" data-edit-id="sem6_title">Sistem Real-Time IoT, Proteksi Fraud AI, & Framework React Python</span>
             </button>
         </div>
 
@@ -356,48 +481,79 @@
 
         <hr class="section-separator">
 
-        <!-- SECTION BARU: TECH CODING CLUB -->
+        <!-- SECTION BARU: PIXEL AND CODE -->
         <div class="coding-club-section">
-            <h2 class="coding-club-title">💻 Tech Coding Club</h2>
+            <!-- Judul yang bisa diklik -->
+            <h2 class="coding-club-title" onclick="bukaModalUpload()" style="cursor: pointer; display: inline-block; padding: 10px 20px; background: rgba(99, 102, 241, 0.2); border: 1px dashed #6366f1; border-radius: 8px;">💻 PIXEL AND CODE</h2>
             <p class="coding-club-subtitle">Pusat Inkubasi Kreativitas, Kompetensi Teknis & Kolaborasi Karya Digital</p>
-            
+
             <div class="coding-club-row">
-                <!-- Button 1: Project -->
                 <a href="club-project.html" class="btn-club">
                     <span class="club-icon">📁</span>
-                    <span class="club-text">Project</span>
-                    <span class="club-desc">Galeri Dokumen & Source Code</span>
+                    <span class="club-text" data-edit-id="club_project_title">Project</span>
+                    <span class="club-desc" data-edit-id="club_project_desc">Galeri Dokumen & Source Code</span>
                 </a>
 
-                <!-- Button 2: Competition -->
                 <a href="club-competition.html" class="btn-club">
                     <span class="club-icon">🏆</span>
-                    <span class="club-text">Competition</span>
-                    <span class="club-desc">Info Lomba & Mentoring</span>
+                    <span class="club-text" data-edit-id="club_comp_title">Competition</span>
+                    <span class="club-desc" data-edit-id="club_comp_desc">Info Lomba & Mentoring</span>
                 </a>
 
-                <!-- Button 3: Course -->
                 <a href="club-course.html" class="btn-club">
                     <span class="club-icon">📖</span>
-                    <span class="club-text">Course</span>
-                    <span class="club-desc">Modul Praktik Mandiri</span>
+                    <span class="club-text" data-edit-id="club_course_title">Course</span>
+                    <span class="club-desc" data-edit-id="club_course_desc">Modul Praktik Mandiri</span>
                 </a>
 
-                <!-- Button 4: Publication -->
                 <a href="club-publication.html" class="btn-club">
                     <span class="club-icon">📰</span>
-                    <span class="club-text">Publication</span>
-                    <span class="club-desc">Artikel & Jurnal Siswa</span>
+                    <span class="club-text" data-edit-id="club_pub_title">Publication</span>
+                    <span class="club-desc" data-edit-id="club_pub_desc">Artikel & Jurnal Siswa</span>
                 </a>
 
-                <!-- Button 5: Teams -->
                 <a href="club-teams.html" class="btn-club">
                     <span class="club-icon">👥</span>
-                    <span class="club-text">Teams</span>
-                    <span class="club-desc">Daftar Kelompok Kerja</span>
+                    <span class="club-text" data-edit-id="club_teams_title">Teams</span>
+                    <span class="club-desc" data-edit-id="club_teams_desc">Daftar Kelompok Kerja</span>
                 </a>
+
+                <!-- SECTION BARU: GALERI PIXEL & CODE -->
+                <div class="k3-container" style="margin-top: 4rem;">
+                    
+                        <button onclick="window.location.href='galeri.html'" class="btn-semester" style="margin: 0 auto; max-width: 450px; text-align: center; display: flex; align-items: center; justify-content: center; background: rgba(30, 41, 59, 0.9); border: 2px solid #4f46e5; color: #fff;">
+                            <span class="sem-number">📸 Galeri Karya & Dokumentasi📁 </span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- MODAL UPLOAD KE GOOGLE DRIVE -->
+                <div id="upload-modal" class="hidden modal-overlay">
+                    <div class="modal-box">
+                        <h3>Upload Dokumentasi Club</h3>
+                        <p style="font-size: 0.8rem; color: #94a3b8; margin-bottom: 15px;">Akses khusus anggota (Password Required)</p>
+                        
+                        <input type="password" id="up-password" placeholder="" class="admin-input-field" style="margin-bottom: 10px;">
+                        <input type="text" id="up-nama" placeholder="Nama Uploader (Ex :Retno X RPL 1)" class="admin-input-field" style="margin-bottom: 10px;">
+                        
+                        <select id="up-keperluan" class="admin-input-field" style="margin-bottom: 10px;" onchange="cekLainnya()">
+                            <option value="" disabled selected>-- Pilih Keperluan --</option>
+                            <option value="Sekolah">Tugas Sekolah</option>
+                            <option value="Prestasi">Sertifikat / Prestasi</option>
+                            <option value="Kunjungan">Kunjungan Industri</option>
+                            <option value="Lainnya">Lainnya...</option>
+                        </select>
+                        <input type="text" id="up-keperluan-lain" placeholder="Sebutkan keperluan lain..." class="hidden admin-input-field" style="margin-bottom: 10px;">
+                        
+                        <input type="file" id="up-file" accept="image/*,video/*" class="admin-input-field" style="margin-bottom: 15px; padding: 10px;">
+                        
+                        <div style="display: flex; gap: 10px;">
+                            <button onclick="tutupModalUpload()" style="flex: 1; padding: 10px; border-radius: 8px; background: #334155; color: white; border: none; cursor: pointer;">Batal</button>
+                            <button id="btn-proses-upload" onclick="prosesUpload()" style="flex: 1; padding: 10px; border-radius: 8px; background: #10b981; color: white; border: none; cursor: pointer; font-weight: bold;">Upload ke Drive 🚀</button>
+                        </div>
+                    </div>
+                </div>
             </div>
-        </div>
 
     </div>
 
@@ -458,7 +614,7 @@
         </div>
     </div>
 
-    <script>
+    <!-- <script> 
         let db = null;
         async function initApp() {
             try {
@@ -474,6 +630,161 @@
             document.getElementById('semester-page').classList.add('hidden');
             document.getElementById('landing-page').classList.remove('hidden');
         }
-    </script>
+    </script>-->
+    <!-- SCRIPT ADMIN & FIREBASE DATABASE 
+    <script type="module">
+        // 1. Import Firebase dari CDN Google (Versi 12.18.0 sesuai gambar Anda)
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-app.js";
+        import { getDatabase, ref, get, set, child, push, update, remove } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-database.js";
+
+        // 2. Konfigurasi Firebase Anda (Sesuai dengan screenshot)
+        const firebaseConfig = {
+            apiKey: "AIzaSyBvY2ryMzSJjgHkadfuPWbzFBgL1kQpygI",
+            authDomain: "materi-pnc.firebaseapp.com",
+            projectId: "materi-pnc",
+            storageBucket: "materi-pnc.firebasestorage.app",
+            messagingSenderId: "631396189340",
+            appId: "1:631396189340:web:c9b86c3f7face5b1635959",
+            measurementId: "G-21R2MTPGQ4"
+        };
+
+        // Inisialisasi Firebase App & Realtime Database
+        const app = initializeApp(firebaseConfig);
+        const db = getDatabase(app);
+
+        const ADMIN_PASS = "RARTNUR";
+        let isAdmin = false;
+
+        // 3. Fungsi Inisialisasi Aplikasi (Memuat dari Firebase)
+        window.initApp = async function() {
+            // Cek apakah admin sudah login
+            if (localStorage.getItem('isAdminActive') === 'true') {
+                isAdmin = true;
+                document.getElementById('btn-profile').innerText = "🔓 Keluar Mode Admin";
+                document.getElementById('btn-profile').style.background = "#ec4899";
+                window.enableEditMode();
+            }
+
+            // Ambil data terbaru dari Firebase
+            const dbRef = ref(db);
+            try {
+                const snapshot = await get(child(dbRef, `site_content`));
+                if (snapshot.exists()) {
+                    const savedData = snapshot.val();
+                    const editableElements = document.querySelectorAll('[data-edit-id]');
+                    
+                    editableElements.forEach(el => {
+                        const id = el.dataset.editId;
+                        if(savedData[id]) {
+                            // Jangan timpa jika sedang dalam mode edit (textarea)
+                            if (!el.querySelector('textarea')) {
+                                el.innerText = savedData[id];
+                            }
+                        }
+                    });
+                }
+            } catch (error) {
+                console.error("Gagal memuat data dari Firebase: ", error);
+            }
+        }
+
+        // 4. Fungsi Login / Logout Admin
+        window.checkAdmin = function() {
+            if(isAdmin) {
+                if(confirm("Anda yakin ingin keluar dari Mode Admin?")) {
+                    localStorage.removeItem('isAdminActive');
+                    window.location.reload();
+                }
+                return;
+            }
+
+            let pass = prompt("Masukkan kode otorisasi sistem:");
+            if(pass === ADMIN_PASS) {
+                isAdmin = true;
+                localStorage.setItem('isAdminActive', 'true');
+                document.getElementById('btn-profile').innerText = "🔓 Keluar Mode Admin";
+                document.getElementById('btn-profile').style.background = "#ec4899";
+                window.enableEditMode();
+            } else if (pass !== null) {
+                alert("Kode salah! Akses ditolak.");
+            }
+        }
+
+        // 5. Fungsi Mengaktifkan Input UI (Double Click dsb)
+        window.enableEditMode = function() {
+            const links = document.querySelectorAll('a.btn-club, button.btn-semester');
+            
+            links.forEach(link => {
+                let targetUrl = "";
+                if (link.tagName === 'A') {
+                    targetUrl = link.getAttribute('href');
+                    if (targetUrl !== "javascript:void(0)") link.setAttribute('data-target', targetUrl);
+                    else targetUrl = link.getAttribute('data-target');
+                    link.href = "javascript:void(0)";
+                } else if (link.tagName === 'BUTTON') {
+                    const onclickStr = link.getAttribute('onclick');
+                    if (onclickStr && onclickStr.includes("window.location.href")) {
+                        const match = onclickStr.match(/'([^']+)'/);
+                        if (match) targetUrl = match[1];
+                        link.removeAttribute('onclick');
+                        link.setAttribute('data-target', targetUrl);
+                    } else {
+                        targetUrl = link.getAttribute('data-target');
+                    }
+                }
+
+                link.title = "Klik 2x di luar area teks untuk buka halaman";
+                link.onclick = (e) => { if(e.target.tagName !== 'TEXTAREA') e.preventDefault(); };
+                link.ondblclick = (e) => {
+                    if (targetUrl && e.target.tagName !== 'TEXTAREA') window.location.href = targetUrl;
+                };
+            });
+
+            const editableElements = document.querySelectorAll('[data-edit-id]');
+            editableElements.forEach(el => {
+                if(el.querySelector('textarea')) return; 
+
+                const currentText = el.innerText;
+                const input = document.createElement('textarea');
+                input.value = currentText;
+                input.className = 'admin-input-field';
+                input.dataset.bind = el.dataset.editId;
+                input.rows = currentText.length > 30 ? 3 : 1; 
+                
+                el.innerHTML = '';
+                el.appendChild(input);
+            });
+
+            document.getElementById('admin-panel').classList.remove('hidden');
+        }
+
+        // 6. Fungsi Menyimpan ke Firebase
+        window.saveChanges = async function() {
+            const btnSave = document.querySelector('.btn-save-admin');
+            const textAwal = btnSave.innerText;
+            btnSave.innerText = "⏳ Menyimpan ke Cloud...";
+
+            const inputs = document.querySelectorAll('.admin-input-field');
+            let newData = {};
+            
+            inputs.forEach(input => {
+                newData[input.dataset.bind] = input.value;
+            });
+
+            try {
+                // Mengirim data baru ke Realtime Database Firebase
+                await set(ref(db, 'site_content'), newData);
+                alert("Perubahan Berhasil Tersimpan di Database Publik!");
+                window.location.reload();
+            } catch (error) {
+                alert("Gagal menyimpan ke Firebase: Periksa koneksi atau aturan Database Anda.");
+                btnSave.innerText = textAwal;
+                console.error(error);
+            }
+        }
+
+        window.onload = window.initApp;
+    </script>-->
+    <script type="module" src="app.js"></script>
 </body>
 </html>
