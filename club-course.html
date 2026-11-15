@@ -3,745 +3,2776 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PIXEL AND CODE — Learning Roadmap & Certification Center</title>
+    <title>PIXEL & CODE — Learning Roadmap &amp; Talent Ecosystem</title>
     <style>
         :root {
-            --bg-main: #0f172a;
-            --bg-card: rgba(30, 41, 59, 0.7);
-            --accent-cyan: #06b6d4;
-            --accent-blue: #38bdf8;
-            --accent-indigo: #6366f1;
-            --accent-purple: #a855f7;
-            --accent-pink: #ec4899;
-            --accent-green: #10b981;
-            --accent-yellow: #f59e0b;
-            --text-primary: #f8fafc;
-            --text-secondary: #94a3b8;
-            --border-color: rgba(255, 255, 255, 0.08);
+            --bg: #0f172a;
+            --bg-deep: #0b1222;
+            --card: rgba(30, 41, 59, 0.66);
+            --card-solid: #1e293b;
+            --text: #f8fafc;
+            --muted: #94a3b8;
+            --soft: #cbd5e1;
+            --line: rgba(255, 255, 255, 0.09);
+            --cyan: #06b6d4;
+            --blue: #38bdf8;
+            --indigo: #6366f1;
+            --purple: #a855f7;
+            --pink: #ec4899;
+            --green: #10b981;
+            --amber: #f59e0b;
+            --red: #f43f5e;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        [hidden] {
+            display: none !important;
+        }
+
+        html {
+            scroll-behavior: smooth;
         }
 
         body {
-            background-color: var(--bg-main);
-            color: var(--text-primary);
-            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            min-height: 100vh;
             margin: 0;
             padding: 0;
+            color-scheme: dark;
+            background-color: var(--bg);
+            background-image:
+                radial-gradient(circle at 8% 0%, rgba(6, 182, 212, 0.15), transparent 28%),
+                radial-gradient(circle at 94% 4%, rgba(168, 85, 247, 0.16), transparent 30%),
+                radial-gradient(circle at 50% 100%, rgba(59, 130, 246, 0.08), transparent 38%);
+            background-attachment: fixed;
+            color: var(--text);
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
             line-height: 1.5;
         }
 
-        .club-container {
-            max-width: 1320px;
-            margin: 0 auto;
-            padding: 2rem 1.5rem;
+        button,
+        input,
+        select {
+            font: inherit;
         }
 
-        /* Header */
-        .club-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 1px solid var(--border-color);
-            padding-bottom: 1.5rem;
-            margin-bottom: 2.5rem;
+        a {
+            color: inherit;
         }
-        .club-title h1 {
-            margin: 0;
-            font-size: 2.1rem;
+
+        .club-container {
+            width: 100%;
+            max-width: 1180px;
+            margin: 0 auto;
+            padding: 1.5rem 1.25rem 2.5rem;
+        }
+
+        /* ==========================================
+           TOP BAR
+        ========================================== */
+        .topbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+            padding-bottom: 1rem;
+            margin-bottom: 1.4rem;
+            border-bottom: 1px solid var(--line);
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 0.65rem;
+            min-width: 0;
+            text-decoration: none;
+        }
+
+        .brand-mark {
+            width: 39px;
+            height: 39px;
+            display: grid;
+            place-items: center;
+            flex-shrink: 0;
+            border-radius: 11px;
+            background: linear-gradient(135deg, var(--cyan), var(--indigo) 55%, var(--purple));
+            color: #ffffff;
+            font-size: 0.78rem;
+            font-weight: 900;
+            letter-spacing: -0.03em;
+            box-shadow: 0 8px 20px rgba(99, 102, 241, 0.28);
+        }
+
+        .brand b {
+            display: block;
+            color: var(--text);
+            font-size: 0.9rem;
+            line-height: 1.2;
+            letter-spacing: 0.02em;
+        }
+
+        .brand small {
+            display: block;
+            margin-top: 0.12rem;
+            color: var(--muted);
+            font-size: 0.64rem;
+            line-height: 1.2;
+        }
+
+        .btn-back {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+            flex-shrink: 0;
+            padding: 0.55rem 0.85rem;
+            border: 1px solid rgba(99, 102, 241, 0.35);
+            border-radius: 9px;
+            background: rgba(99, 102, 241, 0.12);
+            color: #c7d2fe;
+            font-size: 0.74rem;
             font-weight: 800;
-            background: linear-gradient(135deg, #ffffff 0%, var(--accent-blue) 100%);
+            text-decoration: none;
+            transition: background 0.18s ease, border-color 0.18s ease, transform 0.18s ease;
+        }
+
+        .btn-back:hover,
+        .btn-back:focus-visible {
+            background: rgba(99, 102, 241, 0.24);
+            border-color: var(--indigo);
+            transform: translateX(-2px);
+            outline: none;
+        }
+
+        /* ==========================================
+           HERO
+        ========================================== */
+        .hero {
+            position: relative;
+            isolation: isolate;
+            overflow: hidden;
+            display: grid;
+            grid-template-columns: minmax(0, 1.2fr) minmax(300px, 0.8fr);
+            gap: 1.5rem;
+            align-items: center;
+            padding: 2rem;
+            border: 1px solid var(--line);
+            border-radius: 22px;
+            background:
+                radial-gradient(circle at 85% 10%, rgba(168, 85, 247, 0.13), transparent 35%),
+                linear-gradient(135deg, rgba(30, 41, 59, 0.82), rgba(15, 23, 42, 0.9));
+            box-shadow: 0 22px 50px rgba(2, 6, 23, 0.34);
+        }
+
+        .hero::before {
+            content: "";
+            position: absolute;
+            width: 310px;
+            height: 310px;
+            border-radius: 50%;
+            right: -150px;
+            top: -170px;
+            background: rgba(6, 182, 212, 0.1);
+            z-index: -1;
+        }
+
+        .hero::after {
+            content: "";
+            position: absolute;
+            width: 220px;
+            height: 220px;
+            border-radius: 50%;
+            left: 38%;
+            bottom: -170px;
+            background: rgba(99, 102, 241, 0.12);
+            z-index: -1;
+        }
+
+        .eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+            padding: 0.3rem 0.7rem;
+            border: 1px solid rgba(56, 189, 248, 0.25);
+            border-radius: 999px;
+            background: rgba(6, 182, 212, 0.08);
+            color: #a5f3fc;
+            font-size: 0.58rem;
+            font-weight: 900;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+        }
+
+        .hero h1 {
+            max-width: 650px;
+            margin: 0.6rem 0 0;
+            font-size: 2.7rem;
+            line-height: 1.08;
+            letter-spacing: -0.035em;
+        }
+
+        .hero h1 span {
+            background: linear-gradient(100deg, #67e8f9 0%, #a5b4fc 45%, #e9d5ff 100%);
             -webkit-background-clip: text;
+            background-clip: text;
             -webkit-text-fill-color: transparent;
         }
-        .club-title p {
-            margin: 0.25rem 0 0 0;
-            color: var(--text-secondary);
-            font-size: 0.95rem;
-        }
-        .btn-back {
-            background: linear-gradient(135deg, #4f46e5 0%, #3730a3 100%);
-            color: #ffffff;
-            border: none;
-            padding: 0.75rem 1.25rem;
-            border-radius: 8px;
-            cursor: pointer;
-            text-decoration: none;
-            font-weight: 600;
-            transition: all 0.2s;
-        }
-        .btn-back:hover {
-            transform: translateX(-3px);
-            filter: brightness(1.1);
+
+        .hero p {
+            max-width: 590px;
+            margin: 0.65rem 0 0;
+            color: var(--muted);
+            font-size: 0.84rem;
+            line-height: 1.65;
         }
 
-        /* Section Titles */
-        .section-title {
-            font-size: 1.5rem;
-            font-weight: 700;
-            margin-bottom: 1.5rem;
-            letter-spacing: 0.5px;
-            border-left: 4px solid var(--accent-cyan);
-            padding-left: 0.75rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        /* Section 1: Roadmap Leveling */
-        .roadmap-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
-            gap: 1.5rem;
-            margin-bottom: 3.5rem;
-        }
-        .level-card {
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            border-radius: 16px;
-            padding: 1.5rem;
-            position: relative;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
-            backdrop-filter: blur(10px);
-        }
-        .level-card.foundation { border-top: 4px solid var(--accent-cyan); }
-        .level-card.specialist { border-top: 4px solid var(--accent-purple); }
-        .level-card.champion { border-top: 4px solid var(--accent-pink); }
-
-        .level-badge {
-            display: inline-block;
-            padding: 0.25rem 0.75rem;
-            border-radius: 20px;
-            font-size: 0.75rem;
-            font-weight: 800;
-            text-transform: uppercase;
-            margin-bottom: 0.75rem;
-        }
-        .badge-found { background: rgba(6, 182, 212, 0.15); color: var(--accent-cyan); }
-        .badge-spec { background: rgba(168, 85, 247, 0.15); color: var(--accent-purple); }
-        .badge-champ { background: rgba(236, 72, 153, 0.15); color: var(--accent-pink); }
-
-        .level-card h3 { margin: 0 0 0.5rem 0; font-size: 1.25rem; color: #fff; }
-        .level-card p { font-size: 0.875rem; color: var(--text-secondary); margin-bottom: 1rem; }
-
-        /* Block Box Sub-materi */
-        .sub-block {
-            background: rgba(15, 23, 42, 0.6);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            border-radius: 10px;
-            padding: 1rem;
-            margin-bottom: 1rem;
-        }
-        .sub-block h4 {
-            margin: 0 0 0.5rem 0;
-            font-size: 0.95rem;
-            color: var(--accent-blue);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        
-        .materi-list, .platform-links, .lomba-list, .team-spec-list {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-            font-size: 0.85rem;
-        }
-        .materi-list li, .lomba-list li, .team-spec-list li {
-            position: relative;
-            padding-left: 1.2rem;
-            margin-bottom: 0.5rem;
-            color: #cbd5e1;
-        }
-        .materi-list li::before, .lomba-list li::before, .team-spec-list li::before {
-            content: "•";
-            color: var(--accent-cyan);
-            font-weight: bold;
-            font-size: 1.2rem;
-            position: absolute;
-            left: 0;
-            top: -2px;
-        }
-
-        .portofolio-link {
-            color: var(--accent-cyan);
-            text-decoration: none;
-            font-weight: 600;
-        }
-        .portofolio-link:hover {
-            text-decoration: underline;
-        }
-
-        .platform-links {
+        .hero-stats {
             display: flex;
             flex-wrap: wrap;
-            gap: 0.5rem;
-            margin-top: 0.5rem;
+            gap: 0.4rem;
+            margin-top: 1rem;
         }
-        .platform-btn {
-            background: rgba(56, 189, 248, 0.1);
-            border: 1px solid rgba(56, 189, 248, 0.25);
-            color: var(--accent-blue);
-            padding: 0.4rem 0.75rem;
-            border-radius: 6px;
-            text-decoration: none;
-            font-size: 0.8rem;
-            font-weight: 600;
-            transition: all 0.2s;
+
+        .hero-stats span {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.28rem;
+            padding: 0.28rem 0.55rem;
+            border: 1px solid var(--line);
+            border-radius: 7px;
+            background: rgba(15, 23, 42, 0.55);
+            color: var(--soft);
+            font-size: 0.62rem;
+            font-weight: 700;
+        }
+
+        .hero-stack {
+            display: grid;
+            gap: 0.6rem;
+        }
+
+        .mini-track {
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            gap: 0.65rem;
+            padding: 0.8rem;
+            border: 1px solid var(--line);
+            border-radius: 13px;
+            background: rgba(15, 23, 42, 0.62);
+        }
+
+        .mini-track.pixel {
+            border-color: rgba(168, 85, 247, 0.3);
+            background: linear-gradient(110deg, rgba(168, 85, 247, 0.13), rgba(236, 72, 153, 0.06));
+        }
+
+        .mini-track.code {
+            border-color: rgba(6, 182, 212, 0.3);
+            background: linear-gradient(110deg, rgba(6, 182, 212, 0.12), rgba(59, 130, 246, 0.06));
+        }
+
+        .mini-icon {
+            width: 37px;
+            height: 37px;
+            display: grid;
+            place-items: center;
+            flex-shrink: 0;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.07);
+            font-size: 1.05rem;
+        }
+
+        .mini-track b {
+            display: block;
+            font-size: 0.76rem;
+            letter-spacing: 0.06em;
+        }
+
+        .mini-track small {
+            display: block;
+            margin-top: 0.1rem;
+            color: var(--muted);
+            font-size: 0.62rem;
+            line-height: 1.3;
+        }
+
+        .mini-index {
+            margin-left: auto;
+            color: rgba(255, 255, 255, 0.18);
+            font-size: 1.1rem;
+            font-weight: 900;
+            letter-spacing: -0.04em;
+        }
+
+        /* ==========================================
+           SECTION
+        ========================================== */
+        .section {
+            margin-top: 1.5rem;
+        }
+
+        .section-head {
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-between;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-bottom: 0.85rem;
+        }
+
+        .section-kicker {
             display: inline-flex;
             align-items: center;
             gap: 0.3rem;
-        }
-        .platform-btn:hover {
-            background: var(--accent-blue);
-            color: #0f172a;
+            color: #67e8f9;
+            font-size: 0.58rem;
+            font-weight: 900;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
         }
 
-        /* Badges Biaya & Status Lomba */
-        .badge-fee {
-            font-size: 0.7rem;
-            padding: 0.15rem 0.4rem;
-            border-radius: 4px;
+        .section-head h2 {
+            margin: 0.2rem 0 0;
+            color: var(--text);
+            font-size: 1.5rem;
+            line-height: 1.2;
+            letter-spacing: -0.02em;
+        }
+
+        .section-head p {
+            max-width: 700px;
+            margin: 0.25rem 0 0;
+            color: var(--muted);
+            font-size: 0.74rem;
+            line-height: 1.55;
+        }
+
+        .section-note {
+            color: var(--muted);
+            font-size: 0.64rem;
             font-weight: 700;
-            margin-left: 0.4rem;
+            white-space: nowrap;
         }
-        .fee-free { background: rgba(16, 185, 129, 0.2); color: var(--accent-green); border: 1px solid rgba(16, 185, 129, 0.3); }
-        .fee-paid { background: rgba(236, 72, 153, 0.2); color: var(--accent-pink); border: 1px solid rgba(236, 72, 153, 0.3); }
-        .fee-var { background: rgba(245, 158, 11, 0.2); color: var(--accent-yellow); border: 1px solid rgba(245, 158, 11, 0.3); }
 
-        /* Section Form */
-        .course-form-card {
-            background: var(--bg-card);
-            border: 1px solid rgba(99, 102, 241, 0.2);
-            border-radius: 16px;
-            padding: 1.5rem;
-            margin-bottom: 3.5rem;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+        /* ==========================================
+           ROADMAP SHELL & TRACK TABS
+        ========================================== */
+        .roadmap-shell {
+            padding: 1.2rem;
+            border: 1px solid var(--line);
+            border-radius: 18px;
+            background: var(--card);
+            box-shadow: 0 16px 38px rgba(2, 6, 23, 0.24);
+            backdrop-filter: blur(12px);
         }
-        .form-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1rem;
-            margin-bottom: 1rem;
-        }
-        .form-group {
+
+        .roadmap-head {
             display: flex;
-            flex-direction: column;
-            gap: 0.4rem;
+            align-items: flex-end;
+            justify-content: space-between;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-bottom: 0.9rem;
         }
-        .form-group label {
-            font-size: 0.8rem;
-            font-weight: 600;
-            color: #cbd5e1;
+
+        .roadmap-head h2 {
+            margin: 0.2rem 0 0;
+            font-size: 1.3rem;
+            line-height: 1.2;
+            letter-spacing: -0.02em;
         }
-        .form-group input, .form-group select {
-            background: rgba(15, 23, 42, 0.8);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 8px;
-            padding: 0.7rem;
-            color: #fff;
-            font-size: 0.875rem;
+
+        .roadmap-head p {
+            margin: 0.2rem 0 0;
+            color: var(--muted);
+            font-size: 0.7rem;
+        }
+
+        .track-tabs {
+            display: flex;
+            gap: 0.35rem;
+            padding: 0.28rem;
+            border: 1px solid var(--line);
+            border-radius: 12px;
+            background: rgba(15, 23, 42, 0.7);
+        }
+
+        .track-tab {
+            display: flex;
+            align-items: center;
+            gap: 0.45rem;
+            padding: 0.5rem 0.7rem;
+            border: 0;
+            border-radius: 9px;
+            background: transparent;
+            color: var(--muted);
+            text-align: left;
+            cursor: pointer;
+            transition: background 0.18s ease, color 0.18s ease, box-shadow 0.18s ease;
+        }
+
+        .track-tab:hover,
+        .track-tab:focus-visible {
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--text);
             outline: none;
         }
-        .form-group input:focus, .form-group select:focus {
-            border-color: var(--accent-indigo);
-        }
-        .btn-submit {
-            background: linear-gradient(135deg, var(--accent-cyan) 0%, #0891b2 100%);
-            color: white;
-            border: none;
-            border-radius: 8px;
-            padding: 0.75rem 1.5rem;
-            font-weight: 700;
-            cursor: pointer;
-            transition: all 0.2s;
-            height: 42px;
-            margin-top: auto;
-        }
-        .btn-submit:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(6, 182, 212, 0.4);
+
+        .track-tab .tab-icon {
+            font-size: 0.9rem;
         }
 
-        /* Filter & Grid */
-        .filter-container {
-            display: flex;
-            gap: 0.5rem;
-            margin-bottom: 1.5rem;
-            flex-wrap: wrap;
-        }
-        .filter-btn {
-            background: rgba(30, 41, 59, 0.8);
-            border: 1px solid var(--border-color);
-            color: var(--text-secondary);
-            padding: 0.5rem 1rem;
-            border-radius: 20px;
-            font-size: 0.8rem;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-        .filter-btn.active, .filter-btn:hover {
-            background: var(--accent-indigo);
-            color: #ffffff;
-            border-color: var(--accent-indigo);
-        }
-
-        .course-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 1.5rem;
-        }
-        .cert-card {
-            background: linear-gradient(135deg, rgba(30, 41, 59, 0.6) 0%, rgba(15, 23, 42, 0.8) 100%);
-            border: 1px solid var(--border-color);
-            border-radius: 14px;
-            padding: 1.5rem;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            position: relative;
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
-            animation: fadeIn 0.3s ease;
-        }
-        .cert-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            margin-bottom: 0.75rem;
-        }
-        .cert-squad-tag {
+        .track-tab b {
+            display: block;
             font-size: 0.7rem;
-            font-weight: 800;
-            padding: 0.2rem 0.5rem;
-            border-radius: 4px;
-            text-transform: uppercase;
-            background: rgba(99, 102, 241, 0.2);
-            color: var(--accent-blue);
-            border: 1px solid rgba(99, 102, 241, 0.3);
+            line-height: 1.2;
+            letter-spacing: 0.04em;
         }
-        .cert-badge-platform {
-            background: rgba(255, 255, 255, 0.1);
-            padding: 0.2rem 0.5rem;
-            border-radius: 6px;
-            font-size: 0.75rem;
-            font-weight: 700;
-            color: #cbd5e1;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+
+        .track-tab small {
+            display: block;
+            margin-top: 0.08rem;
+            font-size: 0.55rem;
+            line-height: 1.2;
+            opacity: 0.8;
+            white-space: nowrap;
         }
-        .cert-info h3 {
-            margin: 0 0 0.25rem 0;
-            font-size: 1.15rem;
+
+        .track-tab[aria-selected="true"] {
             color: #ffffff;
+            box-shadow: inset 0 0 0 1px rgba(56, 189, 248, 0.28), 0 6px 14px rgba(2, 6, 23, 0.25);
+            background: linear-gradient(135deg, rgba(6, 182, 212, 0.24), rgba(99, 102, 241, 0.26));
+        }
+
+        .track-tab.pixel[aria-selected="true"] {
+            box-shadow: inset 0 0 0 1px rgba(216, 180, 254, 0.25), 0 6px 14px rgba(2, 6, 23, 0.25);
+            background: linear-gradient(135deg, rgba(168, 85, 247, 0.26), rgba(236, 72, 153, 0.2));
+        }
+
+        .track-panel {
+            --track-a: #06b6d4;
+            --track-b: #3b82f6;
+            --track-text: #67e8f9;
+            --track-line: rgba(6, 182, 212, 0.34);
+            --track-soft: rgba(6, 182, 212, 0.1);
+        }
+
+        .track-panel.pixel {
+            --track-a: #a855f7;
+            --track-b: #ec4899;
+            --track-text: #d8b4fe;
+            --track-line: rgba(168, 85, 247, 0.36);
+            --track-soft: rgba(168, 85, 247, 0.11);
+        }
+
+        .track-panel.code {
+            --track-a: #06b6d4;
+            --track-b: #3b82f6;
+            --track-text: #67e8f9;
+            --track-line: rgba(6, 182, 212, 0.34);
+            --track-soft: rgba(6, 182, 212, 0.1);
+        }
+
+        .track-meta {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 0.7rem;
+            flex-wrap: wrap;
+            margin: 0.1rem 0 0.65rem;
+            color: var(--muted);
+            font-size: 0.62rem;
+        }
+
+        .track-meta strong {
+            color: var(--track-text);
+            font-size: 0.64rem;
+            font-weight: 900;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+        }
+
+        /* ==========================================
+           ACCORDION LEVELS
+        ========================================== */
+        .accordion {
+            display: grid;
+            gap: 0.5rem;
+        }
+
+        .level-item {
+            overflow: hidden;
+            border: 1px solid var(--line);
+            border-radius: 13px;
+            background: rgba(15, 23, 42, 0.52);
+            transition: border-color 0.22s ease, box-shadow 0.22s ease, background 0.22s ease;
+        }
+
+        .level-item.open {
+            border-color: var(--track-line);
+            background: rgba(15, 23, 42, 0.75);
+            box-shadow: 0 10px 24px rgba(2, 6, 23, 0.2);
+        }
+
+        .level-toggle {
+            display: flex;
+            align-items: center;
+            gap: 0.7rem;
+            width: 100%;
+            padding: 0.75rem 0.85rem;
+            border: 0;
+            background: transparent;
+            color: var(--text);
+            font-family: inherit;
+            text-align: left;
+            cursor: pointer;
+        }
+
+        .level-toggle:hover,
+        .level-toggle:focus-visible {
+            background: rgba(255, 255, 255, 0.025);
+            outline: none;
+        }
+
+        .level-index {
+            width: 38px;
+            height: 38px;
+            display: grid;
+            place-items: center;
+            flex-shrink: 0;
+            border-radius: 10px;
+            background: linear-gradient(135deg, var(--track-a), var(--track-b));
+            color: #ffffff;
+            font-size: 0.68rem;
+            font-weight: 900;
+            box-shadow: 0 6px 14px rgba(2, 6, 23, 0.24);
+        }
+
+        .level-copy {
+            min-width: 0;
+        }
+
+        .level-copy b {
+            display: block;
+            color: #f8fafc;
+            font-size: 0.82rem;
             line-height: 1.3;
         }
-        .student-name {
-            font-size: 0.875rem;
-            color: var(--accent-cyan);
-            font-weight: 600;
-            margin-bottom: 0.75rem;
+
+        .level-copy small {
+            display: block;
+            margin-top: 0.08rem;
+            color: var(--muted);
+            font-size: 0.64rem;
+            line-height: 1.35;
         }
-        .cert-meta {
-            font-size: 0.8rem;
-            color: var(--text-secondary);
-            margin-bottom: 1.25rem;
-            line-height: 1.4;
+
+        .level-badge {
+            margin-left: auto;
+            padding: 0.18rem 0.45rem;
+            border: 1px solid var(--track-line);
+            border-radius: 999px;
+            background: var(--track-soft);
+            color: var(--track-text);
+            font-size: 0.52rem;
+            font-weight: 900;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            white-space: nowrap;
         }
-        .cert-actions {
+
+        .level-chevron {
+            margin-left: 0.1rem;
+            color: var(--muted);
+            font-size: 0.72rem;
+            transition: transform 0.25s ease;
+        }
+
+        .level-item.open .level-chevron {
+            transform: rotate(180deg);
+            color: var(--track-text);
+        }
+
+        .level-panel {
+            display: grid;
+            grid-template-rows: 0fr;
+            opacity: 0;
+            visibility: hidden;
+            transition: grid-template-rows 0.32s ease, opacity 0.25s ease, visibility 0.32s ease;
+        }
+
+        .level-item.open .level-panel {
+            grid-template-rows: 1fr;
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .level-panel-inner {
+            overflow: hidden;
+        }
+
+        .level-content {
+            padding: 0 0.9rem 0.9rem 4.1rem;
+        }
+
+        .level-desc {
+            margin: 0 0 0.6rem;
+            color: var(--soft);
+            font-size: 0.72rem;
+            line-height: 1.5;
+        }
+        /* ==========================================
+           TRACK CHIPS & MODULE CARDS
+        ========================================== */
+        .track-chips {
             display: flex;
-            justify-content: space-between;
             align-items: center;
+            gap: 0.35rem;
+            flex-wrap: wrap;
+            margin-bottom: 0.7rem;
         }
-        .btn-verify {
-            background: rgba(56, 189, 248, 0.1);
-            border: 1px solid rgba(56, 189, 248, 0.3);
-            color: var(--accent-blue);
-            padding: 0.5rem 0.85rem;
-            border-radius: 8px;
-            text-decoration: none;
-            font-size: 0.8rem;
-            font-weight: 600;
-            transition: all 0.2s;
-        }
-        .btn-verify:hover {
-            background: var(--accent-blue);
-            color: #0f172a;
-            box-shadow: 0 4px 12px rgba(56, 189, 248, 0.3);
-        }
-        .btn-delete-cert {
-            background: none;
-            border: none;
-            color: #ef4444;
-            cursor: pointer;
-            font-size: 0.85rem;
-            opacity: 0.5;
-            transition: opacity 0.2s;
-        }
-        .btn-delete-cert:hover { opacity: 1; }
 
-        .empty-text {
-            color: var(--text-secondary);
-            font-style: italic;
+        .track-chip {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.28rem;
+            padding: 0.26rem 0.5rem;
+            border: 1px solid var(--line);
+            border-radius: 6px;
+            background: rgba(255, 255, 255, 0.03);
+            color: var(--soft);
+            font-size: 0.58rem;
+            font-weight: 700;
+        }
+
+        .track-chip.accent {
+            border-color: var(--track-line);
+            background: var(--track-soft);
+            color: var(--track-text);
+        }
+
+        .level-modules {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 0.45rem;
+        }
+
+        .module-card {
+            position: relative;
+            padding: 0.6rem 0.62rem;
+            border: 1px solid var(--line);
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.028);
+            transition: border-color 0.2s ease, background 0.2s ease, transform 0.2s ease;
+        }
+
+        .module-card:hover {
+            border-color: var(--track-line);
+            background: rgba(255, 255, 255, 0.05);
+            transform: translateY(-2px);
+        }
+
+        .module-top {
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            margin-bottom: 0.2rem;
+        }
+
+        .module-num {
+            display: inline-grid;
+            place-items: center;
+            width: 20px;
+            height: 20px;
+            flex-shrink: 0;
+            border-radius: 6px;
+            background: var(--track-soft);
+            border: 1px solid var(--track-line);
+            color: var(--track-text);
+            font-size: 0.54rem;
+            font-weight: 900;
+        }
+
+        .module-card b {
+            display: block;
+            color: #f1f5f9;
+            font-size: 0.7rem;
+            line-height: 1.32;
+        }
+
+        .module-card p {
+            margin: 0.18rem 0 0;
+            color: var(--muted);
+            font-size: 0.61rem;
+            line-height: 1.45;
+        }
+
+        .module-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.22rem;
+            margin-top: 0.38rem;
+        }
+
+        .module-tags span {
+            padding: 0.1rem 0.32rem;
+            border-radius: 4px;
+            background: rgba(255, 255, 255, 0.055);
+            color: #cbd5e1;
+            font-size: 0.5rem;
+            font-weight: 700;
+            letter-spacing: 0.02em;
+        }
+
+        .module-tags span.hot {
+            background: var(--track-soft);
+            color: var(--track-text);
+        }
+
+        /* ==========================================
+           BIG-O TABLE
+        ========================================== */
+        .complexity {
+            margin-top: 0.55rem;
+            padding: 0.6rem 0.65rem;
+            border: 1px dashed var(--track-line);
+            border-radius: 10px;
+            background: rgba(6, 182, 212, 0.04);
+        }
+
+        .complexity-head {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            margin-bottom: 0.42rem;
+        }
+
+        .complexity-head b {
+            color: var(--track-text);
+            font-size: 0.62rem;
+            font-weight: 900;
+            letter-spacing: 0.07em;
+            text-transform: uppercase;
+        }
+
+        .complexity-head small {
+            color: var(--muted);
+            font-size: 0.55rem;
+        }
+
+        .complexity-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 0.3rem;
+        }
+
+        .complexity-row {
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            padding: 0.3rem 0.4rem;
+            border-radius: 6px;
+            background: rgba(15, 23, 42, 0.6);
+        }
+
+        .complexity-row code {
+            flex-shrink: 0;
+            color: #67e8f9;
+            font-family: "Consolas", "Courier New", monospace;
+            font-size: 0.58rem;
+            font-weight: 800;
+        }
+
+        .complexity-row span {
+            color: var(--muted);
+            font-size: 0.55rem;
+            line-height: 1.3;
+        }
+
+        .complexity-note {
+            margin: 0.42rem 0 0;
+            padding-top: 0.35rem;
+            border-top: 1px dashed rgba(148, 163, 184, 0.2);
+            color: #94a3b8;
+            font-size: 0.52rem;
+            line-height: 1.45;
+        }
+
+        /* ==========================================
+           TRIAD & COMPETITION
+        ========================================== */
+        .ecosystem-grid {
+            display: grid;
+            grid-template-columns: minmax(0, 1.15fr) minmax(280px, 0.85fr);
+            gap: 0.8rem;
+            align-items: start;
+        }
+
+        .triad {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 0.5rem;
+        }
+
+        .triad-card {
+            position: relative;
+            overflow: hidden;
+            padding: 0.85rem 0.75rem;
+            border: 1px solid var(--line);
+            border-radius: 13px;
+            background: var(--card);
+        }
+
+        .triad-card::before {
+            content: "";
+            position: absolute;
+            inset: 0 0 auto 0;
+            height: 3px;
+        }
+
+        .triad-card.hacker::before { background: linear-gradient(90deg, #06b6d4, #3b82f6); }
+        .triad-card.hipster::before { background: linear-gradient(90deg, #a855f7, #ec4899); }
+        .triad-card.hustler::before { background: linear-gradient(90deg, #f59e0b, #f97316); }
+
+        .triad-icon {
+            width: 36px;
+            height: 36px;
+            display: grid;
+            place-items: center;
+            margin-bottom: 0.45rem;
+            border: 1px solid var(--line);
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.05);
+            font-size: 1rem;
+        }
+
+        .triad-card b {
+            display: block;
+            font-size: 0.78rem;
+        }
+
+        .triad-card small {
+            display: block;
+            margin-top: 0.08rem;
+            color: var(--muted);
+            font-size: 0.58rem;
+            font-weight: 700;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+        }
+
+        .triad-card p {
+            margin: 0.35rem 0 0;
+            color: var(--soft);
+            font-size: 0.63rem;
+            line-height: 1.45;
+        }
+
+        .competition {
+            position: relative;
+            overflow: hidden;
+            padding: 0.95rem;
+            border: 1px solid rgba(56, 189, 248, 0.28);
+            border-radius: 15px;
+            background:
+                radial-gradient(circle at 100% 0%, rgba(99, 102, 241, 0.24), transparent 52%),
+                linear-gradient(135deg, rgba(6, 182, 212, 0.14), rgba(15, 23, 42, 0.85));
+        }
+
+        .competition-live {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+            padding: 0.2rem 0.5rem;
+            border: 1px solid rgba(16, 185, 129, 0.35);
+            border-radius: 999px;
+            background: rgba(16, 185, 129, 0.12);
+            color: #6ee7b7;
+            font-size: 0.52rem;
+            font-weight: 900;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+        }
+
+        .competition-live i {
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            background: #34d399;
+            box-shadow: 0 0 0 3px rgba(52, 211, 153, 0.18);
+        }
+
+        .competition h3 {
+            margin: 0.45rem 0 0;
+            font-size: 1rem;
+            line-height: 1.25;
+        }
+
+        .competition h3 span {
+            color: #67e8f9;
+        }
+
+        .competition p {
+            margin: 0.25rem 0 0;
+            color: var(--muted);
+            font-size: 0.63rem;
+            line-height: 1.5;
+        }
+
+        .competition-meta {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 0.35rem;
+            margin-top: 0.6rem;
+        }
+
+        .competition-meta div {
+            padding: 0.4rem 0.45rem;
+            border-radius: 7px;
+            background: rgba(15, 23, 42, 0.55);
+            border: 1px solid var(--line);
+        }
+
+        .competition-meta small {
+            display: block;
+            color: var(--muted);
+            font-size: 0.48rem;
+            font-weight: 800;
+            letter-spacing: 0.07em;
+            text-transform: uppercase;
+        }
+
+        .competition-meta b {
+            display: block;
+            margin-top: 0.08rem;
+            color: #e2e8f0;
+            font-size: 0.6rem;
+        }
+
+        .competition-note {
+            display: block;
+            margin-top: 0.55rem;
+            color: #a5b4fc;
+            font-size: 0.56rem;
+            line-height: 1.45;
+        }
+        /* ==========================================
+           CREDENTIAL VAULT
+        ========================================== */
+        .vault {
+            display: grid;
+            grid-template-columns: minmax(300px, 0.82fr) minmax(0, 1.18fr);
+            gap: 0.8rem;
+            align-items: start;
+        }
+
+        .vault-form-card {
+            padding: 1rem;
+            border: 1px solid var(--line);
+            border-radius: 15px;
+            background: var(--card);
+            box-shadow: 0 14px 32px rgba(2, 6, 23, 0.22);
+        }
+
+        .vault-form-head {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 0.7rem;
+            padding-bottom: 0.55rem;
+            border-bottom: 1px solid var(--line);
+        }
+
+        .vault-form-icon {
+            width: 32px;
+            height: 32px;
+            display: grid;
+            place-items: center;
+            flex-shrink: 0;
+            border-radius: 9px;
+            background: linear-gradient(135deg, rgba(6, 182, 212, 0.2), rgba(99, 102, 241, 0.2));
+            border: 1px solid rgba(56, 189, 248, 0.24);
+            font-size: 0.9rem;
+        }
+
+        .vault-form-head b {
+            display: block;
+            font-size: 0.78rem;
+            line-height: 1.2;
+        }
+
+        .vault-form-head small {
+            display: block;
+            margin-top: 0.08rem;
+            color: var(--muted);
+            font-size: 0.58rem;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 0.5rem;
+        }
+
+        .field {
+            display: grid;
+            gap: 0.2rem;
+        }
+
+        .field.full {
             grid-column: 1 / -1;
-            text-align: center;
-            padding: 3rem;
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: scale(0.98); }
-            to { opacity: 1; transform: scale(1); }
+        .field label {
+            color: var(--muted);
+            font-size: 0.56rem;
+            font-weight: 900;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+        }
+
+        .field input,
+        .field select {
+            width: 100%;
+            min-width: 0;
+            padding: 0.5rem 0.55rem;
+            border: 1px solid rgba(148, 163, 184, 0.24);
+            border-radius: 8px;
+            background: rgba(15, 23, 42, 0.72);
+            color: var(--text);
+            font-family: inherit;
+            font-size: 0.7rem;
+            outline: none;
+            transition: border-color 0.18s ease, box-shadow 0.18s ease, background 0.18s ease;
+        }
+
+        .field input::placeholder {
+            color: #64748b;
+        }
+
+        .field input:focus,
+        .field select:focus {
+            border-color: var(--cyan);
+            background: rgba(15, 23, 42, 0.95);
+            box-shadow: 0 0 0 3px rgba(6, 182, 212, 0.14);
+        }
+
+        .field input.invalid,
+        .field select.invalid {
+            border-color: var(--red);
+            box-shadow: 0 0 0 3px rgba(244, 63, 94, 0.13);
+        }
+
+        .form-actions {
+            display: flex;
+            gap: 0.4rem;
+            flex-wrap: wrap;
+            margin-top: 0.65rem;
+        }
+
+        .btn-primary,
+        .btn-ghost {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.3rem;
+            padding: 0.52rem 0.8rem;
+            border-radius: 8px;
+            font-family: inherit;
+            font-size: 0.68rem;
+            font-weight: 800;
+            cursor: pointer;
+            transition: transform 0.18s ease, background 0.18s ease, border-color 0.18s ease, box-shadow 0.18s ease;
+        }
+
+        .btn-primary {
+            flex: 1;
+            border: 1px solid rgba(56, 189, 248, 0.4);
+            background: linear-gradient(135deg, #0891b2, #4f46e5);
+            color: #ffffff;
+            box-shadow: 0 8px 18px rgba(79, 70, 229, 0.24);
+        }
+
+        .btn-primary:hover,
+        .btn-primary:focus-visible {
+            transform: translateY(-1px);
+            box-shadow: 0 11px 22px rgba(79, 70, 229, 0.32);
+            outline: none;
+        }
+
+        .btn-ghost {
+            border: 1px solid var(--line);
+            background: rgba(255, 255, 255, 0.04);
+            color: var(--soft);
+        }
+
+        .btn-ghost:hover,
+        .btn-ghost:focus-visible {
+            background: rgba(255, 255, 255, 0.09);
+            outline: none;
+        }
+
+        .form-hint {
+            margin: 0.5rem 0 0;
+            color: var(--muted);
+            font-size: 0.56rem;
+            line-height: 1.45;
+        }
+
+        .vault-list-card {
+            padding: 1rem;
+            border: 1px solid var(--line);
+            border-radius: 15px;
+            background: var(--card);
+            box-shadow: 0 14px 32px rgba(2, 6, 23, 0.22);
+        }
+
+        .vault-list-head {
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-between;
+            gap: 0.6rem;
+            flex-wrap: wrap;
+            margin-bottom: 0.6rem;
+        }
+
+        .vault-list-head b {
+            display: block;
+            font-size: 0.78rem;
+        }
+
+        .vault-list-head small {
+            display: block;
+            margin-top: 0.08rem;
+            color: var(--muted);
+            font-size: 0.58rem;
+        }
+
+        .vault-counter {
+            padding: 0.18rem 0.45rem;
+            border-radius: 999px;
+            border: 1px solid rgba(56, 189, 248, 0.28);
+            background: rgba(6, 182, 212, 0.1);
+            color: #a5f3fc;
+            font-size: 0.55rem;
+            font-weight: 900;
+            white-space: nowrap;
+        }
+
+        .filter-bar {
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+            flex-wrap: wrap;
+            margin-bottom: 0.65rem;
+        }
+
+        .filter-btn {
+            padding: 0.34rem 0.6rem;
+            border: 1px solid var(--line);
+            border-radius: 999px;
+            background: transparent;
+            color: var(--muted);
+            font-family: inherit;
+            font-size: 0.6rem;
+            font-weight: 800;
+            cursor: pointer;
+            transition: all 0.18s ease;
+        }
+
+        .filter-btn:hover,
+        .filter-btn:focus-visible {
+            color: var(--text);
+            border-color: rgba(148, 163, 184, 0.36);
+            outline: none;
+        }
+
+        .filter-btn[aria-pressed="true"] {
+            border-color: rgba(56, 189, 248, 0.4);
+            background: rgba(6, 182, 212, 0.16);
+            color: #a5f3fc;
+        }
+
+        .credential-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(215px, 1fr));
+            gap: 0.5rem;
+        }
+
+        .credential-card {
+            position: relative;
+            overflow: hidden;
+            padding: 0.7rem;
+            border: 1px solid var(--line);
+            border-radius: 11px;
+            background: rgba(15, 23, 42, 0.6);
+            transition: border-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .credential-card::before {
+            content: "";
+            position: absolute;
+            inset: 0 auto 0 0;
+            width: 3px;
+            background: linear-gradient(180deg, var(--cyan), var(--indigo));
+        }
+
+        .credential-card.pixel::before {
+            background: linear-gradient(180deg, var(--purple), var(--pink));
+        }
+
+        .credential-card:hover {
+            border-color: rgba(148, 163, 184, 0.3);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 22px rgba(2, 6, 23, 0.28);
+        }
+
+        .credential-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 0.4rem;
+            margin-bottom: 0.35rem;
+        }
+
+        .squad-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.2rem;
+            padding: 0.12rem 0.38rem;
+            border-radius: 4px;
+            font-size: 0.48rem;
+            font-weight: 900;
+            letter-spacing: 0.07em;
+            text-transform: uppercase;
+        }
+
+        .squad-tag.pixel {
+            background: rgba(168, 85, 247, 0.16);
+            color: #d8b4fe;
+            border: 1px solid rgba(168, 85, 247, 0.28);
+        }
+
+        .squad-tag.code {
+            background: rgba(6, 182, 212, 0.14);
+            color: #67e8f9;
+            border: 1px solid rgba(6, 182, 212, 0.28);
+        }
+
+        .verify-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.18rem;
+            font-size: 0.48rem;
+            font-weight: 800;
+            white-space: nowrap;
+        }
+
+        .verify-badge.ok {
+            color: #6ee7b7;
+        }
+
+        .verify-badge.pending {
+            color: #fbbf24;
+        }
+
+        .credential-card h4 {
+            margin: 0;
+            color: #f1f5f9;
+            font-size: 0.72rem;
+            line-height: 1.32;
+            overflow-wrap: anywhere;
+        }
+
+        .credential-issuer {
+            margin: 0.18rem 0 0;
+            color: var(--muted);
+            font-size: 0.58rem;
+            line-height: 1.35;
+            overflow-wrap: anywhere;
+        }
+
+        .credential-meta {
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+            flex-wrap: wrap;
+            margin-top: 0.35rem;
+        }
+
+        .credential-meta span {
+            color: #94a3b8;
+            font-size: 0.52rem;
+        }
+
+        .credential-meta a {
+            color: #67e8f9;
+            font-size: 0.52rem;
+            font-weight: 800;
+            text-decoration: none;
+            overflow-wrap: anywhere;
+        }
+
+        .credential-meta a:hover {
+            text-decoration: underline;
+        }
+
+        .credential-actions {
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+            margin-top: 0.5rem;
+            padding-top: 0.45rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.06);
+        }
+
+        .credential-actions button {
+            flex: 1;
+            padding: 0.3rem 0.4rem;
+            border-radius: 6px;
+            border: 1px solid var(--line);
+            background: rgba(255, 255, 255, 0.035);
+            color: var(--soft);
+            font-family: inherit;
+            font-size: 0.54rem;
+            font-weight: 800;
+            cursor: pointer;
+            transition: all 0.18s ease;
+        }
+
+        .credential-actions button:hover,
+        .credential-actions button:focus-visible {
+            background: rgba(255, 255, 255, 0.09);
+            color: #ffffff;
+            outline: none;
+        }
+
+        .credential-actions button.verify {
+            border-color: rgba(16, 185, 129, 0.3);
+            color: #6ee7b7;
+        }
+
+        .credential-actions button.verify:hover {
+            background: rgba(16, 185, 129, 0.14);
+        }
+
+        .credential-actions button.remove {
+            border-color: rgba(244, 63, 94, 0.28);
+            color: #fda4af;
+        }
+
+        .credential-actions button.remove:hover {
+            background: rgba(244, 63, 94, 0.14);
+        }
+
+        .credential-actions button.remove.armed {
+            background: rgba(244, 63, 94, 0.22);
+            border-color: rgba(244, 63, 94, 0.6);
+            color: #fecdd3;
+        }
+
+        .vault-empty {
+            display: grid;
+            place-items: center;
+            gap: 0.2rem;
+            padding: 1.4rem 0.8rem;
+            border: 1px dashed rgba(148, 163, 184, 0.24);
+            border-radius: 11px;
+            text-align: center;
+        }
+
+        .vault-empty span {
+            font-size: 1.4rem;
+        }
+
+        .vault-empty b {
+            font-size: 0.7rem;
+        }
+
+        .vault-empty small {
+            color: var(--muted);
+            font-size: 0.58rem;
+        }
+
+        /* ==========================================
+           TOAST
+        ========================================== */
+        .toast {
+            position: fixed;
+            left: 50%;
+            bottom: 1.2rem;
+            z-index: 999;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            width: min(370px, calc(100vw - 2rem));
+            padding: 0.7rem 0.8rem;
+            border: 1px solid rgba(56, 189, 248, 0.32);
+            border-radius: 11px;
+            background: #16233b;
+            box-shadow: 0 16px 36px rgba(2, 6, 23, 0.5);
+            opacity: 0;
+            visibility: hidden;
+            transform: translate(-50%, 14px);
+            transition: opacity 0.24s ease, transform 0.24s ease, visibility 0.24s ease;
+            pointer-events: none;
+        }
+
+        .toast.show {
+            opacity: 1;
+            visibility: visible;
+            transform: translate(-50%, 0);
+        }
+
+        .toast-icon {
+            width: 30px;
+            height: 30px;
+            display: grid;
+            place-items: center;
+            flex-shrink: 0;
+            border-radius: 8px;
+            background: rgba(16, 185, 129, 0.16);
+            font-size: 0.85rem;
+        }
+
+        .toast.error {
+            border-color: rgba(244, 63, 94, 0.4);
+        }
+
+        .toast.error .toast-icon {
+            background: rgba(244, 63, 94, 0.16);
+        }
+
+        .toast b {
+            display: block;
+            color: #f1f5f9;
+            font-size: 0.7rem;
+            line-height: 1.3;
+        }
+
+        .toast small {
+            display: block;
+            margin-top: 0.08rem;
+            color: var(--muted);
+            font-size: 0.58rem;
+            line-height: 1.35;
+        }
+
+        /* ==========================================
+           FOOTER
+        ========================================== */
+        .club-footer {
+            margin-top: 1.5rem;
+            padding-top: 0.85rem;
+            border-top: 1px solid var(--line);
+            text-align: center;
+            color: #64748b;
+            font-size: 0.62rem;
+            line-height: 1.6;
+        }
+
+        .club-footer b {
+            color: #a5b4fc;
+        }
+
+        /* ==========================================
+           RESPONSIVE
+        ========================================== */
+        @media (max-width: 960px) {
+            .hero {
+                grid-template-columns: 1fr;
+                padding: 1.6rem;
+            }
+
+            .ecosystem-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .vault {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 760px) {
+            .roadmap-head {
+                align-items: stretch;
+            }
+
+            .track-tabs {
+                width: 100%;
+            }
+
+            .track-tab {
+                flex: 1;
+                justify-content: center;
+            }
+
+            .triad {
+                grid-template-columns: 1fr;
+            }
+
+            .triad-card {
+                display: grid;
+                grid-template-columns: auto 1fr;
+                column-gap: 0.55rem;
+                align-items: center;
+            }
+
+            .triad-icon {
+                grid-row: 1 / span 3;
+                margin-bottom: 0;
+            }
+
+            .triad-card p {
+                grid-column: 2;
+            }
+        }
+
+        @media (max-width: 640px) {
+            .club-container {
+                padding: 1rem 0.9rem 2rem;
+            }
+
+            .topbar {
+                align-items: flex-start;
+                flex-wrap: wrap;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .hero p {
+                font-size: 0.78rem;
+            }
+
+            .section-head h2 {
+                font-size: 1.22rem;
+            }
+
+            .roadmap-shell {
+                padding: 0.8rem;
+                border-radius: 14px;
+            }
+
+            .level-content {
+                padding: 0 0.75rem 0.8rem;
+            }
+
+            .level-modules {
+                grid-template-columns: 1fr;
+            }
+
+            .level-copy small {
+                display: none;
+            }
+
+            .level-badge {
+                display: none;
+            }
+
+            .complexity-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .credential-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .competition-meta {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 380px) {
+            .track-tab small {
+                display: none;
+            }
+
+            .level-index {
+                width: 32px;
+                height: 32px;
+            }
+
+            .hero-stats span {
+                font-size: 0.55rem;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *,
+            *::before,
+            *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+                scroll-behavior: auto !important;
+            }
         }
     </style>
 </head>
 <body>
-
     <div class="club-container">
-        <!-- Header Utama -->
-        <header class="club-header">
-            <div class="club-title">
-                <h1>📖 PIXEL AND CODE — Learning Roadmap & Showcase</h1>
-                <p>Ekosistem Pembelajaran Berjenjang & Pusat Kredensial Talent Ekosistem Kode</p>
-            </div>
-            <a href="index.html" class="btn-back">⬅ Menu Utama</a>
+        <!-- ============================================================
+             TOP BAR
+        ============================================================ -->
+        <header class="topbar">
+            <a class="brand" href="club-course.html" aria-label="PIXEL & CODE Learning Roadmap">
+                <span class="brand-mark" aria-hidden="true">P×C</span>
+                <span>
+                    <b>PIXEL & CODE</b>
+                    <small>Learning Roadmap &amp; Talent Ecosystem</small>
+                </span>
+            </a>
+            <a class="btn-back" href="index.html">⬅ Dashboard</a>
         </header>
 
-        <!-- BAGIAN 1: PETA PERJALANAN BELAJAR (LEARNING ROADMAP) -->
-        <h2 class="section-title">🗺️ Peta Perjalanan Belajar (Specialist Squad Roadmap)</h2>
-        <div class="roadmap-grid">
-            
-            <!-- LEVEL 1: FOUNDATION -->
-            <div class="level-card foundation">
-                <span class="level-badge badge-found">Level 1: All Members</span>
-                <h3>🌱 Foundation & Problem Solving</h3>
-                <p>Membangun pola pikir komputasional mendasar untuk seluruh siswa sebelum masuk ke spesialisasi.</p>
-
-                <!-- Sub-Block 1: Penjelasan Materi Utama -->
-                <div class="sub-block">
-                    <h4>📘 Materi Utama (<a href="https://retno412.github.io/portofolio" target="_blank" class="portofolio-link">Portofolio Acuan</a>):</h4>
-                    <ul class="materi-list">
-                        <li><strong>Computational Thinking:</strong> Metode memecahkan masalah kompleks dengan cara memecahnya menjadi bagian-bagian kecil (dekomposisi, pengenalan pola, dan abstraksi).</li>
-                        <li><strong>Algoritma Dasar:</strong> Menyusun langkah-langkah sistematis dan logis untuk menyelesaikan instruksi program secara akurat.</li>
-                        <li><strong>Git & GitHub Version Control:</strong> Pengelolaan versi kode program serta kolaborasi pemuatan repositori proyek secara profesional.</li>
-                        <li><strong>HTML5 & CSS3 Fundamentals:</strong> Dasar pembentukan struktur halaman web interaktif dan penataan tata letak visual (responsive layout).</li>
-                    </ul>
+        <!-- ============================================================
+             HERO
+        ============================================================ -->
+        <section class="hero" aria-labelledby="hero-title">
+            <div>
+                <span class="eyebrow">⚡ Dual-Track Talent Program</span>
+                <h1 id="hero-title">Dua Jalur, Satu <span>Ekosistem Talenta.</span></h1>
+                <p>Pilih jalur kreatif atau teknis, ikuti roadmap tiga level, lalu kumpulkan kredensial nyata. Fondasi kuat dulu, spesialisasi kemudian, juara di akhir.</p>
+                <div class="hero-stats">
+                    <span>🧭 2 jalur utama</span>
+                    <span>📚 3 level terstruktur</span>
+                    <span>🏆 Jalur lomba</span>
+                    <span>🗂️ Vault kredensial</span>
                 </div>
+            </div>
 
-                <!-- Sub-Block 2: Target Platform Kredensial -->
-                <div class="sub-block">
-                    <h4>🎯 Target Platform Kredensial:</h4>
-                    <div class="platform-links">
-                        <a href="https://tlx.toki.id" target="_blank" class="platform-btn">🔗 TLX TOKI (Dasar)</a>
-                        <a href="https://www.w3schools.com" target="_blank" class="platform-btn">🔗 W3Schools</a>
-                        <a href="https://www.freecodecamp.org" target="_blank" class="platform-btn">🔗 freeCodeCamp (Responsive Web)</a>
-                        <a href="https://www.sololearn.com" target="_blank" class="platform-btn">🔗 SoloLearn</a>
+            <div class="hero-stack" aria-label="Ringkasan dua jalur">
+                <div class="mini-track pixel">
+                    <span class="mini-icon" aria-hidden="true">🎨</span>
+                    <div>
+                        <b>PIXEL</b>
+                        <small>Creative &amp; Social Media Specialist</small>
                     </div>
+                    <span class="mini-index" aria-hidden="true">01</span>
+                </div>
+                <div class="mini-track code">
+                    <span class="mini-icon" aria-hidden="true">💻</span>
+                    <div>
+                        <b>CODE</b>
+                        <small>Technical &amp; Software Engineering</small>
+                    </div>
+                    <span class="mini-index" aria-hidden="true">02</span>
                 </div>
             </div>
+        </section>
 
-            <!-- LEVEL 2: SPECIALIZATION -->
-            <div class="level-card specialist">
-                <span class="level-badge badge-spec">Level 2: Squad Specialist</span>
-                <h3>🚀 Pemetaan Peminatan & Squad</h3>
-                <p>Siswa memilih 1 spesialisasi sesuai minat dan bakat setelah menyelesaikan materi Foundation.</p>
+        <!-- ============================================================
+             ROADMAP
+        ============================================================ -->
+        <section class="section" id="roadmap" aria-labelledby="roadmap-title">
+            <div class="roadmap-shell">
+                <div class="roadmap-head">
+                    <div>
+                        <span class="section-kicker">🧭 Level Roadmap</span>
+                        <h2 id="roadmap-title">Pilih Jalurmu, Buka Setiap Level</h2>
+                        <p>Klik kartu level untuk melihat sub-materi. Satu level dibuka pada satu waktu agar tetap ringkas.</p>
+                    </div>
 
-                <div class="sub-block">
-                    <h4>🌐 Web Development Squad:</h4>
-                    <ul class="materi-list">
-                        <li>JavaScript (ES6+), Node.js, Express.js, PHP Native/Laravel, REST API, & Database MySQL/PostgreSQL.</li>
-                    </ul>
-                </div>
-
-                <div class="sub-block">
-                    <h4>📱 Mobile App Squad:</h4>
-                    <ul class="materi-list">
-                        <li>Dart & Flutter Framework, State Management (Provider/Bloc), Local Storage, & REST API Integration.</li>
-                    </ul>
-                </div>
-
-                <div class="sub-block">
-                    <h4>🎨 UI/UX & Digital Product Design:</h4>
-                    <ul class="materi-list">
-                        <li>Figma Wireframing, User Research, High-Fidelity UI Design, Design System, & Usability Testing.</li>
-                    </ul>
-                </div>
-
-                <div class="sub-block">
-                    <h4>🎮 Game Development Squad:</h4>
-                    <ul class="materi-list">
-                        <li>Godot Engine / Unity 2D, C#, Sprite Animation, Game Physics, Game Logic, & Level Design.</li>
-                    </ul>
-                </div>
-
-                <div class="sub-block">
-                    <h4>☁️ Cloud, DevOps & Database Squad:</h4>
-                    <ul class="materi-list">
-                        <li>Linux CLI, SQL Query Optimization, Docker Fundamentals, & Cloud Infrastructure (AWS/GCP).</li>
-                    </ul>
-                </div>
-            </div>
-
-            <!-- LEVEL 3: COMPETITION & CHAMPIONSHIP -->
-            <div class="level-card champion">
-                <span class="level-badge badge-champ">Level 3: Competitive Ready</span>
-                <h3>🏆 Tim Lomba & Portofolio Industri</h3>
-                <p>Inkubasi intensif untuk siswa terpilih guna mengikuti kompetisi nasional dan proyek tingkat lanjut.</p>
-
-                <!-- Sub-Block 1: Competitive Programming -->
-                <div class="sub-block">
-                    <h4>🧠 Competitive Programming (CP) Squad:</h4>
-                    <ul class="materi-list">
-                        <li><strong>C++ STL:</strong> Penggunaan Standard Template Library (Vector, Map, Set) untuk efisiensi koding.</li>
-                        <li><strong>Analisis Kompleksitas Big-O:</strong> Mengukur kecepatan eksekusi algoritma ($O(1)$, $O(n)$, $O(\log n)$).</li>
-                        <li><strong>Structured Data:</strong> Penerapan struktur data tingkat lanjut seperti Tree dan Graph.</li>
-                        <li><strong>Dynamic Programming:</strong> Teknik pemecahan masalah kompleks dengan menyimpan hasil perhitungan sebelumnya.</li>
-                    </ul>
-                </div>
-
-                <!-- Sub-Block BARU: Kriteria & Spesifikasi Tim Lomba Ideal -->
-                <div class="sub-block" style="border-left: 3px solid var(--accent-purple);">
-                    <h4>👥 Spesifikasi Tim Ideal Kompetisi Inovasi & Coding:</h4>
-                    <p style="font-size:0.8rem; color:#cbd5e1; margin-top:0;">Dianalisis dari standar lomba nasional seperti <strong>JHIC 2.0 (Jagoan Hosting) & Hackathon</strong>, tim siap tanding dibentuk dari gabungan 3 peran utama (*The Triad*):</p>
-                    <ul class="team-spec-list">
-                        <li><strong>👨‍💻 The Hacker (Lead Developer / Web Specialist):</strong> Menguasai logika koding, integrasi database, & hosting deployment (HTML/CSS/JS/PHP/Laravel atau Node.js).</li>
-                        <li><strong>🎨 The Hipster (UI/UX Designer & Product Specialist):</strong> Menguasai Figma, wireframing, estetika antarmuka, serta penyusunan slide presentasi produk (*pitch deck*).</li>
-                        <li><strong>💡 The Hustler / Pitcher (Business & Impact Lead):</strong> Memahami problem-solving, analisis dampak sosial/inovasi sekolah, serta kemampuan menyampaikan gagasan/pitching di hadapan juri.</li>
-                        <li><strong>👨‍🏫 Mentor & Inovator (Guru / Staff IT):</strong> Membimbing kesesuaian solusi digital dengan kebutuhan nyata di sekolah dan mendampingi manajemen proyek tim.</li>
-                    </ul>
-                </div>
-
-                <!-- Sub-Block 2: Target LKS SMK -->
-                <div class="sub-block">
-                    <h4>🎯 Target LKS SMK 2027 (Kabupaten Bekasi):</h4>
-                    <p style="font-size:0.8rem; color:#38bdf8; margin-top:0;">📅 Estimasi Pelaksanaan: <strong>Februari – Maret 2027</strong></p>
-                    <ul class="lomba-list">
-                        <li>Teknik Pengkabelan Jaringan Informasi <span class="badge-fee fee-free">FREE</span></li>
-                        <li>Teknolgi Keamanan Siber (Cyber Security) <span class="badge-fee fee-free">FREE</span></li>
-                        <li>Teknologi Desain Grafis (Graphic Design) <span class="badge-fee fee-free">FREE</span></li>
-                        <li>Piranti Lunak untuk Bisnis (IT Software Solution) <span class="badge-fee fee-free">FREE</span></li>
-                        <li>Sistem Administrasi Jaringan (IT Network System) <span class="badge-fee fee-free">FREE</span></li>
-                        <li>Komputasi Awan (Cloud Computing) <span class="badge-fee fee-free">FREE</span></li>
-                        <li>Teknik Desain Laman (Web Technologies) <span class="badge-fee fee-free">FREE</span></li>
-                        <li>Seni Gim Tiga Dimensi (3D Game Art) <span class="badge-fee fee-free">FREE</span></li>
-                    </ul>
-                </div>
-
-                <!-- Sub-Block 3: Ajang Kompetisi Terbuka -->
-                <div class="sub-block">
-                    <h4>🌐 Ajang Kompetisi Terbuka & Event Tambahan:</h4>
-                    <ul class="lomba-list">
-                        <li><strong>Olimpiade Informatika (NOI / KSN-K):</strong> Seleksi bertahap nasional <span class="badge-fee fee-free">FREE</span></li>
-                        <li><strong>Hackathon (Universitas / Industri):</strong> Lomba cipta solusi digital cepat <span class="badge-fee fee-var">FREE / FEE VARIES</span></li>
-                        <li><strong>Game Jam (Global / Indonesia):</strong> Lomba membuat game dalam kurun 48-72 jam <span class="badge-fee fee-free">FREE</span></li>
-                    </ul>
-                </div>
-
-                <!-- Sub-Block 4: Dynamic Area untuk Lomba Aktif (Termasuk JHIC 2.0) -->
-                <div class="sub-block" style="border: 1px dashed var(--accent-pink); background: rgba(236, 72, 153, 0.05);">
-                    <h4 style="color: var(--accent-pink);">🔥 Lomba Aktif / Sedang Berlangsung:</h4>
-                    <ul class="lomba-list" id="activeLombaList">
-                        <li style="line-height:1.4;">
-                            <strong>Jagoan Hosting Innovation Competition 2026 (JHIC 2.0)</strong> <span class="badge-fee fee-free">FREE (Guru/Staff)</span> <span class="badge-fee fee-var">REGULAR (Siswa)</span><br>
-                            <span style="font-size:0.78rem; color:#94a3b8;">
-                                🏆 Hadiah Total Rp70 Juta & Trofi Komdigi | Final: Yogyakarta<br>
-                                🎯 Kategori: 1) Web Sekolah, 2) Ide Bisnis Digital, 3) Penggerak Inovasi (Guru/Staff)<br>
-                                🗓️ Registrasi: 19 Juni – 14 Agustus 2026 | Link: <a href="https://s.id/JHIC2026" target="_blank" style="color:var(--accent-blue);">s.id/JHIC2026</a>
+                    <div class="track-tabs" role="tablist" aria-label="Pilih jalur pembelajaran">
+                        <button type="button" class="track-tab pixel" role="tab" id="tab-pixel" aria-selected="true" aria-controls="panel-pixel" tabindex="0">
+                            <span class="tab-icon" aria-hidden="true">🎨</span>
+                            <span>
+                                <b>PIXEL</b>
+                                <small>Creative Track</small>
                             </span>
-                        </li>
-                        <li style="margin-top:0.5rem;">Global Game Jam / Hackathon Terbuka <span class="badge-fee fee-free">FREE</span></li>
-                    </ul>
+                        </button>
+                        <button type="button" class="track-tab code" role="tab" id="tab-code" aria-selected="false" aria-controls="panel-code" tabindex="-1">
+                            <span class="tab-icon" aria-hidden="true">💻</span>
+                            <span>
+                                <b>CODE</b>
+                                <small>Engineering Track</small>
+                            </span>
+                        </button>
+                    </div>
                 </div>
 
+                <!-- ========================================================
+                     PIXEL TRACK
+                ======================================================== -->
+                <div class="track-panel pixel" id="panel-pixel" role="tabpanel" aria-labelledby="tab-pixel" tabindex="0">
+                    <div class="track-meta">
+                        <strong>🎨 Social Media Specialist &amp; Creative Content</strong>
+                        <span>5 modul inti · 3 level · portofolio konten</span>
+                    </div>
+
+                    <div class="track-chips">
+                        <span class="track-chip accent">TikTok</span>
+                        <span class="track-chip accent">Instagram Reels</span>
+                        <span class="track-chip">YouTube Shorts</span>
+                        <span class="track-chip">CapCut</span>
+                        <span class="track-chip">Canva</span>
+                    </div>
+
+                    <div class="accordion" data-accordion="pixel">
+                        <!-- LEVEL 1 -->
+                        <article class="level-item">
+                            <button type="button" class="level-toggle" id="pixel-l1-btn" aria-expanded="false" aria-controls="pixel-l1">
+                                <span class="level-index">01</span>
+                                <span class="level-copy">
+                                    <b>Foundation · Fondasi Kreatif</b>
+                                    <small>Riset ide, rasa visual, dan dasar pengambilan gambar</small>
+                                </span>
+                                <span class="level-badge">Level 1</span>
+                                <span class="level-chevron" aria-hidden="true">▾</span>
+                            </button>
+                            <div class="level-panel" id="pixel-l1" role="region" aria-labelledby="pixel-l1-btn" aria-hidden="true">
+                                <div class="level-panel-inner">
+                                    <div class="level-content">
+                                        <p class="level-desc">Sebelum menekan tombol rekam, latih mata dan kebiasaan riset. Konten bagus selalu dimulai dari ide yang jelas.</p>
+                                        <div class="level-modules">
+                                            <div class="module-card">
+                                                <div class="module-top">
+                                                    <span class="module-num">1</span>
+                                                    <b>Brainstorming Ide &amp; Tren Riset Konten</b>
+                                                </div>
+                                                <p>Riset tren harian, bedah konten viral, lalu ubah temuan menjadi 10 ide yang relevan dengan audiens sekolah.</p>
+                                                <div class="module-tags">
+                                                    <span class="hot">TikTok Creative Center</span>
+                                                    <span>IG Insights</span>
+                                                    <span>Trend Mapping</span>
+                                                </div>
+                                            </div>
+                                            <div class="module-card">
+                                                <div class="module-top">
+                                                    <span class="module-num">2</span>
+                                                    <b>Fotografi &amp; Videografi Smartphone</b>
+                                                </div>
+                                                <p>Atur lighting natural, pilih angle yang bercerita, dan pastikan audio framing bersih tanpa alat mahal.</p>
+                                                <div class="module-tags">
+                                                    <span class="hot">Lighting</span>
+                                                    <span>Angle</span>
+                                                    <span>Audio Framing</span>
+                                                </div>
+                                            </div>
+                                            <div class="module-card">
+                                                <div class="module-top">
+                                                    <span class="module-num">3</span>
+                                                    <b>Riset Audiens &amp; Persona</b>
+                                                </div>
+                                                <p>Kenali siapa yang menonton: usia, minat, jam aktif, dan masalah yang ingin mereka selesaikan.</p>
+                                                <div class="module-tags">
+                                                    <span>Audience Persona</span>
+                                                    <span>Insight</span>
+                                                </div>
+                                            </div>
+                                            <div class="module-card">
+                                                <div class="module-top">
+                                                    <span class="module-num">4</span>
+                                                    <b>Visual Identity Dasar</b>
+                                                </div>
+                                                <p>Pilih palet warna, tipografi, dan gaya visual agar setiap konten terasa berasal dari satu brand.</p>
+                                                <div class="module-tags">
+                                                    <span>Moodboard</span>
+                                                    <span>Color Palette</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </article>
+
+                        <!-- LEVEL 2 -->
+                        <article class="level-item">
+                            <button type="button" class="level-toggle" id="pixel-l2-btn" aria-expanded="false" aria-controls="pixel-l2">
+                                <span class="level-index">02</span>
+                                <span class="level-copy">
+                                    <b>Specialist · Produksi &amp; Persuasi</b>
+                                    <small>Editing rapi, copywriting tajam, hook yang menahan scroll</small>
+                                </span>
+                                <span class="level-badge">Level 2</span>
+                                <span class="level-chevron" aria-hidden="true">▾</span>
+                            </button>
+                            <div class="level-panel" id="pixel-l2" role="region" aria-labelledby="pixel-l2-btn">
+                                <div class="level-panel-inner">
+                                    <div class="level-content">
+                                        <p class="level-desc">Di level ini kamu berhenti sekadar merekam. Kamu mulai mengedit dengan ritme, menulis hook, dan mengarahkan perhatian penonton.</p>
+                                        <div class="level-modules">
+                                            <div class="module-card">
+                                                <div class="module-top">
+                                                    <span class="module-num">5</span>
+                                                    <b>Tools Editing Praktis</b>
+                                                </div>
+                                                <p>CapCut dan Canva untuk produksi cepat, lalu Premiere Pro atau DaVinci Resolve untuk kontrol warna dan audio.</p>
+                                                <div class="module-tags">
+                                                    <span class="hot">CapCut</span>
+                                                    <span>Canva</span>
+                                                    <span>Premiere Pro</span>
+                                                    <span>DaVinci</span>
+                                                </div>
+                                            </div>
+                                            <div class="module-card">
+                                                <div class="module-top">
+                                                    <span class="module-num">6</span>
+                                                    <b>Content Copywriting &amp; Hook</b>
+                                                </div>
+                                                <p>Tulis hook tiga detik pertama, caption yang memancing komentar, dan CTA yang jelas tanpa terasa memaksa.</p>
+                                                <div class="module-tags">
+                                                    <span class="hot">Hook 3 Detik</span>
+                                                    <span>Caption</span>
+                                                    <span>CTA</span>
+                                                </div>
+                                            </div>
+                                            <div class="module-card">
+                                                <div class="module-top">
+                                                    <span class="module-num">7</span>
+                                                    <b>Storyboard &amp; Scripting</b>
+                                                </div>
+                                                <p>Susun alur shot per shot sebelum syuting agar proses produksi cepat dan tidak ada scene yang terbuang.</p>
+                                                <div class="module-tags">
+                                                    <span>Storyboard</span>
+                                                    <span>Script</span>
+                                                </div>
+                                            </div>
+                                            <div class="module-card">
+                                                <div class="module-top">
+                                                    <span class="module-num">8</span>
+                                                    <b>Sound Design &amp; Subtitle</b>
+                                                </div>
+                                                <p>Gunakan musik bebas royalti, sound effect secukupnya, dan subtitle otomatis yang tetap enak dibaca.</p>
+                                                <div class="module-tags">
+                                                    <span>Audio Mix</span>
+                                                    <span>Subtitle</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </article>
+
+                        <!-- LEVEL 3 -->
+                        <article class="level-item">
+                            <button type="button" class="level-toggle" id="pixel-l3-btn" aria-expanded="false" aria-controls="pixel-l3">
+                                <span class="level-index">03</span>
+                                <span class="level-copy">
+                                    <b>Champion · Distribusi &amp; Growth</b>
+                                    <small>Algoritma lintas platform, kalender konten, dan laporan campaign</small>
+                                </span>
+                                <span class="level-badge">Level 3</span>
+                                <span class="level-chevron" aria-hidden="true">▾</span>
+                            </button>
+                            <div class="level-panel" id="pixel-l3" role="region" aria-labelledby="pixel-l3-btn">
+                                <div class="level-panel-inner">
+                                    <div class="level-content">
+                                        <p class="level-desc">Konten bagus tidak berhenti di upload. Champion membaca data, mengulang format yang menang, dan menyusun strategi lintas platform.</p>
+                                        <div class="level-modules">
+                                            <div class="module-card">
+                                                <div class="module-top">
+                                                    <span class="module-num">9</span>
+                                                    <b>Strategi Publikasi Lintas Platform</b>
+                                                </div>
+                                                <p>Sesuaikan durasi, rasio, dan gaya untuk TikTok, Reels, dan YouTube Shorts. Satu ide, tiga kemasan berbeda.</p>
+                                                <div class="module-tags">
+                                                    <span class="hot">TikTok</span>
+                                                    <span>Reels</span>
+                                                    <span>Shorts</span>
+                                                </div>
+                                            </div>
+                                            <div class="module-card">
+                                                <div class="module-top">
+                                                    <span class="module-num">10</span>
+                                                    <b>Analisis Algoritma &amp; Metrik</b>
+                                                </div>
+                                                <p>Baca watch time, retention, saves, dan shares. Pahami bahwa algoritma mengikuti perilaku penonton, bukan mitos jam upload.</p>
+                                                <div class="module-tags">
+                                                    <span class="hot">Retention</span>
+                                                    <span>Watch Time</span>
+                                                    <span>Analytics</span>
+                                                </div>
+                                            </div>
+                                            <div class="module-card">
+                                                <div class="module-top">
+                                                    <span class="module-num">11</span>
+                                                    <b>Content Calendar &amp; Campaign</b>
+                                                </div>
+                                                <p>Rancang kalender empat minggu, tentukan tujuan campaign, dan ukur hasil dengan baseline yang jelas.</p>
+                                                <div class="module-tags">
+                                                    <span>Calendar</span>
+                                                    <span>Campaign Goal</span>
+                                                </div>
+                                            </div>
+                                            <div class="module-card">
+                                                <div class="module-top">
+                                                    <span class="module-num">12</span>
+                                                    <b>Portfolio &amp; Personal Branding</b>
+                                                </div>
+                                                <p>Susun studi kasus: masalah, ide, proses, hasil. Tunjukkan angka dan peranmu di dalam tim.</p>
+                                                <div class="module-tags">
+                                                    <span class="hot">Case Study</span>
+                                                    <span>Portfolio</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </article>
+                    </div>
+                </div>
+
+                <!-- ========================================================
+                     CODE TRACK
+                ======================================================== -->
+                <div class="track-panel code" id="panel-code" role="tabpanel" aria-labelledby="tab-code" tabindex="0" hidden>
+                    <div class="track-meta">
+                        <strong>💻 Technical &amp; Competitive Programming</strong>
+                        <span>5 modul inti · 3 level · jalur lomba</span>
+                    </div>
+
+                    <div class="track-chips">
+                        <span class="track-chip accent">JavaScript</span>
+                        <span class="track-chip accent">C++ STL</span>
+                        <span class="track-chip">React / Next.js</span>
+                        <span class="track-chip">Flutter</span>
+                        <span class="track-chip">Docker</span>
+                        <span class="track-chip">GitHub</span>
+                    </div>
+
+                    <div class="accordion" data-accordion="code">
+                        <!-- LEVEL 1 -->
+                        <article class="level-item">
+                            <button type="button" class="level-toggle" id="code-l1-btn" aria-expanded="false" aria-controls="code-l1">
+                                <span class="level-index">01</span>
+                                <span class="level-copy">
+                                    <b>Foundation · Logika &amp; Dasar Web</b>
+                                    <small>Algoritma, JavaScript modern, dan kebiasaan versioning</small>
+                                </span>
+                                <span class="level-badge">Level 1</span>
+                                <span class="level-chevron" aria-hidden="true">▾</span>
+                            </button>
+                            <div class="level-panel" id="code-l1" role="region" aria-labelledby="code-l1-btn" aria-hidden="true">
+                                <div class="level-panel-inner">
+                                    <div class="level-content">
+                                        <p class="level-desc">Fondasi yang benar membuat level berikutnya terasa jauh lebih mudah. Fokus pada logika, bukan hafalan sintaks.</p>
+                                        <div class="level-modules">
+                                            <div class="module-card">
+                                                <div class="module-top">
+                                                    <span class="module-num">1</span>
+                                                    <b>Algoritma &amp; Struktur Data Dasar</b>
+                                                </div>
+                                                <p>Array, hash map, dua pointer, dan pencarian biner. Selalu ukur kompleksitas waktu serta memori, bukan hanya “yang penting jalan”.</p>
+                                                <div class="module-tags">
+                                                    <span class="hot">Big-O</span>
+                                                    <span>Array</span>
+                                                    <span>Hash Map</span>
+                                                </div>
+                                            </div>
+                                            <div class="module-card">
+                                                <div class="module-top">
+                                                    <span class="module-num">2</span>
+                                                    <b>HTML, CSS &amp; JavaScript Modern</b>
+                                                </div>
+                                                <p>Markup semantik, layout responsif, DOM, event, fetch API, dan modularisasi ES6.</p>
+                                                <div class="module-tags">
+                                                    <span class="hot">ES6+</span>
+                                                    <span>Responsive</span>
+                                                    <span>Fetch API</span>
+                                                </div>
+                                            </div>
+                                            <div class="module-card">
+                                                <div class="module-top">
+                                                    <span class="module-num">3</span>
+                                                    <b>Git &amp; GitHub Workflow</b>
+                                                </div>
+                                                <p>Branch, commit atomik, pull request, dan review. Riwayat git yang rapi adalah portofolio kerja tim.</p>
+                                                <div class="module-tags">
+                                                    <span class="hot">Git</span>
+                                                    <span>Pull Request</span>
+                                                </div>
+                                            </div>
+                                            <div class="module-card">
+                                                <div class="module-top">
+                                                    <span class="module-num">4</span>
+                                                    <b>Problem Solving Harian</b>
+                                                </div>
+                                                <p>Latih satu soal logika per hari, tulis pendekatan sebelum coding, lalu refaktor setelah solusi lolos.</p>
+                                                <div class="module-tags">
+                                                    <span>Pseudocode</span>
+                                                    <span>Refactor</span>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="complexity">
+                                            <div class="complexity-head">
+                                                <b>📊 Big-O Cheat Sheet</b>
+                                                <small>Worst-case umum · n = ukuran input</small>
+                                            </div>
+                                            <div class="complexity-grid">
+                                                <div class="complexity-row"><code>O(1)</code><span>Akses array per indeks, operasi hash map rata-rata</span></div>
+                                                <div class="complexity-row"><code>O(log n)</code><span>Binary search, operasi balanced BST</span></div>
+                                                <div class="complexity-row"><code>O(n)</code><span>Satu loop linear, pencarian tanpa urutan</span></div>
+                                                <div class="complexity-row"><code>O(n log n)</code><span>Merge sort, heap sort, quick sort rata-rata</span></div>
+                                                <div class="complexity-row"><code>O(n²)</code><span>Dua loop bersarang, bubble / insertion sort</span></div>
+                                                <div class="complexity-row"><code>O(2ⁿ)</code><span>Brute force subset / backtracking tanpa pruning</span></div>
+                                            </div>
+                                            <p class="complexity-note">Catatan akurasi: hash map rata-rata O(1) tetapi worst-case O(n); quick sort rata-rata O(n log n), worst-case O(n²). Selalu sebutkan kasus yang sedang diukur.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </article>
+
+                        <!-- LEVEL 2 -->
+                        <article class="level-item">
+                            <button type="button" class="level-toggle" id="code-l2-btn" aria-expanded="false" aria-controls="code-l2">
+                                <span class="level-index">02</span>
+                                <span class="level-copy">
+                                    <b>Specialist · Full-Stack &amp; Cloud</b>
+                                    <small>Web, mobile, database, API, dan deployment</small>
+                                </span>
+                                <span class="level-badge">Level 2</span>
+                                <span class="level-chevron" aria-hidden="true">▾</span>
+                            </button>
+                            <div class="level-panel" id="code-l2" role="region" aria-labelledby="code-l2-btn">
+                                <div class="level-panel-inner">
+                                    <div class="level-content">
+                                        <p class="level-desc">Level ini membuatmu mampu membangun produk utuh: dari antarmuka, data, autentikasi, sampai online di internet.</p>
+                                        <div class="level-modules">
+                                            <div class="module-card">
+                                                <div class="module-top">
+                                                    <span class="module-num">5</span>
+                                                    <b>Web Development</b>
+                                                </div>
+                                                <p>Komponen React, routing Next.js, state management, dan integrasi API dengan penanganan error yang rapi.</p>
+                                                <div class="module-tags">
+                                                    <span class="hot">React</span>
+                                                    <span>Next.js</span>
+                                                    <span>REST API</span>
+                                                </div>
+                                            </div>
+                                            <div class="module-card">
+                                                <div class="module-top">
+                                                    <span class="module-num">6</span>
+                                                    <b>Mobile Development</b>
+                                                </div>
+                                                <p>Flutter atau React Native: layout responsif, navigasi, state, dan build aplikasi Android.</p>
+                                                <div class="module-tags">
+                                                    <span class="hot">Flutter</span>
+                                                    <span>React Native</span>
+                                                </div>
+                                            </div>
+                                            <div class="module-card">
+                                                <div class="module-top">
+                                                    <span class="module-num">7</span>
+                                                    <b>Cloud &amp; DevOps Dasar</b>
+                                                </div>
+                                                <p>Deploy ke Vercel, Firebase, atau VPS. Pahami environment variable, Docker, dan pipeline CI/CD sederhana.</p>
+                                                <div class="module-tags">
+                                                    <span class="hot">Docker</span>
+                                                    <span>Vercel</span>
+                                                    <span>CI/CD</span>
+                                                </div>
+                                            </div>
+                                            <div class="module-card">
+                                                <div class="module-top">
+                                                    <span class="module-num">8</span>
+                                                    <b>Database &amp; API Design</b>
+                                                </div>
+                                                <p>Model data relasional dan NoSQL, query efisien, autentikasi, serta validasi input di sisi server.</p>
+                                                <div class="module-tags">
+                                                    <span>SQL</span>
+                                                    <span>Firestore</span>
+                                                    <span>Auth</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </article>
+
+                        <!-- LEVEL 3 -->
+                        <article class="level-item">
+                            <button type="button" class="level-toggle" id="code-l3-btn" aria-expanded="false" aria-controls="code-l3">
+                                <span class="level-index">03</span>
+                                <span class="level-copy">
+                                    <b>Champion · Competitive &amp; System Design</b>
+                                    <small>C++ STL, Tree &amp; Graph, desain sistem, dan strategi tim lomba</small>
+                                </span>
+                                <span class="level-badge">Level 3</span>
+                                <span class="level-chevron" aria-hidden="true">▾</span>
+                            </button>
+                            <div class="level-panel" id="code-l3" role="region" aria-labelledby="code-l3-btn">
+                                <div class="level-panel-inner">
+                                    <div class="level-content">
+                                        <p class="level-desc">Di sini kamu berlatih untuk kompetisi dan sistem berskala lebih besar. Kecepatan berpikir seimbang dengan kebenaran solusi.</p>
+                                        <div class="level-modules">
+                                            <div class="module-card">
+                                                <div class="module-top">
+                                                    <span class="module-num">9</span>
+                                                    <b>Competitive Programming · C++ STL</b>
+                                                </div>
+                                                <p>Kuasai vector, map, set, queue, priority_queue, sort, dan lower_bound agar solusi lolos batas waktu.</p>
+                                                <div class="module-tags">
+                                                    <span class="hot">C++ STL</span>
+                                                    <span>Time Limit</span>
+                                                </div>
+                                            </div>
+                                            <div class="module-card">
+                                                <div class="module-top">
+                                                    <span class="module-num">10</span>
+                                                    <b>Tree, Graph &amp; Dynamic Programming</b>
+                                                </div>
+                                                <p>DFS, BFS, Dijkstra, union-find, lalu DP dasar. Petakan state dan transisi sebelum menulis kode.</p>
+                                                <div class="module-tags">
+                                                    <span class="hot">Graph</span>
+                                                    <span>Tree</span>
+                                                    <span>DP</span>
+                                                </div>
+                                            </div>
+                                            <div class="module-card">
+                                                <div class="module-top">
+                                                    <span class="module-num">11</span>
+                                                    <b>System Design &amp; Scalability</b>
+                                                </div>
+                                                <p>Cache, load balancing, message queue, dan pemisahan service. Diskusikan trade-off, bukan hanya nama teknologi.</p>
+                                                <div class="module-tags">
+                                                    <span>Caching</span>
+                                                    <span>Queue</span>
+                                                    <span>Trade-off</span>
+                                                </div>
+                                            </div>
+                                            <div class="module-card">
+                                                <div class="module-top">
+                                                    <span class="module-num">12</span>
+                                                    <b>Team Contest Playbook</b>
+                                                </div>
+                                                <p>Pembagian peran, strategi membaca soal, manajemen waktu, dan ritual debugging saat kontes berlangsung.</p>
+                                                <div class="module-tags">
+                                                    <span class="hot">Strategy</span>
+                                                    <span>Teamwork</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </article>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============================================================
+             ECOSYSTEM
+        ============================================================ -->
+        <section class="section" id="ekosistem" aria-labelledby="ekosistem-title">
+            <div class="section-head">
+                <div>
+                    <span class="section-kicker">🏆 Talent Ecosystem</span>
+                    <h2 id="ekosistem-title">Tim Juara Bukan Sekadar Kumpulan Kode</h2>
+                    <p>Produk yang menang lahir dari tiga peran yang saling melengkapi. Lengkapi timmu, lalu asah kemampuan presentasinya.</p>
+                </div>
+                <span class="section-note">Hacker · Hipster · Hustler</span>
             </div>
 
-        </div>
-
-        <!-- BAGIAN 2: FORM INPUT KREDENSIAL / SERTIFIKAT SISWA -->
-        <div class="course-form-card">
-            <h3 style="margin-top:0; margin-bottom:1.25rem; font-size:1.1rem; color:#f1f5f9;">➕ Tambah Kredensial / Sertifikat Siswa</h3>
-            <form id="certForm" onsubmit="saveCertificate(event)">
-                <div class="form-grid">
-                    <div class="form-group">
-                        <label for="cTitle">Nama Kompetensi Kredensial</label>
-                        <input type="text" id="cTitle" placeholder="Contoh: Responsive Web Design" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="cStudent">Nama Penerima / Siswa</label>
-                        <input type="text" id="cStudent" placeholder="Nama Lengkap Siswa" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="cSquad">Kategori Squad / Path</label>
-                        <select id="cSquad" required>
-                            <option value="Foundation">🌱 Foundation & Logic</option>
-                            <option value="Web Dev">🌐 Web Development</option>
-                            <option value="Mobile Dev">📱 Mobile App Dev</option>
-                            <option value="UI/UX Design">🎨 UI/UX Design</option>
-                            <option value="Game Dev">🎮 Game Development</option>
-                            <option value="Cloud/DevOps">☁️ Cloud & Database</option>
-                            <option value="Competitive Programming">🧠 Competitive Programming</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="cPlatform">Platform Penerbit</label>
-                        <select id="cPlatform">
-                            <option value="freeCodeCamp">freeCodeCamp</option>
-                            <option value="TLX TOKI">TLX TOKI</option>
-                            <option value="W3Schools">W3Schools</option>
-                            <option value="SoloLearn">SoloLearn</option>
-                            <option value="Dicoding">Dicoding</option>
-                            <option value="Cisco Networking Acad">Cisco Networking Academy</option>
-                            <option value="HackerRank">HackerRank</option>
-                            <option value="Sertifikat Lomba">Sertifikat Lomba / Kejuaraan</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="cUrl">URL Verifikasi Sertifikat (Kredensial)</label>
-                        <input type="url" id="cUrl" placeholder="https://freecodecamp.org/certification/..." required>
-                    </div>
-                    <div class="form-group">
-                        <label for="cDate">Tanggal Terbit</label>
-                        <input type="date" id="cDate" required>
-                    </div>
-                    <button type="submit" class="btn-submit">Sematkan Kredensial</button>
+            <div class="ecosystem-grid">
+                <div class="triad">
+                    <article class="triad-card hacker">
+                        <span class="triad-icon" aria-hidden="true">🛠️</span>
+                        <b>The Hacker</b>
+                        <small>Engineering</small>
+                        <p>Membangun arsitektur, menulis kode inti, menjaga performa, dan memastikan sistem tidak tumbang saat demo.</p>
+                    </article>
+                    <article class="triad-card hipster">
+                        <span class="triad-icon" aria-hidden="true">🎨</span>
+                        <b>The Hipster</b>
+                        <small>Design &amp; Story</small>
+                        <p>Merancang UI, pengalaman pengguna, dan narasi produk agar solusi teknis terasa sederhana bagi juri.</p>
+                    </article>
+                    <article class="triad-card hustler">
+                        <span class="triad-icon" aria-hidden="true">📈</span>
+                        <b>The Hustler</b>
+                        <small>Strategy &amp; Pitch</small>
+                        <p>Memetakan pengguna, menyusun model bisnis, dan menyampaikan dampak nyata dalam waktu singkat.</p>
+                    </article>
                 </div>
-            </form>
-        </div>
 
-        <!-- BAGIAN 3: SHOWCASE VERIFIED MEMBER KREDENSIAL -->
-        <h2 class="section-title">🛡️ Verified Member Kredensial</h2>
-        
-        <!-- Filter Kategori -->
-        <div class="filter-container">
-            <button class="filter-btn active" onclick="filterSquad('All', event)">Semua Squad</button>
-            <button class="filter-btn" onclick="filterSquad('Foundation', event)">🌱 Foundation</button>
-            <button class="filter-btn" onclick="filterSquad('Web Dev', event)">🌐 Web Dev</button>
-            <button class="filter-btn" onclick="filterSquad('Mobile Dev', event)">📱 Mobile Dev</button>
-            <button class="filter-btn" onclick="filterSquad('UI/UX Design', event)">🎨 UI/UX</button>
-            <button class="filter-btn" onclick="filterSquad('Game Dev', event)">🎮 Game Dev</button>
-            <button class="filter-btn" onclick="filterSquad('Competitive Programming', event)">🧠 CP & Algo</button>
-        </div>
+                <article class="competition" aria-labelledby="competition-title">
+                    <span class="competition-live"><i aria-hidden="true"></i> Info Lomba Aktif</span>
+                    <h3 id="competition-title">JHIC <span>2.0</span></h3>
+                    <p>Panggung kompetisi inovasi teknologi pelajar. Bawa prototype yang berjalan, cerita pengguna yang jelas, dan demo yang tidak bergantung pada internet.</p>
+                    <div class="competition-meta">
+                        <div>
+                            <small>Kategori</small>
+                            <b>Software &amp; Creative</b>
+                        </div>
+                        <div>
+                            <small>Format</small>
+                            <b>Tim 3 peran</b>
+                        </div>
+                        <div>
+                            <small>Fokus</small>
+                            <b>Prototype + Pitch</b>
+                        </div>
+                        <div>
+                            <small>Status</small>
+                            <b>Cek kanal resmi</b>
+                        </div>
+                    </div>
+                    <span class="competition-note">📌 Selalu verifikasi jadwal, syarat, dan tautan pendaftaran di pengumuman resmi penyelenggara.</span>
+                </article>
+            </div>
+        </section>
 
-        <div id="courseGrid" class="course-grid">
-            <!-- Grid item disematkan melalui JavaScript -->
+        <!-- ============================================================
+             CREDENTIAL VAULT
+        ============================================================ -->
+        <section class="section" id="kredensial" aria-labelledby="kredensial-title">
+            <div class="section-head">
+                <div>
+                    <span class="section-kicker">🗂️ Credential Vault</span>
+                    <h2 id="kredensial-title">Showcase Sertifikat &amp; Kredensial Squad</h2>
+                    <p>Simpan bukti belajar per jalur, tandai yang sudah diverifikasi, dan tampilkan portofolio tim saat presentasi.</p>
+                </div>
+                <span class="section-note">Tersimpan di browser ini · localStorage</span>
+            </div>
+
+            <div class="vault">
+                <form class="vault-form-card" id="credentialForm" novalidate>
+                    <div class="vault-form-head">
+                        <span class="vault-form-icon" aria-hidden="true">➕</span>
+                        <div>
+                            <b>Tambah Kredensial</b>
+                            <small>Isi data sertifikat atau pencapaian siswa</small>
+                        </div>
+                    </div>
+
+                    <div class="form-grid">
+                        <div class="field">
+                            <label for="credName">Nama Siswa</label>
+                            <input type="text" id="credName" name="name" placeholder="Contoh: Rani Pratama" maxlength="60" autocomplete="off" required>
+                        </div>
+                        <div class="field">
+                            <label for="credSquad">Squad</label>
+                            <select id="credSquad" name="squad">
+                                <option value="pixel">🎨 Pixel</option>
+                                <option value="code">💻 Code</option>
+                            </select>
+                        </div>
+                        <div class="field full">
+                            <label for="credTitle">Nama Kredensial</label>
+                            <input type="text" id="credTitle" name="title" placeholder="Contoh: TikTok Content Strategy" maxlength="90" autocomplete="off" required>
+                        </div>
+                        <div class="field">
+                            <label for="credIssuer">Penerbit</label>
+                            <input type="text" id="credIssuer" name="issuer" placeholder="Contoh: Dicoding" maxlength="60" autocomplete="off">
+                        </div>
+                        <div class="field">
+                            <label for="credDate">Tanggal</label>
+                            <input type="date" id="credDate" name="date">
+                        </div>
+                        <div class="field full">
+                            <label for="credLink">Link Verifikasi (opsional)</label>
+                            <input type="url" id="credLink" name="link" placeholder="https://..." maxlength="200" autocomplete="off">
+                        </div>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="submit" class="btn-primary">＋ Simpan Kredensial</button>
+                        <button type="reset" class="btn-ghost" id="resetForm">Bersihkan</button>
+                    </div>
+                    <p class="form-hint">🔒 Data hanya disimpan di perangkat ini. Tidak dikirim ke server mana pun.</p>
+                </form>
+
+                <div class="vault-list-card">
+                    <div class="vault-list-head">
+                        <div>
+                            <b>Sertifikat Squad</b>
+                            <small>Filter berdasarkan jalur, lalu verifikasi atau hapus.</small>
+                        </div>
+                        <span class="vault-counter" id="credentialCount">0 kredensial</span>
+                    </div>
+
+                    <div class="filter-bar" role="group" aria-label="Filter kredensial berdasarkan squad">
+                        <button type="button" class="filter-btn" data-filter="all" aria-pressed="true">Semua</button>
+                        <button type="button" class="filter-btn" data-filter="pixel" aria-pressed="false">🎨 Pixel</button>
+                        <button type="button" class="filter-btn" data-filter="code" aria-pressed="false">💻 Code</button>
+                    </div>
+
+                    <div class="credential-grid" id="credentialGrid"></div>
+
+                    <div class="vault-empty" id="vaultEmpty" hidden>
+                        <span aria-hidden="true">🗃️</span>
+                        <b>Belum ada kredensial di filter ini.</b>
+                        <small>Tambahkan lewat form, atau ganti filter squad.</small>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <footer class="club-footer">
+            <p><b>PIXEL & CODE</b> — fondasi kuat, spesialisasi tajam, portofolio nyata.</p>
+            <p>Learning Roadmap &amp; Talent Ecosystem · Modul Club Course ·</p>
+        </footer>
+    </div>
+
+    <!-- Toast -->
+    <div class="toast" id="toast" role="status" aria-live="polite" aria-atomic="true">
+        <span class="toast-icon" id="toastIcon" aria-hidden="true">✅</span>
+        <div>
+            <b id="toastTitle">Tersimpan!</b>
+            <small id="toastSub">Kredensial berhasil ditambahkan.</small>
         </div>
     </div>
 
     <script>
-        // Data internal awal kredensial
-        let certificates = JSON.parse(localStorage.getItem('club_certificates')) || [
-            {
-                id: 1,
-                title: "Responsive Web Design Certification",
-                student: "Retno Ariyanti (Mentor Ekosistem)",
-                squad: "Web Dev",
-                platform: "freeCodeCamp",
-                url: "https://www.freecodecamp.org/certification/fccdf8180ea-128a-4933-bfce",
-                date: "2025-08-14"
-            },
-            {
-                id: 2,
-                title: "Pemrograman C++ Dasar & Algoritma",
-                student: "Siswa CP Squad 1",
-                squad: "Competitive Programming",
-                platform: "TLX TOKI",
-                url: "https://tlx.toki.id",
-                date: "2026-03-10"
-            },
-            {
-                id: 3,
-                title: "HTML & CSS Web Fundamentals",
-                student: "Siswa Foundation 1",
-                squad: "Foundation",
-                platform: "W3Schools",
-                url: "https://www.w3schools.com",
-                date: "2026-04-05"
-            }
-        ];
+        /* ============================================================
+           1. TRACK TABS
+        ============================================================ */
+        (function () {
+            "use strict";
 
-        let currentFilter = 'All';
+            var tabs = Array.prototype.slice.call(document.querySelectorAll(".track-tab"));
+            var panels = Array.prototype.slice.call(document.querySelectorAll(".track-panel"));
 
-        function renderCertificates() {
-            const courseGrid = document.getElementById('courseGrid');
-            courseGrid.innerHTML = '';
+            function activateTab(tab, focusTab) {
+                tabs.forEach(function (item) {
+                    var isActive = item === tab;
+                    item.setAttribute("aria-selected", isActive ? "true" : "false");
+                    item.setAttribute("tabindex", isActive ? "0" : "-1");
+                });
 
-            const filteredData = currentFilter === 'All' 
-                ? certificates 
-                : certificates.filter(c => c.squad === currentFilter);
+                panels.forEach(function (panel) {
+                    panel.hidden = panel.id !== tab.getAttribute("aria-controls");
+                });
 
-            if (filteredData.length === 0) {
-                courseGrid.innerHTML = '<p class="empty-text">Belum ada kredensial sertifikat yang terdaftar pada kategori squad ini.</p>';
-                return;
+                if (focusTab) tab.focus();
             }
 
-            filteredData.forEach(c => {
-                const card = document.createElement('div');
-                card.className = 'cert-card';
+            tabs.forEach(function (tab, index) {
+                tab.addEventListener("click", function () {
+                    activateTab(tab, false);
+                });
 
-                card.innerHTML = `
-                    <div>
-                        <div class="cert-header">
-                            <span class="cert-squad-tag">${c.squad || 'General'}</span>
-                            <span class="cert-badge-platform">${c.platform}</span>
-                        </div>
-                        <div class="cert-info">
-                            <h3>${c.title}</h3>
-                            <div class="student-name">👤 ${c.student}</div>
-                            <div class="cert-meta">
-                                ID Kredensial Resmi Terverifikasi<br>
-                                📅 Terbit: ${formatDate(c.date)}
-                            </div>
-                        </div>
-                    </div>
-                    <div class="cert-actions">
-                        <a href="${c.url}" target="_blank" class="btn-verify">🔗 Verifikasi Kredensial</a>
-                        <button class="btn-delete-cert" onclick="deleteCertificate(${c.id})">🗑️ Hapus</button>
-                    </div>
-                `;
-                courseGrid.appendChild(card);
+                tab.addEventListener("keydown", function (event) {
+                    if (event.key !== "ArrowRight" && event.key !== "ArrowLeft" && event.key !== "Home" && event.key !== "End") {
+                        return;
+                    }
+                    event.preventDefault();
+
+                    var nextIndex = index;
+                    if (event.key === "ArrowRight") nextIndex = (index + 1) % tabs.length;
+                    if (event.key === "ArrowLeft") nextIndex = (index - 1 + tabs.length) % tabs.length;
+                    if (event.key === "Home") nextIndex = 0;
+                    if (event.key === "End") nextIndex = tabs.length - 1;
+
+                    activateTab(tabs[nextIndex], true);
+                });
             });
-        }
+        })();
 
-        function saveCertificate(e) {
-            e.preventDefault();
-            const newCert = {
-                id: Date.now(),
-                title: document.getElementById('cTitle').value,
-                student: document.getElementById('cStudent').value,
-                squad: document.getElementById('cSquad').value,
-                platform: document.getElementById('cPlatform').value,
-                url: document.getElementById('cUrl').value,
-                date: document.getElementById('cDate').value
-            };
+        /* ============================================================
+           2. LEVEL ACCORDION
+        ============================================================ */
+        (function () {
+            "use strict";
 
-            certificates.unshift(newCert);
-            localStorage.setItem('club_certificates', JSON.stringify(certificates));
-            renderCertificates();
-            document.getElementById('certForm').reset();
-        }
+            var accordions = Array.prototype.slice.call(document.querySelectorAll("[data-accordion]"));
 
-        function deleteCertificate(id) {
-            if(confirm("Apakah Anda yakin ingin menghapus data kredensial sertifikat ini?")) {
-                certificates = certificates.filter(c => c.id !== id);
-                localStorage.setItem('club_certificates', JSON.stringify(certificates));
-                renderCertificates();
-            }
-        }
+            accordions.forEach(function (accordion) {
+                var items = Array.prototype.slice.call(accordion.querySelectorAll(".level-item"));
 
-        function filterSquad(squadName, evt) {
-            currentFilter = squadName;
-            document.querySelectorAll('.filter-btn').forEach(btn => {
-                btn.classList.remove('active');
+                items.forEach(function (item) {
+                    var toggle = item.querySelector(".level-toggle");
+                    var panel = item.querySelector(".level-panel");
+
+                    function setOpen(open) {
+                        item.classList.toggle("open", open);
+                        toggle.setAttribute("aria-expanded", open ? "true" : "false");
+                        panel.setAttribute("aria-hidden", open ? "false" : "true");
+                    }
+
+                    setOpen(item.classList.contains("open"));
+
+                    toggle.addEventListener("click", function () {
+                        var willOpen = !item.classList.contains("open");
+
+                        if (willOpen) {
+                            items.forEach(function (sibling) {
+                                if (sibling === item) return;
+                                sibling.classList.remove("open");
+                                sibling.querySelector(".level-toggle").setAttribute("aria-expanded", "false");
+                                sibling.querySelector(".level-panel").setAttribute("aria-hidden", "true");
+                            });
+                        }
+
+                        setOpen(willOpen);
+                    });
+                });
             });
-            if(evt && evt.target) {
-                evt.target.classList.add('active');
+        })();
+
+        /* ============================================================
+           3. CREDENTIAL VAULT (localStorage)
+        ============================================================ */
+        (function () {
+            "use strict";
+
+            var STORAGE_KEY = "tkjt_club_credentials_v1";
+
+            var form = document.getElementById("credentialForm");
+            var nameInput = document.getElementById("credName");
+            var squadInput = document.getElementById("credSquad");
+            var titleInput = document.getElementById("credTitle");
+            var issuerInput = document.getElementById("credIssuer");
+            var dateInput = document.getElementById("credDate");
+            var linkInput = document.getElementById("credLink");
+
+            var grid = document.getElementById("credentialGrid");
+            var emptyState = document.getElementById("vaultEmpty");
+            var countLabel = document.getElementById("credentialCount");
+            var filterButtons = Array.prototype.slice.call(document.querySelectorAll("[data-filter]"));
+
+            var toast = document.getElementById("toast");
+            var toastIcon = document.getElementById("toastIcon");
+            var toastTitle = document.getElementById("toastTitle");
+            var toastSub = document.getElementById("toastSub");
+            var toastTimer = null;
+
+            var credentials = [];
+            var activeFilter = "all";
+            var storageAvailable = true;
+
+            var seedData = [
+                {
+                    id: "seed-1",
+                    name: "Favian Zufar Niardi",
+                    squad: "code",
+                    title: "Web Development",
+                    issuer: "Web Development",
+                    date: "2025-04-06",
+                    link: "mynamethiris.vercel.app",
+                    verified: true
+                },
+                {
+                    id: "seed-2",
+                    name: "Abhinaya Faiz Bahiscara",
+                    squad: "code",
+                    title: "apa aja bisa",
+                    issuer: "apa aja bisa",
+                    date: "2025-06-13",
+                    link: "",
+                    verified: true
+                },
+                {
+                    id: "seed-3",
+                    name: "Faiq Ahmad Ibrahim",
+                    squad: "code",
+                    title: "bisa apa aja",
+                    issuer: "bisa apa aja",
+                    date: "2025-06-13",
+                    link: "",
+                    verified: true
+                }
+            ];
+
+            function showToast(title, subtitle, isError) {
+                window.clearTimeout(toastTimer);
+                toastIcon.textContent = isError ? "⚠️" : "✅";
+                toastTitle.textContent = title;
+                toastSub.textContent = subtitle || "";
+                toast.classList.toggle("error", Boolean(isError));
+                toast.classList.add("show");
+
+                toastTimer = window.setTimeout(function () {
+                    toast.classList.remove("show");
+                }, 3000);
             }
-            renderCertificates();
-        }
 
-        function formatDate(dateString) {
-            if(!dateString) return '-';
-            const options = { year: 'numeric', month: 'short', day: 'numeric' };
-            return new Date(dateString).toLocaleDateString('id-ID', options);
-        }
+            function safeParse(raw) {
+                try {
+                    var parsed = JSON.parse(raw);
+                    return Array.isArray(parsed) ? parsed : [];
+                } catch (error) {
+                    return [];
+                }
+            }
 
-        // Render Saat Dimuat
-        renderCertificates();
+            function loadCredentials() {
+                try {
+                    var raw = window.localStorage.getItem(STORAGE_KEY);
+                    if (raw === null) {
+                        credentials = seedData.map(function (item) {
+                            return Object.assign({}, item);
+                        });
+                        saveCredentials();
+                    } else {
+                        credentials = safeParse(raw).filter(function (item) {
+                            return item && typeof item.title === "string";
+                        });
+                    }
+                } catch (error) {
+                    storageAvailable = false;
+                    credentials = seedData.map(function (item) {
+                        return Object.assign({}, item);
+                    });
+                }
+            }
+
+            function saveCredentials() {
+                if (!storageAvailable) return;
+                try {
+                    window.localStorage.setItem(STORAGE_KEY, JSON.stringify(credentials));
+                } catch (error) {
+                    storageAvailable = false;
+                }
+            }
+
+            function makeId() {
+                return "cred-" + Date.now().toString(36) + "-" + Math.random().toString(36).slice(2, 7);
+            }
+
+            function formatDate(value) {
+                if (!value) return "";
+                var parsed = new Date(value + "T00:00:00");
+                if (isNaN(parsed.getTime())) return value;
+                return parsed.toLocaleDateString("id-ID", {
+                    day: "2-digit",
+                    month: "short",
+                    year: "numeric"
+                });
+            }
+
+            function normalizeLink(value) {
+                var trimmed = value.trim();
+                if (!trimmed) return "";
+
+                if (!/^https?:\/\//i.test(trimmed)) {
+                    trimmed = "https://" + trimmed;
+                }
+
+                try {
+                    var parsed = new URL(trimmed);
+                    if (parsed.protocol !== "http:" && parsed.protocol !== "https:") return null;
+                    return parsed.href;
+                } catch (error) {
+                    return null;
+                }
+            }
+
+            function element(tag, className, text) {
+                var node = document.createElement(tag);
+                if (className) node.className = className;
+                if (text !== undefined) node.textContent = text;
+                return node;
+            }
+
+            function buildCard(item) {
+                var card = element("article", "credential-card " + item.squad);
+                card.setAttribute("data-id", item.id);
+
+                var top = element("div", "credential-top");
+                var squadTag = element("span", "squad-tag " + item.squad, item.squad === "pixel" ? "🎨 Pixel" : "💻 Code");
+                var badge = element(
+                    "span",
+                    "verify-badge " + (item.verified ? "ok" : "pending"),
+                    item.verified ? "✔ Terverifikasi" : "⏳ Menunggu"
+                );
+                top.appendChild(squadTag);
+                top.appendChild(badge);
+
+                var title = element("h4", "", item.title);
+                var issuer = element(
+                    "p",
+                    "credential-issuer",
+                    [item.name, item.issuer].filter(Boolean).join(" · ")
+                );
+
+                var meta = element("div", "credential-meta");
+                if (item.date) {
+                    meta.appendChild(element("span", "", "📅 " + formatDate(item.date)));
+                }
+                if (item.link) {
+                    var link = element("a", "", "Verifikasi ↗");
+                    link.href = item.link;
+                    link.target = "_blank";
+                    link.rel = "noopener noreferrer";
+                    meta.appendChild(link);
+                }
+                if (!item.date && !item.link) {
+                    meta.appendChild(element("span", "", "Kredensial tersimpan"));
+                }
+
+                var actions = element("div", "credential-actions");
+                var verifyButton = element("button", "verify", item.verified ? "Batalkan verifikasi" : "Verifikasi");
+                verifyButton.type = "button";
+                verifyButton.setAttribute("data-action", "verify");
+
+                var removeButton = element("button", "remove", "Hapus");
+                removeButton.type = "button";
+                removeButton.setAttribute("data-action", "remove");
+
+                actions.appendChild(verifyButton);
+                actions.appendChild(removeButton);
+
+                card.appendChild(top);
+                card.appendChild(title);
+                card.appendChild(issuer);
+                card.appendChild(meta);
+                card.appendChild(actions);
+
+                return card;
+            }
+
+            function render() {
+                var visible = credentials.filter(function (item) {
+                    return activeFilter === "all" || item.squad === activeFilter;
+                });
+
+                grid.textContent = "";
+                visible.forEach(function (item) {
+                    grid.appendChild(buildCard(item));
+                });
+
+                emptyState.hidden = visible.length > 0;
+                countLabel.textContent = credentials.length + " kredensial";
+            }
+
+            function clearInvalid() {
+                [nameInput, titleInput, linkInput].forEach(function (input) {
+                    input.classList.remove("invalid");
+                });
+            }
+
+            function markInvalid(input) {
+                input.classList.add("invalid");
+            }
+
+            form.addEventListener("submit", function (event) {
+                event.preventDefault();
+                clearInvalid();
+
+                var name = nameInput.value.trim();
+                var title = titleInput.value.trim();
+                var linkValue = linkInput.value.trim();
+                var normalized = linkValue ? normalizeLink(linkValue) : "";
+                var firstInvalid = null;
+
+                if (!name) {
+                    markInvalid(nameInput);
+                    firstInvalid = firstInvalid || nameInput;
+                }
+
+                if (!title) {
+                    markInvalid(titleInput);
+                    firstInvalid = firstInvalid || titleInput;
+                }
+
+                if (normalized === null) {
+                    markInvalid(linkInput);
+                    firstInvalid = firstInvalid || linkInput;
+                }
+
+                if (firstInvalid) {
+                    firstInvalid.focus();
+                    showToast("Data belum lengkap", "Nama siswa dan nama kredensial wajib diisi. Link harus valid.", true);
+                    return;
+                }
+
+                credentials.unshift({
+                    id: makeId(),
+                    name: name,
+                    squad: squadInput.value === "pixel" ? "pixel" : "code",
+                    title: title,
+                    issuer: issuerInput.value.trim(),
+                    date: dateInput.value,
+                    link: normalized,
+                    verified: false
+                });
+
+                saveCredentials();
+                render();
+                form.reset();
+                clearInvalid();
+                showToast("Kredensial tersimpan!", "Data masuk ke vault dan siap diverifikasi.");
+                nameInput.focus();
+            });
+
+            form.addEventListener("reset", function () {
+                window.setTimeout(clearInvalid, 0);
+            });
+
+            grid.addEventListener("click", function (event) {
+                var button = event.target.closest("button[data-action]");
+                if (!button) return;
+
+                var card = button.closest(".credential-card");
+                if (!card) return;
+
+                var id = card.getAttribute("data-id");
+                var index = credentials.findIndex(function (item) {
+                    return item.id === id;
+                });
+                if (index === -1) return;
+
+                var action = button.getAttribute("data-action");
+                var item = credentials[index];
+
+                if (action === "verify") {
+                    item.verified = !item.verified;
+                    saveCredentials();
+                    render();
+                    showToast(
+                        item.verified ? "Kredensial terverifikasi!" : "Verifikasi dibatalkan",
+                        item.title
+                    );
+                    return;
+                }
+
+                if (action === "remove") {
+                    if (button.getAttribute("data-armed") !== "1") {
+                        button.setAttribute("data-armed", "1");
+                        button.textContent = "Yakin hapus?";
+                        button.classList.add("armed");
+
+                        window.setTimeout(function () {
+                            if (!button.isConnected) return;
+                            button.removeAttribute("data-armed");
+                            button.textContent = "Hapus";
+                            button.classList.remove("armed");
+                        }, 2800);
+                        return;
+                    }
+
+                    credentials.splice(index, 1);
+                    saveCredentials();
+                    render();
+                    showToast("Kredensial dihapus", "Data sudah dibersihkan dari vault.");
+                }
+            });
+
+            filterButtons.forEach(function (button) {
+                button.addEventListener("click", function () {
+                    activeFilter = button.getAttribute("data-filter");
+                    filterButtons.forEach(function (item) {
+                        item.setAttribute("aria-pressed", item === button ? "true" : "false");
+                    });
+                    render();
+                });
+            });
+
+            loadCredentials();
+            render();
+        })();
     </script>
 </body>
 </html>

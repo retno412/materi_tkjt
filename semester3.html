@@ -13,13 +13,16 @@
             <button onclick="window.location.href='index.html'" class="btn-back">⬅ Kembali ke Dashboard</button>
             <h2>Semester 3: Administrasi Sistem, Web Backend & Cloud Computing (AWS) (Fase F)</h2>
         </div>
-        <span class="badge-cloud" style="background:#4f46e5;">☁️ AWS Cloud Practitioner Ready</span>
+        <span class="badge-cloud" style="background:#46e5b0; cursor:pointer;" onclick="openAwsModal()" title="Klik untuk cek akun AWS Academy">☁️ AWS Cloud Practitioner Ready 🔑</span>
     </header>
 
     <div class="main-layout">
         <!-- Sidebar Menu 18 Minggu -->
         <div class="sidebar">
-            <h3>📅 Daftar Modul Efektif</h3>
+            <h3 style="cursor: pointer; display: flex; align-items: center; justify-content: space-between; background: #f8fafc; padding: 10px; border-radius: 8px; border: 1px solid #e2e8f0; transition: background 0.2s;" onmouseover="this.style.background='#eff6ff'" onmouseout="this.style.background='#f8fafc'" onclick="openUploadModal()">
+                <span>📅 Daftar Modul Efektif</span>
+                <span style="font-size: 0.7rem; background: #3b82f6; color: white; padding: 4px 8px; border-radius: 999px; box-shadow: 0 2px 4px rgba(59,130,246,0.3);">📤 Upload Project</span>
+            </h3>
             <div class="modul-group">
                 <h4 class="judul-grup-sidebar">Fondasi Cloud AWS & Arsitektur Web Dinamis (Minggu 1-4)</h4>
                 <div id="grup-1" class="grup-kontainer-minggu"></div>
@@ -57,6 +60,406 @@
 
     <!-- Kontainer Modal Pop-Up -->
     <div id="modal-container"></div>
+
+    <div class="floating-warning-banner" id="warningBanner" style="display: none;">
+        ⚠️ Pengerjaan mandiri secara konsisten dan wajib memiliki sertifikat AWS sebelum tanggal 22-02-2027
+    </div>
+
+    <div id="awsModal" class="aws-modal-overlay">
+        <div class="aws-modal-box">
+            <button class="modal-close" onclick="closeAwsModal()">&times;</button>
+            <div class="modal-header">
+                <h3>☁️ Akses & Kredensial AWS Academy</h3>
+            </div>
+            <div class="modal-body">
+                <p>Langkah 1: Akses portal pembelajaran resmi di bawah ini:</p>
+                <a href="https://awsacademy.instructure.com/login/canvas" target="_blank" class="btn-canvas-link">
+                    🚀 Buka Login AWS Academy / Canvas
+                </a>
+                
+                <hr class="modal-divider">
+
+                <p>Langkah 2: Masukkan data Anda untuk melihat Username & Password:</p>
+                <div class="input-group">
+                    <label for="inputNama">Nama Lengkap:</label>
+                    <input type="text" id="inputNama" placeholder="Lengkap">
+                </div>
+                <div class="input-group">
+                    <label for="inputNisn">NISN:</label>
+                    <input type="text" id="inputNisn" placeholder="000000000">
+                </div>
+                <button class="btn-submit-credential" onclick="fetchAwsCredentials()">Cek Kredensial</button>
+                
+                <!-- TOMBOL WORKSFLOW BARU -->
+                <button onclick="openWorksFlow()" style="width: 100%; background: #8b5cf6; color: white; border: none; padding: 10px; border-radius: 6px; font-weight: bold; cursor: pointer; margin-top: 10px; transition: background 0.2s;">
+                    WorksFlow 🖼️
+                </button>
+
+                <div id="credentialResult" class="credential-result" style="display:none;">
+                    <!-- Bagian Cloud Foundation (Kolom C & D) -->
+                    <p style="font-size: 0.95rem; font-weight: bold; color: #0f172a; margin-bottom: 5px;">☁️ Cloud Foundation</p>
+                    <p><strong>Username:</strong> <span id="resUsername" class="copy-text"></span></p>
+                    <p><strong>Password:</strong> <span id="resPassword" class="copy-text"></span></p>
+                    
+                    <hr style="border: 0; border-top: 1px dashed #cbd5e1; margin: 15px 0;">
+                    
+                    <!-- Bagian Learner Lab (Kolom E & F) -->
+                    <p style="font-size: 0.95rem; font-weight: bold; color: #0f172a; margin-bottom: 5px;">🔬 Learner Lab</p>
+                    <p><strong>Username:</strong> <span id="resUsername2" class="copy-text"></span></p>
+                    <p><strong>Password:</strong> <span id="resPassword2" class="copy-text"></span></p>
+                </div>
+                <div id="errorMessage" class="error-msg" style="display:none;"></div>
+            </div>
+        </div>
+    </div>
+    <!-- KONTEN MODAL WORKSFLOW -->
+    <div id="worksFlowModal" class="aws-modal-overlay" style="z-index: 10005;">
+        <div class="aws-modal-box" style="max-width: 850px; max-height: 90vh; overflow-y: auto;">
+            <button class="modal-close" onclick="closeWorksFlow()">&times;</button>
+            <div class="modal-header">
+                <h3>📚 WorksFlow AWS Academy</h3>
+            </div>
+            <div class="modal-body" id="worksFlowContent">
+                <!-- Konten dinamis akan disuntikkan via JavaScript -->
+            </div>
+        </div>
+    </div>
+    <!-- KONTEN MODAL UPLOAD TUGAS -->
+    <div id="uploadModal" class="aws-modal-overlay">
+        <div class="aws-modal-box">
+            <button class="modal-close" onclick="closeUploadModal()">&times;</button>
+            <div class="modal-header">
+                <h3>📤 Upload File Project</h3>
+            </div>
+            <div class="modal-body">
+                <div class="input-group">
+                    <label for="upNama">Nama Lengkap:</label>
+                    <input type="text" id="upNama" placeholder="Sesuai absen kelas">
+                </div>
+                <div class="input-group">
+                    <label for="upKelas">Kelas:</label>
+                    <input type="text" id="upKelas" placeholder="Contoh: XI TKJ 1">
+                </div>
+                <div class="input-group">
+                    <label for="upJudul">Judul Project:</label>
+                    <input type="text" id="upJudul" placeholder="Contoh: Topologi AWS VPC">
+                </div>
+                <div class="input-group">
+                    <label for="upFile">Pilih File (Bebas format HTML/PDF/DOC):</label>
+                    <input type="file" id="upFile" style="padding: 6px; background: #f8fafc;">
+                </div>
+                <div class="input-group">
+                    <label for="upPenjelasan">Apa yang kamu kerjakan barusan? Jelaskan dengan bahasamu:</label>
+                    <textarea id="upPenjelasan" rows="3" placeholder="Ceritakan proses pembuatan project-mu di sini..." style="width: 100%; padding: 10px; border: 1px solid #cbd5e1; border-radius: 6px; box-sizing: border-box; font-family: inherit;"></textarea>
+                </div>
+                
+                <button class="btn-submit-credential" id="btnUploadSubmit" onclick="submitUploadData()" style="background: #16a34a;">Kirim File Project</button>
+                
+                <div id="uploadStatusMsg" class="credential-result" style="display:none; margin-top:15px; text-align: center;"></div>
+            </div>
+        </div>
+    </div>
+    <!-- ============================================
+         AI ASISTEN BELAJAR WIDGET (Lazy Loaded)
+       ============================================ -->
+    <button class="ai-fab" id="aiFab" aria-label="Buka Asisten AI Belajar" title="Asisten AI Belajar">
+      <img class="ai-fab-img" src="https://miro.medium.com/v2/resize:fit:750/format:webp/1*oykNhKLUeerMbgIdRrrl2A.png" alt="AI" loading="lazy" decoding="async">
+    </button>
+    <div class="ai-bubble" id="aiBubble" role="status" aria-label="Tanya apa?">
+      <span class="ai-bubble-text">Tanya apa?</span>
+      <button class="ai-bubble-close" id="aiBubbleClose" aria-label="Tutup gelembung sapaan">&times;</button>
+    </div>
+
+    <div class="ai-chat-overlay" id="aiChatOverlay" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="aiChatTitle">
+      <div class="ai-chat-panel">
+        <div class="ai-chat-header">
+          <h3 id="aiChatTitle">🤖 Asisten AI Belajar</h3>
+          <button class="ai-chat-clear" id="aiChatClear" aria-label="Bersihkan riwayat chat">🗑️</button>
+          <button class="ai-chat-close" id="aiChatClose" aria-label="Tutup obrolan">&times;</button>
+        </div>
+        <div class="ai-chat-messages" id="aiChatMessages">
+          <div class="ai-message ai-message-bot">
+            <div class="ai-message-bubble">Halo! Saya Asisten AI PNC.<br><br>Saya membantu Anda memahami materi pelajaran melalui <b>pertanyaan pemancing</b> dan petunjuk analitis — saya <b>tidak langsung memberikan jawaban kode</b> agar Anda berpikir mandiri (metode Sokratis).<br><br>Silakan ajukan pertanyaan seputar materi semester ini, kurikulum kejuruan, atau dokumentasi pemrograman dan jaringan.</div>
+          </div>
+        </div>
+        <div class="ai-chat-input">
+          <input type="text" id="aiChatInput" placeholder="Ketik pertanyaan Anda tentang materi pelajaran..." autocomplete="off" spellcheck="false">
+          <button class="ai-chat-send" id="aiChatSend" aria-label="Kirim pesan">➤</button>
+        </div>
+      </div>
+    </div>
+
+    <script type="module">
+      (function() {
+        'use strict';
+        const PAGE_KEY = 'semester3';
+        const STORAGE_KEY = 'mpnc_ai_chat_' + PAGE_KEY;
+        const KB_STORAGE_KEY = 'mpnc_ai_kb_' + PAGE_KEY;
+        const FAB_ID = 'aiFab';
+        const OVERLAY_ID = 'aiChatOverlay';
+        const CLOSE_ID = 'aiChatClose';
+        const CLEAR_ID = 'aiChatClear';
+        const INPUT_ID = 'aiChatInput';
+        const SEND_ID = 'aiChatSend';
+        const MESSAGES_ID = 'aiChatMessages';
+        let isInitialized = false;
+        let isOpen = false;
+
+        const STAGE_KEY = 'mpnc_ai_stage_semester3';
+
+        const SEMESTER3_KB = {
+          default: {
+            intent: 'awal',
+            socratic: "Selamat datang di Asisten AI Semester 3! Saya akan membantu kamu memahami Administrasi Sistem, Backend, dan Cloud AWS melalui metode Socratic — saya tidak langsung memberi kode utuh, melainkan membimbingmu berpikir langkah demi langkah.\n\nApa topik yang ingin kamu bahas hari ini? (Contoh: Express.js, Routing, Node.js Server, AWS, atau Linux)"
+          },
+          express: {
+            intent: 'express_init',
+            socratic: "Untuk membangun server backend menggunakan Express.js, langkah awal yang harus kamu siapkan adalah mengimpor modul 'express' dan menginisialisasikannya ke dalam variabel aplikasi (misalnya const app = express()). Menurutmu, setelah instance aplikasi dibuat, metode apa yang harus dipanggil agar server kita siap mendengarkan koneksi pada port tertentu?"
+          },
+          app_listen: {
+            intent: 'express_listen',
+            socratic: "Tepat sekali! app.listen(port, callback) adalah kunci agar server kita aktif berjalan. Sekarang, sebelum server dihidupkan, bagaimana cara kita mendefinisikan sebuah jalur routing metode GET sederhana pada path utama ('/') agar server merespons dengan teks 'Halo Vokasi!'?"
+          },
+          app_get: {
+            intent: 'express_route',
+            socratic: "Sempurna! Penulisan logika routing kamu sudah sangat tepat. Coba gabungkan inisialisasi app.get dan app.listen tersebut di file server.js, lalu jalankan di terminal lokalmu. Menurutmu, apa URL yang harus kamu buka di browser untuk melihat hasil teks 'Halo Vokasi!' tersebut?"
+          },
+          aws: { intent: 'cloud', socratic: "AWS menyediakan banyak layanan untuk hosting backend. Untuk aplikasi sederhana, biasanya kita akan memulai dengan Amazon EC2 (virtual server) atau AWS Lambda (serverless). Apa yang menurutmu keuntungan menggunakan EC2 dibandingkan dengan menyimpan server di komputer fisik sekolah?" },
+          linux: { intent: 'linux', socratic: "Administrasi sistem Linux adalah fondasi untuk mengelola server cloud. Perintah dasar seperti `ls`, `cd`, `sudo apt update`, dan `systemctl` sangat penting. Apa perintah Linux yang biasanya kamu gunakan untuk memeriksa apakah suatu layanan sedang berjalan?" },
+          rest: { intent: 'rest', socratic: "REST API adalah cara standar backend berkomunikasi dengan frontend melalui HTTP. Biasanya kita akan menentukan endpoint seperti `GET /api/users` atau `POST /api/login`. Apa yang menurutmu harus disertakan dalam setiap respons REST API agar frontend bisa memahaminya?" }
+        };
+
+        const STOP_WORDS = new Set([
+          'yang','dan','atau','dengan','untuk','pada','di','ke','dari','ini','itu',
+          'saya','anda','apa','bagaimana','kapan','dimana','mengapa','bisakah','tolong',
+          'bantu','mohon','hal','seputar','tentang','materi','pelajaran','kurikulum',
+          'ada','adalah','tidak','sudah','belum','dapat','bisa','harus','ingin','mau',
+          'coba','jika','maka','karena','sampai','selama','seperti','tanpa'
+        ]);
+
+        function tokenize(text) {
+          return text.toLowerCase()
+            .replace(/[^\w\s]/g, ' ')
+            .split(/\s+/)
+            .filter(w => w.length > 2 && !STOP_WORDS.has(w));
+        }
+
+        function loadDynamicKB() {
+          // No-op: Semester 3 uses static SEMESTER3_KB. Reserved for future dynamic KB loading.
+        }
+
+        function getSavedStage() {
+          try {
+            const raw = sessionStorage.getItem(STAGE_KEY);
+            return raw ? raw : 'start';
+          } catch (e) {
+            return 'start';
+          }
+        }
+
+        function saveStage(stage) {
+          try { sessionStorage.setItem(STAGE_KEY, stage); } catch (e) { /* private mode */ }
+        }
+
+        function resetStage() {
+          try { sessionStorage.removeItem(STAGE_KEY); } catch (e) { /* private mode */ }
+        }
+
+        function detectSemester3Intent(tokens) {
+          for (const token of tokens) {
+            if (SEMESTER3_KB[token]) return SEMESTER3_KB[token];
+          }
+          return null;
+        }
+
+        function generateSocraticResponse(userInput) {
+          return new Promise((resolve) => {
+            setTimeout(() => {
+              const tokens = tokenize(userInput);
+              const stage = getSavedStage();
+              let response = "";
+
+              // Tier 1: Pertanyaan Awal - Express.js / Routing / Server
+              if (stage === 'start' && (tokens.includes('express') || tokens.includes('server') || tokens.includes('routing') || tokens.includes('get'))) {
+                saveStage('step_2');
+                response = SEMESTER3_KB.express.socratic;
+              }
+              // Tier 2: Jawaban Siswa - app.listen
+              else if (stage === 'step_2' && (tokens.includes('listen') || tokens.includes('port'))) {
+                saveStage('step_3');
+                response = "Tepat sekali! app.listen(port, callback) adalah kunci agar server kita aktif berjalan. Sekarang, sebelum server dihidupkan, bagaimana cara kita mendefinisikan sebuah jalur routing metode GET sederhana pada path utama ('/') agar server merespons dengan teks 'Halo Vokasi!'?";
+              }
+              // Tier 3: Jawaban Siswa - app.get / res.send
+              else if (stage === 'step_3' && (tokens.includes('app.get') || tokens.includes('res.send'))) {
+                saveStage('completed');
+                response = "Sempurna! Penulisan logika routing kamu sudah sangat tepat. Coba gabungkan inisialisasi app.get dan app.listen tersebut di file server.js, lalu jalankan di terminal lokalmu. Menurutmu, apa URL yang harus kamu buka di browser untuk melihat hasil teks 'Halo Vokasi!' tersebut?";
+              }
+              // General Socratic response for other topics
+              else {
+                const kb = SEMESTER3_KB[tokens.find(t => SEMESTER3_KB[t])] || SEMESTER3_KB.default;
+                response = kb.socratic;
+              }
+
+              response += "\n\nCoba jelaskan lebih detail situasi Anda, dan saya akan memberi petunjuk analitis.";
+              resolve(response);
+            }, 700);
+          });
+        }
+
+        function resetChat() {
+          resetStage();
+          messages.innerHTML = '';
+          try { localStorage.removeItem(STORAGE_KEY); } catch (e) {}
+          addMessageSync('Riwayat chat dan state percakapan dibersihkan. Silakan mulai percakapan baru tentang materi pelajaran.', false);
+        }
+
+        function initAI() {
+          if (isInitialized) return;
+          isInitialized = true;
+          const fab = document.getElementById(FAB_ID);
+          const overlay = document.getElementById(OVERLAY_ID);
+          const closeBtn = document.getElementById(CLOSE_ID);
+          const clearBtn = document.getElementById(CLEAR_ID);
+          const input = document.getElementById(INPUT_ID);
+          const sendBtn = document.getElementById(SEND_ID);
+          const messages = document.getElementById(MESSAGES_ID);
+          const bubble = document.getElementById('aiBubble');
+          const bubbleClose = document.getElementById('aiBubbleClose');
+          if (!fab || !overlay) return;
+
+          function saveHistory() {
+            try {
+              const items = [];
+              messages.querySelectorAll('.ai-message').forEach((el) => {
+                const isUser = el.classList.contains('ai-message-user');
+                const text = el.querySelector('.ai-message-bubble')?.textContent || '';
+                if (text) items.push({ user: isUser, text: text });
+              });
+              localStorage.setItem(STORAGE_KEY, JSON.stringify(items));
+            } catch (e) { /* private mode */ }
+          }
+
+          function loadHistory() {
+            try {
+              const raw = localStorage.getItem(STORAGE_KEY);
+              if (!raw) return;
+              const items = JSON.parse(raw);
+              items.forEach((item) => addMessageSync(item.text, item.user));
+            } catch (e) { /* corrupted storage */ }
+          }
+
+          function addMessageSync(text, isUser = false) {
+            const div = document.createElement('div');
+            div.className = 'ai-message ' + (isUser ? 'ai-message-user' : 'ai-message-bot');
+            const bubbleEl = document.createElement('div');
+            bubbleEl.className = 'ai-message-bubble';
+            bubbleEl.textContent = text;
+            div.appendChild(bubbleEl);
+            messages.appendChild(div);
+            messages.scrollTop = messages.scrollHeight;
+            saveHistory();
+            return div;
+          }
+
+          async function addMessage(text, isUser = false) {
+            const div = document.createElement('div');
+            div.className = 'ai-message ' + (isUser ? 'ai-message-user' : 'ai-message-bot');
+            const bubbleEl = document.createElement('div');
+            bubbleEl.className = 'ai-message-bubble';
+            bubbleEl.textContent = text;
+            div.appendChild(bubbleEl);
+            messages.appendChild(div);
+            messages.scrollTop = messages.scrollHeight;
+            saveHistory();
+            return div;
+          }
+
+          function scrollToBottom() {
+            messages.scrollTop = messages.scrollHeight;
+          }
+
+          function openChat() {
+            overlay.classList.add('open');
+            overlay.setAttribute('aria-hidden', 'false');
+            isOpen = true;
+            fab.classList.add('hidden');
+            if (bubble) bubble.style.display = 'none';
+            input.focus();
+            scrollToBottom();
+          }
+
+          function closeChat() {
+            overlay.classList.remove('open');
+            overlay.setAttribute('aria-hidden', 'true');
+            isOpen = false;
+            fab.classList.remove('hidden');
+          }
+
+          function toggleChat() {
+            if (isOpen) closeChat(); else openChat();
+          }
+
+          fab.addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            toggleChat();
+          });
+
+          closeBtn.addEventListener('click', closeChat);
+          overlay.addEventListener('click', (e) => { if (e.target === overlay) closeChat(); });
+          document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && isOpen) closeChat(); });
+
+          if (bubble && bubbleClose) {
+            bubbleClose.addEventListener('click', () => { bubble.style.display = 'none'; });
+            fab.addEventListener('click', () => { bubble.style.display = 'none'; });
+            window.requestAnimationFrame(() => {
+              bubble.style.display = 'flex';
+            });
+          }
+
+          if (clearBtn) {
+            clearBtn.addEventListener('click', () => {
+              resetChat();
+            });
+          }
+
+          loadDynamicKB();
+          loadHistory();
+
+          async function sendMessage() {
+            const value = input.value.trim();
+            if (!value) return;
+            input.value = '';
+            sendBtn.disabled = true;
+            await addMessage(value, true);
+            const thinkingDiv = await addMessage('Sedang menganalisis kata kunci Anda…', false);
+            try {
+              const response = await generateSocraticResponse(value);
+              thinkingDiv.remove();
+              await addMessage(response, false);
+            } catch (err) {
+              thinkingDiv.remove();
+              await addMessage('Maaf, saya mengalami gangguan teknis. Coba lagi dalam beberapa saat.', false);
+            } finally {
+              sendBtn.disabled = false;
+              input.focus();
+              scrollToBottom();
+            }
+          }
+
+          sendBtn.addEventListener('click', sendMessage);
+          input.addEventListener('keypress', (e) => { if (e.key === 'Enter') sendMessage(); });
+        }
+
+        if (document.readyState === 'loading') {
+          document.addEventListener('DOMContentLoaded', () => {
+            window.requestAnimationFrame(() => window.requestAnimationFrame(initAI));
+          });
+        } else {
+          window.requestAnimationFrame(() => window.requestAnimationFrame(initAI));
+        }
+      })();
+    </script>
 
 </body>
 </html>
@@ -364,9 +767,445 @@
             padding: 1px 6px; border-radius: 5px; font-family: Consolas, Monaco, monospace;
             font-size: 0.85em; color: #be123c; }
 
+        /* Animasi Banner Melayang Naik Turun */
+        @keyframes floatUpDown {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-8px); }
+        }
+
+        .floating-warning-banner {
+            position: fixed;
+            bottom: 25px;
+            right: 25px;
+            background: linear-gradient(135deg, #ff9800, #f57c00);
+            color: white;
+            padding: 12px 20px;
+            border-radius: 30px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            animation: floatUpDown 2s ease-in-out infinite;
+            z-index: 9999;
+        }
+
+        /* Styling Modal Pop-up */
+        .aws-modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(4px);
+            z-index: 10000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .aws-modal-box {
+            background: #ffffff;
+            width: 90%;
+            max-width: 450px;
+            border-radius: 12px;
+            padding: 25px;
+            position: relative;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            animation: modalPop 0.3s ease-out;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        @keyframes modalPop {
+            from { transform: scale(0.9); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #666;
+        }
+
+        .modal-header h3 {
+            margin-top: 0;
+            color: #0f172a;
+            font-size: 1.25rem;
+        }
+
+        .btn-canvas-link {
+            display: block;
+            background: #FF9900;
+            color: #232f3e;
+            text-align: center;
+            padding: 10px;
+            border-radius: 6px;
+            font-weight: bold;
+            text-decoration: none;
+            margin: 10px 0 15px 0;
+            transition: background 0.2s;
+        }
+        .btn-canvas-link:hover {
+            background: #ec8b00;
+        }
+
+        .modal-divider {
+            border: 0;
+            border-top: 1px solid #e2e8f0;
+            margin: 20px 0;
+        }
+
+        .input-group {
+            margin-bottom: 12px;
+        }
+
+        .input-group label {
+            display: block;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: #475569;
+            margin-bottom: 5px;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #cbd5e1;
+            border-radius: 6px;
+            font-size: 0.95rem;
+            box-sizing: border-box;
+        }
+
+        .btn-submit-credential {
+            width: 100%;
+            background: #0ea5e9;
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 6px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: background 0.2s;
+        }
+        .btn-submit-credential:hover {
+            background: #0284c7;
+        }
+
+        .credential-result {
+            margin-top: 15px;
+            background: #f1f5f9;
+            padding: 12px;
+            border-radius: 6px;
+            border-left: 4px solid #10b981;
+        }
+
+        .copy-text {
+            font-family: monospace;
+            background: #ffffff;
+            padding: 2px 6px;
+            border-radius: 4px;
+            border: 1px solid #e2e8f0;
+            user-select: all;
+            color: #0f172a;
+        }
+
+        .error-msg {
+            margin-top: 12px;
+            color: #ef4444;
+            font-size: 0.85rem;
+            background: #fef2f2;
+            padding: 8px;
+            border-radius: 4px;
+            text-align: center;
+        }
+
+        /* ============ AI ASISTEN BELAJAR WIDGET ============ */
+        .ai-fab {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            z-index: 1000;
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            border: none;
+            background: linear-gradient(135deg, #1e1b4b, #312e81);
+            color: #ffffff;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 8px 32px rgba(30, 27, 75, 0.45);
+            transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.25s ease, box-shadow 0.25s ease;
+            will-change: transform;
+        }
+        .ai-fab:hover { transform: translateY(-2px) scale(1.05); box-shadow: 0 12px 40px rgba(30, 27, 75, 0.55); }
+        .ai-fab:active { transform: translateY(0) scale(0.95); }
+        .ai-fab-img { width: 28px; height: 28px; border-radius: 50%; object-fit: cover; display: block; }
+        .ai-fab.hidden {
+            opacity: 0;
+            pointer-events: none;
+            transform: scale(0.85);
+        }
+
+        .ai-bubble {
+            position: fixed;
+            bottom: 92px;
+            left: 20px;
+            z-index: 1000;
+            display: none;
+            flex-direction: row;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 10px;
+            border-radius: 999px;
+            background: linear-gradient(135deg, #312e81, #4338ca);
+            color: #ffffff;
+            font-size: 0.78rem;
+            font-weight: 600;
+            box-shadow: 0 6px 24px rgba(30, 27, 75, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            animation: aiBubbleFadeIn 0.5s ease-out forwards;
+            white-space: nowrap;
+        }
+        
+        .ai-bubble-close {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            border: none;
+            background: rgba(255, 255, 255, 0.2);
+            color: #ffffff;
+            font-size: 0.85rem;
+            font-weight: 800;
+            line-height: 1;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.18s ease;
+        }
+        .ai-bubble-close:hover { background: rgba(255, 255, 255, 0.4); }
+        @keyframes aiBubbleFadeIn {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @media (max-width: 480px) {
+            .ai-bubble { bottom: 82px; left: 16px; }
+            .ai-fab { bottom: 16px; left: 16px; width: 50px; height: 50px; }
+        }
+        
+        .ai-chat-overlay {
+            position: fixed;
+            bottom: 80px;
+            left: 20px;
+            z-index: 1050;
+            display: none;
+            width: min(420px, 92vw);
+            max-height: 85vh;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.25s ease, display 0.25s ease;
+        }
+        .ai-chat-overlay.open { display: block; opacity: 1; pointer-events: auto; }
+
+        .ai-chat-panel {
+            width: 100%;
+            height: 85vh;
+            max-height: 600px;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            border-radius: 16px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            opacity: 0;
+            transform: scale(0.95);
+            transition: opacity 0.25s ease, transform 0.25s ease;
+        }
+        .ai-chat-overlay.open .ai-chat-panel { opacity: 1; transform: scale(1); }
+
+        .ai-chat-clear {
+            background: transparent;
+            border: none;
+            color: #6b7280;
+            font-size: 1.25rem;
+            cursor: pointer;
+            line-height: 1;
+            padding: 0.25rem;
+            border-radius: 8px;
+            transition: color 0.18s ease, background 0.18s ease;
+        }
+        .ai-chat-clear:hover { color: #ef4444; background: rgba(239, 68, 68, 0.1); }
+
+        .ai-chat-header {
+            padding: 1rem 1.25rem;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: rgba(255, 255, 255, 0.6);
+        }
+        .ai-chat-header h3 { margin: 0; font-size: 1rem; font-weight: 600; color: #111827; display: flex; align-items: center; gap: 0.5rem; }
+        .ai-chat-close { background: transparent; border: none; color: #6b7280; font-size: 1.5rem; cursor: pointer; line-height: 1; padding: 0.25rem; border-radius: 8px; transition: color 0.18s ease, background 0.18s ease; }
+        .ai-chat-close:hover { color: #ef4444; background: rgba(239, 68, 68, 0.1); }
+
+        .ai-chat-messages {
+            flex: 1;
+            overflow-y: auto;
+            padding: 1rem 1.25rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.85rem;
+            background: #f8fafc;
+        }
+        .ai-message { max-width: 85%; display: flex; flex-direction: column; gap: 0.4rem; }
+        .ai-message-bot { align-self: flex-start; }
+        .ai-message-user { align-self: flex-end; }
+        .ai-message-bubble { padding: 0.85rem 1rem; border-radius: 12px; font-size: 0.9rem; line-height: 1.5; white-space: pre-wrap; }
+        .ai-message-bot .ai-message-bubble { background: #ffffff; border: 1px solid #e5e7eb; color: #374151; border-bottom-left-radius: 4px; box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05); }
+        .ai-message-user .ai-message-bubble { background: #3b82f6; color: #ffffff; border-bottom-right-radius: 4px; }
+        .ai-message-user .ai-message-bubble a { color: #93c5fd; text-decoration: underline; }
+
+        .ai-chat-input {
+            padding: 0.75rem 1.25rem;
+            border-top: 1px solid rgba(0, 0, 0, 0.08);
+            background: rgba(255, 255, 255, 0.8);
+            display: flex;
+            gap: 0.6rem;
+            align-items: center;
+        }
+        .ai-chat-input input { flex: 1; padding: 0.75rem 1rem; border: 1px solid #d1d5db; border-radius: 10px; background: #ffffff; font-size: 0.9rem; color: #111827; outline: none; transition: border-color 0.18s ease, box-shadow 0.18s ease; }
+        .ai-chat-input input:focus { border-color: #3b82f6; box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15); }
+        .ai-chat-send { width: 40px; height: 40px; border-radius: 10px; border: none; background: #3b82f6; color: #ffffff; font-size: 1rem; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: background 0.18s ease, transform 0.18s ease; }
+        .ai-chat-send:hover { background: #2563eb; }
+        .ai-chat-send:active { transform: scale(0.95); }
+        .ai-chat-send:disabled { opacity: 0.5; cursor: not-allowed; }
+
+        @media (max-width: 480px) {
+            .ai-chat-panel { height: 90vh; max-height: none; border-radius: 16px 16px 0 0; transform: translateY(40px); }
+            .ai-chat-overlay { align-items: flex-end; justify-content: center; padding: 0.5rem; }
+            .ai-fab { bottom: 16px; left: 16px; width: 50px; height: 50px; }
+        }
+        @media (prefers-reduced-motion: reduce) {
+            .ai-fab, .ai-chat-overlay, .ai-chat-panel, .ai-chat-close, .ai-chat-send { transition: none !important; animation: none !important; }
+        }
+
     </style>
 
     <script>
+        // URL Apps Script AWS Credentials baru
+        const AWS_APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzq3mIqs5FYZvSZTSmYULh3BI0dF3KQCio3kVV019XlaxiCl-jfztYtipypToHzwFZiRA/exec";
+
+        // Fungsi Modal AWS Academy
+        window.openAwsModal = function() {
+            const modal = document.getElementById('awsModal');
+            if(modal) modal.style.display = 'flex';
+        }
+
+        window.closeAwsModal = function() {
+            const modal = document.getElementById('awsModal');
+            if(modal) modal.style.display = 'none';
+            
+            const resBox = document.getElementById('credentialResult');
+            const errBox = document.getElementById('errorMessage');
+            if(resBox) resBox.style.display = 'none';
+            if(errBox) errBox.style.display = 'none';
+            
+            const namaInput = document.getElementById('inputNama');
+            const nisnInput = document.getElementById('inputNisn');
+            if(namaInput) namaInput.value = '';
+            if(nisnInput) nisnInput.value = '';
+        }
+
+        window.fetchAwsCredentials = async function() {
+            const nama = document.getElementById('inputNama').value.trim();
+            const nisn = document.getElementById('inputNisn').value.trim();
+            const resBox = document.getElementById('credentialResult');
+            const errBox = document.getElementById('errorMessage');
+            
+            if(resBox) resBox.style.display = 'none';
+            if(errBox) errBox.style.display = 'none';
+
+            if (!nama || !nisn) {
+                if(errBox) {
+                    errBox.innerText = "Mohon isi Nama Lengkap dan NISN terlebih dahulu.";
+                    errBox.style.display = 'block';
+                }
+                return;
+            }
+
+            const submitBtn = document.querySelector('.btn-submit-credential');
+            if(submitBtn) {
+                submitBtn.innerText = "Mencari data...";
+                submitBtn.disabled = true;
+            }
+
+            try {
+                const response = await fetch(`${AWS_APPS_SCRIPT_URL}?nisn=${encodeURIComponent(nisn)}&nama=${encodeURIComponent(nama)}`);
+                const data = await response.json();
+
+                if(submitBtn) {
+                    submitBtn.innerText = "Cek Kredensial";
+                    submitBtn.disabled = false;
+                }
+
+                if (data.success) {
+                    // Inject data Cloud Foundation (Sheet C & D)
+                    document.getElementById('resUsername').innerText = data.username;
+                    document.getElementById('resPassword').innerText = data.password;
+                    
+                    // Inject data Learner Lab (Sheet E & F)
+                    // Pastikan key data.username2 dan data.password2 sesuai dengan output JSON Apps Script Anda
+                    document.getElementById('resUsername2').innerText = data.username2 || '-';
+                    document.getElementById('resPassword2').innerText = data.password2 || '-';
+                    
+                    if(resBox) resBox.style.display = 'block';
+
+                    // Munculkan banner peringatan hanya selama 10 detik saat berhasil submit & tampil kredensial
+                    const warningBanner = document.getElementById('warningBanner');
+                    if(warningBanner) {
+                        warningBanner.style.display = 'block';
+                        setTimeout(() => {
+                            warningBanner.style.display = 'none';
+                        }, 10000);
+                    }
+                } else {
+                    if(errBox) {
+                        errBox.innerText = data.message;
+                        errBox.style.display = 'block';
+                    }
+                }
+            } catch (error) {
+                if(submitBtn) {
+                    submitBtn.innerText = "Cek Kredensial";
+                    submitBtn.disabled = false;
+                }
+                if(errBox) {
+                    errBox.innerText = "Terjadi kesalahan koneksi ke server.";
+                    errBox.style.display = 'block';
+                }
+                console.error('Error:', error);
+            }
+        }
+
+        // Event listener untuk menutup modal jika klik area luar modal
+        window.addEventListener('click', (event) => {
+            const modal = document.getElementById('awsModal');
+            if (event.target === modal) {
+                window.closeAwsModal();
+            }
+        });
+
         // ========================================
         // CORE DATA STRUCTURE: mtrSemester3
         // ========================================
@@ -649,7 +1488,7 @@
                         sesi: "SESI 2",
                         tipe: "INDIVIDU",
                         topik_singkat: "Praktik Inisialisasi Custom VPC Mandiri",
-                        materi_lengkap: `<h4>Materi Mendalam: Praktik Inisialisasi Custom VPC Mandiri</h4><div class="mat"><p class="mat-lead">Dalam praktik industri, kita menghindari pembuatan otomatis lewat wizard agar benar-edge memahami rantai keterkaitan antar komponen jaringan virtual. Kita akan membuatnya secara manual satu per satu.</p><h5>🪜 Langkah pembuatan unit VPC:</h5><ol class="mat-steps"><li>Klik tombol jingga bertuliskan <b>Create VPC</b> pada halaman dashboard.</li><li>Pada pilihan opsi tipe pembuatan, centang bagian <b>VPC only</b> untuk kontrol manual total.</li><li>Beri identitas pengenal pada kolom *Name tag*, gunakan format baku industri: <code>VPC-SMK-PROYEK-1</code>.</li></ol></div>`,
+                        materi_lengkap: `<h4>Materi Mendalam: Praktik Inisialisasi Custom VPC Mandiri</h4><div class="mat"><p class="mat-lead">Dalam praktik industri, kita menghindari pembuatan otomatis lewat wizard agar benar-edge memahami rantai keterkaitan antar komponen jaringan fisik. Kita akan membuatnya secara manual satu per satu.</p><h5>🪜 Langkah pembuatan unit VPC:</h5><ol class="mat-steps"><li>Klik tombol jingga bertuliskan <b>Create VPC</b> pada halaman dashboard.</li><li>Pada pilihan opsi tipe pembuatan, centang bagian <b>VPC only</b> untuk kontrol manual total.</li><li>Beri identitas pengenal pada kolom *Name tag*, gunakan format baku industri: <code>VPC-SMK-PROYEK-1</code>.</li></ol></div>`,
                         lvl_minimum: "Siswa mampu mengklik instruksi inisialisasi pembuatan komponen VPC baru.",
                         lvl_menengah: "Siswa mampu memberikan identitas nama objek di AWS menggunakan kaidah tagging yang rapi.",
                         lvl_mahir: "Siswa mampu menganalisis implikasi penamaan komponen jaringan terhadap kecepatan audit dokumentasi server."
@@ -816,7 +1655,7 @@
                 laptop_desc: "Pelajari kerangka arsitektur runtime backend modern untuk mempersiapkan integrasi aplikasi server awan industri.",
                 smartphone_link: "https://developer.mozilla.org/en-US/docs/Learn/Server-side/Node_server_without_framework",
                 smartphone_desc: "Gunakan panduan MDN server lewat smartphone untuk memahami konsep penanganan parameter URL request backend.",
-                tujuan_pembelajaran: ["Melakukan instalasi bahasa pemrograman backend (PHP / Node.js runtime) secara sempurna di OS server Linux.", "Membuat file kode skrip penangkap parameter URL request dinamis.", "Memindahkan atau memperbarui konfigurasi default direktori baca engine web server.", "Menguji validasi fungsionalitas pemrosesan logika komputasi backend melintasi jalur internet browser."],
+                tujuan_pembelajaran: ["Melakukan instalasi bahasa pemrograman backend (PHP / Node.js runtime) secara sempurna di OS server Linux.", "Membuat file skrip penangkap parameter URL request dinamis.", "Memindahkan atau memperbarui konfigurasi default direktori baca engine web server.", "Menguji validasi fungsionalitas pemrosesan logika komputasi backend melintasi jalur internet browser."],
                 pemantik: "Bagaimana cara kerja sistem komputer kalkulator online di internet menghitung angka penjumlahan yang kita kirimkan, padahal laptop kita sama sekali tidak memiliki file kode kalkulator tersebut?",
                 daily_targets: [
                     {
@@ -824,7 +1663,7 @@
                         tipe: "INDIVIDU",
                         topik_singkat: "Instalasi Runtime Engine Bahasa Pemrograman Sisi Server",
                         materi_lengkap: `<h4>Materi Mendalam: Instalasi Runtime Engine Bahasa Pemrograman Sisi Server</h4><div class="mat"><p class="mat-lead">Agar server Linux EC2 sanggup membaca dan mengeksekusi baris instruksi logika komputasi matematika yang rumit, kita harus memasangkan komponen otak bahasa pemrograman backend terlebih dahulu.</p><h5>🪜 Langkah instalasi runtime backend (Opsi Rumpun PHP):</h5><ol class="mat-steps"><li>Pastikan posisi koneksi remot terminal SSH kalian ke server masih tersambung aktif.</li><li>Jalankan instruksi pengunduhan paket bahasa pemrograman backend industri: <code>sudo apt install php-fpm php-cli -y</code>.</li><li>Buktikan keberhasilan instalasi otak bahasa dengan memeriksa nomor edisi rilis versi terpasang lewat perintah teks: <code>php -v</code>.</li></ol></div>`,
-                        lvl_minimum: "Siswa mampu menjalankan perintah instalasi package interpreter PHP pada terminal server cloud.",
+                        lvl_minimum: "Siswa mampu menjalankan perintah instalasi paket interpreter PHP pada terminal server cloud.",
                         lvl_menengah: "Siswa mampu mengonfirmasi nomor edisi rilis mesin pemrograman backend yang sukses terpasang.",
                         lvl_mahir: "Siswa mampu menganalisis kelebihan performa antara arsitektur module PHP biasa dengan varian PHP-FPM (FastCGI Process Manager) di dunia industri server."
                     },
@@ -875,7 +1714,7 @@ echo json_encode($response);
                         sesi: "SESI 5",
                         tipe: "KELOMPOK",
                         topik_singkat: "Uji Pembuktian Parsing Data Parameter Dinamis Global",
-                        materi_lengkap: `<h4>Materi Mendalam: Uji Pembuktian Parsing Data Parameter Dinamis Global</h4><div class="mat"><figure class="mat-fig"><svg viewBox="0 0 520 220" role="img" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI, Arial, sans-serif"><rect x="30" y="30" width="460" height="160" rx="8" fill="#f8fafc" stroke="#16a34a" stroke-width="2.5"/><text x="260" y="60" font-size="13" fill="#14532d" text-anchor="middle" font-weight="600">🏁 Puncak Capaian Target Akhir Sub-Bab Kedua 🏁</text><rect x="60" y="90" width="400" height="40" rx="4" fill="#1e293b"/><text x="75" y="115" font-size="11" fill="#38bdf8" font-family="Courier New, monospace">http://&lt;IP-Public&gt;/api.php?user=Budi</text><path d="M260,130 L260,160" stroke="#16a34a" stroke-width="2" marker-end="url(#arrow1)"/><text x="260" y="180" font-size="12" fill="#16a34a" text-anchor="middle" font-weight="600">Output JSON Dinamis Berhasil Melewati Pintu Gerbang VPC & IGW!</text></svg><figcaption>Format Pengujian URL Parameter Dinamis Lintas Jaringan Global</figcaption></figure><p class="mat-lead">Hari pamungkas penutup sub-bab kedua dirayakan dengan melakukan atraksi pengujian pengiriman data jarak jauh (Parsing Live Test). Kelompok membuktikan bahwa server awan kustom rakitan mereka bukan sekadar menyala, tapi sanggup mengolah data kiriman user secara interaktif dari berbagai lokasi browser.</p><h5>🪜 Langkah pembuktian akhir kelompok:</h5><ol class="mat-steps"><li>Buka aplikasi web browser di handphone atau komputer lokal masing-masing anggota tim kelompok.</li><li>Ketikkan alamat link URL unik pengujian dengan menyisipkan parameter nama di bagian buntut link, contoh format penulisan: <code>http://&lt;ALAMAT-IP-PUBLIC-SERVER-KALIAN&gt;/api.php?user=Kelompok3-TKJT</code>. Lalu hantam tombol enter browser.</li><li>Perhatikan layar browser kalian! Jika layar sukses berubah menampilkan seonggok data interaktif terstruktur rapi format **JSON** yang otomatis menyapa nama kelompok kalian beserta waktu real-time presisi dari data center server, maka selamat! Aplikasi backend dinamis kalian resmi sukses mengudara dengan aman melintasi labirin Custom VPC, melewati celah Public Subnet, menembus pintu Internet Gateway, dan diolah cerdas oleh engine instans EC2. Kelompok kalian dinyatakan **Lulus Sempurna dengan Predikat Arsitek Jaringan Cloud Handal**!</ol></div>`,
+                        materi_lengkap: `<h4>Materi Mendalam: Uji Pembuktian Parsing Data Parameter Dinamis Global</h4><div class="mat"><figure class="mat-fig"><svg viewBox="0 0 520 220" role="img" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI, Arial, sans-serif"><rect x="40" y="30" width="460" height="160" rx="8" fill="#f8fafc" stroke="#16a34a" stroke-width="2.5"/><text x="260" y="60" font-size="13" fill="#14532d" text-anchor="middle" font-weight="600">🏁 Puncak Capaian Target Akhir Sub-Bab Kedua 🏁</text><rect x="60" y="90" width="400" height="40" rx="4" fill="#1e293b"/><text x="75" y="115" font-size="11" fill="#38bdf8" font-family="Courier New, monospace">http://&lt;IP-Public&gt;/api.php?user=Budi</text><path d="M260,130 L260,160" stroke="#16a34a" stroke-width="2" marker-end="url(#arrow1)"/><text x="260" y="180" font-size="12" fill="#16a34a" text-anchor="middle" font-weight="600">Output JSON Dinamis Berhasil Melewati Pintu Gerbang VPC & IGW!</text></svg><figcaption>Format Pengujian URL Parameter Dinamis Lintas Jaringan Global</figcaption></figure><p class="mat-lead">Hari pemungkas penutup sub-bab kedua ditutup dengan melakukan atraksi pengujian pengiriman data jarak jauh (Parsing Live Test). Kelompok membuktikan bahwa server awan kustom rakitan mereka bukan sekadar menyala, tapi sanggup mengolah data kiriman user secara interaktif dari berbagai lokasi browser.</p><h5>🪜 Langkah pembuktian akhir kelompok:</h5><ol class="mat-steps"><li>Buka aplikasi web browser di handphone atau komputer lokal masing-masing anggota tim kelompok.</li><li>Ketikkan alamat link URL unik pengujian dengan menyisipkan parameter nama di bagian buntut link, contoh format penulisan: <code>http://&lt;ALAMAT-IP-PUBLIC-SERVER-KALIAN&gt;/api.php?user=Kelompok3-TKJT</code>. Lalu hantam tombol enter browser.</li><li>Perhatikan layar browser kalian! Jika layar sukses berubah menampilkan seonggok data interaktif terstruktur rapi format **JSON** yang otomatis menyapa nama kelompok kalian beserta waktu real-time presisi dari data center server, maka selamat! Aplikasi backend dinamis kalian resmi sukses mengudara dengan aman melintasi labirin Custom VPC, melewati celah Public Subnet, menembus pintu Internet Gateway, dan diolah cerdas oleh engine instans EC2. Kelompok kalian dinyatakan **Lulus Sempurna dengan Predikat Arsitek Jaringan Cloud Handal**!</ol></div>`,
                         lvl_minimum: "Siswa mampu mengetikkan format alamat URL lengkap dengan imbuhan simbol tanda tanya parameter.",
                         lvl_menengah: "Siswa mampu membuktikan keberhasilan penampilan output data terstruktur berformat standar industri JSON.",
                         lvl_mahir: "Siswa mampu mempertahankan seluruh dokumentasi rantai arsitektur (VPC, Subnet, IGW, EC2, Nginx, PHP) di depan sidang evaluasi guru kelas."
@@ -988,7 +1827,7 @@ echo json_encode($response);
                         sesi: "SESI 4",
                         tipe: "INDIVIDU",
                         topik_singkat: "Konfigurasi Alokasi Storage & Autoscaling Data",
-                        materi_lengkap: `<h4>Materi Mendalam: Konfigurasi Alokasi Storage & Autoscaling Data</h4><div class="mat"><p class="mat-lead">Kita harus menentukan jenis penampung fisik (Hardisk/SSD) untuk database kita. AWS menyediakan tipe penyimpanan berkecepatan tinggi berbasis NVMe SSD yang dinamakan **General Purpose SSD (gp3)**.</p><h5>🪜 Langkah penentuan ruang penyimpanan:</h5><ol class="mat-steps"><li>Pada bagian *Storage type*, pilih **General Purpose SSD (gp3)**.</li><li>Isikan *Allocated storage* sebesar <code>20</code> GiB (kapasitas maksimal yang dicover oleh skema Free Tier AWS selama 12 bulan).</li><li>Temukan opsi **Enable storage autoscaling**. Fitur ini wajib dicentang agar jika volume data sekolah membengkak melebihi 20 GB, AWS akan otomatis menambah ruang hardisk secara elastis tanpa membuat database mengalami mati suri (*downtime*).</li></ol></div>`,
+                        materi_lengkap: `<h4>Materi Mendalam: Konfigurasi Alokasi Storage & Autoscaling Data</h4><div class="mat"><p class="mat-lead">Kita harus menentukan jenis penampung fisik (Hardisk/SSD) untuk database kita. AWS menyediakan penyimpanan berkecepatan tinggi berbasis NVMe SSD yang dinamakan **General Purpose SSD (gp3)**.</p><h5>🪜 Langkah penentuan ruang penyimpanan:</h5><ol class="mat-steps"><li>Pada bagian *Storage type*, pilih **General Purpose SSD (gp3)**.</li><li>Isikan *Allocated storage* sebesar <code>20</code> GiB (kapasitas maksimal yang dicover oleh skema Free Tier AWS selama 12 bulan).</li><li>Temukan opsi **Enable storage autoscaling**. Fitur ini wajib dicentang agar jika volume data sekolah membengkak melebihi 20 GB, AWS akan otomatis menambah ruang hardisk secara elastis tanpa membuat database mengalami mati suri (*downtime*).</li></ol></div>`,
                         lvl_minimum: "Siswa tahu kapasitas maksimal storage gratis RDS yang disediakan oleh AWS Free Tier.",
                         lvl_menengah: "Siswa mampu mengonfigurasi fitur Storage Autoscaling pada form pembuatan database.",
                         lvl_mahir: "Siswa mampu memprediksi ambang batas atas penyebaran kapasitas data (Maximum Storage Threshold) untuk mengendalikan pengeluaran anggaran."
@@ -1058,7 +1897,7 @@ echo json_encode($response);
                         sesi: "SESI 5",
                         tipe: "KELOMPOK",
                         topik_singkat: "Audit Topologi Hubungan Firewall Lintas Komputasi",
-                        materi_lengkap: `<h4>Materi Mendalam: Audit Topologi Hubungan Firewall Lintas Komputasi</h4><div class="mat"><p class="mat-lead">Aktivitas penutup minggu ke-11 diisi dengan kegiatan audit jaringan antarkelompok. Siswa memvalidasi diagram alur data untuk memastikan perimeter pertahanan cloud mereka telah terpasang tanpa celah kebocoran port.</p><div class="mat-callout do"><b>🚀 Tantangan Audit Tim Kelompok</b><p>Gunakan papan tulis atau kertas gambar kelompok untuk memetakan jalur komunikasi. Pastikan ada panah tegas yang menunjukkan bahwa Laptop Siswa hanya boleh masuk ke EC2 (Port 22), dan EC2 yang boleh meneruskan data ke RDS (Port 3306). Laptop siswa dilarang keras menembak langsung ke RDS!</p></div><figure class="mat-fig"><svg viewBox="0 0 520 220" role="img" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI, Arial, sans-serif"><rect x="20" y="30" width="480" height="160" rx="8" fill=\"#f8fafc\" stroke=\"#1e3a8a\" stroke-width=\"2\"/><text x=\"260\" y=\"60\" font-size=\"14\" fill=\"#1e3a8a\" text-anchor=\"middle\" font-weight=\"bold\">🔒 FILTERING PORT FIREWALL SECURITY GROUPS</text><line x1=\"40\" y1=\"80\" x2=\"480\" y2=\"80\" stroke=\"#cbd5e1\" stroke-width=\"1.5\"/><text x=\"45\" y=\"120\" font-size=\"12\" fill=\"#475569\" font-weight=\"600\">Laptop Siswa ➔ EC2 Instance (Port 22 SSH)</text><text x=\"440\" y=\"120\" font-size=\"12\" fill=\"#16a34a\" font-weight=\"bold\" text-anchor=\"end\">TERBUKA</text><text x=\"45\" y=\"150\" font-size=\"12\" fill=\"#475569\" font-weight=\"600\">EC2 Instance ➔ RDS Instance (Port 3306 MySQL)</text><text x=\"440\" y=\"150\" font-size=\"12\" fill=\"#16a34a\" font-weight=\"bold\" text-anchor=\"end\">TERKUNCI SG</text></svg><figcaption>Alur Restriksi Port Pengamanan Berlapis Antara Komputasi Web dan Penyimpanan Data</figcaption></figure></div>`,
+                        materi_lengkap: `<h4>Materi Mendalam: Audit Topologi Hubungan Firewall Lintas Komputasi</h4><div class="mat"><p class="mat-lead">Aktivitas penutup minggu ke-11 diisi dengan kegiatan audit jaringan antarkelompok. Siswa memvalidasi diagram alur data untuk memastikan perimeter pertahanan cloud mereka telah terpasang tanpa celah kebocoran port.</p><div class="mat-callout do"><b>🚀 Tantangan Audit Tim Kelompok</b><p>Gunakan papan tulis atau kertas gambar kelompok untuk memetakan jalur komunikasi. Pastikan ada panah tegas yang menunjukkan bahwa Laptop Siswa hanya boleh masuk ke EC2 (Port 22), dan EC2 yang boleh meneruskan data ke RDS (Port 3306). Laptop siswa dilarang keras menembak langsung ke RDS!</p></div><figure class="mat-fig"><svg viewBox="0 0 520 220" role="img" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI, Arial, sans-serif"><rect x="20" y="30" width="480" height="160" rx="8" fill="#f8fafc" stroke="#1e3a8a" stroke-width="2"/><text x="260" y="60" font-size="14" fill="#1e3a8a" text-anchor="middle" font-weight="bold">🔒 FILTERING PORT FIREWALL SECURITY GROUPS</text><line x1="40" y1="80" x2="480" y2="80" stroke="#cbd5e1" stroke-width="1.5"/><text x="45" y="120" font-size="12" fill="#475569" font-weight="600">Laptop Siswa ➔ EC2 Instance (Port 22 SSH)</text><text x="440" y="120" font-size="12" fill="#16a34a" font-weight="bold" text-anchor="end">TERBUKA</text><text x="45" y="150" font-size="12" fill="#475569" font-weight="600">EC2 Instance ➔ RDS Instance (Port 3306 MySQL)</text><text x="440" y="150" font-size="12" fill="#16a34a" font-weight="bold" text-anchor="end">TERKUNCI SG</text></svg><figcaption>Alur Restriksi Port Pengamanan Berlapis Antara Komputasi Web dan Penyimpanan Data</figcaption></figure></div>`,
                         lvl_minimum: "Siswa mampu menjelaskan skema alur komunikasi data antar komponen cloud kelompoknya.",
                         lvl_menengah: "Siswa mampu melakukan pembuktian status verifikasi keterikatan Security Group baru pada menu RDS.",
                         lvl_mahir: "Siswa mampu mendeteksi secara mandiri jika terjadi kesalahan peletakan aturan inbound (Inbound Rule Mismatch) saat proses peninjauan kelas."
@@ -1085,7 +1924,7 @@ echo json_encode($response);
                         topik_singkat: "Pemasangan Paket Data Client di OS Server Linux",
                         materi_lengkap: `<h4>Materi Mendalam: Pemasangan Paket Data Client di OS Server Linux</h4><div class="mat"><p class="mat-lead">Agar server backend EC2 kita mampu mengirimkan paket instruksi SQL menuju komputer RDS, kita harus memasang perkakas penerjemah bahasa data di dalam OS Linux Ubuntu kita yang bernama <b>mysql-client</b>.</p><h5>🪜 Langkah instalasi via CLI remote terminal:</h5><ol class="mat-steps"><li>Lakukan koneksi remote SSH seperti biasa menuju server EC2 kalian.</li><li>Masuk sebagai administrator tertinggi, lalu perintahkan sistem mengunduh paket perkakas data: <code>sudo apt install mysql-client -y</code>.</li><li>Uji kesiapan perkakas dengan mengetikkan perintah: <code>mysql --version</code>.</li></ol></div>`,
                         lvl_minimum: "Siswa mampu menginstal perkakas paket mysql-client via terminal CLI Linux.",
-                        lvl_menengah: "Siswa mampu menguji validitas instalasi aplikasi client database lewat perintah versioning.",
+                        lvl_menengah: "Siswa mampu menguji validasi instalasi aplikasi client database lewat perintah versioning.",
                         lvl_mahir: "Siswa mampu menerangkan fungsi perbedaan peran antara mysql-server (mesin utama) dengan mysql-client (perkakas pengetuk pintu)."
                     },
                     {
@@ -1229,7 +2068,7 @@ try {
                         sesi: "SESI 5",
                         tipe: "KELOMPOK",
                         topik_singkat: "Live Launching REST API Lintas Regional Browser Client",
-                        materi_lengkap: `<h4>Materi Mendalam: Live Launching REST API Lintas Regional Browser Client</h4><div class="mat"><p class="mat-lead">Sesi penutupan minggu ke-13 ditutup dengan puncak perayaan peluncuran mahakarya aplikasi data (Grand Launching REST API). Seluruh anggota tim bersiap memegang handphone masing-masing untuk menembak endpoint web buatan kelompoknya.</p><h5> 🪜 Langkah pembuktian validasi akhir kelompok:</h5><ol class="mat-steps"><li>Buka aplikasi web browser di handphone pintar kalian menggunakan koneksi kuota mandiri di luar wifi sekolah.</li><li>Ketikkan alamat URL pemanggilan berkas endpoint REST API buatan kalian, dengan format pengetikan: <code>http://&lt;ALAMAT-IP-PUBLIC-SERVER-EC2-KALIAN&gt;/data-siswa.php</code>. Hantam tombol enter!</li></ol><figure class="mat-fig"><svg viewBox="0 0 520 220" role="img" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI, Arial, sans-serif"><rect x="20" y="30" width="480" height="160" rx="8" fill="#1e293b" stroke="#16a34a" stroke-width="2.5"/><text x="260" y="60" font-size="13" fill="#34d399" text-anchor="middle" font-weight="600">🟢 OUTPUT DATA REST API SINKRONISASI CLOUD BERHASIL 🟢</text><g font-family="Courier New, monospace" font-size="11" fill="#94a3b8"><text x="50" y="95">{</text><text x="70" y="115">"developer_infrastruktur": "Siswa Hebat SMK AMI Deltamas",</text><text x="70" y="135">"total_record_siswa": 3,</text><text x="70" y="155">"data": [ {"nisn": "00123", "nama": "Budi"}, ... ]</text><text x="50" y="175">}</text></g></svg><figcaption>Tampilan Visual Respons Data JSON REST API Hasil Sinkronisasi Multi-Tier Cloud AWS</figcaption></figure><p class="mat-lead">Apabila layar handphone kalian sukses memancarkan untaian teks terstruktur format **JSON** rapi berisikan seluruh daftar nama data anggota kelompok kalian yang ditarik langsung secara live dari brankas Amazon RDS, maka selamat! Kelompok kalian resmi dinyatakan **Lulus Kompetensi Integrasi Full-Stack Database Cloud Terpusat Tingkat Industri**!</p></div>`,
+                        materi_lengkap: `<h4>Materi Mendalam: Live Launching REST API Lintas Regional Browser Client</h4><div class="mat"><figure class="mat-fig"><svg viewBox="0 0 520 220" role="img" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI, Arial, sans-serif"><rect x="20" y="30" width="480" height="160" rx="8" fill="#1e293b" stroke="#16a34a" stroke-width="2.5"/><text x="260" y="60" font-size="13" fill="#34d399" text-anchor="middle" font-weight="600">🟢 OUTPUT DATA REST API SINKRONISASI CLOUD BERHASIL 🟢</text><g font-family="Courier New, monospace" font-size="11" fill="#94a3b8"><text x="50" y="95">{</text><text x="70" y="115">"developer_infrastruktur": "Siswa Hebat SMK AMI Deltamas",</text><text x="70" y="135">"total_record_siswa": 3,</text><text x="70" y="155">"data": [ {"nisn": "00123", "nama": "Budi"}, ... ]</text><text x="50" y="175">}</text></g></svg><figcaption>Tampilan Visual Respons Data JSON REST API Hasil Sinkronisasi Multi-Tier Cloud AWS</figcaption></figure><p class="mat-lead">Sesi penutupan minggu ke-13 ditutup dengan puncak perayaan peluncuran mahakarya aplikasi data (Grand Launching REST API). Seluruh anggota tim bersiap memegang handphone masing-masing untuk menembak endpoint web buatan kelompoknya.</p><h5> 🪜 Langkah pembuktian validasi akhir kelompok:</h5><ol class="mat-steps"><li>Buka aplikasi web browser di handphone pintar kalian menggunakan koneksi kuota mandiri di luar wifi sekolah.</li><li>Ketikkan alamat URL pemanggilan berkas endpoint REST API buatan kalian, dengan format pengetikan: <code>http://&lt;ALAMAT-IP-PUBLIC-SERVER-EC2-KALIAN&gt;/data-siswa.php</code>. Hantam tombol enter!</li></ol></div>`,
                         lvl_minimum: "Siswa mampu mendemonstrasikan pembukaan link endpoint REST API ciptaan timnya lewat handphone.",
                         lvl_menengah: "Siswa mampu membuktikan kevalidan data JSON yang memancar keluar melintasi batas jaringan internal.",
                         lvl_mahir: "Siswa mampu mempertahankan integritas dan keamanan arsitektur data rancangan kelompoknya saat disidang oleh guru penguji depan proyektor kelas."
@@ -1362,7 +2201,7 @@ try {
                         sesi: "SESI 5",
                         tipe: "KELOMPOK",
                         topik_singkat: "Integrasi Kode HTML/PHP dengan Aset Multimedia Cloud S3",
-                        materi_lengkap: `<h4>Materi Mendalam: Integrasi Kode HTML/PHP dengan Aset Multimedia Cloud S3</h4><div class="mat"><p class="mat-lead">Sesi penutupan minggu ke-15 ditutup dengan pengerjaan integrasi akhir kode program kelompok. Tim developer akan merombak kode program web backend mereka untuk memanfaatkan link S3 terpusat ini.</p><h5>🪜 Langkah sinkronisasi kode kelompok:</h5><ol class="mat-steps"><li>Masuk ke script aplikasi web kalian via terminal SSH atau text editor smartphone/laptop.</li><li>Cari tag pemanggilan gambar lama yang masih mengarah ke lokal server (misal: <code>&lt;img src="images/avatar.jpg"&gt;</code>).</li><li>Ganti isian atribut src tersebut menjadi alamat penuh Object URL S3 milik kelompok kalian yang berdurabilitas tinggi: <code>&lt;img src="https://bucket-multimedia-smk-kelompok.s3.amazonaws.com/avatar.jpg"&gt;</code>. Simpan kode, jalankan website, dan saksikan seluruh aset multimedia kini dimuat langsung dari tangki raksasa Amazon S3!</li></ol><h5>🎬 Video tutorial tambahan arsitektur S3:</h5><a class="mat-video-facade" href="https://www.youtube.com/watch?v=e6w9LwZJFIA" target="_blank" rel="noopener" style="background-image:url(https://img.youtube.com/vi/e6w9LwZJFIA/hqdefault.jpg)"><span class="yt-play"></span><span class="yt-cap">Tonton di YouTube</span></a></div>`,
+                        materi_lengkap: `<h4>Materi Mendalam: Integrasi Kode HTML/PHP dengan Aset Multimedia Cloud S3</h4><div class="mat"><p class="mat-lead">Sesi penutup minggu ke-15 ditutup dengan pengerjaan integrasi akhir kode program kelompok. Tim developer akan merombak kode program web backend mereka untuk memanfaatkan link S3 terpusat ini.</p><h5>🪜 Langkah sinkronisasi kode kelompok:</h5><ol class="mat-steps"><li>Masuk ke script aplikasi web kalian via terminal SSH atau text editor smartphone/laptop.</li><li>Cari tag pemanggilan gambar lama yang masih mengarah ke lokal server (misal: <code>&lt;img src="images/avatar.jpg"&gt;</code>).</li><li>Ganti isian atribut src tersebut menjadi alamat penuh Object URL S3 milik kelompok kalian yang berdurabilitas tinggi: <code>&lt;img src="https://bucket-multimedia-smk-kelompok.s3.amazonaws.com/avatar.jpg"&gt;</code>. Simpan kode, jalankan website, dan saksikan seluruh aset multimedia kini dimuat langsung dari tangki raksasa Amazon S3!</li></ol><h5>🎬 Video tutorial tambahan arsitektur S3:</h5><a class="mat-video-facade" href="https://www.youtube.com/watch?v=e6w9LwZJFIA" target="_blank" rel="noopener" style="background-image:url(https://img.youtube.com/vi/e6w9LwZJFIA/hqdefault.jpg)"><span class="yt-play"></span><span class="yt-cap">Tonton di YouTube</span></a></div>`,
                         lvl_minimum: "Siswa mampu menempelkan link Object URL S3 ke dalam baris tag img kode HTML.",
                         lvl_menengah: "Siswa mampu merombak struktur data database agar kolom foto menyimpan string link S3 secara dinamis.",
                         lvl_mahir: "Siswa mampu mendemonstrasikan kelancaran penampilan aset multimedia web lintas perangkat di depan tim kelompok lain."
@@ -1754,4 +2593,216 @@ try {
         // Initialize
         generateMenu();
         renderKonten(1);
+
+        // ========================================
+        // LOGIKA WORKSFLOW
+        // ========================================
+        function openWorksFlow() {
+            document.getElementById('worksFlowModal').style.display = 'flex';
+            showStep1();
+        }
+
+        function closeWorksFlow() {
+            document.getElementById('worksFlowModal').style.display = 'none';
+        }
+
+        let isZoomed = false;
+        function toggleZoom(imgEl) {
+            isZoomed = !isZoomed;
+            if(isZoomed) {
+                imgEl.style.transform = "scale(1.8)";
+                imgEl.style.cursor = "zoom-out";
+                imgEl.style.zIndex = "10";
+            } else {
+                imgEl.style.transform = "scale(1)";
+                imgEl.style.cursor = "zoom-in";
+                imgEl.style.zIndex = "1";
+            }
+        }
+
+        function showStep1() {
+            // URL gambar 1 dimodifikasi menjadi fit:1920 untuk kualitas Full HD
+            const img1 = "https://miro.medium.com/v2/resize:fit:1920/format:webp/1*958aKDdSC7OKHAPkVdxkaQ.jpeg";
+            
+            document.getElementById('worksFlowContent').innerHTML = `
+                <div style="text-align: center; position: relative; overflow: hidden; padding-bottom: 20px;">
+                    <img id="wfImage1" src="${img1}" style="width: 100%; border-radius: 8px; transition: transform 0.3s ease; cursor: zoom-in; position: relative;" onclick="toggleZoom(this)">
+                    <div style="margin-top: 20px; display: flex; justify-content: space-between; position: relative; z-index: 20;">
+                        <button onclick="toggleZoom(document.getElementById('wfImage1'))" style="background: #4b5563; color: white; padding: 10px 20px; border: none; border-radius: 6px; cursor: pointer; font-weight: bold;">🔍 Zoom In/Out</button>
+                        <button onclick="showStep2()" style="background: #0ea5e9; color: white; padding: 10px 20px; border: none; border-radius: 6px; cursor: pointer; font-weight: bold;">Next ➡️</button>
+                    </div>
+                </div>
+            `;
+        }
+
+        function showStep2() {
+            const img2 = "https://miro.medium.com/v2/resize:fit:1100/format:webp/1*NFLqhTSMBst8P1Qvkg8zUA.jpeg";
+            const img3 = "https://miro.medium.com/v2/resize:fit:720/format:webp/1*LfqpWayoKPEC2Lw5lNj2gA.jpeg";
+            const img4 = "https://miro.medium.com/v2/resize:fit:786/format:webp/1*HFpZ6UuiN4OqpdT6A4oMvg.jpeg";
+            
+            const modulesText = `
+                <div style="text-align: left; background: #f8fafc; padding: 20px; border-radius: 8px; margin: 20px 0; border-left: 4px solid #3b82f6;">
+                    <h3 style="margin-top:0; color: #0f172a;">Core Modules</h3>
+                    
+                    <p><b>Module 1 - Cloud Concepts Overview</b><br>
+                    Fokus Materi: Pengenalan dasar apa itu cloud computing, keuntungan beralih ke cloud, pengenalan ekosistem AWS, serta strategi migrasi awal.<br>
+                    Evaluasi: Module 1 Knowledge Check (Kuis pilihan ganda).</p>
+                    
+                    <p><b>Module 2 - Cloud Economics and Billing</b><br>
+                    Fokus Materi: Dasar penetapan harga AWS (pricing fundamentals), kalkulasi Total Cost of Ownership (TCO) beserta studi kasusnya.<br>
+                    Praktik & Manajemen: Pengelolaan multi-akun dengan AWS Organizations, manajemen tagihan (AWS Billing), demonstrasi konsol Billing Dashboard, serta model dukungan teknis (Technical Support Models).<br>
+                    Evaluasi: Module 2 Knowledge Check.</p>
+
+                    <p><b>Module 3 - AWS Global Infrastructure Overview</b><br>
+                    Fokus Materi: Pemahaman arsitektur global AWS (Region, Availability Zones, dan Edge Locations) serta pemetaan layanan dasar AWS secara umum.<br>
+                    Evaluasi: Module 3 Knowledge Check.</p>
+
+                    <p><b>Module 4 - AWS Cloud Security</b><br>
+                    Fokus Materi: Model tanggung jawab bersama (Shared Responsibility Model), manajemen akses dengan AWS IAM (Identity and Access Management), serta pengamanan akun baru dan data.<br>
+                    Praktik Mandiri:<br>
+                    - Console Demonstration (IAM).<br>
+                    - Lab 1: Introduction to AWS IAM (Praktik manajemen user, group, dan policy).<br>
+                    Evaluasi: Module 4 Knowledge Check.</p>
+
+                    <p><b>Module 5 - Networking and Content Delivery</b><br>
+                    Fokus Materi: Konsep dasar jaringan komputer, pembuatan jaringan privat virtual dengan Amazon VPC (Virtual Private Cloud), keamanan jaringan, serta layanan distribusi konten dan domain (Amazon Route 53 & Amazon CloudFront).<br>
+                    Praktik Mandiri:<br>
+                    - Console Demonstration (VPC Wizard).<br>
+                    - Lab 2: Build your VPC and Launch a Web Server (Praktik membangun jaringan terisolasi dan merilis server web).<br>
+                    Evaluasi: Module 5 Knowledge Check.</p>
+
+                    <p><b>Module 6 - Compute</b><br>
+                    Fokus Materi: Overview layanan komputasi, eksplorasi mendalam Amazon EC2 (Elastic Compute Cloud) dari Part 1 hingga Part 3, strategi optimalisasi biaya EC2, pengenalan layanan kontainer (Container Services), AWS Lambda (Serverless), dan AWS Elastic Beanstalk (Platform as a Service).<br>
+                    Praktik Mandiri:<br>
+                    - Console Demonstration (EC2).<br>
+                    - Lab 3: Introduction to Amazon EC2 (Praktik meluncurkan dan mengonfigurasi mesin virtual).<br>
+                    - Activity: AWS Lambda & AWS Elastic Beanstalk.<br>
+                    Evaluasi: Module 6 Knowledge Check.</p>
+
+                    <p><b>Module 7 - Storage</b><br>
+                    Fokus Materi: Sistem penyimpanan berbasis blok, objek, dan file meliputi Amazon EBS (Elastic Block Store), Amazon S3 (Simple Storage Service), Amazon EFS (Elastic File System), serta arsip jangka panjang Amazon S3 Glacier.<br>
+                    Praktik Mandiri:<br>
+                    - Console Demonstrations (EBS, S3, EFS, dan Glacier).<br>
+                    - Lab 4: Working with EBS (Praktik manajemen volume penyimpanan blok).<br>
+                    Evaluasi: Module 7 Knowledge Check.</p>
+
+                    <p><b>Module 8 - Databases</b><br>
+                    Fokus Materi: Pengelolaan basis data relasional dan non-relasional meliputi Amazon RDS (Relational Database Service), Amazon DynamoDB (NoSQL), Amazon Redshift (Data Warehousing), dan Amazon Aurora.<br>
+                    Praktik Mandiri:<br>
+                    - Console Demonstration (RDS & DynamoDB).<br>
+                    - Lab 5: Build a Database Server (Praktik membangun dan menghubungkan server database relasional).<br>
+                    Evaluasi: Module 8 Knowledge Check.</p>
+
+                    <p><b>Module 9 - Cloud Architecture</b><br>
+                    Fokus Materi: Prinsip desain AWS Well-Architected Framework yang mencakup 6 pilar: Operational Excellence, Security, Reliability, Performance Efficiency, Cost Optimization, dan Sustainability. Serta penggunaan alat rekomendasi AWS Trusted Advisor.<br>
+                    Evaluasi: Module 9 Knowledge Check.</p>
+
+                    <p><b>Module 10 - Auto Scaling and Monitoring</b><br>
+                    Fokus Materi: Mekanisme distribusi beban kerja dengan Elastic Load Balancing (ELB), pemantauan sistem via Amazon CloudWatch, dan otomatisasi penskalaan sumber daya dengan Amazon EC2 Auto Scaling.<br>
+                    Praktik Mandiri:<br>
+                    - Lab 6: Scale & Load Balance your Architecture (Praktik mengatur beban kerja otomatis dan load balancing).<br>
+                    Evaluasi: Module 10 Knowledge Check.</p>
+                </div>
+            `;
+
+            document.getElementById('worksFlowContent').innerHTML = `
+                <div style="text-align: center;">
+                    <div style="display: flex; justify-content: flex-start; margin-bottom: 20px;">
+                        <button onclick="showStep1()" style="background: #64748b; color: white; padding: 10px 20px; border: none; border-radius: 6px; cursor: pointer; font-weight: bold;">⬅️ Kembali ke Gambar 1</button>
+                    </div>
+                    
+                    <img src="${img2}" style="width: 100%; border-radius: 8px; margin-bottom: 5px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+                    ${modulesText}
+                    <img src="${img3}" style="width: 100%; border-radius: 8px; margin-bottom: 20px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+                    <img src="${img4}" style="width: 100%; border-radius: 8px; margin-bottom: 20px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+                </div>
+            `;
+        }
+        // GANTI DENGAN URL WEB APP GOOGLE APPS SCRIPT KEDUA ANDA
+        const UPLOAD_APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbz-lhSLgt7nZPuxns77KAg-cAMz66_p4XhNDoVNKZhnN6YWXdQcwUznqfw0mI7S2YUjvw/exec";
+
+        function openUploadModal() {
+            document.getElementById('uploadModal').style.display = 'flex';
+        }
+
+        function closeUploadModal() {
+            document.getElementById('uploadModal').style.display = 'none';
+            const statusMsg = document.getElementById('uploadStatusMsg');
+            if(statusMsg) statusMsg.style.display = 'none';
+            
+            // Reset form
+            document.getElementById('upNama').value = '';
+            document.getElementById('upKelas').value = '';
+            document.getElementById('upJudul').value = '';
+            document.getElementById('upPenjelasan').value = ''; // <-- Tambahkan baris ini
+            document.getElementById('upFile').value = '';
+        }
+
+        function submitUploadData() {
+            const nama = document.getElementById('upNama').value.trim();
+            const kelas = document.getElementById('upKelas').value.trim();
+            const judul = document.getElementById('upJudul').value.trim();
+            const penjelasan = document.getElementById('upPenjelasan').value.trim(); // <-- Ambil nilai penjelasan
+            const fileInput = document.getElementById('upFile');
+            const statusMsg = document.getElementById('uploadStatusMsg');
+            const btnSubmit = document.getElementById('btnUploadSubmit');
+
+            // Pastikan penjelasan juga wajib diisi
+            if (!nama || !kelas || !judul || !penjelasan || fileInput.files.length === 0) { 
+                statusMsg.innerHTML = '<span style="color:#ef4444; font-weight:bold;">⚠️ Harap lengkapi semua data, penjelasan, dan pilih file.</span>';
+                statusMsg.style.display = 'block';
+                return;
+            }
+
+            const file = fileInput.files[0];
+            const reader = new FileReader();
+
+            btnSubmit.innerText = "⏳ Sedang Mengunggah File...";
+            btnSubmit.disabled = true;
+            btnSubmit.style.background = "#94a3b8";
+            statusMsg.style.display = 'none';
+
+            reader.onload = function(e) {
+                // Ekstrak data base64 dari file
+                const base64Data = e.target.result.split(',')[1];
+                
+                const payload = {
+                    nama: nama,
+                    kelas: kelas,
+                    judul: judul,
+                    penjelasan: penjelasan, // <-- Masukkan ke payload untuk dikirim ke GAS
+                    fileName: file.name,
+                    mimeType: file.type,
+                    fileData: base64Data
+                };
+
+                fetch(UPLOAD_APPS_SCRIPT_URL, {
+                    method: 'POST',
+                    body: JSON.stringify(payload)
+                })
+                .then(response => response.json())
+                .then(result => {
+                    btnSubmit.innerText = "Kirim File Project";
+                    btnSubmit.disabled = false;
+                    btnSubmit.style.background = "#16a34a";
+                    statusMsg.style.display = 'block';
+                    
+                    if (result.success) {
+                        statusMsg.innerHTML = '✅ <span style="color:#10b981; font-weight:bold;">Berhasil! File tersimpan.</span>';
+                    } else {
+                        statusMsg.innerHTML = '❌ <span style="color:#ef4444; font-weight:bold;">Gagal: ' + result.message + '</span>';
+                    }
+                })
+                .catch(error => {
+                    btnSubmit.innerText = "Kirim File Project";
+                    btnSubmit.disabled = false;
+                    btnSubmit.style.background = "#16a34a";
+                    statusMsg.style.display = 'block';
+                    statusMsg.innerHTML = '❌ <span style="color:#ef4444; font-weight:bold;">Koneksi terputus/Error Jaringan.</span>';
+                });
+            };
+            
+            // Mulai membaca file
+            reader.readAsDataURL(file);
+        }
     </script>

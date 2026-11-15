@@ -51,6 +51,43 @@
             -webkit-text-fill-color: transparent;
         }
 
+        /* --- STYLE BARU: CONTAINER TOMBOL PENGUMPULAN --- */
+        /* Menggunakan flexbox untuk membuat tombol sejajar di kanan dengan rapi */
+        .action-buttons {
+            display: flex;
+            justify-content: flex-end;
+            gap: 1rem; /* Jarak proporsional antar tombol */
+            margin-bottom: 1.5rem;
+        }
+        /* Tombol Pengumpulan Pixel (Warna: Kuning/Amber menuju Hijau) */
+        .btn-pixel {
+            background: linear-gradient(135deg, #f59e0b 0%, #10b981 100%);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 700;
+            box-shadow: 0 4px 12px rgba(245, 158, 11, 0.2);
+            transition: all 0.2s ease;
+        }
+        /* Tombol Pengumpulan Code (Warna: Hijau Terang menuju Biru) */
+        .btn-code {
+            background: linear-gradient(135deg, #10b981 0%, #3b82f6 100%);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 700;
+            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.2);
+            transition: all 0.2s ease;
+        }
+        /* Efek hover elegan untuk kedua tombol */
+        .btn-pixel:hover, .btn-code:hover {
+            transform: translateY(-2px);
+            filter: brightness(1.1);
+        }
+        /* ------------------------------------------------ */
+
         /* Form Input Sederhana & Edukatif */
         .project-form-card {
             background: rgba(30, 41, 59, 0.7);
@@ -113,6 +150,8 @@
         }
         @media (max-width: 600px) {
             .project-columns { grid-template-columns: 1fr; }
+            /* Memastikan tombol menjadi vertikal di HP jika layar sempit */
+            .action-buttons { flex-direction: column; text-align: center; }
         }
         .column-card {
             background: rgba(15, 23, 42, 0.6);
@@ -212,6 +251,20 @@
             </div>
             <a href="index.html" class="btn-back">⬅ Menu Utama</a>
         </header>
+
+        <!-- KELOMPOK TOMBOL PENGUMPULAN -->
+        <!-- Menggunakan class action-buttons untuk menyelaraskan kedua tombol secara horizontal -->
+        <div class="action-buttons">
+            <!-- Tombol Baru: Pengumpulan Pixel -->
+            <a href="https://forms.gle/V1KYc5rrFKV4Gdd16" target="_blank" class="btn-pixel">
+                🎨 Pengumpulan Pixel
+            </a>
+            
+            <!-- Tombol Lama yang Diupdate: Pengumpulan Code -->
+            <a href="https://forms.gle/TdpMWeFBxR9Zo6Ss6" target="_blank" class="btn-code">
+                📋 Pengumpulan Code
+            </a>
+        </div>
 
         <!-- FORM INPUT PROJECT BARU -->
         <div class="project-form-card">

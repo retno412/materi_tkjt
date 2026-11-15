@@ -1,14 +1,27 @@
-materi_belajar_tkjt/generator.py
-import os
-import json
+"""Generate Markdown lesson files for the TKJT curriculum."""
 
-# Setup folders
-os.makedirs("materi_belajar_tkjt/lessons/semester_1", exist_ok=True)
-os.makedirs("materi_belajar_tkjt/lessons/semester_2", exist_ok=True)
-os.makedirs("materi_belajar_tkjt/lessons/semester_3", exist_ok=True)
-os.makedirs("materi_belajar_tkjt/lessons/semester_4", exist_ok=True)
-os.makedirs("materi_belajar_tkjt/lessons/semester_5", exist_ok=True)
-os.makedirs("materi_belajar_tkjt/lessons/semester_6", exist_ok=True)
+from pathlib import Path
+
+BASE_DIR = Path(__file__).resolve().parent
+OUTPUT_ROOT = BASE_DIR / "materi_belajar_tkjt" / "lessons"
+
+REQUIRED_WEEK_FIELDS = (
+    "title",
+    "what",
+    "why",
+    "who",
+    "when",
+    "where",
+    "how",
+    "web_app_fundamental",
+    "portfolio_meaning_intro",
+    "portfolio_repo_structure",
+    "portfolio_commit",
+    "portfolio_readme",
+    "reflection_q1",
+    "reflection_q2",
+    "reflection_q3",
+)
 
 # Generate detailed curriculum structure
 curriculum_data = {
@@ -636,17 +649,26 @@ curriculum_data = {
     }
 }
 
-# Define placeholders for Semesters 3-6 to ensure they are created with deep content
-# We will generate semesters 3 to 6 dynamically to save script memory while keeping maximum quality and density.
-# Let's write the generator script that will write out all 108 meetings beautifully!
 
-# Let's define the generation logic
-for sem_id, sem_data in curriculum_data.items():
-    sem_name = sem_data["name"]
-    for week_id, week_data in sem_data["weeks"].items():
-        filename = f"materi_belajar_tkjt/lessons/semester_{sem_id}/pertemuan_{week_id}.md"
-        
-        md_content = f"""# Pertemuan {week_id}: {week_data["title"]}
+def validate_curriculum(data):
+    """Fail early with a clear message if a lesson is missing required fields."""
+    for sem_id, sem_data in data.items():
+        if "weeks" not in sem_data:
+            raise ValueError(f"Semester {sem_id} has no 'weeks' data.")
+        for week_id, week_data in sem_data["weeks"].items():
+            missing = [
+                field for field in REQUIRED_WEEK_FIELDS if field not in week_data
+            ]
+            if missing:
+                raise ValueError(
+                    f"Semester {sem_id}, week {week_id} is missing: "
+                    f"{', '.join(missing)}"
+                )
+
+
+def render_lesson(week_id, week_data):
+    """Render one week of curriculum as a Markdown document."""
+    return f"""# Pertemuan {week_id}: {week_data['title']}
 
 ## 🎯 Target Kompetensi & Makna Pembelajaran
 *Membangun pondasi yang kokoh untuk karir siswa di bidang teknologi, menghubungkan kode dengan solusi dunia nyata.*
@@ -656,51 +678,75 @@ for sem_id, sem_data in curriculum_data.items():
 ## 🧭 Panduan 5W + 1H (What, Why, Who, When, Where, How)
 
 ### 📌 WHAT (Apa itu?)
-{week_data["what"]}
+{week_data['what']}
 
 ### 📌 WHY (Mengapa Penting?)
-{week_data["why"]}
+{week_data['why']}
 
 ### 📌 WHO (Siapa yang menggunakan?)
-{week_data["who"]}
+{week_data['who']}
 
 ### 📌 WHEN (Kapan Digunakan?)
-{week_data["when"]}
+{week_data['when']}
 
 ### 📌 WHERE (Di Mana Diaplikasikan?)
-{week_data["where"]}
+{week_data['where']}
 
 ### 📌 HOW (Bagaimana Cara Mengimplementasikannya?)
-{week_data["how"]}
+{week_data['how']}
 
 ---
 
 ## 🌐 Fundamental Web & Aplikasi (Kunci Sukses Solusi Pengguna)
-{week_data["web_app_fundamental"]}
+{week_data['web_app_fundamental']}
 
 ---
 
 ## 💼 Konstruksi Portofolio & Makna Perjalanan
 *Setiap baris kode adalah langkah menuju profesionalisme. Berikut cara mendokumentasikan pencapaian minggu ini:*
 
-- **Makna Proyek:** {week_data["portfolio_meaning_intro"]}
+- **Makna Proyek:** {week_data['portfolio_meaning_intro']}
 - **Struktur Repositori & Dokumentasi:**
 ```text
-{week_data["portfolio_repo_structure"]}
+{week_data['portfolio_repo_structure']}
 ```
-- **Rekomendasi Commit Message:** `{week_data["portfolio_commit"]}`
-- **Dokumentasi README.md:** {week_data["portfolio_readme"]}
+- **Rekomendasi Commit Message:** `{week_data['portfolio_commit']}`
+- **Dokumentasi README.md:** {week_data['portfolio_readme']}
 
 ---
 
 ## 📝 Jurnal Refleksi Mingguan Siswa
 *Gunakan pertanyaan ini untuk mengisi jurnal sesian/mingguamu:*
-1. {week_data["reflection_q1"]}
-2. {week_data["reflection_q2"]}
-3. {week_data["reflection_q3"]}
+1. {week_data['reflection_q1']}
+2. {week_data['reflection_q2']}
+3. {week_data['reflection_q3']}
 """
-        with open(filename, "w", encoding="utf-8") as f:
-            f.write(md_content)
 
-print("Semester 1 and 2 generated!")
-write_file: path 'materi_belajar_tkjt/generator.py' is outside the allowed roots
+
+def main():
+    """Generate every lesson file declared in curriculum_data."""
+    validate_curriculum(curriculum_data)
+
+    generated = 0
+    semester_ids = []
+    for sem_id, sem_data in sorted(curriculum_data.items()):
+        semester_dir = OUTPUT_ROOT / f"semester_{sem_id}"
+        semester_dir.mkdir(parents=True, exist_ok=True)
+        semester_ids.append(sem_id)
+
+        for week_id, week_data in sorted(sem_data["weeks"].items()):
+            lesson_path = semester_dir / f"pertemuan_{week_id}.md"
+            lesson_path.write_text(
+                render_lesson(week_id, week_data), encoding="utf-8"
+            )
+            generated += 1
+
+    semesters = ", ".join(str(sem_id) for sem_id in semester_ids)
+    print(
+        f"Generated {generated} lesson files for semester(s) {semesters} "
+        f"in {OUTPUT_ROOT}"
+    )
+
+
+if __name__ == "__main__":
+    main()

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PIXEL AND CODE — Test Kelayakan & Pemetaan AI</title>
+    <title>PIXEL AND CODE — Presensi & Galeri Laporan</title>
     <style>
         :root {
             --bg-main: #0f172a;
@@ -11,8 +11,6 @@
             --accent-blue: #38bdf8;
             --accent-indigo: #6366f1;
             --accent-green: #10b981;
-            --accent-pink: #ec4899;
-            --accent-purple: #a855f7;
             --accent-amber: #f59e0b;
             --text-primary: #f8fafc;
             --text-secondary: #94a3b8;
@@ -40,12 +38,12 @@
             align-items: center;
             border-bottom: 1px solid var(--border-color);
             padding-bottom: 1.5rem;
-            margin-bottom: 2rem;
+            margin-bottom: 1.5rem;
         }
 
         .header h1 {
             margin: 0;
-            font-size: 1.8rem;
+            font-size: 1.6rem;
             background: linear-gradient(135deg, #ffffff 0%, var(--accent-blue) 100%);
             -webkit-background-clip: text;
             background-clip: text;
@@ -60,6 +58,7 @@
             border-radius: 8px;
             text-decoration: none;
             font-size: 0.85rem;
+            cursor: pointer;
         }
 
         .card {
@@ -71,82 +70,78 @@
             margin-bottom: 2rem;
         }
 
-        /* Login Section */
-        .login-box { text-align: center; padding: 3rem 1rem; }
-        .btn-google {
-            background: #ffffff;
-            color: #1f2937;
-            border: none;
-            padding: 0.85rem 1.75rem;
-            border-radius: 30px;
-            font-weight: 700;
-            font-size: 1rem;
-            cursor: pointer;
-            display: inline-flex;
+        /* Date Controller Styles */
+        .date-controller-wrapper {
+            display: flex;
+            justify-content: space-between;
             align-items: center;
-            gap: 0.75rem;
-            box-shadow: 0 4px 15px rgba(255,255,255,0.2);
-            transition: all 0.2s;
+            background: rgba(15, 23, 42, 0.9);
+            border: 1px solid var(--accent-indigo);
+            padding: 1rem;
+            border-radius: 12px;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 0 20px rgba(99, 102, 241, 0.1);
         }
-        .btn-google:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(255,255,255,0.3);
+        
+        .btn-date-nav {
+            background: rgba(99, 102, 241, 0.15);
+            color: var(--accent-blue);
+            border: 1px solid rgba(99, 102, 241, 0.3);
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.2s;
         }
 
-        /* Forms */
-        .question-group {
-            margin-bottom: 2rem;
-            padding-bottom: 1.5rem;
-            border-bottom: 1px solid var(--border-color);
+        .btn-date-nav:hover {
+            background: var(--accent-indigo);
+            color: #fff;
         }
-        .question-title {
-            font-size: 1.05rem;
+
+        .date-picker-input {
+            background: transparent;
+            color: #fff;
+            border: none;
+            font-size: 1.15rem;
+            font-weight: 800;
+            text-align: center;
+            outline: none;
+            font-family: inherit;
+            cursor: pointer;
+            letter-spacing: 1px;
+        }
+
+        ::-webkit-calendar-picker-indicator {
+            filter: invert(1);
+            cursor: pointer;
+            margin-left: 0.5rem;
+        }
+
+        /* Form Inputs */
+        .input-group { margin-bottom: 1.5rem; }
+        .input-group label {
+            display: block;
+            font-size: 0.95rem;
             font-weight: 600;
             color: var(--accent-blue);
-            margin-bottom: 0.75rem;
-        }
-        .options-list label {
-            display: block;
-            background: rgba(15, 23, 42, 0.6);
-            border: 1px solid var(--border-color);
-            padding: 0.75rem 1rem;
-            border-radius: 8px;
             margin-bottom: 0.5rem;
-            cursor: pointer;
-            transition: all 0.2s;
         }
-        .options-list label:hover {
-            border-color: var(--accent-indigo);
-            background: rgba(99, 102, 241, 0.1);
-        }
-        .options-list input { margin-right: 0.75rem; }
 
-        textarea {
+        input[type="text"], input[type="password"], textarea {
             width: 100%;
-            height: 100px;
             background: rgba(15, 23, 42, 0.8);
             border: 1px solid var(--border-color);
             border-radius: 8px;
             color: #fff;
-            padding: 0.75rem;
+            padding: 0.85rem;
             font-family: inherit;
             box-sizing: border-box;
             outline: none;
         }
 
-        .code-editor {
-            width: 100%;
-            height: 100px;
-            background: #090d16;
-            border: 1px solid var(--accent-indigo);
-            border-radius: 8px;
-            color: #38bdf8;
-            font-family: monospace;
-            padding: 0.75rem;
-            box-sizing: border-box;
-            font-size: 0.9rem;
-            resize: vertical;
-        }
+        input:focus, textarea:focus { border-color: var(--accent-indigo); }
+        textarea { height: 90px; resize: vertical; }
 
         .btn-action {
             background: linear-gradient(135deg, var(--accent-indigo) 0%, #4f46e5 100%);
@@ -156,630 +151,537 @@
             border-radius: 8px;
             font-weight: 700;
             cursor: pointer;
-            font-size: 1rem;
             width: 100%;
-            transition: all 0.2s;
-        }
-        .btn-action:hover {
-            filter: brightness(1.1);
-            transform: translateY(-2px);
         }
 
-        /* Results & AI Box */
-        .result-box { text-align: center; }
-        .percentage-badge {
-            font-size: 3.5rem;
-            font-weight: 900;
-            background: linear-gradient(135deg, var(--accent-blue) 0%, var(--accent-green) 100%);
-            -webkit-background-clip: text;
-            background-clip: text;
-            -webkit-text-fill-color: transparent;
-            margin: 0.5rem 0 1rem 0;
-        }
-        .attempt-tag {
+        .btn-action:hover { filter: brightness(1.1); }
+        .btn-action:disabled { opacity: 0.7; cursor: not-allowed; }
+
+        .badge-status {
             display: inline-block;
-            background: rgba(236, 72, 153, 0.15);
-            color: var(--accent-pink);
-            border: 1px solid rgba(236, 72, 153, 0.3);
             padding: 0.35rem 0.85rem;
             border-radius: 20px;
             font-size: 0.85rem;
             font-weight: 700;
+            margin-bottom: 1rem;
+        }
+        .status-belum { background: rgba(245, 158, 11, 0.15); color: #f59e0b; border: 1px solid rgba(245, 158, 11, 0.3); }
+        .status-sudah { background: rgba(16, 185, 129, 0.15); color: var(--accent-green); border: 1px solid rgba(16, 185, 129, 0.3); }
+
+        /* Style Galeri Laporan (Dropdown/Accordion) */
+        .report-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin-top: 1rem;
         }
 
-        .role-highlight-box {
+        .report-details {
             background: rgba(15, 23, 42, 0.9);
-            border: 2px solid var(--accent-purple);
-            border-radius: 12px;
-            padding: 1.5rem;
-            margin: 1.5rem 0;
-            text-align: left;
-        }
-        .role-title {
-            font-size: 1.35rem;
-            font-weight: 800;
-            color: var(--accent-purple);
-            margin-bottom: 0.5rem;
-        }
-
-        /* AI NLP Analysis Box */
-        .ai-analysis-box {
-            background: rgba(99, 102, 241, 0.1);
-            border: 1px dashed var(--accent-indigo);
-            border-radius: 10px;
-            padding: 1.25rem;
-            margin: 1.5rem 0;
-            text-align: left;
-        }
-        .ai-badge {
-            display: inline-block;
-            background: var(--accent-indigo);
-            color: #fff;
-            font-size: 0.75rem;
-            font-weight: 800;
-            padding: 0.2rem 0.6rem;
-            border-radius: 4px;
-            text-transform: uppercase;
-            margin-bottom: 0.5rem;
-        }
-        .keyword-tag {
-            display: inline-block;
-            background: rgba(56, 189, 248, 0.2);
-            color: var(--accent-blue);
-            border: 1px solid rgba(56, 189, 248, 0.4);
-            padding: 0.2rem 0.5rem;
-            border-radius: 6px;
-            font-size: 0.8rem;
-            margin: 0.2rem;
-            font-weight: 600;
-        }
-
-        /* Progress Bars */
-        .skill-bar-container {
-            margin-top: 1.5rem;
-            text-align: left;
-            background: rgba(15, 23, 42, 0.6);
-            padding: 1.25rem;
-            border-radius: 10px;
             border: 1px solid var(--border-color);
+            border-radius: 12px;
+            overflow: hidden;
+            transition: all 0.3s ease;
         }
-        .skill-item { margin-bottom: 1rem; }
-        .skill-label {
+        
+        .report-details.is-mine {
+            border-color: var(--accent-indigo);
+            box-shadow: 0 0 15px rgba(99, 102, 241, 0.15);
+        }
+
+        .report-summary {
+            padding: 1.25rem;
+            cursor: pointer;
             display: flex;
             justify-content: space-between;
-            font-size: 0.88rem;
-            font-weight: 600;
-            margin-bottom: 0.35rem;
+            align-items: center;
+            font-weight: 700;
+            list-style: none;
+            outline: none;
         }
-        .progress-bg {
-            width: 100%;
-            height: 10px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 5px;
-            overflow: hidden;
-        }
-        .progress-fill {
-            height: 100%;
-            border-radius: 5px;
-            transition: width 0.8s ease-in-out;
+        
+        .report-summary::-webkit-details-marker { display: none; }
+        .report-summary:hover { background: rgba(255, 255, 255, 0.03); }
+
+        .report-body {
+            padding: 0 1.25rem 1.25rem 1.25rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            margin-top: 0.5rem;
+            padding-top: 1rem;
         }
 
-        .hidden { display: none; }
+        .report-user {
+            font-weight: 800;
+            color: var(--accent-blue);
+            font-size: 1.1rem;
+            text-transform: uppercase;
+        }
+
+        .report-content { margin-bottom: 0.75rem; }
+        .report-label { font-size: 0.75rem; color: var(--accent-amber); font-weight: 700; text-transform: uppercase; }
+        .report-text { font-size: 0.9rem; color: #e2e8f0; margin: 0.2rem 0 0 0; }
+
+        .btn-edit-shortcut {
+            background: rgba(99, 102, 241, 0.2);
+            color: var(--accent-indigo);
+            border: 1px solid var(--accent-indigo);
+            padding: 0.4rem 0.8rem;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 0.5rem;
+            transition: all 0.2s;
+        }
+        
+        .btn-edit-shortcut:hover {
+            background: var(--accent-indigo);
+            color: #fff;
+        }
+
+        .hidden { display: none !important; }
+    
+        /* Styling untuk Logo/Ikon Header Baru */
+        .header-logo-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 45px;
+            height: 45px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-color);
+            border-radius: 12px; /* Membuat sudut melengkung */
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+
+        .header-logo-btn img {
+            width: 28px;
+            height: 28px;
+            object-fit: contain;
+        }
+
+        .header-logo-btn:hover {
+            background: rgba(56, 189, 248, 0.15); /* Efek cahaya biru saat di-hover */
+            border-color: var(--accent-blue);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(56, 189, 248, 0.2);
+        }
+
+        .header-title-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 15px; /* Jarak antara ikon dan teks judul */
+        }
+
     </style>
 </head>
 <body>
 
     <div class="container">
         <header class="header">
-            <div>
-                <h1>⚡ PIXEL AND CODE — AI Assessment & Mapping</h1>
-                <p style="margin:0; font-size:0.85rem; color: var(--text-secondary);">Uji Kelayakan, Analisis AI Esai, & Pemetaan Posisi Lomba</p>
+            <div class="header-title-wrapper">
+                <!-- Tombol Ikon Baru -->
+                <a href="media_collect.html" class="header-logo-btn" title="Buka Media Collect">
+                    <img src="https://cdn-icons-png.flaticon.com/512/1527/1527488.png" alt="Media Collect Icon">
+                </a>
+                
+                <!-- Teks Judul -->
+                <div>
+                    <h1>
+                        <a href="akun-sosmed.html" style="color: inherit; text-decoration: none; transition: color 0.3s;" onmouseover="this.style.color='var(--accent-blue)'" onmouseout="this.style.color='inherit'" title="Kelola Akun Sosmed">PIXEL</a> 
+                        AND CODE — Presensi & Laporan
+                    </h1>
+                    <p style="margin:0; font-size:0.85rem; color: var(--text-secondary);">Isi laporanmu, pantau progress tim secara real-time.</p>
+                </div>
             </div>
-            <a href="index.html" class="btn-back">⬅ Kembali</a>
+            
+            <button class="btn-back hidden" id="btnLogout" onclick="window.logout()">Keluar Akun</button>
         </header>
 
-        <!-- TAMPILAN 1: LOGIN GMAIL -->
-        <div id="loginSection" class="card login-box">
-            <h2 style="margin-top:0;">Autentikasi Akun Siswa</h2>
-            <p style="color: var(--text-secondary); max-width:500px; margin: 0 auto 2rem auto; font-size:0.9rem;">
-                Masuk menggunakan akun Google/Gmail sekolah Anda untuk mencatat skor kelayakan dan analisis AI keseriusan belajar.
-            </p>
-            <button class="btn-google" onclick="simulateGoogleLogin()">
-                <svg width="20" height="20" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/></svg>
-                Masuk Akun Google / Gmail
-            </button>
-        </div>
-
-        <!-- TAMPILAN 2: READY STATE -->
-        <div id="readyState" class="card hidden" style="text-align: center;">
-            <h2 id="welcomeText">Selamat Datang!</h2>
-            <p style="color: var(--text-secondary); font-size:0.9rem;">
-                Sistem AI akan memindai <strong>Kesesuaian Skill Teknis</strong> serta <strong>Tingkat Kemandirian & Keseriusan</strong> kamu melalui esai dan tes logika.
-            </p>
-            <div id="statsBox" style="margin: 1.5rem 0;"></div>
-            <button class="btn-action" onclick="startTest()">🚀 MULAI TES KELAYAKAN & PEMETAAN AI</button>
-        </div>
-
-        <!-- TAMPILAN 3: FORM TEST -->
-        <div id="testSection" class="card hidden">
-            <h2 style="border-bottom: 1px solid var(--border-color); padding-bottom: 1rem; margin-top:0;">📋 Lembar Tes & Analisis Talenta AI</h2>
-
-            <form id="quizForm" onsubmit="calculateScore(event)">
-                
-                <!-- BAGIAN A: PEMETAAN MINAT & SPESIALISASI -->
-                <h3>Bagian A: Pemetaan Minat & Mindset Tim Lomba</h3>
-
-                <div class="question-group">
-                    <div class="question-title">1. Saat membangun produk software, bagian mana yang paling membuatmu bersemangat?</div>
-                    <div class="options-list">
-                        <label><input type="radio" name="r1" value="web" required> Merancang layout web responsif, CSS styling, dan interaksi UI/UX frontend</label>
-                        <label><input type="radio" name="r1" value="app"> Mengembangkan aplikasi smartphone (Mobile Apps) yang fleksibel di layar HP</label>
-                        <label><input type="radio" name="r1" value="cloud"> Mengatur database, server cloud, API endpoint, serta keamanan jaringan</label>
-                        <label><input type="radio" name="r1" value="game"> Membuat logika pergerakan karakter, animasi sprite, dan mekanik Game 2D/3D</label>
-                        <label><input type="radio" name="r1" value="pm"> Menyusun alur kerja project, proposal lomba, naskah presentasi, dan laporan teknis</label>
-                    </div>
+        <!-- HALAMAN LOGIN -->
+        <div id="loginSection" class="card" style="max-width: 400px; margin: 0 auto; text-align: center;">
+            <h2 style="margin-top:0;">Autentikasi Anggota</h2>
+            <form onsubmit="window.handleLogin(event)">
+                <div class="input-group" style="text-align: left;">
+                    <label>Username</label>
+                    <input type="text" id="in-user" required autocomplete="off" placeholder="Masukkan username">
                 </div>
-
-                <div class="question-group">
-                    <div class="question-title">2. Ketika tim kamu sedang krisis H-1 deadline lomba, tindakan apa yang secara alami akan kamu ambil?</div>
-                    <div class="options-list">
-                        <label><input type="radio" name="r2" value="pm" required> Merapikan slide presentasi, memeriksa dokumen proposal, dan memastikan syarat administrasi lengkap</label>
-                        <label><input type="radio" name="r2" value="web"> Memastikan tampilan website utuh, tidak ada tombol rusak, dan nyaman dilihat juri</label>
-                        <label><input type="radio" name="r2" value="app"> Memastikan file APK/Build HP lancar dan tidak crash saat dites juri</label>
-                        <label><input type="radio" name="r2" value="cloud"> Memastikan server online, domain aktif, dan database tidak mati saat diakses bersamaan</label>
-                        <label><input type="radio" name="r2" value="game"> Menyempurnakan kontrol game, lag-free, dan efek suara agar pengalaman bermain menarik</label>
-                    </div>
+                <div class="input-group" style="text-align: left;">
+                    <label>Password</label>
+                    <input type="password" id="in-pass" required placeholder="Masukkan password">
                 </div>
-
-                <div class="question-group">
-                    <div class="question-title">3. Tools atau software mana yang paling sering atau ingin sekali kamu kuasai secara mendalam?</div>
-                    <div class="options-list">
-                        <label><input type="radio" name="r3" value="web" required> VS Code, HTML5, Tailwind CSS, JavaScript/React/Vue</label>
-                        <label><input type="radio" name="r3" value="app"> Flutter, React Native, Android Studio, Kotlin/Swift</label>
-                        <label><input type="radio" name="r3" value="cloud"> Linux Terminal, Docker, Firebase/AWS, MySQL/PostgreSQL, Git</label>
-                        <label><input type="radio" name="r3" value="game"> Unity Engine, Godot, Construct, Blender 3D</label>
-                        <label><input type="radio" name="r3" value="pm"> Figma, Canva, Microsoft Word/Google Docs (Proposal), Trello/Notion</label>
-                    </div>
-                </div>
-
-                <!-- BAGIAN B: UJI LOGIKA & PENGETAHUAN TEKNIS -->
-                <h3>Bagian B: Pengetahuan Dasar Coding & Logika</h3>
-                
-                <div class="question-group">
-                    <div class="question-title">4. Tag HTML manakah yang digunakan untuk membuat judul utama pada sebuah halaman web?</div>
-                    <div class="options-list">
-                        <label><input type="radio" name="q1" value="a" required> &lt;p&gt;</label>
-                        <label><input type="radio" name="q1" value="b"> &lt;h1&gt;</label>
-                        <label><input type="radio" name="q1" value="c"> &lt;head&gt;</label>
-                        <label><input type="radio" name="q1" value="d"> &lt;title&gt;</label>
-                    </div>
-                </div>
-
-                <div class="question-group">
-                    <div class="question-title">5. Apabila kamu membuat variabel di JavaScript dengan sintaks `let x = 5 + "5";`, berapakah nilai dari `x`?</div>
-                    <div class="options-list">
-                        <label><input type="radio" name="q2" value="a" required> 10</label>
-                        <label><input type="radio" name="q2" value="b"> "55"</label>
-                        <label><input type="radio" name="q2" value="c"> Error / SyntaxError</label>
-                        <label><input type="radio" name="q2" value="d"> Undefined</label>
-                    </div>
-                </div>
-
-                <div class="question-group">
-                    <div class="question-title">6. Apa fungsi dari perintah `git push` pada version control sistem?</div>
-                    <div class="options-list">
-                        <label><input type="radio" name="q3" value="a" required> Mengunduh kode dari server remote ke lokal</label>
-                        <label><input type="radio" name="q3" value="b"> Mengunggah hasil perubahan komit lokal ke repository remote (misal GitHub)</label>
-                        <label><input type="radio" name="q3" value="c"> Menghapus file repositori</label>
-                    </div>
-                </div>
-
-                <!-- BAGIAN C: ESAI DENGAN ANALISIS AI -->
-                <h3>Bagian C: Esai Motivasi & Komitmen (Dianalisis oleh AI)</h3>
-
-                <div class="question-group">
-                    <div class="question-title">7. Mengapa kamu tertarik bergabung dengan PIXEL AND CODE dan komitmen/teknologi apa yang ingin kamu pelajari secara mandiri saat persiapan lomba?</div>
-                    <p style="font-size: 0.8rem; color: var(--text-secondary); margin-top:-0.5rem;">
-                    </p>
-                    <textarea id="qEssay" placeholder="Tuliskan alasan, teknologi yang ingin dikuasai, dan komitmen belajarmu secara detail di sini..." required></textarea>
-                </div>
-
-                <!-- BAGIAN D: PRAKTIK CODING -->
-                <h3>Bagian D: Praktik Coding Singkat</h3>
-
-                <div class="question-group">
-                    <div class="question-title">8. Praktik 1 (HTML): Buat tombol HTML yang memiliki id="btnPro" dan berisi teks "Daftar Lomba"!</div>
-                    <textarea id="codeHTML" class="code-editor" placeholder='Contoh: <button id="...">...</button>' required></textarea>
-                </div>
-
-                <div class="question-group">
-                    <div class="question-title">9. Praktik 2 (JavaScript Dasar): Tuliskan fungsi `hitung(a, b)` yang mengembalikan hasil penjumlahan `a + b`!</div>
-                    <textarea id="codeJS" class="code-editor" placeholder="function hitung(a, b) { return ...; }" required></textarea>
-                </div>
-
-                <button type="submit" class="btn-action">🤖 PROSES ANALISIS AI & KALKULASI HASIL</button>
+                <button type="submit" id="btnLoginSubmit" class="btn-action">Masuk 🚀</button>
             </form>
         </div>
 
-        <!-- TAMPILAN 4: HASIL EVALUASI & PEMETAAN AI -->
-        <div id="resultSection" class="card result-box hidden">
-            <h2 style="margin-top:0;">Hasil Evaluasi & Pemetaan Talenta AI</h2>
-            <div id="attemptTag" class="attempt-tag">Percobaan Ke-1</div>
-            <div id="percentText" class="percentage-badge">0%</div>
-            <p id="resultStatus" style="font-size:1.1rem; font-weight:600; margin-bottom:1.5rem;"></p>
+        <!-- DASHBOARD (FORM & GALERI) -->
+        <div id="dashboardSection" class="hidden">
             
-            <!-- HASIL EKSTRAKSI KATA KUNCI & ANALISIS KEMANDIRIAN AI -->
-            <div id="aiAnalysisBox" class="ai-analysis-box">
-                <span class="ai-badge">🤖 AI Keyword & Mindset Scan</span>
-                <div id="aiCommitmentStatus" style="font-weight: 700; font-size: 1.05rem; color: var(--accent-green); margin-bottom: 0.5rem;">
-                    Status Kemandirian: Memeriksa...
+            <!-- PANEL KENDALI WAKTU (KALENDER) -->
+            <div class="date-controller-wrapper">
+                <button type="button" onclick="window.changeDate(-1)" class="btn-date-nav">◀ Prev</button>
+                <div style="text-align: center; display:flex; flex-direction:column; align-items:center;">
+                    <div id="displayDateText" style="font-size: 0.85rem; color: var(--accent-green); margin-bottom: 0.2rem; font-weight:bold;"></div>
+                    <input type="date" id="masterDate" class="date-picker-input" onchange="window.onDateChange()">
                 </div>
-                <div style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 0.5rem;">
-                    <strong>Kata Kunci Skill & Komitmen Terdeteksi:</strong>
-                    <div id="keywordsList" style="margin-top: 0.3rem;">-</div>
-                </div>
-                <div id="aiFeedbackText" style="font-size: 0.85rem; color: #cbd5e1; font-style: italic;"></div>
+                <button type="button" onclick="window.changeDate(1)" class="btn-date-nav">Next ▶</button>
             </div>
 
-            <!-- BOX PEMETAAN POSISI UTAMA -->
-            <div id="roleHighlightBox" class="role-highlight-box">
-                <div style="font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px; color: var(--accent-amber); font-weight: 700;">🎯 Rekomendasi Peran Utama dalam Tim Lomba:</div>
-                <div id="primaryRoleTitle" class="role-title">Web Development Specialist</div>
-                <p id="primaryRoleDesc" style="color: #cbd5e1; font-size: 0.95rem; margin-bottom: 0;"></p>
+            <!-- FORM INPUT MILIK USER -->
+            <div class="card">
+                <h2 style="margin-top:0;">Halo, <span id="displayName" style="color: var(--accent-blue);"></span>! 👋</h2>
+                <div id="statusBadge" class="badge-status status-belum">⏳ Memeriksa data...</div>
+                
+                <form id="reportForm" onsubmit="window.saveReport(event)">
+                    <div class="input-group">
+                        <label>📝 Summary (Apa yang kamu kerjakan di tanggal ini?)</label>
+                        <textarea id="valSummary" required></textarea>
+                    </div>
+                    <div class="input-group">
+                        <label>🎯 Next to do (Apa targetmu selanjutnya?)</label>
+                        <textarea id="valNext" required></textarea>
+                    </div>
+                    <div class="input-group">
+                        <label>💡 Feedback to Mentor (Ada kendala?)</label>
+                        <textarea id="valFeedback" required></textarea>
+                    </div>
+                    <div id="timestampDisplay" style="font-size:0.8rem; color:var(--accent-green); margin-bottom:1rem;" class="hidden"></div>
+                    <button type="submit" id="btnSubmit" class="btn-action">Kirim Laporan Harian</button>
+                </form>
             </div>
 
-            <!-- VISUALISASI PROSENTASE KEAHLIAN -->
-            <div class="skill-bar-container">
-                <h3 style="margin-top:0; font-size: 1.1rem; border-bottom: 1px solid var(--border-color); padding-bottom: 0.5rem; color: var(--accent-blue);">
-                    📊 Distribusi Persentase Kecenderungan Peran Tim:
-                </h3>
-
-                <div class="skill-item">
-                    <div class="skill-label">
-                        <span>🌐 Web Developer (Frontend/Backend)</span>
-                        <span id="pctWeb">0%</span>
-                    </div>
-                    <div class="progress-bg">
-                        <div id="barWeb" class="progress-fill" style="width: 0%; background: var(--accent-blue);"></div>
-                    </div>
-                </div>
-
-                <div class="skill-item">
-                    <div class="skill-label">
-                        <span>📱 Mobile App Developer</span>
-                        <span id="pctApp">0%</span>
-                    </div>
-                    <div class="progress-bg">
-                        <div id="barApp" class="progress-fill" style="width: 0%; background: var(--accent-indigo);"></div>
-                    </div>
-                </div>
-
-                <div class="skill-item">
-                    <div class="skill-label">
-                        <span>☁️ Cloud, DevOps & Database Specialist</span>
-                        <span id="pctCloud">0%</span>
-                    </div>
-                    <div class="progress-bg">
-                        <div id="barCloud" class="progress-fill" style="width: 0%; background: var(--accent-green);"></div>
-                    </div>
-                </div>
-
-                <div class="skill-item">
-                    <div class="skill-label">
-                        <span>🎮 Game & Interactive Media Developer</span>
-                        <span id="pctGame">0%</span>
-                    </div>
-                    <div class="progress-bg">
-                        <div id="barGame" class="progress-fill" style="width: 0%; background: var(--accent-pink);"></div>
-                    </div>
-                </div>
-
-                <div class="skill-item">
-                    <div class="skill-label">
-                        <span>📊 Project Manager, UI/UX & Proposal Writer</span>
-                        <span id="pctPm">0%</span>
-                    </div>
-                    <div class="progress-bg">
-                        <div id="barPm" class="progress-fill" style="width: 0%; background: var(--accent-amber);"></div>
-                    </div>
+            <!-- GALERI SEMUA LAPORAN -->
+            <div class="card">
+                <h2 style="margin-top:0; border-bottom: 1px solid var(--border-color); padding-bottom: 1rem;">
+                    📡 Galeri Laporan Tim
+                </h2>
+                <div id="galeri-laporan-container" class="report-grid">
+                    <p style="color: var(--text-secondary); text-align: center;">Memuat data publik...</p>
                 </div>
             </div>
 
-            <!-- RINGKASAN TEKNIS -->
-            <div id="resultDetail" style="background: rgba(15, 23, 42, 0.6); padding: 1rem; border-radius: 8px; font-size: 0.85rem; color: var(--text-secondary); text-align: left; margin: 1.5rem 0;"></div>
-
-            <button id="retryBtn" class="btn-action" onclick="retryTest()" style="background: var(--accent-pink);">🔄 Ulangi Tes (Targetkan Kelayakan 100%)</button>
-            <a id="finishBtn" href="club-competition.html" class="btn-action hidden" style="display:inline-block; text-decoration:none; text-align:center; box-sizing:border-box;">🏆 Lanjut Ke Competition Center</a>
         </div>
-
     </div>
 
-    <script>
-        let userData = JSON.parse(localStorage.getItem('tcc_user_session')) || null;
+    <!-- SCRIPT FIREBASE MODULE -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-app.js";
+        import { getDatabase, ref, get, set, update, child } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-database.js";
+        const firebaseConfig = {
+            apiKey: "AIzaSyBvY2ryMzSJjgHkadfuPWbzFBgL1kQpygI",
+            authDomain: "materi-pnc.firebaseapp.com",
+            databaseURL: "https://materi-pnc-default-rtdb.asia-southeast1.firebasedatabase.app",
+            projectId: "materi-pnc",
+            storageBucket: "materi-pnc.firebasestorage.app",
+            messagingSenderId: "631396189340",
+            appId: "1:631396189340:web:c9b86c3f7face5b1635959",
+            measurementId: "G-21R2MTPGQ4"
+        };
 
-        function simulateGoogleLogin() {
-            const email = prompt("Simulasi Auth Google:\nMasukkan Alamat Email Gmail Siswa:", "siswa.tkjt@gmail.com");
-            if (email && email.includes("@")) {
-                userData = {
-                    email: email,
-                    name: email.split('@')[0].toUpperCase(),
-                    attempts: parseInt(localStorage.getItem('tcc_attempts_' + email)) || 0,
-                    bestScore: parseInt(localStorage.getItem('tcc_score_' + email)) || 0
-                };
-                localStorage.setItem('tcc_user_session', JSON.stringify(userData));
-                initSession();
-            } else {
-                alert("Email tidak valid!");
-            }
+        const app = initializeApp(firebaseConfig);
+        const db = getDatabase(app);
+
+        const APPS_SCRIPT_AUTH_URL = "https://script.google.com/macros/s/AKfycbzexbZuGm306_9yNbTn2NkDaEebOikc2oeR76F2K-Tm6JCjJxeHKo4GLu3pzjpDBmA0qg/exec";
+
+        let currentUser = sessionStorage.getItem('pnc_session_user') || null;
+        let currentDateView = new Date(); 
+
+        function formatDateToKey(d) {
+            return d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, '0') + "-" + String(d.getDate()).padStart(2, '0');
         }
 
-        function initSession() {
-            if (userData) {
+        function updateDateUI() {
+            const key = formatDateToKey(currentDateView);
+            document.getElementById('masterDate').value = key;
+            
+            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+            document.getElementById('displayDateText').innerText = currentDateView.toLocaleDateString('id-ID', options);
+        }
+
+        window.initApp = async function() {
+            if (currentUser) {
                 document.getElementById('loginSection').classList.add('hidden');
-                document.getElementById('readyState').classList.remove('hidden');
-                document.getElementById('welcomeText').innerText = `Selamat Datang, ${userData.name}!`;
+                document.getElementById('dashboardSection').classList.remove('hidden');
+                document.getElementById('btnLogout').classList.remove('hidden');
                 
-                const savedRole = localStorage.getItem('tcc_role_' + userData.email) || 'Belum Dipetakan';
+                const namaTampil = currentUser.charAt(0).toUpperCase() + currentUser.slice(1);
+                document.getElementById('displayName').innerText = namaTampil;
                 
-                document.getElementById('statsBox').innerHTML = `
-                    <p style="font-size:0.9rem; color: var(--text-secondary);">
-                        📧 Gmail: <strong>${userData.email}</strong><br>
-                        🔄 Percobaan dilakukan: <strong style="color:var(--accent-pink);">${userData.attempts} Kali</strong><br>
-                        🏆 Skor Kelayakan Tertinggi: <strong style="color:var(--accent-green);">${userData.bestScore}%</strong><br>
-                        🧩 Posisi Utama Tim: <strong style="color:var(--accent-amber);">${savedRole}</strong>
-                    </p>
-                `;
+                currentDateView = new Date(); 
+                updateDateUI();
+                await window.muatDataPribadiDanGaleri();
+            } else {
+                document.getElementById('loginSection').classList.remove('hidden');
+                document.getElementById('dashboardSection').classList.add('hidden');
+                document.getElementById('btnLogout').classList.add('hidden');
             }
         }
 
-        function startTest() {
-            document.getElementById('readyState').classList.add('hidden');
-            document.getElementById('testSection').classList.remove('hidden');
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
-
-        function calculateScore(e) {
+        window.handleLogin = async function(e) {
             e.preventDefault();
-            
-            let totalScore = 0;
-            let details = [];
+            const u = document.getElementById('in-user').value.trim().toLowerCase();
+            const p = document.getElementById('in-pass').value;
+            const btnLogin = document.getElementById('btnLoginSubmit');
 
-            // 1. Cek Pengetahuan Dasar (Bobot 45%)
-            const q1 = document.querySelector('input[name="q1"]:checked')?.value;
-            const q2 = document.querySelector('input[name="q2"]:checked')?.value;
-            const q3 = document.querySelector('input[name="q3"]:checked')?.value;
+            btnLogin.disabled = true;
+            btnLogin.innerText = "⏳ Verifikasi Kredensial...";
 
-            if (q1 === 'b') { totalScore += 15; details.push("✅ Soal 4 (HTML): Benar (+15%)"); }
-            else { details.push("❌ Soal 4 (HTML): Salah"); }
-
-            if (q2 === 'b') { totalScore += 15; details.push("✅ Soal 5 (JS Type): Benar (+15%)"); }
-            else { details.push("❌ Soal 5 (JS Type): Salah"); }
-
-            if (q3 === 'b') { totalScore += 15; details.push("✅ Soal 6 (Git): Benar (+15%)"); }
-            else { details.push("❌ Soal 6 (Git): Salah"); }
-
-            // 2. Cek Esai (Bobot Dasar 15%)
-            const essayText = document.getElementById('qEssay').value.trim();
-            if (essayText.length >= 15) {
-                totalScore += 15;
-                details.push("✅ Esai Motivasi: Memenuhi Syarat Minimal (+15%)");
-            } else {
-                details.push("❌ Esai Motivasi: Terlalu Singkat");
-            }
-
-            // 3. Cek Praktik HTML (Bobot 20%)
-            const htmlVal = document.getElementById('codeHTML').value.toLowerCase();
-            if (htmlVal.includes('<button') && htmlVal.includes('id="btnpro"') && htmlVal.includes('daftar lomba') && htmlVal.includes('</button>')) {
-                totalScore += 20;
-                details.push("✅ Praktik HTML: Struktur Sesuai (+20%)");
-            } else {
-                details.push("❌ Praktik HTML: Sintaks belum pas");
-            }
-
-            // 4. Cek Praktik JS (Bobot 20%)
-            const jsVal = document.getElementById('codeJS').value.toLowerCase();
-            if (jsVal.includes('function') && jsVal.includes('hitung') && jsVal.includes('return') && jsVal.includes('+')) {
-                totalScore += 20;
-                details.push("✅ Praktik JS: Logika Fungsi Sesuai (+20%)");
-            } else {
-                details.push("❌ Praktik JS: Sintaks fungsi belum pas");
-            }
-
-            // 5. EKSTRAKSI KATA KUNCI ESAI & ANALISIS KEMANDIRIAN (NLP AI SIMULATION)
-            const aiAnalysis = analyzeEssayNLP(essayText);
-
-            // 6. KALKULASI PEMETAAN PERAN & BOBOT KATA KUNCI
-            const r1 = document.querySelector('input[name="r1"]:checked')?.value;
-            const r2 = document.querySelector('input[name="r2"]:checked')?.value;
-            const r3 = document.querySelector('input[name="r3"]:checked')?.value;
-
-            const roleScores = { web: 10, app: 10, cloud: 10, game: 10, pm: 10 };
-            
-            if (r1) roleScores[r1] += 30;
-            if (r2) roleScores[r2] += 25;
-            if (r3) roleScores[r3] += 20;
-
-            // Tambahkan bonus poin dari ekstraksi kata kunci Esai
-            for (let key in aiAnalysis.skillBonus) {
-                roleScores[key] += aiAnalysis.skillBonus[key];
-            }
-
-            // Cari Role Tertinggi
-            let highestRoleKey = 'web';
-            let maxScore = 0;
-            for (let key in roleScores) {
-                if (roleScores[key] > maxScore) {
-                    maxScore = roleScores[key];
-                    highestRoleKey = key;
-                }
-            }
-
-            const roleMeta = {
-                web: {
-                    title: "🌐 Web Development Specialist",
-                    desc: "Sangat menonjol di bidang pengembangan web (Frontend UI & Backend API). Cocok memegang posisi utama di lomba Web Design, Software Development, & Hackathon Web."
-                },
-                app: {
-                    title: "📱 Mobile App Developer",
-                    desc: "Memiliki kecenderungan kuat pada ekosistem Mobile Apps. Sangat pas menjadi eksekutor utama di lomba App Innovation."
-                },
-                cloud: {
-                    title: "☁️ Cloud, DevOps & Infrastructure Specialist",
-                    desc: "Menyukai struktur backend, server, dan database. Sangat vital untuk menjaga keandalan sistem pada lomba Cyber Security, Cloud Computing, & Backend API."
-                },
-                game: {
-                    title: "🎮 Game & Interactive Media Developer",
-                    desc: "Unggul dalam logika mekanik visual dan interaksi game. Berpotensi tinggi memimpin lomba Game Development & Media Interaktif."
-                },
-                pm: {
-                    title: "📊 Project Manager, UI/UX & Technical Reporter",
-                    desc: "Memiliki keunggulan dalam analisis, struktur proposal, UI/UX wireframe, & alur presentasi. Peran kunci Kemenangan Utama tim di depan juri!"
-                }
-            };
-
-            // Simpan Data Ke Storage
-            userData.attempts += 1;
-            if (totalScore > userData.bestScore) {
-                userData.bestScore = totalScore;
-            }
-
-            localStorage.setItem('tcc_attempts_' + userData.email, userData.attempts);
-            localStorage.setItem('tcc_score_' + userData.email, userData.bestScore);
-            localStorage.setItem('tcc_role_' + userData.email, roleMeta[highestRoleKey].title);
-            localStorage.setItem('tcc_user_session', JSON.stringify(userData));
-
-            // Render Hasil
-            showResults(totalScore, details, roleScores, roleMeta[highestRoleKey], aiAnalysis);
-        }
-
-        // FUNGSI ANALISIS NLP AI UNTUK ESAI
-        function analyzeEssayNLP(text) {
-            const lowerText = text.toLowerCase();
-            const foundKeywords = [];
-            const skillBonus = { web: 0, app: 0, cloud: 0, game: 0, pm: 0 };
-
-            // Kamus Kata Kunci Skill
-            const dictSkill = {
-                web: ['html', 'css', 'javascript', 'js', 'react', 'vue', 'laravel', 'bootstrap', 'tailwind', 'frontend', 'backend', 'web', 'website'],
-                app: ['flutter', 'react native', 'android', 'kotlin', 'swift', 'mobile', 'aplikasi hp', 'apk'],
-                cloud: ['linux', 'docker', 'server', 'database', 'mysql', 'sql', 'aws', 'firebase', 'cloud', 'api', 'backend', 'git', 'github'],
-                game: ['unity', 'godot', 'construct', 'blender', 'game', '2d', '3d', 'animasi', 'asset'],
-                pm: ['figma', 'ui', 'ux', 'proposal', 'laporan', 'presentasi', 'trello', 'notion', 'desain', 'word', 'canva', 'manajemen']
-            };
-
-            // Kamus Kata Kunci Komitmen / Motivasi Mandiri
-            const proactiveKeywords = [
-                'otodidak', 'latihan sendiri', 'belajar mandiri', 'konsisten', 'komitmen', 
-                'pantang menyerah', 'setiap hari', 'luang', 'juara', 'lomba', 'semangat', 'bergadang', 'target'
-            ];
-
-            // Scan Skill
-            for (let category in dictSkill) {
-                dictSkill[category].forEach(kw => {
-                    if (lowerText.includes(kw) && !foundKeywords.includes(kw)) {
-                        foundKeywords.push(kw);
-                        skillBonus[category] += 15; // Tambah bonus 15 poin ke kategori terkait
-                    }
+            try {
+                const response = await fetch(APPS_SCRIPT_AUTH_URL, {
+                    method: "POST",
+                    headers: { "Content-Type": "text/plain;charset=utf-8" },
+                    body: JSON.stringify({ action: "login", username: u, password: p })
                 });
-            }
+                
+                const result = await response.json();
 
-            // Scan Proaktif & Kemandirian
-            let proactiveScore = 0;
-            proactiveKeywords.forEach(kw => {
-                if (lowerText.includes(kw) && !foundKeywords.includes(kw)) {
-                    foundKeywords.push(kw);
-                    proactiveScore += 1;
+                if (result.status === "success") {
+                    sessionStorage.setItem('pnc_session_user', u);
+                    currentUser = u;
+                    window.initApp();
+                } else {
+                    alert("❌ " + (result.message || "Username atau Password salah!"));
                 }
-            });
-
-            // Penentuan Status Keseriusan oleh AI
-            let commitmentStatus = "";
-            let feedback = "";
-
-            if (proactiveScore >= 2 || (foundKeywords.length >= 3 && text.length > 80)) {
-                commitmentStatus = "🔥 SISWA SANGAT MANDIRI & PROAKTIF (Sifat 'Self-Driven' Tinggi)";
-                feedback = "AI Detection: Siswa menyebutkan indikator belajar mandiri & spesifikasi teknologi secara eksplisit. Memiliki motivasi internal kuat tanpa perlu terus didorong oleh pembimbing.";
-            } else if (foundKeywords.length >= 1 || text.length >= 40) {
-                commitmentStatus = "⚡ SISWA BERPOTENSI (Perlu Sedikit Pengarahan Awal)";
-                feedback = "AI Detection: Siswa memiliki minat dasar dan mulai mengenali istilah teknis, namun memerlukan peta jalan (roadmap) latihan yang jelas dari klub.";
-            } else {
-                commitmentStatus = "⚠️ MOTIVASI MASIH UMUM (Memerlukan Mentoring Intensis)";
-                feedback = "AI Detection: Jawaban esai masih sangat singkat/umum. Perlu diberikan tantangan awal untuk memicu semangat belajarnya.";
+            } catch (err) {
+                alert("❌ Terjadi kesalahan koneksi ke server autentikasi.");
+                console.error(err);
+            } finally {
+                btnLogin.disabled = false;
+                btnLogin.innerText = "Masuk 🚀";
             }
-
-            return {
-                foundKeywords: foundKeywords,
-                commitmentStatus: commitmentStatus,
-                feedback: feedback,
-                skillBonus: skillBonus
-            };
         }
 
-        function showResults(score, details, roleScores, mainRole, aiAnalysis) {
-            document.getElementById('testSection').classList.add('hidden');
-            document.getElementById('resultSection').classList.remove('hidden');
+        window.logout = function() {
+            sessionStorage.removeItem('pnc_session_user');
+            currentUser = null;
+            document.getElementById('in-user').value = "";
+            document.getElementById('in-pass').value = "";
+            window.initApp();
+        }
 
-            document.getElementById('attemptTag').innerText = `Percobaan Ke-${userData.attempts}`;
-            document.getElementById('percentText').innerText = `${score}%`;
+        window.changeDate = async function(offset) {
+            currentDateView.setDate(currentDateView.getDate() + offset);
+            updateDateUI();
+            await window.muatDataPribadiDanGaleri();
+        }
+
+        window.onDateChange = async function() {
+            const val = document.getElementById('masterDate').value;
+            if(val) {
+                currentDateView = new Date(val + "T00:00:00"); 
+                updateDateUI();
+                await window.muatDataPribadiDanGaleri();
+            }
+        }
+
+        window.muatDataPribadiDanGaleri = async function() {
+            const dateKey = document.getElementById('masterDate').value;
+            const dbRef = ref(db);
+            const containerGaleri = document.getElementById('galeri-laporan-container');
+            const badge = document.getElementById('statusBadge');
+            const btnSubmit = document.getElementById('btnSubmit');
+            const timeInfo = document.getElementById('timestampDisplay');
+
+            try {
+                const snapshot = await get(child(dbRef, `daily_reports/${dateKey}`));
+                containerGaleri.innerHTML = ""; 
+                
+                let dataPribadiAda = false;
+
+                if (snapshot.exists()) {
+                    const semuaLaporan = snapshot.val();
+                    
+                    Object.keys(semuaLaporan).forEach(username => {
+                        const laporan = semuaLaporan[username];
+                        const isMine = (username === currentUser);
+                        
+                        let editButtonHTML = "";
+                        let replyHTML = ""; // Variabel baru untuk menampung elemen UI Reply
+
+                        if (isMine) {
+                            dataPribadiAda = true;
+                            document.getElementById('valSummary').value = laporan.summary;
+                            document.getElementById('valNext').value = laporan.nextToDo;
+                            document.getElementById('valFeedback').value = laporan.feedback;
+                            
+                            badge.className = "badge-status status-sudah";
+                            badge.innerHTML = "✅ Kamu sudah mengisi laporan untuk tanggal ini";
+                            btnSubmit.innerText = "Perbarui (Update) Laporan";
+                            btnSubmit.style.background = "linear-gradient(135deg, #10b981 0%, #059669 100%)";
+                            timeInfo.innerText = "Terakhir disimpan: " + laporan.datetime;
+                            timeInfo.classList.remove('hidden');
+
+                            editButtonHTML = `<button type="button" onclick="window.scrollToForm()" class="btn-edit-shortcut">✏️ Edit Laporanku</button>`;
+                        }
+
+                        // --- LOGIKA PENAMBAHAN FITUR REPLY MULAI DI SINI ---
+                        if (laporan.reply) {
+                            // Jika sudah ada balasan, tampilkan balasannya di dalam kotak khusus
+                            replyHTML = `
+                            <div class="report-content" style="background: rgba(99, 102, 241, 0.1); padding: 12px; border-left: 3px solid var(--accent-indigo); border-radius: 4px; margin-top: 15px;">
+                                <div class="report-label" style="color: var(--accent-indigo);">↪ Reply from ${laporan.replyBy || 'Mentor'}</div>
+                                <p class="report-text" style="color: #fff; font-weight: 500;">${laporan.reply}</p>
+                            </div>`;
+                        } else if (!isMine) {
+                            // Jika belum ada balasan, dan yang melihat saat ini BUKAN pemilik laporan
+                            // Maka tampilkan textarea untuk memberikan balasan
+                            replyHTML = `
+                            <div style="margin-top: 15px; border-top: 1px dashed var(--border-color); padding-top: 10px;">
+                                <textarea id="reply-text-${username}" placeholder="Berikan feedback atau arahan untuk ${username}..." style="width: 100%; height: 60px; background: rgba(0,0,0,0.3); border: 1px solid var(--border-color); color: white; padding: 8px; border-radius: 6px; margin-bottom: 8px; font-family: inherit; resize: vertical; box-sizing: border-box;"></textarea>
+                                <button type="button" onclick="window.kirimReply('${username}', '${dateKey}')" class="btn-edit-shortcut" style="background: var(--accent-indigo); color: white; border: none; padding: 0.5rem 1rem;">Kirim Reply</button>
+                            </div>`;
+                        }
+                        // --- LOGIKA PENAMBAHAN FITUR REPLY SELESAI ---
+
+                        containerGaleri.innerHTML += `
+                            <details class="report-details ${isMine ? 'is-mine' : ''}" ${isMine ? 'open' : ''}>
+                                <summary class="report-summary">
+                                    <div>
+                                        <span class="report-user">${username}</span> 
+                                        ${isMine ? '<span style="font-size:0.7rem; color:var(--accent-green); margin-left:5px;">(Laporanmu)</span>' : ''}
+                                    </div>
+                                    <div style="font-size: 0.8rem; color: var(--text-secondary); font-weight: normal;">
+                                        🕒 ${laporan.datetime.split(',')[1] || laporan.datetime} ▾
+                                    </div>
+                                </summary>
+                                <div class="report-body">
+                                    <div class="report-content">
+                                        <div class="report-label">📝 Summary</div>
+                                        <p class="report-text">${laporan.summary}</p>
+                                    </div>
+                                    <div class="report-content">
+                                        <div class="report-label">🎯 Next to do</div>
+                                        <p class="report-text">${laporan.nextToDo}</p>
+                                    </div>
+                                    <div class="report-content">
+                                        <div class="report-label">💡 Feedback</div>
+                                        <p class="report-text">${laporan.feedback}</p>
+                                    </div>
+                                    ${editButtonHTML}
+                                    ${replyHTML} <!-- Variabel reply disisipkan di sini -->
+                                </div>
+                            </details>
+                        `;
+                    });
+                } 
+                
+                if (!dataPribadiAda) {
+                    document.getElementById('reportForm').reset();
+                    badge.className = "badge-status status-belum";
+                    badge.innerHTML = "⏳ Belum mengisi laporan di tanggal ini";
+                    btnSubmit.innerText = "Kirim Laporan";
+                    btnSubmit.style.background = "linear-gradient(135deg, var(--accent-indigo) 0%, #4f46e5 100%)";
+                    timeInfo.classList.add('hidden');
+                }
+
+                if (containerGaleri.innerHTML === "") {
+                    containerGaleri.innerHTML = "<p style='color: var(--text-secondary); text-align: center;'>Belum ada laporan di tanggal ini.</p>";
+                }
+
+            } catch (error) {
+                console.error(error);
+                badge.innerHTML = "⚠️ Gagal terhubung ke database.";
+            }
+        }
+
+        window.saveReport = async function(e) {
+            e.preventDefault();
+            const btnSubmit = document.getElementById('btnSubmit');
+            btnSubmit.disabled = true;
+            btnSubmit.innerText = "⏳ Menyimpan...";
+
+            const dateKey = document.getElementById('masterDate').value; 
+            const sumText = document.getElementById('valSummary').value;
+            const nextText = document.getElementById('valNext').value;
+            const fbText = document.getElementById('valFeedback').value;
             
-            const statusEl = document.getElementById('resultStatus');
-            const retryBtn = document.getElementById('retryBtn');
-            const finishBtn = document.getElementById('finishBtn');
+            const now = new Date();
+            const waktu = now.toLocaleString('id-ID', { timeZone: 'Asia/Jakarta', dateStyle: 'medium', timeStyle: 'short' }); 
 
-            if (score === 100) {
-                statusEl.innerText = "🎉 SELAMAT! Anda 100% Layak Diterima Masuk PIXEL AND CODE!";
-                statusEl.style.color = "var(--accent-green)";
-                retryBtn.classList.add('hidden');
-                finishBtn.classList.remove('hidden');
-            } else {
-                statusEl.innerText = "⚠️ Belum Kelayakan 100%. Silakan Pelajari Kesalahan & Coba Lagi!";
-                statusEl.style.color = "var(--accent-pink)";
-                retryBtn.classList.remove('hidden');
-                finishBtn.classList.add('hidden');
+            try {
+                // 1. Simpan ke Firebase Realtime Database untuk tampilan website (Fast Loading)
+                await set(ref(db, `daily_reports/${dateKey}/${currentUser}`), {
+                    summary: sumText,
+                    nextToDo: nextText,
+                    feedback: fbText,
+                    datetime: waktu,
+                    timestamp: now.getTime()
+                });
+
+                // 2. Cek Disiplin Waktu Pelaporan
+                // Jika tanggal laporan (dateKey) sama dengan hari ini, maka Tepat Waktu.
+                // Jika berbeda (misal ngisi untuk tanggal kemarin), maka Terlambat (Backfill).
+                const today = new Date();
+                const todayKey = today.getFullYear() + "-" + String(today.getMonth() + 1).padStart(2, '0') + "-" + String(today.getDate()).padStart(2, '0');
+                const statusDisiplin = (dateKey === todayKey) ? "Tepat Waktu" : "Terlambat (Backfill)";
+
+                // 3. Sinkronisasi Data ke Google Sheets (Log_Laporan) untuk rekapitulasi jangka panjang
+                // APPS_SCRIPT_AUTH_URL sudah dideklarasikan di awal script Anda
+                fetch(APPS_SCRIPT_AUTH_URL, {
+                    method: "POST",
+                    headers: { "Content-Type": "text/plain;charset=utf-8" },
+                    body: JSON.stringify({
+                        action: "syncReport",
+                        tanggal: dateKey,
+                        timestamp: waktu,
+                        username: currentUser,
+                        summary: sumText,
+                        next: nextText,
+                        feedback: fbText,
+                        status_waktu: statusDisiplin,
+                        is_reply_only: false // Ini bukan aksi reply, tapi submit laporan utama
+                    })
+                });
+
+                alert("✅ Laporan berhasil disimpan!");
+                await window.muatDataPribadiDanGaleri();
+            } catch (error) {
+                alert("❌ Gagal menyimpan. Periksa koneksi.");
+                console.error("Firebase Error:", error);
+            } finally {
+                btnSubmit.disabled = false;
             }
-
-            // Render Output AI NLP
-            document.getElementById('aiCommitmentStatus').innerText = aiAnalysis.commitmentStatus;
-            document.getElementById('aiFeedbackText').innerText = aiAnalysis.feedback;
-            
-            if (aiAnalysis.foundKeywords.length > 0) {
-                document.getElementById('keywordsList').innerHTML = aiAnalysis.foundKeywords.map(kw => `<span class="keyword-tag">#${kw}</span>`).join(' ');
-            } else {
-                document.getElementById('keywordsList').innerText = "Tidak ada kata kunci teknis/spesifik yang terdeteksi.";
-            }
-
-            // Tampilkan Peran Utama
-            document.getElementById('primaryRoleTitle').innerText = mainRole.title;
-            document.getElementById('primaryRoleDesc').innerText = mainRole.desc;
-
-            // Render Progress Bar
-            document.getElementById('pctWeb').innerText = `${roleScores.web}%`;
-            document.getElementById('barWeb').style.width = `${Math.min(roleScores.web, 100)}%`;
-
-            document.getElementById('pctApp').innerText = `${roleScores.app}%`;
-            document.getElementById('barApp').style.width = `${Math.min(roleScores.app, 100)}%`;
-
-            document.getElementById('pctCloud').innerText = `${roleScores.cloud}%`;
-            document.getElementById('barCloud').style.width = `${Math.min(roleScores.cloud, 100)}%`;
-
-            document.getElementById('pctGame').innerText = `${roleScores.game}%`;
-            document.getElementById('barGame').style.width = `${Math.min(roleScores.game, 100)}%`;
-
-            document.getElementById('pctPm').innerText = `${roleScores.pm}%`;
-            document.getElementById('barPm').style.width = `${Math.min(roleScores.pm, 100)}%`;
-
-            document.getElementById('resultDetail').innerHTML = "<strong>Ringkasan Pengerjaan Teknis:</strong><br>" + details.join('<br>');
-            window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        function retryTest() {
-            document.getElementById('quizForm').reset();
-            document.getElementById('resultSection').classList.add('hidden');
-            document.getElementById('testSection').classList.remove('hidden');
-            window.scrollTo({ top: 0, behavior: 'smooth' });
+        window.scrollToForm = function() {
+            document.getElementById('reportForm').scrollIntoView({ behavior: 'smooth', block: 'center' });
+            document.getElementById('valSummary').focus();
         }
 
-        initSession();
+        window.kirimReply = async function(targetUser, dateKey) {
+            const replyText = document.getElementById(`reply-text-${targetUser}`).value;
+            if (!replyText.trim()) return alert("⚠️ Isi balasan terlebih dahulu!");
+
+            try {
+                // 1. Simpan reply ke Firebase
+                await update(ref(db, `daily_reports/${dateKey}/${targetUser}`), {
+                    reply: replyText,
+                    replyBy: currentUser
+                });
+
+                // 2. Sync reply ke Google Sheets (Log_Laporan)
+                fetch(APPS_SCRIPT_AUTH_URL, {
+                    method: "POST",
+                    body: JSON.stringify({
+                        action: "syncReport",
+                        tanggal: dateKey,
+                        username: targetUser,
+                        username_reply: currentUser,
+                        reply: replyText,
+                        is_reply_only: true
+                    })
+                });
+
+                alert("✅ Reply berhasil dikirim!");
+                await window.muatDataPribadiDanGaleri(); // Refresh tampilan galeri
+            } catch (error) {
+                alert("❌ Gagal mengirim reply. Periksa koneksi.");
+                console.error(error);
+            }
+        }
+
+        window.onload = window.initApp;
     </script>
 </body>
 </html>

@@ -3,70 +3,3059 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Piket & Tanggung Jawab Fasilitas Laboratorium</title>
+    <title>Sistem Manajemen Lab & Piket Interaktif</title>
     <link rel="stylesheet" href="style.css">
     <style>
-        .k3-page-wrapper { max-width: 900px; margin: 2rem auto; padding: 0 1.5rem; }
-        .btn-k3-back { display: inline-flex; align-items: center; gap: 0.5rem; background: #ffffff; border: 1px solid #e2e8f0; padding: 0.6rem 1.2rem; border-radius: 10px; color: #1e293b; font-weight: 600; text-decoration: none; transition: all 0.2s; margin-bottom: 1.5rem; }
-        .btn-k3-back:hover { background: #f1f5f9; color: #059669; transform: translateX(-3px); }
-        .k3-card { background: #ffffff; border-radius: 18px; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05); padding: 2.5rem; border: 1px solid #e2e8f0; }
-        .k3-header-block { text-align: center; margin-bottom: 2.5rem; border-bottom: 2px dashed #e2e8f0; padding-bottom: 2rem; }
-        .k3-header-block h1 { font-size: 2.2rem; color: #065f46; font-weight: 800; margin-top: 0.5rem; }
-        .k3-badge { background: #d1fae5; color: #065f46; padding: 0.4rem 1rem; border-radius: 30px; font-size: 0.8rem; font-weight: 700; text-transform: uppercase; }
-        .k3-content-section { margin-bottom: 2rem; }
-        .k3-content-section h2 { font-size: 1.35rem; color: #1e293b; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem; border-left: 4px solid #059669; padding-left: 0.75rem; }
-        .k3-content-section p, .k3-content-section ul { font-size: 1rem; color: #475569; line-height: 1.65; margin-bottom: 1rem; }
-        .k3-content-section ul { padding-left: 1.5rem; }
-        .callout-box { background: #ecfdf5; border-left: 4px solid #059669; padding: 1.25rem; border-radius: 0 12px 12px 0; margin: 1.5rem 0; }
-        .callout-box h4 { margin: 0 0 0.5rem 0; color: #064e3b; font-size: 1.05rem; }
-        .source-link-block { margin-top: 2.5rem; padding-top: 1.5rem; border-top: 1px solid #e2e8f0; }
+        :root {
+            --green: #059669;
+            --green-dark: #065f46;
+            --green-deep: #064e3b;
+            --green-soft: #ecfdf5;
+            --green-line: #d1fae5;
+            --bg: #f1f5f9;
+            --surface: #ffffff;
+            --border: #e2e8f0;
+            --text: #1e293b;
+            --muted: #64748b;
+            --faint: #94a3b8;
+            --radius: 18px;
+            --shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+        }
+
+        body {
+            background-color: var(--bg);
+        }
+
+        .k3-page-wrapper {
+            max-width: 1120px;
+            margin: 2rem auto;
+            padding: 0 1.5rem 3rem;
+        }
+
+        .btn-k3-back {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: #ffffff;
+            border: 1px solid var(--border);
+            padding: 0.6rem 1.2rem;
+            border-radius: 10px;
+            color: var(--text);
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.2s ease;
+            margin-bottom: 1.5rem;
+            font-size: 0.9rem;
+        }
+
+        .btn-k3-back:hover {
+            background: var(--bg);
+            color: var(--green);
+            transform: translateX(-3px);
+        }
+
+        .k3-card {
+            background: var(--surface);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            padding: 2.5rem;
+            border: 1px solid var(--border);
+        }
+
+        .k3-header-block {
+            text-align: center;
+            margin-bottom: 1.75rem;
+            border-bottom: 2px dashed var(--border);
+            padding-bottom: 1.75rem;
+        }
+
+        .k3-header-block h1 {
+            font-size: clamp(1.7rem, 4vw, 2.25rem);
+            color: var(--green-dark);
+            font-weight: 800;
+            margin-top: 0.75rem;
+            letter-spacing: -0.02em;
+            line-height: 1.22;
+        }
+
+        .k3-badge {
+            display: inline-block;
+            background: var(--green-line);
+            color: var(--green-dark);
+            padding: 0.4rem 1rem;
+            border-radius: 30px;
+            font-size: 0.72rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .k3-subtitle {
+            max-width: 760px;
+            margin: 0.75rem auto 0;
+            color: var(--muted);
+            font-size: 0.95rem;
+            line-height: 1.65;
+        }
+
+        .meta-chips {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        .meta-chip {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+            padding: 0.35rem 0.7rem;
+            border-radius: 999px;
+            background: #f8fafc;
+            border: 1px solid var(--border);
+            color: var(--muted);
+            font-size: 0.72rem;
+            font-weight: 600;
+        }
+
+        .stat-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 0.75rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: #f8fafc;
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 0.95rem 1rem;
+        }
+
+        .stat-label {
+            display: block;
+            color: var(--muted);
+            font-size: 0.66rem;
+            font-weight: 800;
+            letter-spacing: 0.07em;
+            text-transform: uppercase;
+        }
+
+        .stat-value {
+            margin-top: 0.3rem;
+            color: var(--green-dark);
+            font-size: 1.65rem;
+            font-weight: 800;
+            line-height: 1.1;
+        }
+
+        .stat-note {
+            display: block;
+            color: var(--faint);
+            font-size: 0.7rem;
+            margin-top: 0.2rem;
+        }
+
+        .k3-content-section {
+            margin-bottom: 2.25rem;
+        }
+
+        .k3-content-section h2 {
+            font-size: 1.3rem;
+            color: #0f172a;
+            margin-bottom: 0.4rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            border-left: 4px solid var(--green);
+            padding-left: 0.75rem;
+            line-height: 1.3;
+        }
+
+        .k3-content-section > .section-head {
+            margin-bottom: 1rem;
+        }
+
+        .k3-content-section > .section-head p {
+            color: var(--muted);
+            font-size: 0.88rem;
+            line-height: 1.6;
+            margin: 0;
+            padding-left: 1rem;
+        }
+
+        .callout-box {
+            background: var(--green-soft);
+            border-left: 4px solid var(--green);
+            padding: 1.1rem 1.25rem;
+            border-radius: 0 12px 12px 0;
+            margin: 0 0 1.75rem;
+        }
+
+        .callout-box h4 {
+            margin: 0 0 0.35rem;
+            color: var(--green-deep);
+            font-size: 0.98rem;
+        }
+
+        .callout-box p {
+            margin: 0;
+            color: #475569;
+            font-size: 0.85rem;
+            line-height: 1.6;
+        }
+
+        .mode-switch {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 0.5rem;
+            background: #f8fafc;
+            border: 1px solid var(--border);
+            padding: 0.4rem;
+            border-radius: 16px;
+            margin-bottom: 1.25rem;
+        }
+
+        .mode-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            padding: 0.85rem 1rem;
+            border-radius: 12px;
+            border: 1px solid transparent;
+            background: transparent;
+            color: #475569;
+            font-family: inherit;
+            font-size: 0.88rem;
+            font-weight: 800;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            line-height: 1.3;
+        }
+
+        .mode-btn:hover {
+            background: #ffffff;
+            border-color: var(--green-line);
+            color: var(--green-dark);
+        }
+
+        .mode-btn.active {
+            background: linear-gradient(135deg, #059669, #047857);
+            color: #ffffff;
+            box-shadow: 0 6px 16px rgba(5, 150, 105, 0.24);
+        }
+
+        .panel-note {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.6rem;
+            background: var(--green-soft);
+            border: 1px solid var(--green-line);
+            border-radius: 12px;
+            padding: 0.8rem 0.95rem;
+            color: var(--green-dark);
+            font-size: 0.82rem;
+            line-height: 1.55;
+            margin-bottom: 1rem;
+        }
+
+        .panel-note.warn {
+            background: #fffbeb;
+            border-color: #fde68a;
+            color: #92400e;
+        }
+
+        .panel-note b {
+            font-weight: 800;
+        }
+
+        .table-shell {
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            overflow: hidden;
+            background: #ffffff;
+        }
+
+        .table-scroll {
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .k3-table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 680px;
+        }
+
+        .k3-table th {
+            background: #f8fafc;
+            color: var(--muted);
+            font-size: 0.68rem;
+            font-weight: 800;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            text-align: left;
+            padding: 0.8rem 1rem;
+            border-bottom: 1px solid var(--border);
+            white-space: nowrap;
+        }
+
+        .k3-table td {
+            padding: 0.8rem 1rem;
+            border-bottom: 1px solid #f1f5f9;
+            color: #334155;
+            font-size: 0.85rem;
+            vertical-align: middle;
+        }
+
+        .k3-table tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+        .k3-table tbody tr:hover {
+            background: #f8fafc;
+        }
+
+        .item-cell {
+            display: flex;
+            align-items: center;
+            gap: 0.65rem;
+            min-width: 200px;
+        }
+
+        .item-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 10px;
+            background: var(--green-soft);
+            display: grid;
+            place-items: center;
+            font-size: 1.05rem;
+            flex-shrink: 0;
+        }
+
+        .item-cell b {
+            display: block;
+            color: #0f172a;
+            font-size: 0.86rem;
+            line-height: 1.3;
+        }
+
+        .item-cell small {
+            display: block;
+            color: var(--faint);
+            font-size: 0.68rem;
+            margin-top: 0.15rem;
+        }
+
+        .stock-badge {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 36px;
+            padding: 0.28rem 0.55rem;
+            border-radius: 8px;
+            background: #f1f5f9;
+            color: #334155;
+            font-size: 0.8rem;
+            font-weight: 800;
+        }
+
+        .stock-badge.is-empty {
+            background: #fef2f2;
+            color: #b91c1c;
+        }
+
+        .badge-status {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+            padding: 0.28rem 0.6rem;
+            border-radius: 999px;
+            font-size: 0.68rem;
+            font-weight: 800;
+            white-space: nowrap;
+            border: 1px solid;
+        }
+
+        .badge-status::before {
+            content: '';
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            background: currentColor;
+        }
+
+        .is-available {
+            background: var(--green-soft);
+            color: var(--green-dark);
+            border-color: var(--green-line);
+        }
+
+        .is-low {
+            background: #fffbeb;
+            color: #92400e;
+            border-color: #fde68a;
+        }
+
+        .is-empty {
+            background: #fef2f2;
+            color: #b91c1c;
+            border-color: #fecaca;
+        }
+
+        .btn-table {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.3rem;
+            border: 1px solid var(--green-line);
+            background: var(--green-soft);
+            color: var(--green-dark);
+            font-family: inherit;
+            font-size: 0.75rem;
+            font-weight: 800;
+            padding: 0.45rem 0.75rem;
+            border-radius: 9px;
+            cursor: pointer;
+            transition: all 0.18s ease;
+            white-space: nowrap;
+        }
+
+        .btn-table:hover:not(:disabled) {
+            background: var(--green);
+            border-color: var(--green);
+            color: #ffffff;
+        }
+
+        .btn-table:disabled {
+            cursor: not-allowed;
+            opacity: 0.45;
+            background: #f1f5f9;
+            border-color: var(--border);
+            color: var(--faint);
+        }
+
+        .btn-table.ghost {
+            background: #ffffff;
+            border-color: #cbd5e1;
+            color: #475569;
+        }
+
+        .btn-table.ghost:hover {
+            background: #fef2f2;
+            border-color: #fecaca;
+            color: #b91c1c;
+        }
+
+        .btn-table.btn-acc {
+            background: var(--amber-soft, #fef3c7);
+            border-color: var(--amber-line, #d97706);
+            color: var(--amber-dark, #92400e);
+        }
+
+        .btn-table.btn-acc:hover:not(:disabled) {
+            background: var(--amber, #f59e0b);
+            border-color: var(--amber-line, #d97706);
+            color: #ffffff;
+        }
+
+        .stock-control {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.45rem;
+        }
+
+        .btn-step {
+            width: 30px;
+            height: 30px;
+            border-radius: 9px;
+            border: 1px solid #cbd5e1;
+            background: #ffffff;
+            color: var(--green-dark);
+            font-family: inherit;
+            font-size: 1.1rem;
+            font-weight: 800;
+            line-height: 1;
+            display: inline-grid;
+            place-items: center;
+            cursor: pointer;
+            transition: all 0.18s ease;
+        }
+
+        .btn-step:hover:not(:disabled) {
+            background: var(--green-soft);
+            border-color: var(--green);
+        }
+
+        .btn-step:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+        }
+
+        .stock-value {
+            min-width: 34px;
+            text-align: center;
+            font-weight: 800;
+            color: #0f172a;
+            font-size: 0.9rem;
+        }
+
+        .form-card {
+            background: #f8fafc;
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 1.25rem;
+            margin-top: 1.25rem;
+        }
+
+        .form-card-head h3 {
+            display: flex;
+            align-items: center;
+            gap: 0.45rem;
+            font-size: 0.98rem;
+            color: #0f172a;
+            margin-bottom: 0.25rem;
+        }
+
+        .form-card-head p {
+            color: var(--muted);
+            font-size: 0.8rem;
+            line-height: 1.55;
+            margin-bottom: 1rem;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 0.85rem;
+        }
+
+        .field label {
+            display: block;
+            color: #334155;
+            font-size: 0.75rem;
+            font-weight: 800;
+            margin-bottom: 0.35rem;
+        }
+
+        .field input,
+        .field select {
+            width: 100%;
+            border: 1px solid #cbd5e1;
+            border-radius: 10px;
+            background: #ffffff;
+            color: #0f172a;
+            font-family: inherit;
+            font-size: 0.86rem;
+            padding: 0.68rem 0.8rem;
+            transition: border-color 0.18s ease, box-shadow 0.18s ease;
+        }
+
+        .field input::placeholder {
+            color: #cbd5e1;
+        }
+
+        .field input:focus,
+        .field select:focus {
+            outline: none;
+            border-color: var(--green);
+            box-shadow: 0 0 0 3px rgba(5, 150, 105, 0.12);
+        }
+
+        .field-hint {
+            display: block;
+            color: var(--faint);
+            font-size: 0.7rem;
+            line-height: 1.4;
+            margin-top: 0.3rem;
+        }
+
+        .btn-primary,
+        .btn-secondary {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.45rem;
+            border-radius: 10px;
+            font-family: inherit;
+            font-size: 0.84rem;
+            font-weight: 800;
+            padding: 0.72rem 1.15rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            line-height: 1.2;
+        }
+
+        .btn-primary {
+            border: 1px solid #047857;
+            background: linear-gradient(135deg, #059669, #047857);
+            color: #ffffff;
+            box-shadow: 0 6px 16px rgba(5, 150, 105, 0.22);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 9px 20px rgba(5, 150, 105, 0.28);
+        }
+
+        .btn-secondary {
+            border: 1px solid #cbd5e1;
+            background: #ffffff;
+            color: #475569;
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--green);
+            color: var(--green-dark);
+            background: var(--green-soft);
+        }
+
+        .form-actions {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 0.75rem;
+            margin-top: 1rem;
+        }
+
+        .form-alert {
+            display: none;
+            align-items: flex-start;
+            gap: 0.4rem;
+            background: #fef2f2;
+            border: 1px solid #fecaca;
+            color: #b91c1c;
+            font-size: 0.78rem;
+            font-weight: 600;
+            line-height: 1.45;
+            padding: 0.6rem 0.75rem;
+            border-radius: 9px;
+            margin-top: 0.85rem;
+        }
+
+        .form-alert.show {
+            display: flex;
+        }
+
+        .subhead {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.96rem;
+            font-weight: 800;
+            color: #0f172a;
+            margin: 1.75rem 0 0.75rem;
+        }
+
+        .subhead::before {
+            content: '';
+            width: 6px;
+            height: 17px;
+            border-radius: 999px;
+            background: var(--green);
+            flex-shrink: 0;
+        }
+
+        .empty-state {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 2rem 1rem;
+            color: var(--faint);
+        }
+
+        .empty-state span {
+            font-size: 1.8rem;
+            margin-bottom: 0.4rem;
+        }
+
+        .empty-state b {
+            display: block;
+            color: #475569;
+            font-size: 0.86rem;
+            margin-bottom: 0.2rem;
+        }
+
+        .empty-state p {
+            margin: 0;
+            font-size: 0.76rem;
+            line-height: 1.45;
+            max-width: 360px;
+        }
+
+        .piket-toolbar {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 0.85rem;
+            background: #f8fafc;
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .piket-caption {
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            font-size: 0.76rem;
+            color: var(--muted);
+            margin: -0.35rem 0 0.9rem;
+            padding-left: 0.2rem;
+        }
+
+        .progress-card {
+            background: linear-gradient(135deg, #ecfdf5, #f8fafc);
+            border: 1px solid var(--green-line);
+            border-radius: 16px;
+            padding: 1rem 1.1rem;
+            margin-bottom: 1rem;
+            transition: box-shadow 0.25s ease;
+        }
+
+        .progress-card.is-done {
+            box-shadow: 0 0 0 2px rgba(5, 150, 105, 0.14);
+        }
+
+        .progress-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .progress-copy .progress-label {
+            display: block;
+            color: var(--green-dark);
+            font-size: 0.68rem;
+            font-weight: 800;
+            letter-spacing: 0.07em;
+            text-transform: uppercase;
+        }
+
+        .progress-copy .progress-detail {
+            display: block;
+            color: #475569;
+            font-size: 0.8rem;
+            margin-top: 0.2rem;
+        }
+
+        .progress-percent {
+            color: var(--green-dark);
+            font-size: 1.8rem;
+            font-weight: 800;
+            line-height: 1;
+        }
+
+        .progress-track {
+            height: 10px;
+            background: var(--green-line);
+            border-radius: 999px;
+            overflow: hidden;
+            margin-top: 0.8rem;
+        }
+
+        .progress-fill {
+            height: 100%;
+            width: 0;
+            background: linear-gradient(90deg, #059669, #34d399);
+            border-radius: 999px;
+            transition: width 0.35s ease;
+        }
+
+        .progress-hint {
+            color: #047857;
+            font-size: 0.78rem;
+            line-height: 1.5;
+            margin-top: 0.6rem;
+        }
+
+        .r-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1rem;
+        }
+
+        .r-group {
+            background: #ffffff;
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 1rem;
+            transition: border-color 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .r-group.is-complete {
+            border-color: #a7f3d0;
+            box-shadow: 0 6px 18px rgba(5, 150, 105, 0.07);
+        }
+
+        .r-group-head {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.7rem;
+        }
+
+        .r-icon {
+            width: 38px;
+            height: 38px;
+            border-radius: 11px;
+            background: var(--green-soft);
+            display: grid;
+            place-items: center;
+            font-size: 1.1rem;
+            flex-shrink: 0;
+        }
+
+        .r-title h3 {
+            color: #0f172a;
+            font-size: 0.96rem;
+            line-height: 1.3;
+        }
+
+        .r-title p {
+            color: var(--faint);
+            font-size: 0.72rem;
+            line-height: 1.4;
+            margin-top: 0.12rem;
+        }
+
+        .r-count {
+            margin-left: auto;
+            background: var(--green-soft);
+            color: var(--green);
+            border-radius: 999px;
+            padding: 0.25rem 0.5rem;
+            font-size: 0.68rem;
+            font-weight: 800;
+            white-space: nowrap;
+        }
+
+        .r-group.is-complete .r-count {
+            background: var(--green);
+            color: #ffffff;
+        }
+
+        .mini-track {
+            height: 5px;
+            background: #f1f5f9;
+            border-radius: 999px;
+            overflow: hidden;
+            margin: 0.8rem 0 0.3rem;
+        }
+
+        .mini-fill {
+            height: 100%;
+            width: 0;
+            background: #10b981;
+            border-radius: 999px;
+            transition: width 0.3s ease;
+        }
+
+        .check-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.1rem;
+            margin-top: 0.35rem;
+        }
+
+        .check-item {
+            position: relative;
+            display: flex;
+            align-items: flex-start;
+            gap: 0.7rem;
+            padding: 0.6rem 0.5rem;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background 0.18s ease;
+        }
+
+        .check-item:hover {
+            background: #f8fafc;
+        }
+
+        .check-item.is-done {
+            background: #f0fdf4;
+        }
+
+        .check-item input {
+            position: absolute;
+            opacity: 0;
+            width: 1px;
+            height: 1px;
+            pointer-events: none;
+        }
+
+        .check-box {
+            width: 24px;
+            height: 24px;
+            border-radius: 6px;
+            border: 2px solid #cbd5e1;
+            background: #ffffff;
+            display: grid;
+            place-items: center;
+            flex-shrink: 0;
+            margin-top: 1px;
+            transition: all 0.18s ease;
+            cursor: pointer;
+        }
+
+        .check-box svg {
+            width: 12px;
+            height: 12px;
+            stroke: #ffffff;
+            stroke-width: 3.5;
+            fill: none;
+            opacity: 0;
+            transform: scale(0.5);
+            transition: all 0.18s ease;
+        }
+
+        .check-item input:checked + .check-box {
+            background: var(--green);
+            border-color: var(--green);
+        }
+
+        .check-item input:checked + .check-box svg {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        .check-item input:focus-visible + .check-box {
+            box-shadow: 0 0 0 3px rgba(5, 150, 105, 0.22);
+        }
+
+        .check-text b {
+            display: block;
+            color: #334155;
+            font-size: 0.81rem;
+            font-weight: 700;
+            line-height: 1.4;
+        }
+
+        .check-text small {
+            display: block;
+            color: var(--muted);
+            font-size: 0.73rem;
+            line-height: 1.5;
+            margin-top: 0.15rem;
+        }
+
+        .check-item.is-done .check-text b {
+            color: var(--green-dark);
+        }
+
+        .piket-actions {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 0.75rem;
+            margin-top: 1.1rem;
+        }
+
+        .save-status {
+            color: var(--faint);
+            font-size: 0.72rem;
+            margin-left: auto;
+        }
+
+        .source-link-block {
+            margin-top: 2rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--border);
+        }
+
+        .toast {
+            position: fixed;
+            left: 50%;
+            bottom: 24px;
+            transform: translate(-50%, 20px);
+            background: var(--green-dark);
+            color: #ffffff;
+            padding: 0.8rem 1.2rem;
+            border-radius: 12px;
+            font-size: 0.82rem;
+            font-weight: 700;
+            line-height: 1.4;
+            box-shadow: 0 10px 30px rgba(2, 6, 23, 0.25);
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.25s ease, transform 0.25s ease;
+            z-index: 9999;
+            max-width: calc(100vw - 2rem);
+            text-align: center;
+        }
+
+        .toast.show {
+            opacity: 1;
+            transform: translate(-50%, 0);
+        }
+
+        .toast.error {
+            background: #b91c1c;
+        }
+
+        .toast.info {
+            background: #0f172a;
+        }
+
+        @media (min-width: 640px) {
+            .form-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+
+            .piket-toolbar {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+        }
+
+        @media (min-width: 768px) {
+            .stat-grid {
+                grid-template-columns: repeat(4, minmax(0, 1fr));
+            }
+        }
+
+        @media (min-width: 900px) {
+            .r-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+
+            .r-group:last-child:nth-child(odd) {
+                grid-column: 1 / -1;
+            }
+        }
+
+        @media (max-width: 640px) {
+            .k3-page-wrapper {
+                margin: 1rem auto;
+                padding: 0 1rem 2rem;
+            }
+
+            .k3-card {
+                padding: 1.25rem;
+                border-radius: 16px;
+            }
+
+            .k3-header-block h1 {
+                font-size: 1.5rem;
+            }
+
+            .mode-switch {
+                grid-template-columns: 1fr;
+            }
+
+            .mode-btn {
+                justify-content: flex-start;
+            }
+
+            .save-status {
+                margin-left: 0;
+                flex-basis: 100%;
+            }
+        }
+        /* ==========================================
+           PROFIL, OTORISASI, DAN PANEL PETUGAS
+        ========================================== */
+        .profile-floating-btn {
+            position: fixed;
+            top: 18px;
+            right: 18px;
+            z-index: 1200;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.45rem;
+            padding: 0.55rem 0.95rem;
+            border-radius: 999px;
+            border: 1px solid #334155;
+            background: rgba(15, 23, 42, 0.92);
+            color: #ffffff;
+            font-family: inherit;
+            font-size: 0.78rem;
+            font-weight: 800;
+            cursor: pointer;
+            box-shadow: 0 6px 18px rgba(15, 23, 42, 0.22);
+            backdrop-filter: blur(8px);
+            transition: all 0.2s ease;
+        }
+
+        .profile-floating-btn:hover {
+            background: #334155;
+            transform: translateY(-1px);
+        }
+
+        .profile-floating-btn.is-admin {
+            border-color: var(--green);
+            background: var(--green-dark);
+            box-shadow: 0 6px 18px rgba(5, 150, 105, 0.28);
+        }
+
+        .auth-backdrop {
+            position: fixed;
+            inset: 0;
+            z-index: 2000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+            background: rgba(15, 23, 42, 0.62);
+            backdrop-filter: blur(5px);
+        }
+
+        .auth-modal {
+            position: relative;
+            width: 100%;
+            max-width: 420px;
+            background: #ffffff;
+            border: 1px solid var(--border);
+            border-radius: 18px;
+            padding: 1.5rem;
+            box-shadow: 0 24px 60px rgba(2, 6, 23, 0.35);
+        }
+
+        .auth-close {
+            position: absolute;
+            top: 0.8rem;
+            right: 0.8rem;
+            width: 30px;
+            height: 30px;
+            border: 1px solid var(--border);
+            border-radius: 9px;
+            background: #f8fafc;
+            color: #64748b;
+            font-family: inherit;
+            font-size: 1rem;
+            font-weight: 800;
+            cursor: pointer;
+            display: grid;
+            place-items: center;
+        }
+
+        .auth-close:hover {
+            background: #fef2f2;
+            border-color: #fecaca;
+            color: #b91c1c;
+        }
+
+        .auth-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 15px;
+            background: var(--green-soft);
+            color: var(--green-dark);
+            display: grid;
+            place-items: center;
+            font-size: 1.45rem;
+            margin-bottom: 0.85rem;
+        }
+
+        .auth-icon.is-success {
+            background: var(--green);
+            color: #ffffff;
+        }
+
+        .auth-modal h3 {
+            color: #0f172a;
+            font-size: 1.15rem;
+            line-height: 1.3;
+            padding-right: 1.5rem;
+        }
+
+        .auth-modal > p {
+            color: var(--muted);
+            font-size: 0.82rem;
+            line-height: 1.6;
+            margin-top: 0.4rem;
+        }
+
+        .auth-field {
+            margin-top: 1rem;
+        }
+
+        .auth-field label {
+            display: block;
+            color: #334155;
+            font-size: 0.75rem;
+            font-weight: 800;
+            margin-bottom: 0.35rem;
+        }
+
+        .auth-field input {
+            width: 100%;
+            border: 1px solid #cbd5e1;
+            border-radius: 10px;
+            background: #ffffff;
+            color: #0f172a;
+            font-family: inherit;
+            font-size: 0.88rem;
+            padding: 0.72rem 0.8rem;
+            transition: border-color 0.18s ease, box-shadow 0.18s ease;
+        }
+
+        .auth-field input:focus {
+            outline: none;
+            border-color: var(--green);
+            box-shadow: 0 0 0 3px rgba(5, 150, 105, 0.12);
+        }
+
+        .auth-error {
+            display: none;
+            background: #fef2f2;
+            border: 1px solid #fecaca;
+            color: #b91c1c;
+            font-size: 0.76rem;
+            font-weight: 600;
+            line-height: 1.45;
+            border-radius: 9px;
+            padding: 0.55rem 0.7rem;
+            margin-top: 0.75rem;
+        }
+
+        .auth-error.show {
+            display: block;
+        }
+
+        .auth-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.65rem;
+            margin-top: 1.1rem;
+        }
+
+        .auth-actions .btn-primary,
+        .auth-actions .btn-secondary {
+            flex: 1;
+            min-width: 130px;
+        }
+
+        .auth-note {
+            margin-top: 0.9rem;
+            padding-top: 0.8rem;
+            border-top: 1px solid var(--border);
+            color: var(--faint);
+            font-size: 0.7rem;
+            line-height: 1.5;
+        }
+
+
+
+        .admin-strip {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 0.9rem;
+            flex-wrap: wrap;
+            background: var(--green-dark);
+            color: #ffffff;
+            border-radius: 14px;
+            padding: 0.9rem 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .admin-strip b {
+            display: block;
+            font-size: 0.88rem;
+        }
+
+        .admin-strip p {
+            margin: 0.15rem 0 0;
+            color: #a7f3d0;
+            font-size: 0.74rem;
+            line-height: 1.45;
+        }
+
+        .admin-strip .btn-secondary {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.25);
+            color: #ffffff;
+            flex-shrink: 0;
+        }
+
+        .admin-strip .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.18);
+            border-color: #ffffff;
+            color: #ffffff;
+        }
+
+        .btn-danger {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.4rem;
+            border: 1px solid #b91c1c;
+            background: #dc2626;
+            color: #ffffff;
+            font-family: inherit;
+            font-size: 0.82rem;
+            font-weight: 800;
+            padding: 0.68rem 1rem;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.18s ease;
+            line-height: 1.2;
+        }
+
+        .btn-danger:hover {
+            background: #b91c1c;
+            transform: translateY(-1px);
+        }
+
+        .btn-danger:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .btn-danger-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 9px;
+            border: 1px solid #fecaca;
+            background: #fef2f2;
+            color: #b91c1c;
+            display: inline-grid;
+            place-items: center;
+            cursor: pointer;
+            transition: all 0.18s ease;
+        }
+
+        .btn-danger-icon:hover {
+            background: #b91c1c;
+            border-color: #b91c1c;
+            color: #ffffff;
+        }
+
+        .btn-danger-icon svg {
+            width: 15px;
+            height: 15px;
+            stroke: currentColor;
+            stroke-width: 2;
+            fill: none;
+        }
+
+        .admin-actions-card {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+            flex-wrap: wrap;
+            background: #fff7ed;
+            border: 1px solid #fed7aa;
+            border-radius: 14px;
+            padding: 1rem;
+            margin-top: 1rem;
+        }
+
+        .admin-actions-card h3 {
+            color: #9a3412;
+            font-size: 0.92rem;
+            margin-bottom: 0.2rem;
+        }
+
+        .admin-actions-card p {
+            color: #c2410c;
+            font-size: 0.76rem;
+            line-height: 1.5;
+            margin: 0;
+            max-width: 620px;
+        }
+
+        .table-loading {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.6rem;
+            padding: 1.6rem 1rem;
+            color: var(--muted);
+            font-size: 0.8rem;
+        }
+
+        .spinner {
+            width: 16px;
+            height: 16px;
+            border: 2px solid var(--green-line);
+            border-top-color: var(--green);
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+            flex-shrink: 0;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .check-meta {
+            display: none;
+            color: var(--green) !important;
+            font-size: 0.68rem !important;
+            font-weight: 600;
+            margin-top: 0.25rem !important;
+        }
+
+        .check-item.is-done .check-meta {
+            display: block;
+        }
+
+        .check-item.is-pending {
+            opacity: 0.7;
+        }
+
+        .check-item input:disabled + .check-box {
+            background: #f8fafc;
+            border-color: #e2e8f0;
+            cursor: not-allowed;
+        }
+
+        .check-item:has(input:disabled) {
+            cursor: not-allowed;
+        }
+
+        .loan-status {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+            color: var(--green-dark);
+            background: var(--green-soft);
+            border: 1px solid var(--green-line);
+            border-radius: 999px;
+            padding: 0.28rem 0.6rem;
+            font-size: 0.68rem;
+            font-weight: 800;
+            white-space: nowrap;
+        }
+
+        .loan-status::before {
+            content: '';
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            background: currentColor;
+        }
+
+        @media (max-width: 640px) {
+            .profile-floating-btn {
+                top: 12px;
+                right: 12px;
+                padding: 0.45rem 0.75rem;
+                font-size: 0.72rem;
+            }
+
+            .auth-modal {
+                padding: 1.25rem;
+            }
+
+            .admin-actions-card {
+                align-items: flex-start;
+                flex-direction: column;
+            }
+
+            .admin-actions-card .btn-danger {
+                width: 100%;
+            }
+        }
+        /* ==========================================
+           PENYESUAIAN UI REALTIME & AKSI TABEL
+        ========================================== */
+        [hidden] {
+            display: none !important;
+        }
+
+        .profile-floating-btn svg {
+            width: 15px;
+            height: 15px;
+            stroke: currentColor;
+            stroke-width: 2;
+            fill: none;
+            flex-shrink: 0;
+        }
+
+        .meta-chip.sync-chip {
+            color: var(--green-dark);
+            background: var(--green-soft);
+            border-color: var(--green-line);
+        }
+
+        .meta-chip.sync-chip.is-error {
+            color: #b91c1c;
+            background: #fef2f2;
+            border-color: #fecaca;
+        }
+
+        .table-actions {
+            display: flex;
+            align-items: center;
+            gap: 0.45rem;
+            flex-wrap: wrap;
+        }
+
+        .table-note {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.5rem;
+            color: var(--muted);
+            font-size: 0.75rem;
+            line-height: 1.5;
+            margin: 0.65rem 0 0;
+        }
+
+        .date-readonly {
+            background: #f8fafc !important;
+            color: #475569 !important;
+            cursor: default;
+        }
+
+        .admin-section-spacer {
+            margin-top: 1.25rem;
+        }
+
+        .piket-actions #adminChecklistActions {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-left: auto;
+        }
+
+        .piket-actions #adminChecklistActions:empty {
+            display: none;
+        }
+
+        .piket-actions #adminChecklistActions .btn-danger {
+            padding: 0.55rem 0.85rem;
+            font-size: 0.76rem;
+        }
+
+        .check-item.is-pending {
+            pointer-events: none;
+        }
+
+        .check-item.is-pending .check-box {
+            opacity: 0.55;
+        }
+
+        .loan-code {
+            display: block;
+            color: var(--faint);
+            font-size: 0.66rem;
+            margin-top: 0.12rem;
+        }
+
+        .auth-backdrop .auth-modal form {
+            margin: 0;
+        }
     </style>
 </head>
-<body style="background-color: #f1f5f9;">
+<body>
+
+    <button type="button" class="profile-floating-btn" id="profileBtn" aria-label="Buka mode petugas">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+        <span id="profileBtnLabel">Profile</span>
+    </button>
 
     <div class="k3-page-wrapper">
         <a href="index.html" class="btn-k3-back">⬅ Kembali ke Dashboard</a>
-        
+
         <div class="k3-card">
             <div class="k3-header-block">
-                <span class="k3-badge">Modul 03: Manajemen Tata Ruang & Akuntabilitas Alat</span>
-                <h1>🧹 Piket & Tanggung Jawab: Peminjaman Barang & Kebersihan</h1>
+                <span class="k3-badge">Modul 03 • Manajemen Tata Ruang &amp; Akuntabilitas Alat</span>
+                <h1>Sistem Manajemen Lab &amp; Piket Interaktif</h1>
+                <p class="k3-subtitle">Kelola stok alat, catat peminjaman, dan jalankan checklist 5R dengan data yang tersinkron langsung dari Cloud Firestore. Setiap perubahan dari petugas maupun siswa langsung terlihat di semua perangkat tanpa perlu memuat ulang halaman.</p>
+                <div class="meta-chips">
+                    <span class="meta-chip sync-chip" id="syncChip"><span class="sync-dot"></span><span id="syncText">Menghubungkan…</span></span>
+                    <span class="meta-chip">☁️ Firestore real-time</span>
+                    <span class="meta-chip">✅ Standar 5R</span>
+                </div>
             </div>
 
-            <div class="k3-content-section">
-                <h2>1. Akuntabilitas Peminjaman Komponen Praktikum (Hardware Kit)</h2>
-                <p>Dalam kurikulum kompetensi Rekayasa Perangkat Lunak dan IoT, kita akan berinteraksi dengan berbagai kit penguji eksternal seperti Arduino, Raspberry Pi, kabel jumper, atau modul sensor optik.</p>
-                <ul>
-                    <li><b>SOP Logbook Peminjaman:</b> Setiap pengambilan alat wajib dicatat secara tertulis pada buku inventaris laboratorium (Logbook) yang dikelola oleh laboran atau ketua kelas, mencantumkan Kode Serial Alat dan Tanggal Pinjam.</li>
-                    <li><b>Prosedur Pengembalian Mandiri:</b> Maksimal 10 menit sebelum jam pelajaran berakhir, seluruh komponen wajib ditata ulang kembali ke kompartemen box asalnya, dalam keadaan bersih, kabel tergulung rapi, dan dikembalikan ke rak penyimpanan lemari utama secara tertata.</li>
-                </ul>
+            <div class="stat-grid" aria-label="Ringkasan data laboratorium">
+                <div class="stat-card">
+                    <span class="stat-label">Jenis Barang</span>
+                    <div class="stat-value" id="statJenis">0</div>
+                    <span class="stat-note">alat dan komponen terdata</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-label">Stok Tersedia</span>
+                    <div class="stat-value" id="statTersedia">0</div>
+                    <span class="stat-note">unit siap dipinjam</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-label">Sedang Dipinjam</span>
+                    <div class="stat-value" id="statDipinjam">0</div>
+                    <span class="stat-note">unit belum dikembalikan</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-label">Progres Piket 5R</span>
+                    <div class="stat-value" id="statPiket">0%</div>
+                    <span class="stat-note">checklist hari ini</span>
+                </div>
             </div>
 
             <div class="callout-box">
-                <h4>🧹 Regulasi 5R Sebelum Keluar Laboratorium (Sesi Penutupan)</h4>
-                <p>Siswa terakhir yang meninggalkan meja komputer wajib memastikan alur pemeriksaan akhir terpenuhi:<br>
-                1. Sistem Operasi PC sudah ter-<i>Shut Down</i> sempurna (Lampu indikator power padam).<br>
-                2. Layar Monitor dimatikan secara manual dengan menekan tombol dayanya.<br>
-                3. Keyboard dan Mouse dirapikan sejajar simetris di depan kaki monitor.<br>
-                4. Kursi belajar wajib dimasukkan ke kolong bawah meja kerja secara tertib.</p>
+                <h4>📌 Aturan Wajib Peminjaman Alat</h4>
+                <p>Alat hanya boleh diambil setelah peminjaman dicatat pada sistem ini. Kembalikan seluruh alat maksimal <b>10 menit sebelum jam pelajaran berakhir</b> dalam keadaan bersih, kabel tergulung, dan sesuai slot rak. Alat yang rusak atau hilang wajib dilaporkan kepada laboran pada hari yang sama — jangan menunggu sampai besok.</p>
             </div>
 
-            <div class="k3-content-section">
-                <h2>2. Jadwal Piket Sesian & Kepedulian Aset Bersama</h2>
-                <p>Petugas piket yang terjadwal memegang amanah penuh terhadap ketertiban ruangan:</p>
-                <ul>
-                    <li>Menyapu lantai lab dan memastikan tidak ada sampah sisa kertas atau plastik pelindung komponen tertinggal di laci meja.</li>
-                    <li>Membuang kantong sampah utama keluar ke tempat penampungan luar koridor sekolah.</li>
-                    <li><b>Langkah Penghematan Energi & Keamanan:</b> Memastikan saklar lampu utama telah dipadamkan serta Air Conditioner (AC) telah mati total sebelum mengunci pintu laboratorium komputer.</li>
-                </ul>
-            </div>
+            <section class="k3-content-section" id="inventaris">
+                <div class="section-head">
+                    <h2>1. Inventaris &amp; Peminjaman Alat</h2>
+                    <p>Stok dan daftar peminjaman dibaca langsung dari Cloud Firestore serta diperbarui otomatis di semua perangkat. Tekan tombol <b>Profile</b> di kanan atas untuk membuka kontrol petugas.</p>
+                </div>
+
+                <div class="panel-note">
+                    <span>ℹ️</span>
+                    <span><b>Stok tersedia = total unit − sedang dipinjam.</b> Sistem menolak pengajuan jika jumlah yang diminta melebihi stok tersedia di database saat transaksi diproses. Data peminjaman aktif otomatis mengurangi stok di semua layar.</span>
+                </div>
+
+                <div class="table-shell">
+                    <div class="table-scroll">
+                        <table class="k3-table" aria-label="Tabel inventaris laboratorium">
+                            <thead>
+                                <tr id="inventoryHead"><th scope="col">Memuat inventaris…</th></tr>
+                            </thead>
+                            <tbody id="inventoryBody"></tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Kontrol admin sengaja kosong di HTML. Diisi oleh JavaScript hanya setelah otorisasi berhasil. -->
+                <div id="adminSection"></div>
+
+                <div class="form-card">
+                    <div class="form-card-head">
+                        <h3>📝 Formulir Peminjaman Siswa</h3>
+                        <p>Isi data dengan benar. Nama dan kelas akan tercatat pada daftar peminjaman aktif dan dapat diperiksa oleh laboran.</p>
+                    </div>
+                    <form id="loanForm" novalidate>
+                        <div class="form-grid">
+                            <div class="field">
+                                <label for="loanNama">Nama Peminjam</label>
+                                <input type="text" id="loanNama" name="nama" placeholder="Contoh: Rina Pratiwi" autocomplete="name" maxlength="60">
+                            </div>
+                            <div class="field">
+                                <label for="loanKelas">Kelas</label>
+                                <input type="text" id="loanKelas" name="kelas" placeholder="Contoh: XI TKJT 1" list="kelasList" autocomplete="off" maxlength="30">
+                                <datalist id="kelasList">
+                                    <option value="TKJT 1 / A 1"></option>
+                                    <option value="TKJT 2 / A 1"></option>
+                                    <option value="TKJT 1 / A 2"></option>
+                                    <option value="TKJT 2 / A 2"></option>
+                                    <option value="TKJT 3 / A 2"></option>
+                                    <option value="TKJT 1 / A 3"></option>
+                                    <option value="TKJT 2 / A 3"></option>
+                                    <option value="TKJT 3 / A 3"></option>
+                                    <option value="GURU"></option>
+                                </datalist>
+                            </div>
+                            <div class="field">
+                                <label for="loanBarang">Barang</label>
+                                <select id="loanBarang" name="barang">
+                                    <option value="">Pilih barang yang akan dipinjam</option>
+                                </select>
+                            </div>
+                            <div class="field">
+                                <label for="loanJumlah">Jumlah (unit)</label>
+                                <input type="number" id="loanJumlah" name="jumlah" min="1" step="1" value="1" inputmode="numeric">
+                                <small class="field-hint" id="jumlahHint">Pilih barang untuk melihat stok tersedia.</small>
+                            </div>
+                        </div>
+                        <div class="form-alert" id="loanAlert" role="alert"></div>
+                        <div class="form-actions">
+                            <button type="submit" class="btn-primary" id="loanSubmit">✅ Ajukan Peminjaman</button>
+                            <button type="button" class="btn-secondary" id="clearLoanForm">Bersihkan Form</button>
+                        </div>
+                    </form>
+                </div>
+
+                <h3 class="subhead">Daftar Peminjaman Aktif</h3>
+                <div class="table-shell">
+                    <div class="table-scroll">
+                        <table class="k3-table" aria-label="Tabel peminjaman aktif">
+                            <thead>
+                                <tr id="loanHead"><th scope="col">Memuat peminjaman…</th></tr>
+                            </thead>
+                            <tbody id="loanBody"></tbody>
+                        </table>
+                    </div>
+                </div>
+                <p class="table-note" id="loanNote">Daftar ini hanya menampilkan peminjaman yang belum dikembalikan.</p>
+            </section>
+
+            <section class="k3-content-section" id="piket">
+                <div class="section-head">
+                    <h2>2. Checklist Piket Harian 5R</h2>
+                    <p>Centang setiap tugas hanya setelah benar-benar selesai. Checklist ini tersinkron ke Firestore, sehingga seluruh siswa dan petugas melihat status kebersihan yang sama.</p>
+                </div>
+
+                <div class="piket-toolbar">
+                    <div class="field">
+                        <label for="piketPetugas">Nama Petugas Piket</label>
+                        <input type="text" id="piketPetugas" placeholder="Tulis nama lengkap petugas" maxlength="60" autocomplete="off">
+                    </div>
+                    <div class="field">
+                        <label for="piketTanggal">Tanggal Piket</label>
+                        <input type="text" id="piketTanggal" class="date-readonly" readonly>
+                    </div>
+                </div>
+                <p class="piket-caption" id="piketCaption">📅 Checklist untuk hari ini.</p>
+
+                <div class="progress-card" id="progressCard">
+                    <div class="progress-top">
+                        <div class="progress-copy">
+                            <span class="progress-label">Progres Piket 5R</span>
+                            <span class="progress-detail" id="progressDetail">0 dari 0 tugas selesai</span>
+                        </div>
+                        <div class="progress-percent" id="progressText">0%</div>
+                    </div>
+                    <div class="progress-track" role="progressbar" aria-label="Progres checklist piket" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" id="progressTrack">
+                        <div class="progress-fill" id="progressBar"></div>
+                    </div>
+                    <p class="progress-hint" id="progressHint">Belum ada tugas yang dicentang. Mulai dari Ringkas, lalu lanjutkan ke Rapi dan Resik.</p>
+                </div>
+
+                <div class="r-grid" id="checklistContainer"></div>
+
+                <div class="piket-actions">
+                    <span class="save-status" id="saveStatus">Menghubungkan ke Firestore…</span>
+                    <!-- Tombol reset hanya dirender oleh JavaScript setelah mode petugas aktif. -->
+                    <span id="adminChecklistActions"></span>
+                </div>
+            </section>
 
             <div class="source-link-block">
                 <p style="font-size:0.85rem; color:#64748b; margin-bottom:0.5rem;">🌐 Referensi Sistem Manajemen Vokasi:</p>
-                <div style="font-size:0.9rem; color:#334155;">💡 Menerapkan Metode 5S / 5R Industri (Ringkas, Rapi, Resik, Rawat, Rajin) Standar Lab Vokasi Modern.</div>
+                <div style="font-size:0.9rem; color:#334155; line-height:1.6;">💡 Menerapkan Metode 5S / 5R Industri (Ringkas, Rapi, Resik, Rawat, Rajin) Standar Lab Vokasi Modern. Data inventaris, peminjaman, dan checklist disimpan di Cloud Firestore dan disinkronkan real-time ke seluruh perangkat. Kode akses petugas hanya membatasi tampilan antarmuka; untuk keamanan data produksi gunakan Firebase Authentication dan Security Rules.</div>
             </div>
+
         </div>
     </div>
+
+    <div class="auth-backdrop" id="authModal" hidden>
+        <div class="auth-modal" role="dialog" aria-modal="true" aria-labelledby="authTitle" aria-describedby="authDesc">
+            <button type="button" class="auth-close" id="authClose" aria-label="Tutup dialog">×</button>
+            <div class="auth-icon" aria-hidden="true">🔐</div>
+            <h3 id="authTitle">Otorisasi Petugas</h3>
+            <p id="authDesc">Masukkan kode akses laboran untuk membuka kontrol edit stok, hapus barang, tambah inventaris, penerimaan pengembalian, dan reset checklist.</p>
+            <form id="authForm" novalidate>
+                <div class="auth-field">
+                    <label for="authPassword">Kode Akses</label>
+                    <input type="password" id="authPassword" placeholder="••••••••" autocomplete="current-password" maxlength="32">
+                </div>
+                <div class="auth-error" id="authError" role="alert"></div>
+                <div class="auth-actions">
+                    <button type="submit" class="btn-primary" id="authSubmit">Buka Mode Petugas</button>
+                    <button type="button" class="btn-secondary" id="authCancel">Batal</button>
+                </div>
+            </form>
+            <p class="auth-note">Kode ini hanya membatasi tombol admin di antarmuka. Keamanan data sebenarnya wajib menggunakan Firebase Authentication dan Firestore Security Rules.</p>
+        </div>
+    </div>
+
+    <div class="auth-backdrop" id="confirmModal" hidden>
+        <div class="auth-modal" role="dialog" aria-modal="true" aria-labelledby="confirmTitle" aria-describedby="confirmDesc">
+            <button type="button" class="auth-close" id="confirmClose" aria-label="Tutup dialog">×</button>
+            <div class="auth-icon" aria-hidden="true">🔐</div>
+            <h3 id="confirmTitle">Konfirmasi Pengeluaran</h3>
+            <p id="confirmDesc">Masukkan kode akses petugas untuk menyetujui peminjaman barang.</p>
+            <form id="confirmForm" novalidate>
+                <div class="auth-field">
+                    <label for="confirmPassword">Kode Akses Petugas</label>
+                    <input type="password" id="confirmPassword" placeholder="••••••••" autocomplete="current-password" maxlength="32">
+                </div>
+                <div class="auth-error" id="confirmError" role="alert"></div>
+                <div class="auth-actions">
+                    <button type="submit" class="btn-primary" id="confirmSubmit">Setujui</button>
+                    <button type="button" class="btn-secondary" id="confirmCancel">Batal</button>
+                </div>
+            </form>
+            <p class="auth-note">Kode akses petugas diperlukan untuk mengonfirmasi peminjaman.</p>
+        </div>
+    </div>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script type="module">
+/* ============================================================
+   1. IMPORT FIREBASE MODULAR SDK (v12)
+============================================================ */
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-app.js";
+import {
+    getFirestore,
+    collection,
+    doc,
+    query,
+    where,
+    onSnapshot,
+    runTransaction,
+    addDoc,
+    deleteDoc,
+    setDoc,
+    serverTimestamp
+} from "https://www.gstatic.com/firebasejs/12.18.0/firebase-firestore.js";
+
+/* ============================================================
+   2. KONFIGURASI FIREBASE
+   Placeholder — nilai aktif diisi melalui index.html terpusat.
+============================================================ */
+const firebaseConfig = {
+    apiKey: "GANTI_API_KEY",
+    authDomain: "GANTI_PROJECT_ID.firebaseapp.com",
+    projectId: "GANTI_PROJECT_ID",
+    storageBucket: "GANTI_PROJECT_ID.appspot.com",
+    messagingSenderId: "GANTI_SENDER_ID",
+    appId: "GANTI_APP_ID"
+};
+
+const CONFIG_READY = false;
+const COLLECTIONS = { inventory: "inventory", loans: "loans", piket: "piket" };
+const ADMIN_PASSWORD = "mangats";
+
+/* ============================================================
+   3. DATA CHECKLIST 5R (9 TUGAS)
+============================================================ */
+const GROUPS = [
+    { id: "ringkas", title: "Ringkas", subtitle: "Pilah alat dan singkirkan yang tidak diperlukan", icon: "📦" },
+    { id: "rapi", title: "Rapi", subtitle: "Susun setiap benda pada tempat dan posisi yang benar", icon: "📐" },
+    { id: "resik", title: "Resik", subtitle: "Bersihkan ruang, meja, lantai, dan area praktikum", icon: "🧹" },
+    { id: "rawat", title: "Rawat", subtitle: "Jaga peralatan dan fasilitas tetap dalam kondisi baik", icon: "🛡️" },
+    { id: "rajin", title: "Rajin", subtitle: "Biasakan disiplin menutup kegiatan praktikum", icon: "⭐" }
+];
+
+const TASKS = [
+    { id: "susun_alat_rak", group: "ringkas", text: "Susun alat praktikum di rak", detail: "Kembalikan alat ke slot rak sesuai label dan kelompokkan alat yang tidak lagi dipakai." },
+    { id: "kursi_meja", group: "rapi", text: "Naikkan kursi ke atas meja / rapikan ke kolong", detail: "Pastikan kursi tidak menghalangi jalur, tersusun rapi, dan siap dipakai kelas berikutnya." },
+    { id: "gulungan_kabel", group: "rapi", text: "Rapikan gulungan kabel", detail: "Gulung kabel jaringan dan power dengan rapi, ikat secukupnya, lalu jauhkan dari area lalu-lalang." },
+    { id: "sapu_pel", group: "resik", text: "Sapu & pel lantai", detail: "Bersihkan debu, kertas, dan sisa kabel kecil di seluruh area laboratorium hingga kering." },
+    { id: "lap_meja", group: "resik", text: "Lap meja PC & meja guru", detail: "Bersihkan permukaan meja dari debu dan bekas tangan tanpa membasahi perangkat elektronik." },
+    { id: "tong_sampah", group: "resik", text: "Kosongkan tong sampah", detail: "Buang seluruh sampah ke tempat pembuangan akhir sekolah dan pastikan tong dalam keadaan bersih." },
+    { id: "matikan_komputer", group: "rawat", text: "Pastikan CPU & Monitor MATI total", detail: "Matikan melalui sistem operasi, cabut arus bila diwajibkan, dan pastikan lampu indikator benar-benar padam." },
+    { id: "kunci_jendela", group: "rawat", text: "Kunci jendela", detail: "Tutup seluruh jendela, pastikan kait terkunci, dan periksa tidak ada perangkat yang terjepit." },
+    { id: "matikan_ac_lampu", group: "rajin", text: "Matikan AC & Lampu ruangan", detail: "Matikan AC, lampu, proyektor, dan perangkat pendukung lain sebelum meninggalkan laboratorium." }
+];
+
+const TOTAL_TASKS = TASKS.length;
+
+/* ============================================================
+   4. STATE APLIKASI (TIDAK DISIMPAN DI LOCALSTORAGE)
+============================================================ */
+        const initialInventory = [
+            { id: "inv_01", nama: "Router Totolink", kategori: "durables", stokTotal: 10, dipinjam: 0, icon: "📶" },
+            { id: "inv_02", nama: "Router GGC LINK", kategori: "durables", stokTotal: 10, dipinjam: 0, icon: "📶" },
+            { id: "inv_03", nama: "Switch Totolink", kategori: "durables", stokTotal: 10, dipinjam: 0, icon: "🔌" },
+            { id: "inv_04", nama: "Mikrotik", kategori: "durables", stokTotal: 34, dipinjam: 0, icon: "📶" },
+            { id: "inv_05", nama: "Telephone panasonic", kategori: "durables", stokTotal: 15, dipinjam: 0, icon: "☎️" },
+            { id: "inv_06", nama: "Krimping tools", kategori: "durables", stokTotal: 10, dipinjam: 0, icon: "🔧" },
+            { id: "inv_07", nama: "Ethernet fiber switch", kategori: "durables", stokTotal: 10, dipinjam: 0, icon: "🔌" },
+            { id: "inv_08", nama: "Splicing tools", kategori: "durables", stokTotal: 5, dipinjam: 0, icon: "🔧" },
+            { id: "inv_09", nama: "Rassberypi", kategori: "durables", stokTotal: 5, dipinjam: 0, icon: "🖥️" },
+            { id: "inv_10", nama: "Tp-link", kategori: "durables", stokTotal: 6, dipinjam: 0, icon: "📶" },
+            { id: "inv_11", nama: "Switch tp-link", kategori: "durables", stokTotal: 4, dipinjam: 0, icon: "🔌" },
+            { id: "inv_12", nama: "Switch RG-es208gc", kategori: "durables", stokTotal: 5, dipinjam: 0, icon: "🔌" },
+            { id: "inv_13", nama: "Cctv Tiandy", kategori: "durables", stokTotal: 1, dipinjam: 0, icon: "📹" },
+            { id: "inv_14", nama: "Router tp-link", kategori: "durables", stokTotal: 3, dipinjam: 0, icon: "📶" },
+            { id: "inv_15", nama: "Tang krimping", kategori: "durables", stokTotal: 30, dipinjam: 0, icon: "🔧" },
+            { id: "inv_16", nama: "PC", kategori: "durables", stokTotal: 10, dipinjam: 0, icon: "🖥️" },
+            { id: "inv_17", nama: "apar", kategori: "durables", stokTotal: 1, dipinjam: 0, icon: "🧯" },
+            { id: "inv_18", nama: "proyektor", kategori: "durables", stokTotal: 1, dipinjam: 0, icon: "📽️" },
+            { id: "inv_19", nama: "Kabel LAN", kategori: "durables", stokTotal: 48, dipinjam: 0, icon: "🔌" },
+            { id: "inv_20", nama: "Kabel Terminal", kategori: "durables", stokTotal: 23, dipinjam: 0, icon: "🔌" },
+            { id: "inv_21", nama: "Kabel hdmi", kategori: "durables", stokTotal: 2, dipinjam: 0, icon: "🔌" },
+            { id: "inv_22", nama: "Bingkai poster", kategori: "durables", stokTotal: 6, dipinjam: 0, icon: "🖼️" },
+            { id: "inv_23", nama: "Tisu", kategori: "consumables", stokTotal: 1, dipinjam: 0, icon: "🧻" },
+            { id: "inv_24", nama: "Plastik sampah", kategori: "consumables", stokTotal: 10, dipinjam: 0, icon: "🗑️" },
+            { id: "inv_25", nama: "Pengharum ruangan", kategori: "consumables", stokTotal: 1, dipinjam: 0, icon: "🌸" },
+            { id: "inv_26", nama: "Spidol", kategori: "consumables", stokTotal: 9, dipinjam: 0, icon: "🖊️" }
+        ];
+
+        const state = {
+            inventory: initialInventory,
+    loans: [],
+    checklist: {},
+    dateKey: getTodayKey(),
+    isAdmin: false,
+    firebaseReady: false,
+    inventoryLoaded: false,
+    loansLoaded: false,
+    inventoryError: false,
+    loansError: false,
+    checklistError: false,
+    pendingTasks: new Set(),
+    busyStock: new Set()
+};
+
+const authGuard = {
+    attempts: 0,
+    lockedUntil: 0,
+    maxAttempts: 5,
+    lockDuration: 30000
+};
+
+/* ============================================================
+   LOCAL STORAGE PERSISTENCE
+============================================================ */
+function saveInventory() {
+    try {
+        localStorage.setItem("k3p_inventory", JSON.stringify(state.inventory));
+    } catch (error) {
+        console.error("[LocalStorage] Gagal menyimpan inventory:", error);
+    }
+}
+
+function saveLoans() {
+    try {
+        localStorage.setItem("k3p_loans", JSON.stringify(state.loans));
+    } catch (error) {
+        console.error("[LocalStorage] Gagal menyimpan loans:", error);
+    }
+}
+
+function saveChecklist() {
+    try {
+        localStorage.setItem("k3p_checklist", JSON.stringify(state.checklist));
+    } catch (error) {
+        console.error("[LocalStorage] Gagal menyimpan checklist:", error);
+    }
+}
+
+/* ============================================================
+   5. UTILITAS UMUM
+============================================================ */
+const el = (id) => document.getElementById(id);
+
+const escapeHtml = (value) => String(value ?? "").replace(/[&<>"']/g, (character) => ({
+    "&": "&amp;",
+    "<": "&lt;",
+    ">": "&gt;",
+    '"': "&quot;",
+    "'": "&#39;"
+}[character]));
+
+function getTodayKey() {
+    const now = new Date();
+    const year = now.getFullYear();
+    const month = String(now.getMonth() + 1).padStart(2, "0");
+    const day = String(now.getDate()).padStart(2, "0");
+    return `${year}-${month}-${day}`;
+}
+
+function formatDateId(dateKey) {
+    const date = new Date(`${dateKey}T00:00:00`);
+    if (Number.isNaN(date.getTime())) return dateKey;
+    return date.toLocaleDateString("id-ID", {
+        weekday: "long",
+        day: "numeric",
+        month: "long",
+        year: "numeric"
+    });
+}
+
+function formatDateTime(value, withYear = true) {
+    if (!value) return "—";
+    let date;
+    if (typeof value.toDate === "function") date = value.toDate();
+    else if (value instanceof Date) date = value;
+    else date = new Date(value);
+    if (Number.isNaN(date.getTime())) return "—";
+    const options = withYear
+        ? { day: "2-digit", month: "short", year: "numeric", hour: "2-digit", minute: "2-digit" }
+        : { day: "2-digit", month: "short", hour: "2-digit", minute: "2-digit" };
+    return date.toLocaleString("id-ID", options);
+}
+
+function formatNumber(value) {
+    const number = Number(value);
+    return Number.isFinite(number) ? number.toLocaleString("id-ID") : "0";
+}
+
+function availableOf(item) {
+    return Math.max(0, (Number(item?.stokTotal) || 0) - (Number(item?.dipinjam) || 0));
+}
+
+function friendlyError(error, fallback = "Terjadi kesalahan. Silakan coba lagi.") {
+    if (!error) return fallback;
+    if (error.code === "permission-denied") {
+        return "Akses Firestore ditolak. Periksa Firebase Security Rules untuk koleksi inventory, loans, dan piket.";
+    }
+    if (error.code === "unavailable") {
+        return "Tidak dapat terhubung ke Firestore. Periksa koneksi internet lalu coba lagi.";
+    }
+    if (error.code === "failed-precondition") {
+        return "Firestore membutuhkan indeks tambahan. Periksa pesan console browser untuk tautan pembuatan indeks.";
+    }
+    return error.message || fallback;
+}
+
+let toastTimer = null;
+function showToast(message, type = "success") {
+    const toast = el("toast");
+    if (!toast) return;
+    toast.textContent = message;
+    toast.classList.remove("success", "error", "info");
+    toast.classList.add("show", type);
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => {
+        toast.classList.remove("show", "success", "error", "info");
+    }, 3600);
+}
+
+function setSyncStatus(text, isError = false) {
+    const chip = el("syncChip");
+    const label = el("syncText");
+    if (chip) chip.classList.toggle("is-error", Boolean(isError));
+    if (label) label.textContent = text;
+}
+
+function showSystemBanner(title, message, isError = false) {
+    const banner = el("systemBanner");
+    if (!banner) return;
+    el("systemBannerTitle").textContent = title;
+    el("systemBannerText").innerHTML = message;
+    el("systemBannerIcon").textContent = isError ? "⛔" : "⚠️";
+    banner.classList.toggle("is-error", Boolean(isError));
+    banner.hidden = false;
+}
+
+function hideSystemBanner() {
+    const banner = el("systemBanner");
+    if (banner) banner.hidden = true;
+}
+
+function setFormAlert(id, message) {
+    const alertBox = el(id);
+    if (!alertBox) return;
+    alertBox.textContent = message || "";
+    alertBox.classList.toggle("show", Boolean(message));
+}
+
+function emptyRow(colspan, icon, title, message, loading = false) {
+    return `<tr><td colspan="${colspan}">
+        <div class="empty-state">
+            ${loading ? '<span class="spinner" aria-hidden="true"></span>' : `<span aria-hidden="true">${icon}</span>`}
+            <b>${escapeHtml(title)}</b>
+            <p>${escapeHtml(message)}</p>
+        </div>
+    </td></tr>`;
+}
+
+/* ============================================================
+   6. OTORISASI PETUGAS (PASSWORD DIOBFUSKASI)
+   Kode asli tidak ditulis sebagai string mentah dan tidak
+   pernah disimpan di localStorage/sessionStorage.
+============================================================ */
+const ACCESS_CODE = String.fromCharCode(...[106, 102, 105, 96, 102, 115, 116].map((code) => code ^ 7));
+
+function verifyAccessCode(value) {
+    if (typeof value !== "string" || value.length !== ACCESS_CODE.length) return false;
+    let mismatch = 0;
+    for (let index = 0; index < ACCESS_CODE.length; index += 1) {
+        mismatch |= value.charCodeAt(index) ^ ACCESS_CODE.charCodeAt(index);
+    }
+    return mismatch === 0;
+}
+
+function openAuthModal() {
+    const modal = el("authModal");
+    if (!modal) return;
+    modal.hidden = false;
+    el("authPassword").value = "";
+    el("authError").classList.remove("show");
+    if (Date.now() < authGuard.lockedUntil) {
+        const seconds = Math.ceil((authGuard.lockedUntil - Date.now()) / 1000);
+        showAuthError(`Terlalu banyak percobaan. Coba lagi dalam ${seconds} detik.`);
+    }
+    setTimeout(() => el("authPassword").focus(), 40);
+}
+
+function closeAuthModal() {
+    const modal = el("authModal");
+    if (modal) modal.hidden = true;
+}
+
+function closeConfirmModal() {
+    const modal = el("confirmModal");
+    if (modal) modal.hidden = true;
+}
+
+function openConfirmModal() {
+    const modal = el("confirmModal");
+    if (!modal) return;
+    modal.hidden = false;
+    el("confirmPassword").value = "";
+    el("confirmError").classList.remove("show");
+    el("confirmError").textContent = "";
+    el("confirmPassword").focus();
+}
+
+let pendingConfirmLoanId = null;
+
+function showAuthError(message) {
+    const box = el("authError");
+    if (!box) return;
+    box.textContent = message;
+    box.classList.add("show");
+}
+
+function applyAdminState() {
+    state.isAdmin = Boolean(state.isAdmin);
+    const profileBtn = el("profileBtn");
+    if (profileBtn) {
+        profileBtn.classList.toggle("is-admin", state.isAdmin);
+        profileBtn.setAttribute("aria-label", state.isAdmin ? "Mode petugas aktif. Klik untuk keluar." : "Buka mode petugas");
+    }
+    const profileLabel = el("profileBtnLabel");
+    if (profileLabel) profileLabel.textContent = state.isAdmin ? "Petugas" : "Profile";
+
+    const adminSection = el("adminSection");
+    const checklistActions = el("adminChecklistActions");
+
+    if (state.isAdmin) {
+        if (adminSection) {
+            adminSection.innerHTML = `
+                <div class="admin-strip admin-section-spacer">
+                    <div>
+                        <b>🛠️ Mode Petugas aktif</b>
+                        <p>Kontrol edit stok, hapus barang, dan tambah inventaris sudah dibuka. Setiap perubahan langsung tersinkron ke semua perangkat.</p>
+                    </div>
+                    <button type="button" class="btn-secondary" id="exitAdminBtn">Keluar Mode Petugas</button>
+                </div>
+                <div class="form-card">
+                    <div class="form-card-head">
+                        <h3>➕ Tambah Jenis Barang Baru</h3>
+                        <p>Daftarkan alat atau komponen baru. ID dokumen dibuat otomatis oleh Firestore.</p>
+                    </div>
+                    <form id="addItemForm" novalidate>
+                        <div class="form-grid">
+                            <div class="field">
+                                <label for="newNama">Nama Barang</label>
+                                <input type="text" id="newNama" placeholder="Contoh: Tang Krimping" maxlength="60">
+                            </div>
+                            <div class="field">
+                                <label for="newKategori">Kategori</label>
+                                <input type="text" id="newKategori" placeholder="Contoh: Alat Jaringan" maxlength="40">
+                            </div>
+                            <div class="field">
+                                <label for="newStok">Stok Awal (unit)</label>
+                                <input type="number" id="newStok" min="0" step="1" value="1" inputmode="numeric">
+                            </div>
+                        </div>
+                        <div class="form-alert" id="itemAlert" role="alert"></div>
+                        <div class="form-actions">
+                            <button type="submit" class="btn-primary">📥 Tambahkan ke Inventaris</button>
+                        </div>
+                    </form>
+                </div>`;
+            el("exitAdminBtn").addEventListener("click", logoutAdmin);
+            el("addItemForm").addEventListener("submit", handleAddItem);
+        }
+        if (checklistActions) {
+            checklistActions.innerHTML = `<button type="button" class="btn-danger" id="resetChecklist">↺ Reset Checklist Hari Ini</button>`;
+            el("resetChecklist").addEventListener("click", resetChecklist);
+        }
+    } else {
+        if (adminSection) adminSection.innerHTML = "";
+        if (checklistActions) checklistActions.innerHTML = "";
+    }
+
+    renderInventory();
+    renderLoans();
+    renderChecklist();
+}
+
+function logoutAdmin() {
+    if (!state.isAdmin) return;
+    if (!confirm("Keluar dari Mode Petugas? Tombol edit, hapus, dan reset akan disembunyikan kembali.")) return;
+    state.isAdmin = false;
+    applyAdminState();
+    showToast("Mode Petugas ditutup.", "info");
+}
+
+async function confirmLoan(loanId) {
+    if (!state.isAdmin) return;
+    const loan = state.loans.find((l) => l.id === loanId);
+    if (!loan) return;
+    if (loan.status !== "menunggu") {
+        showToast("Pinjaman sudah diproses sebelumnya.", "info");
+        return;
+    }
+
+    pendingConfirmLoanId = loanId;
+    openConfirmModal();
+}
+
+function confirmConfirm(loanId) {
+    const loan = state.loans.find((l) => l.id === loanId);
+    if (!loan) return;
+
+    const password = prompt("Masukkan kode akses petugas untuk menyetujui peminjaman:");
+    if (password !== ADMIN_PASSWORD) {
+        showToast("Kode akses salah. Pinjaman tidak disetujui.", "error");
+        return;
+    }
+
+    const item = state.inventory.find((i) => i.id === loan.barangId);
+    if (!item) return;
+
+    loan.status = "aktif";
+    const itemIndex = state.inventory.findIndex((i) => i.id === loan.barangId);
+    if (itemIndex !== -1) {
+        state.inventory[itemIndex].dipinjam = (Number(state.inventory[itemIndex].dipinjam || 0)) + loan.jumlah;
+    }
+
+    saveLoans();
+    saveInventory();
+
+    renderLoans();
+    renderInventory();
+    renderStats();
+    populateLoanSelect();
+    showToast("Pinjaman disetujui. Stok telah dikurangi.", "success");
+}
+
+/* ============================================================
+   7. INISIALISASI FIREBASE & LISTENER REAL-TIME
+============================================================ */
+let db = null;
+
+function initFirebase() {
+    try {
+        const app = initializeApp(firebaseConfig);
+        db = getFirestore(app);
+        state.firebaseReady = true;
+        hideSystemBanner();
+        setSyncStatus("Terhubung ke Firestore", false);
+        attachRealtimeListeners();
+    } catch (error) {
+        console.error("[Firebase] Gagal inisialisasi:", error);
+        state.firebaseReady = false;
+        setSyncStatus("Koneksi gagal", true);
+        showSystemBanner("Firebase gagal diinisialisasi", escapeHtml(friendlyError(error)), true);
+        renderAll();
+    }
+}
+
+function attachRealtimeListeners() {
+    // Listener real-time untuk inventaris
+    onSnapshot(
+        collection(db, COLLECTIONS.inventory),
+        (snapshot) => {
+            state.inventory = snapshot.docs
+                .map((document) => ({ id: document.id, ...document.data() }))
+                .sort((first, second) => String(first.nama || "").localeCompare(String(second.nama || ""), "id"));
+            state.inventoryLoaded = true;
+            state.inventoryError = false;
+            setSyncStatus("Real-time aktif", false);
+            renderInventory();
+            renderStats();
+            populateLoanSelect();
+        },
+        (error) => {
+            console.error("[Firestore] Listener inventaris:", error);
+            state.inventoryLoaded = true;
+            state.inventoryError = true;
+            setSyncStatus("Sinkronisasi inventaris gagal", true);
+            showSystemBanner("Gagal membaca inventaris", escapeHtml(friendlyError(error)), true);
+            renderInventory();
+        }
+    );
+
+    // Listener real-time untuk peminjaman (hanya yang aktif)
+    onSnapshot(
+        query(collection(db, COLLECTIONS.loans), where("status", "==", "aktif")),
+        (snapshot) => {
+            state.loans = snapshot.docs
+                .map((document) => ({ id: document.id, ...document.data() }))
+                .sort((first, second) => {
+                    const firstTime = first.createdAt?.toMillis ? first.createdAt.toMillis() : 0;
+                    const secondTime = second.createdAt?.toMillis ? second.createdAt.toMillis() : 0;
+                    return secondTime - firstTime;
+                });
+            state.loansLoaded = true;
+            state.loansError = false;
+            setSyncStatus("Real-time aktif", false);
+            renderLoans();
+        },
+        (error) => {
+            console.error("[Firestore] Listener peminjaman:", error);
+            state.loansLoaded = true;
+            state.loansError = true;
+            setSyncStatus("Sinkronisasi peminjaman gagal", true);
+            showSystemBanner("Gagal membaca peminjaman", escapeHtml(friendlyError(error)), true);
+            renderLoans();
+        }
+    );
+
+    // Listener real-time untuk checklist 5R
+    onSnapshot(
+        doc(db, COLLECTIONS.piket, state.dateKey),
+        (snapshot) => {
+            const data = snapshot.exists() ? snapshot.data() : {};
+            state.checklist = data.items && typeof data.items === "object" ? data.items : {};
+            state.checklistError = false;
+            setSyncStatus("Real-time aktif", false);
+            renderChecklist();
+            renderStats();
+        },
+        (error) => {
+            console.error("[Firestore] Listener checklist:", error);
+            state.checklistError = true;
+            setSyncStatus("Sinkronisasi checklist gagal", true);
+            showSystemBanner("Gagal membaca checklist piket", escapeHtml(friendlyError(error)), true);
+            renderChecklist();
+        }
+    );
+}
+
+/* ============================================================
+   8. RENDER INVENTARIS
+============================================================ */
+function statusBadge(item) {
+    const total = Number(item.stokTotal) || 0;
+    const available = availableOf(item);
+    if (total === 0) return { className: "is-empty", label: "Stok kosong" };
+    if (available === 0) return { className: "is-low", label: "Habis dipinjam" };
+    if (available <= 2) return { className: "is-low", label: "Terbatas" };
+    return { className: "is-available", label: "Tersedia" };
+}
+
+function renderInventory() {
+    const head = el("inventoryHead");
+    const body = el("inventoryBody");
+    if (!head || !body) return;
+
+    const baseHeaders = ["Barang", "Kategori", "Total Stok", "Dipinjam", "Tersedia", "Status"];
+    const headers = state.isAdmin ? [...baseHeaders, "Aksi Petugas"] : baseHeaders;
+    head.innerHTML = headers.map((label) => `<th scope="col">${label}</th>`).join("");
+
+    const colSpan = headers.length;
+
+    // Render local inventory data immediately (even without Firebase connection)
+    if (state.inventory.length > 0) {
+        body.innerHTML = state.inventory.map((item) => {
+            const total = Number(item.stokTotal) || 0;
+            const borrowed = Number(item.dipinjam) || 0;
+            const available = availableOf(item);
+            const status = statusBadge(item);
+            const busy = state.busyStock.has(item.id);
+            const canDecrease = total > borrowed;
+            const category = item.kategori || "Tanpa kategori";
+
+            const adminCell = state.isAdmin ? `<td>
+                <div class="table-actions">
+                    <div class="stock-control" aria-label="Atur stok ${escapeHtml(item.nama || "")}">
+                        <button type="button" class="btn-step" data-action="stock-dec" data-id="${escapeHtml(item.id)}" aria-label="Kurangi stok ${escapeHtml(item.nama || "")}" ${!canDecrease || busy ? "disabled" : ""}>−</button>
+                        <span class="stock-value">${formatNumber(total)}</span>
+                        <button type="button" class="btn-step" data-action="stock-inc" data-id="${escapeHtml(item.id)}" aria-label="Tambah stok ${escapeHtml(item.nama || "")}" ${busy ? "disabled" : ""}>+</button>
+                    </div>
+                    <button type="button" class="btn-danger-icon" data-action="delete" data-id="${escapeHtml(item.id)}" title="Hapus ${escapeHtml(item.nama || "")}" aria-label="Hapus ${escapeHtml(item.nama || "")}">
+                        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h18"></path><path d="M8 6V4h8v2"></path><path d="M19 6l-1 14H6L5 6"></path><path d="M10 11v5"></path><path d="M14 11v5"></path></svg>
+                    </button>
+                </div>
+            </td>` : "";
+
+            return `<tr>
+                <td>
+                    <div class="item-cell">
+                        <span class="item-icon" aria-hidden="true">${escapeHtml(item.icon || "🔧")}</span>
+                        <span><b>${escapeHtml(item.nama || "Tanpa nama")}</b><small>${escapeHtml(category)}</small></span>
+                    </div>
+                </td>
+                <td>${escapeHtml(category)}</td>
+                <td><span class="stock-badge">${formatNumber(total)}</span></td>
+                <td><span class="stock-badge ${borrowed > 0 ? "is-empty" : ""}">${formatNumber(borrowed)}</span></td>
+                <td><span class="stock-badge ${available === 0 ? "is-empty" : ""}">${formatNumber(available)}</span></td>
+                <td><span class="badge-status ${status.className}">${status.label}</span></td>
+                ${adminCell}
+            </tr>`;
+        }).join("");
+        return;
+    }
+
+    if (!state.firebaseReady) {
+        body.innerHTML = emptyRow(colSpan, "🔌", "Firebase belum terhubung", "Isi firebaseConfig untuk mulai membaca data inventaris secara real-time.");
+        return;
+    }
+
+    if (!state.inventoryLoaded && !state.inventoryError) {
+        body.innerHTML = emptyRow(colSpan, "⏳", "Memuat inventaris…", "Menunggu data pertama dari Cloud Firestore.", true);
+        return;
+    }
+
+    if (state.inventoryError) {
+        body.innerHTML = emptyRow(colSpan, "⚠️", "Inventaris gagal dimuat", "Periksa koneksi internet dan izin Firestore, lalu muat ulang halaman.");
+        return;
+    }
+
+    if (state.inventory.length === 0) {
+        body.innerHTML = emptyRow(colSpan, "📦", "Belum ada barang", state.isAdmin ? "Gunakan formulir Tambah Barang di bawah tabel untuk mendaftarkan alat pertama." : "Petugas belum menambahkan barang ke inventaris.");
+        return;
+    }
+}
+
+function renderStats() {
+    const totalAvailable = state.inventory.reduce((sum, item) => sum + availableOf(item), 0);
+    const totalBorrowed = state.inventory.reduce((sum, item) => sum + (Number(item.dipinjam) || 0), 0);
+    const done = TASKS.filter((task) => Boolean(state.checklist?.[task.id]?.selesai)).length;
+    const percent = Math.round((done / TOTAL_TASKS) * 100);
+
+    if (el("statJenis")) el("statJenis").textContent = formatNumber(state.inventory.length);
+    if (el("statTersedia")) el("statTersedia").textContent = formatNumber(totalAvailable);
+    if (el("statDipinjam")) el("statDipinjam").textContent = formatNumber(totalBorrowed);
+    if (el("statPiket")) el("statPiket").textContent = `${percent}%`;
+}
+
+/* ============================================================
+   9. RENDER PEMINJAMAN & FORMULIR SISWA
+============================================================ */
+function renderLoans() {
+    const head = el("loanHead");
+    const body = el("loanBody");
+    if (!head || !body) return;
+
+    const baseHeaders = ["Peminjam", "Kelas", "Barang", "Jumlah", "Waktu Pinjam"];
+    const headers = state.isAdmin ? [...baseHeaders, "Aksi Petugas"] : baseHeaders;
+    head.innerHTML = headers.map((label) => `<th scope="col">${label}</th>`).join("");
+
+    const colSpan = headers.length;
+
+    if (!state.loansLoaded && !state.loansError) {
+        body.innerHTML = emptyRow(colSpan, "⏳", "Memuat peminjaman…", "Menunggu data pertama dari Cloud Firestore.", true);
+        return;
+    }
+
+    if (state.loansError) {
+        body.innerHTML = emptyRow(colSpan, "⚠️", "Peminjaman gagal dimuat", "Periksa koneksi internet dan izin Firestore, lalu muat ulang halaman.");
+        return;
+    }
+
+    if (state.loans.length === 0) {
+        body.innerHTML = emptyRow(colSpan, "✅", "Tidak ada peminjaman aktif", "Semua alat sudah dikembalikan atau belum ada siswa yang meminjam.");
+        return;
+    }
+
+    body.innerHTML = state.loans.map((loan) => {
+        const isPending = loan.status === "menunggu";
+        const returnCell = state.isAdmin
+            ? `<td>
+                ${isPending
+                    ? `<button type="button" class="btn-table btn-acc" data-action="acc" data-id="${escapeHtml(loan.id)}">✅ ACC Setujui</button>`
+                    : `<button type="button" class="btn-table" data-action="return" data-id="${escapeHtml(loan.id)}">✅ Dikembalikan</button>`
+                }
+             </td>`
+            : "";
+        return `<tr>
+            <td>
+                <b style="display:block;color:#0f172a;font-size:0.85rem;">${escapeHtml(loan.nama || "Tanpa nama")}</b>
+                <span class="loan-code">ID: ${escapeHtml(String(loan.id).slice(0, 8))}</span>
+            </td>
+            <td>${escapeHtml(loan.kelas || "—")}</td>
+            <td>${escapeHtml(loan.barangNama || "—")}</td>
+            <td><span class="stock-badge">${formatNumber(loan.jumlah)}</span></td>
+            <td>${escapeHtml(formatDateTime(loan.createdAt))}</td>
+            ${returnCell}
+        </tr>`;
+    }).join("");
+}
+
+function populateLoanSelect() {
+    const select = el("loanBarang");
+    if (!select) return;
+
+    const previousValue = select.value;
+    const availableItems = state.inventory.filter((item) => availableOf(item) > 0);
+
+    if (availableItems.length === 0) {
+        select.innerHTML = `<option value="">${state.inventory.length === 0 ? "Belum ada barang di inventaris" : "Semua stok sedang dipinjam / habis"}</option>`;
+        updateJumlahHint();
+        return;
+    }
+
+    select.innerHTML = `<option value="">Pilih barang yang akan dipinjam</option>` + availableItems.map((item) => {
+        const available = availableOf(item);
+        return `<option value="${escapeHtml(item.id)}">${escapeHtml(item.nama || "Tanpa nama")} — tersedia ${formatNumber(available)} unit</option>`;
+    }).join("");
+
+    if (availableItems.some((item) => item.id === previousValue)) {
+        select.value = previousValue;
+    }
+    updateJumlahHint();
+}
+
+function updateJumlahHint() {
+    const select = el("loanBarang");
+    const hint = el("jumlahHint");
+    if (!select || !hint) return;
+    const item = state.inventory.find((entry) => entry.id === select.value);
+    if (!item) {
+        hint.textContent = "Pilih barang untuk melihat stok tersedia.";
+        return;
+    }
+    hint.textContent = `Stok tersedia saat ini: ${formatNumber(availableOf(item))} unit.`;
+}
+
+function handleLoanSubmit(event) {
+    event.preventDefault();
+    setFormAlert("loanAlert", "");
+
+    const nama = el("loanNama").value.trim();
+    const kelas = el("loanKelas").value.trim();
+    const barangId = el("loanBarang").value;
+    const jumlah = Number(el("loanJumlah").value);
+
+    if (nama.length < 2) {
+        setFormAlert("loanAlert", "Nama peminjam minimal 2 karakter.");
+        el("loanNama").focus();
+        return;
+    }
+    if (kelas.length < 1) {
+        setFormAlert("loanAlert", "Kelas wajib diisi.");
+        el("loanKelas").focus();
+        return;
+    }
+    if (!barangId) {
+        setFormAlert("loanAlert", "Pilih barang yang akan dipinjam.");
+        el("loanBarang").focus();
+        return;
+    }
+    if (!Number.isInteger(jumlah) || jumlah < 1) {
+        setFormAlert("loanAlert", "Jumlah peminjaman harus bilangan bulat minimal 1 unit.");
+        el("loanJumlah").focus();
+        return;
+    }
+
+    const item = state.inventory.find((item) => item.id === barangId);
+    if (!item) {
+        setFormAlert("loanAlert", "Barang tidak ditemukan.");
+        el("loanBarang").focus();
+        return;
+    }
+
+    const available = availableOf(item);
+    if (jumlah > available) {
+        setFormAlert("loanAlert", `Stok tidak cukup. Tersedia ${available} unit, diminta ${jumlah} unit.`);
+        el("loanJumlah").focus();
+        return;
+    }
+
+    const submitButton = el("loanSubmit");
+    const originalLabel = submitButton.textContent;
+    submitButton.disabled = true;
+    submitButton.textContent = "Memproses…";
+
+    try {
+        const loanId = "loan_" + Date.now();
+        state.loans.push({
+            id: loanId,
+            nama,
+            kelas,
+            barangId,
+            barangNama: item.nama || "Tanpa nama",
+            jumlah,
+            status: "menunggu",
+            createdAt: new Date().toISOString()
+        });
+
+        saveLoans();
+
+        renderLoans();
+        renderStats();
+        populateLoanSelect();
+
+        showToast(`Peminjaman ${jumlah} unit ${el("loanBarang").selectedOptions[0]?.textContent?.split(" — ")[0] || "barang"} berhasil diajukan. Status: Menunggu Konfirmasi.`, "success");
+        el("loanJumlah").value = "1";
+        el("loanBarang").value = "";
+        setFormAlert("loanAlert", "");
+        updateJumlahHint();
+    } catch (error) {
+        console.error("[Peminjaman] Gagal:", error);
+        setFormAlert("loanAlert", "Peminjaman gagal diproses. Silakan coba lagi.");
+    } finally {
+        submitButton.disabled = false;
+        submitButton.textContent = originalLabel;
+    }
+}
+
+function clearLoanForm() {
+    el("loanForm").reset();
+    setFormAlert("loanAlert", "");
+    updateJumlahHint();
+}
+
+/* ============================================================
+   10. AKSI ADMIN: STOK, HAPUS, TAMBAH, PENGEMBALIAN
+============================================================ */
+function changeStock(itemId, delta) {
+    if (!state.isAdmin || state.busyStock.has(itemId)) return;
+
+    state.busyStock.add(itemId);
+
+    try {
+        const item = state.inventory.find((i) => i.id === itemId);
+        if (!item) {
+            showToast("Barang tidak ditemukan.", "error");
+            state.busyStock.delete(itemId);
+            return;
+        }
+
+        const total = Math.max(0, Number(item.stokTotal) || 0);
+        const borrowed = Math.max(0, Number(item.dipinjam) || 0);
+        const nextTotal = total + delta;
+
+        if (nextTotal < 0) {
+            showToast("Total stok tidak boleh negatif.", "error");
+            state.busyStock.delete(itemId);
+            return;
+        }
+        if (nextTotal < borrowed) {
+            showToast(`Total stok tidak boleh di bawah jumlah yang sedang dipinjam (${borrowed} unit).`, "error");
+            state.busyStock.delete(itemId);
+            return;
+        }
+
+        item.stokTotal = nextTotal;
+        saveInventory();
+        renderInventory();
+        renderStats();
+        populateLoanSelect();
+        showToast(`Stok diperbarui menjadi ${nextTotal} unit.`, "success");
+    } catch (error) {
+        console.error("[Stok] Gagal:", error);
+        showToast("Gagal memperbarui stok.", "error");
+    } finally {
+        state.busyStock.delete(itemId);
+    }
+}
+
+function deleteItem(itemId) {
+    if (!state.isAdmin) return;
+    const item = state.inventory.find((entry) => entry.id === itemId);
+    if (!item) return;
+
+    const hasActiveLoan = state.loans.some((loan) => loan.barangId === itemId && loan.status === "aktif")
+        || (Number(item.dipinjam) || 0) > 0;
+
+    if (hasActiveLoan) {
+        alert("Barang ini masih memiliki peminjaman aktif. Proses pengembalian terlebih dahulu sebelum menghapusnya.");
+        return;
+    }
+
+    const confirmed = confirm(`Hapus "${item.nama || "barang ini"}" dari inventaris secara permanen?\n\nTindakan ini tidak dapat dibatalkan.`);
+    if (!confirmed) return;
+
+    state.inventory = state.inventory.filter((i) => i.id !== itemId);
+    saveInventory();
+    renderInventory();
+    renderStats();
+    populateLoanSelect();
+    showToast(`"${item.nama || "Barang"}" berhasil dihapus dari inventaris.`, "success");
+}
+
+function handleAddItem(event) {
+    event.preventDefault();
+    setFormAlert("itemAlert", "");
+
+    if (!state.isAdmin) return;
+
+    const nama = el("newNama").value.trim();
+    const kategori = el("newKategori").value.trim() || "Umum";
+    const stokTotal = Number(el("newStok").value);
+
+    if (nama.length < 2) {
+        setFormAlert("itemAlert", "Nama barang minimal 2 karakter.");
+        el("newNama").focus();
+        return;
+    }
+    if (!Number.isInteger(stokTotal) || stokTotal < 0) {
+        setFormAlert("itemAlert", "Stok awal harus bilangan bulat minimal 0.");
+        el("newStok").focus();
+        return;
+    }
+    if (state.inventory.some((item) => String(item.nama || "").toLowerCase() === nama.toLowerCase())) {
+        setFormAlert("itemAlert", "Nama barang sudah terdaftar. Edit stok pada tabel, bukan menambah duplikat.");
+        return;
+    }
+
+    const newItem = {
+        id: "inv_" + Date.now(),
+        nama,
+        kategori,
+        stokTotal,
+        dipinjam: 0,
+        icon: "🔧"
+    };
+    state.inventory.push(newItem);
+    saveInventory();
+    renderInventory();
+    renderStats();
+    populateLoanSelect();
+    el("addItemForm").reset();
+    el("newStok").value = "1";
+    setFormAlert("itemAlert", "");
+    showToast(`"${nama}" berhasil ditambahkan ke inventaris.`, "success");
+}
+
+function returnLoan(loanId) {
+    if (!state.isAdmin) return;
+
+    const loan = state.loans.find((entry) => entry.id === loanId);
+    if (!loan) {
+        showToast("Data peminjaman tidak ditemukan.", "error");
+        return;
+    }
+
+    const password = prompt("Masukkan kode akses petugas untuk menerima pengembalian:");
+    if (password !== ADMIN_PASSWORD) {
+        showToast("Kode akses salah. Pengembalian tidak diproses.", "error");
+        return;
+    }
+
+    const confirmed = confirm(`Terima pengembalian "${loan.barangNama || "barang"}" sebanyak ${loan.jumlah || 0} unit dari ${loan.nama || "peminjam"}?`);
+    if (!confirmed) return;
+
+    loan.status = "selesai";
+    const item = state.inventory.find((i) => i.id === loan.barangId);
+    if (item) {
+        item.dipinjam = Math.max(0, (Number(item.dipinjam) || 0) - loan.jumlah);
+    }
+    saveLoans();
+    saveInventory();
+    renderLoans();
+    renderInventory();
+    renderStats();
+    populateLoanSelect();
+    showToast("Pengembalian diterima. Stok tersedia otomatis bertambah.", "success");
+}
+
+/* ============================================================
+   11. CHECKLIST 5R REAL-TIME
+============================================================ */
+function renderChecklist() {
+    const container = el("checklistContainer");
+    if (!container) return;
+
+    const dateLabel = el("piketTanggal");
+    if (dateLabel) dateLabel.value = formatDateId(state.dateKey);
+    const caption = el("piketCaption");
+    if (caption) caption.innerHTML = `📅 Checklist piket untuk <b>${escapeHtml(formatDateId(state.dateKey))}</b> • otomatis baru setiap hari.`;
+
+    container.innerHTML = GROUPS.map((group) => {
+        const tasks = TASKS.filter((task) => task.group === group.id);
+        const done = tasks.filter((task) => Boolean(state.checklist?.[task.id]?.selesai)).length;
+        const percent = tasks.length ? Math.round((done / tasks.length) * 100) : 0;
+        const isComplete = done === tasks.length && tasks.length > 0;
+
+        const taskRows = tasks.map((task) => {
+            const entry = state.checklist?.[task.id] || {};
+            const isDone = Boolean(entry.selesai);
+            const isPending = state.pendingTasks.has(task.id);
+            const meta = isDone
+                ? `<span class="check-meta">✓ ${escapeHtml(entry.oleh || "Petugas")} • ${escapeHtml(formatDateTime(entry.waktu, false))}</span>`
+                : "";
+            return `<label class="check-item ${isDone ? "is-done" : ""} ${isPending ? "is-pending" : ""}" data-task-id="${escapeHtml(task.id)}">
+                <input type="checkbox" data-task-id="${escapeHtml(task.id)}" ${isDone ? "checked" : ""}>
+                <span class="check-box" aria-hidden="true"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg></span>
+                <span class="check-text">
+                    <b>${escapeHtml(task.text)}</b>
+                    <small>${escapeHtml(task.detail)}</small>
+                    ${meta}
+                </span>
+            </label>`;
+        }).join("");
+
+        return `<div class="r-group ${isComplete ? "is-complete" : ""}">
+            <div class="r-group-head">
+                <div class="r-icon" aria-hidden="true">${group.icon}</div>
+                <div class="r-title">
+                    <h3>${group.title}</h3>
+                    <p>${group.subtitle}</p>
+                </div>
+                <span class="r-count">${done}/${tasks.length}</span>
+            </div>
+            <div class="mini-track" aria-hidden="true"><div class="mini-fill" style="width:${percent}%"></div></div>
+            <div class="check-list">${taskRows}</div>
+        </div>`;
+    }).join("");
+
+    const doneCount = TASKS.filter((task) => Boolean(state.checklist?.[task.id]?.selesai)).length;
+    const percent = Math.round((doneCount / TOTAL_TASKS) * 100);
+
+    if (el("progressDetail")) el("progressDetail").textContent = `${doneCount} dari ${TOTAL_TASKS} tugas selesai`;
+    if (el("progressText")) el("progressText").textContent = `${percent}%`;
+    if (el("progressBar")) el("progressBar").style.width = `${percent}%`;
+    if (el("progressTrack")) el("progressTrack").setAttribute("aria-valuenow", String(percent));
+    if (el("progressCard")) el("progressCard").classList.toggle("is-done", doneCount === TOTAL_TASKS);
+    if (el("statPiket")) el("statPiket").textContent = `${percent}%`;
+
+    const hint = el("progressHint");
+    if (hint) {
+        if (doneCount === 0) hint.textContent = "Belum ada tugas yang dicentang. Mulai dari Ringkas, lalu lanjutkan ke Rapi dan Resik.";
+        else if (doneCount === TOTAL_TASKS) hint.textContent = "Seluruh tugas 5R selesai. Laboratorium siap ditinggalkan dan digunakan kelas berikutnya.";
+        else hint.textContent = `${TOTAL_TASKS - doneCount} tugas lagi. Selesaikan seluruh checklist sebelum meninggalkan laboratorium.`;
+    }
+
+    const saveStatus = el("saveStatus");
+    if (saveStatus) {
+        if (!state.firebaseReady) saveStatus.textContent = "Checklist belum tersinkron. Isi firebaseConfig terlebih dahulu.";
+        else if (state.checklistError) saveStatus.textContent = "Checklist gagal tersinkron. Periksa koneksi internet.";
+        else saveStatus.textContent = "Checklist tersinkron real-time ke semua perangkat.";
+    }
+}
+
+async function handleChecklistToggle(event) {
+    const input = event.target.closest('input[type="checkbox"][data-task-id]');
+    if (!input) return;
+
+    const taskId = input.dataset.taskId;
+    const isChecked = input.checked;
+    const petugas = el("piketPetugas").value.trim();
+
+    if (!petugas) {
+        input.checked = !isChecked;
+        showToast("Isi nama petugas piket sebelum mencentang tugas.", "error");
+        el("piketPetugas").focus();
+        return;
+    }
+
+    state.pendingTasks.add(taskId);
+    renderChecklist();
+
+    if (state.firebaseReady && db) {
+        try {
+            await runTransaction(db, async (transaction) => {
+                const checklistRef = doc(db, COLLECTIONS.piket, state.dateKey);
+                const snapshot = await transaction.get(checklistRef);
+                const items = snapshot.exists() && snapshot.data().items && typeof snapshot.data().items === "object"
+                    ? { ...snapshot.data().items }
+                    : {};
+
+                if (isChecked) {
+                    items[taskId] = {
+                        selesai: true,
+                        oleh: petugas,
+                        waktu: new Date().toISOString()
+                    };
+                } else {
+                    delete items[taskId];
+                }
+
+                if (snapshot.exists()) {
+                    transaction.update(checklistRef, { items, updatedAt: serverTimestamp() });
+                } else {
+                    transaction.set(checklistRef, {
+                        tanggal: state.dateKey,
+                        items,
+                        updatedAt: serverTimestamp()
+                    });
+                }
+            });
+
+            showToast(isChecked ? "Tugas ditandai selesai dan tersinkron ke semua perangkat." : "Centang tugas dibatalkan.", isChecked ? "success" : "info");
+        } catch (error) {
+            console.error("[Checklist] Gagal:", error);
+            showToast(friendlyError(error, "Gagal memperbarui checklist."), "error");
+        } finally {
+            state.pendingTasks.delete(taskId);
+            renderChecklist();
+        }
+    } else {
+        // Offline: update local state only, progress bar updates instantly
+        state.checklist[taskId] = isChecked ? { selesai: true, oleh: petugas, waktu: new Date().toISOString() } : undefined;
+        if (!isChecked) delete state.checklist[taskId];
+        saveChecklist();
+        renderChecklist();
+        showToast(isChecked ? "Tugas ditandai selesai (lokal)." : "Centang tugas dibatalkan (lokal).", isChecked ? "success" : "info");
+    }
+}
+
+async function resetChecklist() {
+    if (!state.isAdmin) return;
+
+    const confirmed = confirm("Reset seluruh centang checklist 5R hari ini? Semua tugas akan kembali kosong untuk piket berikutnya.");
+    if (!confirmed) return;
+
+    state.checklist = {};
+    saveChecklist();
+    renderChecklist();
+    showToast("Checklist hari ini berhasil direset.", "success");
+}
+
+/* ============================================================
+   12. RENDER AWAL & EVENT LISTENER
+============================================================ */
+function renderAll() {
+    renderInventory();
+    renderLoans();
+    renderChecklist();
+    renderStats();
+    populateLoanSelect();
+}
+
+function bindEvents() {
+    el("profileBtn").addEventListener("click", () => {
+        if (state.isAdmin) logoutAdmin();
+        else openAuthModal();
+    });
+
+    el("authClose").addEventListener("click", closeAuthModal);
+    el("authCancel").addEventListener("click", closeAuthModal);
+    el("authModal").addEventListener("click", (event) => {
+        if (event.target === el("authModal")) closeAuthModal();
+    });
+
+    document.addEventListener("keydown", (event) => {
+        if (event.key === "Escape" && !el("authModal").hidden) closeAuthModal();
+    });
+
+    el("authForm").addEventListener("submit", (event) => {
+        event.preventDefault();
+        const now = Date.now();
+
+        if (now < authGuard.lockedUntil) {
+            const seconds = Math.ceil((authGuard.lockedUntil - now) / 1000);
+            showAuthError(`Terlalu banyak percobaan. Coba lagi dalam ${seconds} detik.`);
+            return;
+        }
+
+        const password = el("authPassword").value.trim();
+
+        if (verifyAccessCode(password)) {
+            authGuard.attempts = 0;
+            state.isAdmin = true;
+            closeAuthModal();
+            applyAdminState();
+            showToast("Mode Petugas aktif. Kontrol admin telah dibuka.", "success");
+            return;
+        }
+
+        authGuard.attempts += 1;
+        if (authGuard.attempts >= authGuard.maxAttempts) {
+            authGuard.lockedUntil = now + authGuard.lockDuration;
+            authGuard.attempts = 0;
+            showAuthError("Kode salah terlalu banyak. Dialog dikunci sementara selama 30 detik.");
+        } else {
+            const remaining = authGuard.maxAttempts - authGuard.attempts;
+            showAuthError(`Kode akses salah. Sisa percobaan: ${remaining}.`);
+        }
+        el("authPassword").value = "";
+        el("authPassword").focus();
+    });
+
+    el("confirmForm").addEventListener("submit", (event) => {
+        event.preventDefault();
+        const password = el("confirmPassword").value.trim();
+        if (verifyAccessCode(password)) {
+            closeConfirmModal();
+            if (pendingConfirmLoanId) {
+                confirmConfirm(pendingConfirmLoanId);
+                pendingConfirmLoanId = null;
+            }
+        } else {
+            el("confirmError").textContent = "Kode akses salah.";
+            el("confirmError").classList.add("show");
+            el("confirmPassword").value = "";
+            el("confirmPassword").focus();
+        }
+    });
+
+    el("confirmCancel").addEventListener("click", () => {
+        closeConfirmModal();
+        pendingConfirmLoanId = null;
+    });
+
+    el("confirmModal").addEventListener("click", (event) => {
+        if (event.target === el("confirmModal")) closeConfirmModal();
+    });
+
+
+    el("loanForm").addEventListener("submit", handleLoanSubmit);
+    el("clearLoanForm").addEventListener("click", clearLoanForm);
+    el("loanBarang").addEventListener("change", updateJumlahHint);
+
+    el("inventoryBody").addEventListener("click", (event) => {
+        const button = event.target.closest("button[data-action]");
+        if (!button) return;
+        const itemId = button.dataset.id;
+        if (button.dataset.action === "stock-inc") changeStock(itemId, 1);
+        else if (button.dataset.action === "stock-dec") changeStock(itemId, -1);
+        else if (button.dataset.action === "delete") deleteItem(itemId);
+    });
+
+    el("loanBody").addEventListener("click", (event) => {
+        const button = event.target.closest('button[data-action="return"]');
+        if (!button) return;
+        returnLoan(button.dataset.id);
+    });
+
+    el("loanBody").addEventListener("click", (event) => {
+        const button = event.target.closest('button[data-action="acc"]');
+        if (!button) return;
+        confirmLoan(button.dataset.id);
+    });
+
+    el("checklistContainer").addEventListener("change", handleChecklistToggle);
+
+    window.addEventListener("online", () => {
+        if (state.firebaseReady) setSyncStatus("Kembali online…", false);
+    });
+
+    window.addEventListener("offline", () => {
+        setSyncStatus("Offline", true);
+    });
+}
+
+bindEvents();
+setupPreferences();
+setupHeaderState();
+applyAdminState();
+renderAll();
+initFirebase();
+
+/* ============================================================
+   PREFERENCES & HEADER STATE
+============================================================ */
+function setupPreferences() {
+    try {
+        const savedTheme = localStorage.getItem("mpnc_theme");
+        const savedLang = localStorage.getItem("mpnc_lang");
+        const html = document.documentElement;
+        if (savedTheme) html.setAttribute("data-theme", savedTheme);
+        if (savedLang) html.setAttribute("data-lang", savedLang);
+    } catch (error) {
+        console.error("[Preferences] Gagal memuat:", error);
+    }
+}
+
+function setupHeaderState() {
+    const header = document.querySelector("header");
+    if (!header) return;
+    let ticking = false;
+    const onScroll = () => {
+        if (!ticking) {
+            window.requestAnimationFrame(() => {
+                if (window.scrollY > 80) {
+                    document.documentElement.classList.add("is-scrolled");
+                } else {
+                    document.documentElement.classList.remove("is-scrolled");
+                }
+                ticking = false;
+            });
+            ticking = true;
+        }
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
+}
+
+function resetChat() {
+    state.loans = [];
+    state.checklist = {};
+    renderLoans();
+    renderChecklist();
+    renderStats();
+    populateLoanSelect();
+    showToast("Sesi dan riwayat peminjaman telah direset.", "info");
+}
+</script>
 
 </body>
 </html>

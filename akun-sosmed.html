@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PIXEL AND CODE — Galeri Sosial Media</title>
+    <style>
+        :root {
+            --bg-main: #0f172a;
+            --bg-card: rgba(30, 41, 59, 0.85);
+            --accent-blue: #38bdf8;
+            --accent-indigo: #6366f1;
+            --accent-pink: #ec4899;
+            --text-primary: #f8fafc;
+            --border-color: rgba(255, 255, 255, 0.1);
+        }
+
+        body {
+            background-color: var(--bg-main);
+            color: var(--text-primary);
+            font-family: system-ui, -apple-system, sans-serif;
+            margin: 0;
+            padding: 0;
+            line-height: 1.5;
+        }
+
+        .container { max-width: 1000px; margin: 0 auto; padding: 2rem 1rem; }
+        
+        .header {
+            display: flex; justify-content: space-between; align-items: center;
+            border-bottom: 1px solid var(--border-color); padding-bottom: 1.5rem; margin-bottom: 1.5rem;
+        }
+        
+        .header h1 {
+            margin: 0; font-size: 1.6rem;
+            background: linear-gradient(135deg, #ffffff 0%, var(--accent-blue) 100%);
+            -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+        }
+
+        .btn-back {
+            background: rgba(255, 255, 255, 0.05); border: 1px solid var(--border-color);
+            color: #fff; padding: 0.5rem 1rem; border-radius: 8px; text-decoration: none; font-size: 0.85rem; transition: 0.2s;
+        }
+        .btn-back:hover { background: rgba(255, 255, 255, 0.1); }
+
+        .card {
+            background: var(--bg-card); border: 1px solid var(--border-color);
+            border-radius: 16px; padding: 2rem; margin-bottom: 2rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+        }
+
+        /* Form Input */
+        .input-group { margin-bottom: 1.5rem; }
+        .input-group label { display: block; font-size: 0.95rem; font-weight: 600; color: var(--accent-blue); margin-bottom: 0.5rem; }
+        input[type="text"], input[type="url"], select {
+            width: 100%; background: rgba(15, 23, 42, 0.8); border: 1px solid var(--border-color);
+            border-radius: 8px; color: #fff; padding: 0.85rem; font-family: inherit; box-sizing: border-box; outline: none;
+        }
+        input:focus, select:focus { border-color: var(--accent-indigo); }
+
+        .btn-action {
+            background: linear-gradient(135deg, var(--accent-indigo) 0%, #4f46e5 100%);
+            color: #fff; border: none; padding: 0.85rem 2rem; border-radius: 8px; font-weight: 700;
+            cursor: pointer; width: 100%; transition: 0.2s;
+        }
+        .btn-action:hover { filter: brightness(1.1); transform: translateY(-2px); }
+        .btn-action:disabled { opacity: 0.6; cursor: not-allowed; }
+        
+        .btn-cancel {
+            background: transparent; border: 1px solid #ef4444; color: #ef4444;
+            padding: 0.85rem; border-radius: 8px; cursor: pointer; width: 100%; margin-top: 10px; display: none;
+        }
+
+        /* Galeri Grid Style */
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .user-profile-card {
+            background: rgba(15, 23, 42, 0.6);
+            border: 1px solid rgba(56, 189, 248, 0.2);
+            border-radius: 12px;
+            padding: 1.5rem;
+            transition: all 0.3s;
+        }
+        .user-profile-card:hover {
+            border-color: var(--accent-blue);
+            box-shadow: 0 5px 20px rgba(56, 189, 248, 0.1);
+        }
+        .user-profile-card.is-mine {
+            border: 1px solid var(--accent-pink);
+            background: rgba(236, 72, 153, 0.05);
+        }
+
+        .profile-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 1rem;
+            margin-bottom: 1rem;
+        }
+        .profile-icon {
+            font-size: 2rem;
+        }
+        .profile-name {
+            font-size: 1.2rem;
+            font-weight: 800;
+            color: #fff;
+            margin: 0;
+            text-transform: uppercase;
+        }
+        .badge-mine {
+            font-size: 0.7rem;
+            background: var(--accent-pink);
+            color: #fff;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-weight: bold;
+        }
+
+        .sosmed-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+        }
+        .sosmed-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.03);
+            padding: 0.75rem;
+            border-radius: 8px;
+            border: 1px solid transparent;
+        }
+        .sosmed-item:hover { border-color: rgba(255, 255, 255, 0.1); background: rgba(255,255,255,0.06); }
+        
+        .platform-badge {
+            font-size: 0.75rem;
+            font-weight: 700;
+            background: rgba(99, 102, 241, 0.2);
+            color: var(--accent-blue);
+            padding: 3px 8px;
+            border-radius: 20px;
+            display: inline-block;
+            margin-bottom: 4px;
+        }
+        .sosmed-link {
+            color: #f8fafc;
+            text-decoration: none;
+            font-size: 0.95rem;
+            font-weight: 600;
+            display: block;
+        }
+        .sosmed-link:hover { color: var(--accent-blue); text-decoration: underline; }
+        
+        .action-btns button {
+            background: rgba(255,255,255,0.1); border: none; font-size: 1rem;
+            cursor: pointer; padding: 6px; border-radius: 6px; opacity: 0.8; transition: 0.2s;
+            margin-left: 5px;
+        }
+        .action-btns button:hover { opacity: 1; background: rgba(255,255,255,0.2); }
+
+        .hidden { display: none !important; }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header class="header">
+            <div>
+                <h1>🌐 Galeri Akun Anggota</h1>
+                <p style="margin:0; font-size:0.85rem; color: #94a3b8;">Jejaring Sosial Media Profesional PIXEL AND CODE</p>
+            </div>
+            <a href="club-eligibility.html" class="btn-back">⬅ Kembali ke Presensi</a>
+        </header>
+
+        <div id="unauthMessage" class="card hidden" style="text-align: center;">
+            <h2>⚠️ Akses Ditolak</h2>
+            <p>Anda belum login. Sistem tidak dapat mengidentifikasi identitas Anda.</p>
+            <a href="club-eligibility.html" style="color: var(--accent-blue);">Klik di sini untuk Login terlebih dahulu.</a>
+        </div>
+
+        <div id="mainContent" class="hidden">
+            <!-- FORM INPUT -->
+            <div class="card">
+                <h2 style="margin-top:0;">Halo, <span id="displayUser" style="color: var(--accent-blue);"></span>! 👋</h2>
+                <p style="font-size: 0.9rem; color: #94a3b8; margin-bottom: 2rem;">Tambahkan akun sosial media Anda agar rekan tim dapat saling terkoneksi.</p>
+                
+                <form id="sosmedForm" onsubmit="simpanData(event)">
+                    <div class="input-group">
+                        <label>Nama Akun / Username Terlihat</label>
+                        <input type="text" id="in-akun" placeholder="Contoh: @retno_code atau Retno Ariyanti" required>
+                    </div>
+                    <div class="input-group">
+                        <label>Jenis Platform</label>
+                        <select id="in-platform" required>
+                            <option value="">-- Pilih Platform --</option>
+                            <optgroup label="Global Populer">
+                                <option value="Instagram">Instagram</option>
+                                <option value="LinkedIn">LinkedIn</option>
+                                <option value="GitHub">GitHub</option>
+                                <option value="WhatsApp">WhatsApp</option>
+                                <option value="X/Twitter">X / Twitter</option>
+                                <option value="Facebook">Facebook</option>
+                                <option value="Threads">Threads</option>
+                                <option value="TikTok">TikTok</option>
+                                <option value="YouTube">YouTube</option>
+                                <option value="Telegram">Telegram</option>
+                                <option value="Discord">Discord</option>
+                            </optgroup>
+                            <optgroup label="Ecosystem Tiongkok">
+                                <option value="WeChat">WeChat</option>
+                                <option value="Weibo">Sina Weibo</option>
+                                <option value="Douyin">Douyin</option>
+                                <option value="Bilibili">Bilibili</option>
+                                <option value="Xiaohongshu">Xiaohongshu (RED)</option>
+                                <option value="QQ">Tencent QQ</option>
+                            </optgroup>
+                            <option value="Portofolio/Web">Website / Portofolio Personal</option>
+                            <option value="Lainnya">Lainnya</option>
+                        </select>
+                    </div>
+                    <div class="input-group">
+                        <label>Link Profil / URL Aktif</label>
+                        <input type="url" id="in-link" placeholder="https://..." required>
+                    </div>
+                    
+                    <button type="submit" id="btnSubmit" class="btn-action">Simpan ke Galeri</button>
+                    <button type="button" id="btnCancel" class="btn-cancel" onclick="batalEdit()">Batal Edit</button>
+                </form>
+            </div>
+
+            <!-- GALERI SOSMED SEMUA ANGGOTA -->
+            <div class="card">
+                <h2 style="margin-top:0; border-bottom: 1px solid var(--border-color); padding-bottom: 1rem;">
+                    📡 Jejaring Anggota Club
+                </h2>
+                <div id="galleryContainer" class="gallery-grid">
+                    <p style="text-align: center; color: #94a3b8; grid-column: 1 / -1;">Memuat data anggota...</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // MENGGUNAKAN URL EXEC (Deployment) YANG TEPAT
+        const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzexbZuGm306_9yNbTn2NkDaEebOikc2oeR76F2K-Tm6JCjJxeHKo4GLu3pzjpDBmA0qg/exec";
+
+        let currentUser = sessionStorage.getItem('pnc_session_user');
+        let editingId = null;
+
+        // Inisialisasi Halaman
+        window.onload = function() {
+            if (!currentUser) {
+                document.getElementById('unauthMessage').classList.remove('hidden');
+            } else {
+                document.getElementById('mainContent').classList.remove('hidden');
+                document.getElementById('displayUser').innerText = currentUser.toUpperCase();
+                muatGaleri();
+            }
+        };
+
+        // Mengambil Seluruh Data dari Apps Script
+        async function muatGaleri() {
+            const container = document.getElementById('galleryContainer');
+            try {
+                const response = await fetch(APPS_SCRIPT_URL, {
+                    method: 'POST',
+                    headers: { "Content-Type": "text/plain;charset=utf-8" }, 
+                    body: JSON.stringify({ action: 'get_sosmed' }) 
+                });
+                const res = await response.json();
+                
+                container.innerHTML = "";
+
+                if (res.status === "success" && res.data.length > 0) {
+                    // Kelompokkan data berdasarkan username
+                    const groupedData = {};
+                    res.data.forEach(item => {
+                        if (!groupedData[item.username]) groupedData[item.username] = [];
+                        groupedData[item.username].push(item);
+                    });
+
+                    // Render setiap kartu user
+                    for (const user in groupedData) {
+                        const isMine = (user === currentUser);
+                        const userAccounts = groupedData[user];
+                        
+                        let accountListHTML = "";
+                        userAccounts.forEach(acc => {
+                            let actionButtons = "";
+                            // Validasi: Tombol aksi hanya muncul di data milik user yang sedang login
+                            if (isMine) {
+                                actionButtons = `
+                                <div class="action-btns">
+                                    <button type="button" title="Edit" onclick="siapkanEdit('${acc.id}', '${acc.nama_akun}', '${acc.platform}', '${acc.link}')">✏️</button>
+                                    <button type="button" title="Hapus" onclick="hapusData('${acc.id}')">🗑️</button>
+                                </div>`;
+                            }
+
+                            accountListHTML += `
+                                <div class="sosmed-item">
+                                    <div>
+                                        <span class="platform-badge">${acc.platform}</span>
+                                        <a href="${acc.link}" target="_blank" class="sosmed-link">${acc.nama_akun}</a>
+                                    </div>
+                                    ${actionButtons}
+                                </div>
+                            `;
+                        });
+
+                        container.innerHTML += `
+                            <div class="user-profile-card ${isMine ? 'is-mine' : ''}">
+                                <div class="profile-header">
+                                    <div class="profile-icon">🧑‍💻</div>
+                                    <div>
+                                        <h3 class="profile-name">${user}</h3>
+                                        ${isMine ? '<span class="badge-mine">Profil Kamu</span>' : ''}
+                                    </div>
+                                </div>
+                                <div class="sosmed-list">
+                                    ${accountListHTML}
+                                </div>
+                            </div>
+                        `;
+                    }
+                } else {
+                    container.innerHTML = "<p style='text-align: center; color: #94a3b8; grid-column: 1 / -1;'>Belum ada anggota yang menambahkan jejaring sosial.</p>";
+                }
+            } catch (err) {
+                container.innerHTML = "<p style='text-align: center; color: #ef4444; grid-column: 1 / -1;'>Gagal memuat galeri jaringan. Periksa koneksi internet Anda.</p>";
+                console.error("Fetch Error:", err);
+            }
+        }
+
+        // Menyimpan (Insert) atau Memperbarui (Update) Data
+        async function simpanData(e) {
+            e.preventDefault();
+            const btn = document.getElementById('btnSubmit');
+            btn.disabled = true;
+            btn.innerText = "⏳ Menyimpan...";
+
+            const akun = document.getElementById('in-akun').value;
+            const platform = document.getElementById('in-platform').value;
+            const link = document.getElementById('in-link').value;
+
+            const payload = {
+                username: currentUser,
+                nama_akun: akun,
+                platform: platform,
+                link: link,
+                action: editingId ? 'update_sosmed' : 'save_sosmed'
+            };
+
+            if (editingId) payload.id = editingId;
+
+            try {
+                const response = await fetch(APPS_SCRIPT_URL, {
+                    method: 'POST',
+                    headers: { "Content-Type": "text/plain;charset=utf-8" }, 
+                    body: JSON.stringify(payload)
+                });
+                const res = await response.json();
+
+                if (res.status === "success") {
+                    document.getElementById('sosmedForm').reset();
+                    batalEdit();
+                    await muatGaleri(); 
+                } else {
+                    alert("❌ Gagal menyimpan. " + (res.message || "Akses ditolak."));
+                }
+            } catch (err) {
+                alert("❌ Terjadi kesalahan sistem saat menyimpan data.");
+                console.error("Save Error:", err);
+            } finally {
+                btn.disabled = false;
+                btn.innerText = editingId ? "Perbarui Data" : "Simpan ke Galeri";
+            }
+        }
+
+        // Siapkan Form untuk Mode Edit
+        window.siapkanEdit = function(id, akun, platform, link) {
+            editingId = id;
+            document.getElementById('in-akun').value = akun;
+            document.getElementById('in-platform').value = platform;
+            document.getElementById('in-link').value = link;
+            
+            document.getElementById('btnSubmit').innerText = "Perbarui Data";
+            document.getElementById('btnSubmit').style.background = "linear-gradient(135deg, #f59e0b 0%, #d97706 100%)";
+            document.getElementById('btnCancel').style.display = "block";
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        };
+
+        // Batal Mode Edit
+        window.batalEdit = function() {
+            editingId = null;
+            document.getElementById('sosmedForm').reset();
+            document.getElementById('btnSubmit').innerText = "Simpan ke Galeri";
+            document.getElementById('btnSubmit').style.background = "linear-gradient(135deg, var(--accent-indigo) 0%, #4f46e5 100%)";
+            document.getElementById('btnCancel').style.display = "none";
+        };
+
+        // Menghapus Data
+        window.hapusData = async function(id) {
+            if (confirm("Yakin ingin menghapus tautan akun ini dari galeri?")) {
+                try {
+                    const response = await fetch(APPS_SCRIPT_URL, {
+                        method: 'POST',
+                        headers: { "Content-Type": "text/plain;charset=utf-8" }, 
+                        body: JSON.stringify({ action: 'delete_sosmed', username: currentUser, id: id })
+                    });
+                    const res = await response.json();
+                    
+                    if (res.status === "success") {
+                        await muatGaleri();
+                    } else {
+                        alert("❌ Gagal menghapus data. Validasi kepemilikan ditolak.");
+                    }
+                } catch (err) {
+                    alert("❌ Terjadi kesalahan jaringan saat menghapus.");
+                    console.error("Delete Error:", err);
+                }
+            }
+        };
+    </script>
+</body>
+</html>

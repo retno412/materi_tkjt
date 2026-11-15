@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>IT Student Journey</title>
+    <link rel="stylesheet" href="journey.css">
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&family=VT323&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="screen-container">
+        
+        <!-- Layar 1: Welcome Screen -->
+        <div id="welcome-screen" class="screen active">
+            <div class="hero-text">
+                <h1 class="pixel-font text-glow">RECOGNIZE_OUR&lt;SKILL&gt;</h1>
+                <p class="code-font typing-effect">Welcome to Your IT Journey...</p>
+                <p class="code-font small-text">Proses menyadari & merekam kemampuanmu</p>
+            </div>
+            <div class="action-buttons">
+                <!-- Tombol Start selalu ada, Continue disembunyikan via JS jika tidak ada sesi -->
+                <button id="btn-start" class="btn pixel-btn" onclick="startNewJourney()">[ START NEW JOURNEY ]</button>
+                <button id="btn-continue" class="btn pixel-btn hidden" onclick="continueJourney()">[ CONTINUE JOURNEY ]</button>
+            </div>
+        </div>
+
+        <!-- Layar 2: Dashboard -->
+        <div id="dashboard-screen" class="screen hidden">
+            <header class="dash-header">
+                <h2 class="pixel-font">Status: <span id="student-name">Player</span></h2>
+                <div class="companion-box">
+                    <p class="code-font" id="companion-message">"Menghubungkan ke server pusat..."</p>
+                </div>
+            </header>
+            
+            <div class="skills-grid code-font">
+                <!-- ID berurutan sangat penting untuk logika penguncian -->
+                <button id="skill-0" class="skill-card" onclick="openQuest(0, 'Learning How to Learn')">1. L2L</button>
+                <button id="skill-1" class="skill-card" onclick="openQuest(1, 'Problem Solving')">2. Problem Solv</button>
+                <button id="skill-2" class="skill-card" onclick="openQuest(2, 'Communication')">3. Comm</button>
+                <button id="skill-3" class="skill-card" onclick="openQuest(3, 'Public Speaking')">4. Speaking</button>
+                <button id="skill-4" class="skill-card" onclick="openQuest(4, 'Teamwork')">5. Teamwork</button>
+                <button id="skill-5" class="skill-card" onclick="openQuest(5, 'Networking')">6. Network</button>
+                <button id="skill-6" class="skill-card" onclick="openQuest(6, 'Time Management')">7. Time Mgt</button>
+                <button id="skill-7" class="skill-card" onclick="openQuest(7, 'Adaptability')">8. Adapt</button>
+            </div>
+        </div>
+        
+    </div>
+
+    <!-- Tombol Melayang Bantuan / Forum Diskusi -->
+    <button class="floating-forum-btn pixel-font" onclick="window.location.href='forum.html'" title="Forum Diskusi Teman">&quest;</button>
+
+    <!-- Modal Popup untuk Dokumentasi Siswa -->
+    <!-- Modal Popup untuk Dokumentasi Siswa -->
+    <div id="quest-modal" class="modal hidden">
+        <div class="modal-content">
+            <h3 class="pixel-font" id="modal-title">Quest Name</h3>
+            
+            <!-- BAGIAN 1: Kuesioner Wizard 10 Tahap (Satu-persatu) -->
+            <div id="l2l-questionnaire" class="hidden">
+                <p class="code-font small-text" style="text-align: left; color: var(--pixel-color); margin-bottom: 10px;" id="l2l-step-indicator">
+                    Pertanyaan 1 dari 10
+                </p>
+
+                <!-- Q1 -->
+                <div class="l2l-step" id="l2l-step-1">
+                    <p class="question-text code-font">1. Sumber belajar utama apa yang paling sering kamu gunakan?</p>
+                    <div class="options-group" id="q1-group">
+                        <button class="btn opt-btn" onclick="nextL2LStep(1, 'q1-group', 1)" data-score="1">A. Hanya video tutorial tanpa praktik</button>
+                        <button class="btn opt-btn" onclick="nextL2LStep(1, 'q1-group', 3)" data-score="3">B. Dokumentasi resmi & artikel teknis</button>
+                        <button class="btn opt-btn" onclick="nextL2LStep(1, 'q1-group', 2)" data-score="2">C. Buku teks / modul terstruktur</button>
+                    </div>
+                </div>
+
+                <!-- Q2 -->
+                <div class="l2l-step hidden" id="l2l-step-2">
+                    <p class="question-text code-font">2. Bagaimana cara kamu mengatasi saat menemui konsep baru yang sulit?</p>
+                    <div class="options-group" id="q2-group">
+                        <button class="btn opt-btn" onclick="nextL2LStep(2, 'q2-group', 1)" data-score="1">A. Menghafal teori/kode sekadarnya lalu lanjut</button>
+                        <button class="btn opt-btn" onclick="nextL2LStep(2, 'q2-group', 3)" data-score="3">B. Mencari analogi sederhana & membuat mind map</button>
+                        <button class="btn opt-btn" onclick="nextL2LStep(2, 'q2-group', 0)" data-score="0">C. Menyerah dan menunggu jawaban teman</button>
+                    </div>
+                </div>
+
+                <!-- Q3 -->
+                <div class="l2l-step hidden" id="l2l-step-3">
+                    <p class="question-text code-font">3. Saat melihat contoh kode pemrograman (coding), apa tindakanmu?</p>
+                    <div class="options-group" id="q3-group">
+                        <button class="btn opt-btn" onclick="nextL2LStep(3, 'q3-group', 1)" data-score="1">A. Cukup dibaca dan dipahami dalam hati</button>
+                        <button class="btn opt-btn" onclick="nextL2LStep(3, 'q3-group', 2)" data-score="2">B. Mengetik ulang persis seperti contoh</button>
+                        <button class="btn opt-btn" onclick="nextL2LStep(3, 'q3-group', 3)" data-score="3">C. Mengetik ulang sambil memodifikasi parameternya</button>
+                    </div>
+                </div>
+
+                <!-- Q4 (Multiple Choice) -->
+                <div class="l2l-step hidden" id="l2l-step-4">
+                    <p class="question-text code-font">4. Bagaimana caramu memvalidasi informasi atau mengatasi error? (Bisa pilih lebih dari satu, lalu klik Lanjut)</p>
+                    <div class="options-group" id="q4-group">
+                        <button class="btn opt-btn mult" onclick="selectMultiple(this)" data-score="2">A. Cross-check dari forum (StackOverflow/GitHub)</button>
+                        <button class="btn opt-btn mult" onclick="selectMultiple(this)" data-score="0">B. Mengandalkan satu sumber blog saja</button>
+                        <button class="btn opt-btn mult" onclick="selectMultiple(this)" data-score="2">C. Membaca changelog / dokumentasi versi</button>
+                    </div>
+                    <button class="btn pixel-btn" style="margin-top: 15px;" onclick="nextL2LMultiStep(4)">[ LANJUT ]</button>
+                </div>
+
+                <!-- Q5 -->
+                <div class="l2l-step hidden" id="l2l-step-5">
+                    <p class="question-text code-font">5. Teknik apa yang kamu pakai agar tidak mudah lupa materi yang dipelajari?</p>
+                    <div class="options-group" id="q5-group">
+                        <button class="btn opt-btn" onclick="nextL2LStep(5, 'q5-group', 2)" data-score="2">A. Sering membaca ulang catatan setiap hari</button>
+                        <button class="btn opt-btn" onclick="nextL2LStep(5, 'q5-group', 3)" data-score="3">B. Menuliskan ulang dengan bahasa sendiri (Feynman)</button>
+                        <button class="btn opt-btn" onclick="nextL2LStep(5, 'q5-group', 0)" data-score="0">C. Belajar sistem kebut semalam saat ada tugas</button>
+                    </div>
+                </div>
+
+                <!-- Q6 -->
+                <div class="l2l-step hidden" id="l2l-step-6">
+                    <p class="question-text code-font">6. Seberapa jauh kemampuanmu menjelaskan kembali materi IT ke orang lain?</p>
+                    <div class="options-group" id="q6-group">
+                        <button class="btn opt-btn" onclick="nextL2LStep(6, 'q6-group', 1)" data-score="1">A. Belum bisa menjelaskan ke orang lain</button>
+                        <button class="btn opt-btn" onclick="nextL2LStep(6, 'q6-group', 2)" data-score="2">B. Bisa menjelaskan garis besar teorinya saja</button>
+                        <button class="btn opt-btn" onclick="nextL2LStep(6, 'q6-group', 3)" data-score="3">C. Bisa mengajarkan praktik dan logikanya dengan tuntas</button>
+                    </div>
+                </div>
+
+                <!-- Q7 -->
+                <div class="l2l-step hidden" id="l2l-step-7">
+                    <p class="question-text code-font">7. Bagaimana kamu memantau kemajuan (self-monitoring) belajarmu?</p>
+                    <div class="options-group" id="q7-group">
+                        <button class="btn opt-btn" onclick="nextL2LStep(7, 'q7-group', 0)" data-score="0">A. Tidak pernah mengevaluasi, mengalir saja</button>
+                        <button class="btn opt-btn" onclick="nextL2LStep(7, 'q7-group', 2)" data-score="2">B. Sadar bagian mana yang masih error/bingung</button>
+                        <button class="btn opt-btn" onclick="nextL2LStep(7, 'q7-group', 3)" data-score="3">C. Membuat target mini project dan mencatat evaluasi</button>
+                    </div>
+                </div>
+
+                <!-- Q8 -->
+                <div class="l2l-step hidden" id="l2l-step-8">
+                    <p class="question-text code-font">8. Bagaimana kamu memanfaatkan AI atau alat bantu saat belajar?</p>
+                    <div class="options-group" id="q8-group">
+                        <button class="btn opt-btn" onclick="nextL2LStep(8, 'q8-group', 0)" data-score="0">A. Menyuruh AI membuatkan seluruh kode instan</button>
+                        <button class="btn opt-btn" onclick="nextL2LStep(8, 'q8-group', 3)" data-score="3">B. Sebagai sparring partner untuk diskusi logika</button>
+                        <button class="btn opt-btn" onclick="nextL2LStep(8, 'q8-group', 2)" data-score="2">C. Hanya untuk mencari tahu baris kode yang error</button>
+                    </div>
+                </div>
+
+                <!-- Q9 -->
+                <div class="l2l-step hidden" id="l2l-step-9">
+                    <p class="question-text code-font">9. Bagaimana konsistensi waktu luangmu untuk eksplorasi IT?</p>
+                    <div class="options-group" id="q9-group">
+                        <button class="btn opt-btn" onclick="nextL2LStep(9, 'q9-group', 0)" data-score="0">A. Hanya belajar saat disuruh guru di sekolah</button>
+                        <button class="btn opt-btn" onclick="nextL2LStep(9, 'q9-group', 1)" data-score="1">B. Belajar sesuka hati tanpa jadwal pasti</button>
+                        <button class="btn opt-btn" onclick="nextL2LStep(9, 'q9-group', 3)" data-score="3">C. Memiliki jadwal rutin mandiri untuk ngoprek/coding</button>
+                    </div>
+                </div>
+
+                <!-- Q10 (Multiple Choice & Finish) -->
+                <div class="l2l-step hidden" id="l2l-step-10">
+                    <p class="question-text code-font">10. Apa tindakanmu ketika menghadapi bug/error yang memakan waktu lama? (Bisa pilih lebih dari satu)</p>
+                    <div class="options-group" id="q10-group">
+                        <button class="btn opt-btn mult" onclick="selectMultiple(this)" data-score="0">A. Marah / frustrasi lalu menutup laptop</button>
+                        <button class="btn opt-btn mult" onclick="selectMultiple(this)" data-score="2">B. Menganalisis baris demi baris log error</button>
+                        <button class="btn opt-btn mult" onclick="selectMultiple(this)" data-score="2">C. Bertanya di forum atau berdiskusi dengan tim</button>
+                    </div>
+                    <button class="btn pixel-btn" style="margin-top: 15px; border-color: var(--pixel-color); color: var(--pixel-color);" onclick="finishL2LWizard()">[ SELESAI & ANALISIS ]</button>
+                </div>
+
+            </div>
+
+            <!-- BAGIAN 2: Area Input Refleksi (Standar) -->
+            <div id="quest-input-area">
+                <!-- Bar Indikator (Hanya muncul setelah jawab L2L) -->
+                <div id="l2l-result" class="hidden">
+                    <p class="code-font small-text" style="margin-bottom: 5px; text-align: left;">Efektivitas Belajar: <span id="l2l-score-text">0</span>/10</p>
+                    <div class="progress-bar"><div class="progress-fill" id="l2l-progress"></div></div>
+                </div>
+
+                <p class="code-font small-text" id="modal-instruction">Tuliskan dokumentasi progres/kendalamu di sini.</p>
+                <textarea id="quest-notes" class="code-font" rows="4" placeholder="Ketik laporanmu di sini..."></textarea>
+                <div class="modal-actions">
+                    <button class="btn btn-cancel" onclick="closeModal()">[ CANCEL ]</button>
+                    <button class="btn btn-submit" onclick="submitQuest()">[ SUBMIT ]</button>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+
+    <script src="journey.js"></script>
+</body>
+</html>

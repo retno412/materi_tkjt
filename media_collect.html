@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inventaris Media — PIXEL AND CODE</title>
+    <style>
+        :root {
+            --bg-main: #0f172a;
+            --bg-card: rgba(30, 41, 59, 0.85);
+            --accent-blue: #38bdf8;
+            --accent-indigo: #6366f1;
+            --accent-green: #10b981;
+            --text-primary: #f8fafc;
+            --border-color: rgba(255, 255, 255, 0.1);
+        }
+
+        body {
+            background-color: var(--bg-main);
+            color: var(--text-primary);
+            font-family: system-ui, -apple-system, sans-serif;
+            margin: 0; padding: 0; line-height: 1.5;
+        }
+
+        .container { max-width: 900px; margin: 0 auto; padding: 2rem 1rem; }
+
+        .header {
+            display: flex; justify-content: space-between; align-items: center;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 1.5rem; margin-bottom: 1.5rem;
+        }
+
+        .header h1 {
+            margin: 0; font-size: 1.6rem;
+            background: linear-gradient(135deg, #ffffff 0%, var(--accent-blue) 100%);
+            -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+        }
+
+        .card {
+            background: var(--bg-card); border: 1px solid var(--border-color);
+            border-radius: 16px; padding: 2rem; box-shadow: 0 10px 30px rgba(0,0,0,0.4); margin-bottom: 2rem;
+        }
+
+        .input-group { margin-bottom: 1.5rem; }
+        .input-group label {
+            display: block; font-size: 0.95rem; font-weight: 600; color: var(--accent-blue); margin-bottom: 0.5rem;
+        }
+
+        input[type="text"], input[type="password"], select, textarea {
+            width: 100%; background: rgba(15, 23, 42, 0.8); border: 1px solid var(--border-color);
+            border-radius: 8px; color: #fff; padding: 0.85rem; font-family: inherit; box-sizing: border-box; outline: none;
+        }
+        input:focus, select:focus, textarea:focus { border-color: var(--accent-indigo); }
+        textarea { height: 80px; resize: vertical; }
+
+        .btn-action {
+            background: linear-gradient(135deg, var(--accent-indigo) 0%, #4f46e5 100%);
+            color: #fff; border: none; padding: 0.85rem 2rem; border-radius: 8px; font-weight: 700; cursor: pointer; width: 100%;
+        }
+        .btn-action:hover { filter: brightness(1.1); }
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.05); border: 1px dashed var(--accent-blue); color: var(--accent-blue);
+            padding: 0.85rem; border-radius: 8px; cursor: pointer; width: 100%; margin-bottom: 1rem; font-weight: bold;
+        }
+
+        /* Styling untuk Grup Device Dinamis */
+        .device-item {
+            background: rgba(0, 0, 0, 0.2); border: 1px solid rgba(99, 102, 241, 0.3);
+            border-radius: 12px; padding: 1.5rem; margin-bottom: 1.5rem; position: relative;
+        }
+        .btn-remove {
+            position: absolute; top: 10px; right: 10px; background: #ef4444; color: white;
+            border: none; border-radius: 4px; padding: 4px 8px; cursor: pointer; font-size: 0.8rem;
+        }
+
+        .radio-group { display: flex; gap: 1rem; margin-bottom: 1rem; flex-wrap: wrap; }
+        .radio-label {
+            display: flex; align-items: center; gap: 0.5rem; font-size: 0.9rem;
+            background: rgba(255,255,255,0.05); padding: 0.5rem 1rem; border-radius: 20px; cursor: pointer; border: 1px solid transparent;
+        }
+        .radio-label:has(input:checked) { border-color: var(--accent-green); background: rgba(16, 185, 129, 0.1); }
+
+        /* Styling Tabel Terpisah Kiri & Kanan */
+        .table-container { display: flex; gap: 1.5rem; flex-wrap: wrap; margin-top: 1rem; }
+        .table-box { flex: 1; min-width: 300px; background: rgba(0,0,0,0.2); border-radius: 12px; padding: 1rem; border: 1px solid var(--border-color); }
+        .table-box h3 { margin-top: 0; color: var(--accent-blue); font-size: 1.1rem; text-align: center; border-bottom: 1px dashed rgba(255,255,255,0.2); padding-bottom: 0.5rem; }
+        
+        table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
+        th, td { padding: 0.75rem; text-align: left; border-bottom: 1px solid rgba(255,255,255,0.05); }
+        th { color: var(--text-secondary); font-weight: 600; }
+        tr:hover { background: rgba(255,255,255,0.02); }
+
+        .hidden { display: none !important; }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header class="header">
+            <div>
+                <h1>🎥 Inventaris Media Specialist</h1>
+                <p style="margin:0; font-size:0.85rem; color: var(--text-secondary);">Pemetaan ketersediaan alat pendukung produksi digital.</p>
+            </div>
+            <a href="club-eligibility.html" style="color:var(--accent-blue); text-decoration:none; font-size:0.9rem;">◀ Kembali ke Presensi</a>
+        </header>
+
+        <!-- KOTAK LOGIN / OTORISASI -->
+        <div id="authSection" class="card" style="max-width: 400px; margin: 0 auto; text-align: center;">
+            <h2 style="margin-top:0;">Verifikasi Identitas</h2>
+            <p style="font-size:0.85rem; color:#94a3b8;">Masukkan akun Anda sebelum mengisi inventaris.</p>
+            <form onsubmit="handleAuth(event)">
+                <div class="input-group" style="text-align: left;">
+                    <label>Username</label>
+                    <input type="text" id="auth-user" required autocomplete="off">
+                </div>
+                <div class="input-group" style="text-align: left;">
+                    <label>Password</label>
+                    <input type="password" id="auth-pass" required>
+                </div>
+                <button type="submit" id="btnAuth" class="btn-action">Konfirmasi Akses</button>
+            </form>
+        </div>
+
+        <!-- AREA PENGISIAN FORM (Disembunyikan sebelum login) -->
+        <div id="formSection" class="hidden">
+            <div class="card">
+                <h2 style="margin-top:0;">Halo, <span id="namaSiswa" style="color:var(--accent-blue);"></span>! 🎬</h2>
+                <p style="font-size:0.9rem; color:#94a3b8; margin-bottom: 1.5rem;">Data ini membantu pemetaan kelompok produksi. Masukkan spesifikasi dengan detail (Contoh: "2023, Canon EOS M50 Mark II, Lensa Kit 15-45mm").</p>
+                
+                <form id="inventoryForm" onsubmit="submitInventory(event)">
+                    <div id="deviceContainer">
+                        <!-- Perangkat 1 (Default) akan dimuat dari JS -->
+                    </div>
+                    
+                    <button type="button" class="btn-secondary" onclick="addDeviceField()">+ Tambah Device Lainnya</button>
+                    <button type="submit" id="btnSubmitInv" class="btn-action">Simpan Inventaris</button>
+                </form>
+            </div>
+
+            <!-- HASIL INVENTARIS (KIRI & KANAN) -->
+            <div class="card">
+                <h2 style="margin-top:0;">📊 Rekapitulasi Alat Tim</h2>
+                <div class="table-container">
+                    
+                    <!-- TABEL KIRI -->
+                    <div class="table-box">
+                        <h3>🟢 Milik Pribadi (Ready to Use)</h3>
+                        <table>
+                            <thead>
+                                <tr><th>Nama</th><th>Device</th><th>Spesifikasi</th></tr>
+                            </thead>
+                            <tbody id="tbodyPribadi">
+                                <!-- Data Kiri Masuk Sini -->
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- TABEL KANAN -->
+                    <div class="table-box">
+                        <h3>🟡 Fasilitas/Pinjam (Mahir)</h3>
+                        <table>
+                            <thead>
+                                <tr><th>Nama</th><th>Device</th><th>Spesifikasi</th></tr>
+                            </thead>
+                            <tbody id="tbodyMahir">
+                                <!-- Data Kanan Masuk Sini -->
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // GANTI URL INI DENGAN URL DEPLOYMENT APPS SCRIPT ANDA YANG BARU
+        const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzexbZuGm306_9yNbTn2NkDaEebOikc2oeR76F2K-Tm6JCjJxeHKo4GLu3pzjpDBmA0qg/exec";
+        
+        let activeUser = "";
+        let deviceCount = 0;
+
+        const opsiDevice = `
+            <option value="" disabled selected>Pilih Model Device...</option>
+            <option value="Smartphone">Smartphone (iOS/Android)</option>
+            <option value="Laptop/PC">Laptop / PC (Mac/Windows)</option>
+            <option value="Kamera Digital">Kamera Profesional (Mirrorless/DSLR/HandyCam)</option>
+            <option value="Action Cam">Action Cam (GoPro/Insta360 dll)</option>
+            <option value="Drone">Drone (Aerial Camera)</option>
+            <option value="Audio Recorder">Audio/Microphone (Wireless Mic/Shotgun)</option>
+            <option value="Stabilizer">Stabilizer / Gimbal</option>
+            <option value="Lighting">Pencahayaan (Ringlight/Softbox)</option>
+            <option value="Lainnya">Lainnya...</option>
+        `;
+
+        function addDeviceField() {
+            deviceCount++;
+            const div = document.createElement('div');
+            div.className = 'device-item';
+            div.id = 'devRow_' + deviceCount;
+            
+            let hapusBtn = deviceCount > 1 ? `<button type="button" class="btn-remove" onclick="removeDevice(${deviceCount})">Hapus X</button>` : '';
+
+            div.innerHTML = `
+                ${hapusBtn}
+                <div class="input-group">
+                    <label>Jenis Device</label>
+                    <select class="val-device" required>${opsiDevice}</select>
+                </div>
+                <div class="input-group">
+                    <label>Status Ketersediaan</label>
+                    <div class="radio-group">
+                        <label class="radio-label">
+                            <input type="radio" name="status_${deviceCount}" value="Milik Pribadi" required> 
+                            Milik Pribadi & Leluasa Digunakan
+                        </label>
+                        <label class="radio-label">
+                            <input type="radio" name="status_${deviceCount}" value="Belum Memiliki (Mahir)" required> 
+                            Belum Memiliki Tapi Mahir Menggunakan
+                        </label>
+                    </div>
+                </div>
+                <div class="input-group">
+                    <label>Spesifikasi (Tahun, Merk, Tipe)</label>
+                    <textarea class="val-spek" placeholder="Contoh: 2024, iPhone 13 Pro 256GB" required></textarea>
+                </div>
+            `;
+            document.getElementById('deviceContainer').appendChild(div);
+        }
+
+        function removeDevice(id) {
+            document.getElementById('devRow_' + id).remove();
+        }
+
+        async function handleAuth(e) {
+            e.preventDefault();
+            const btn = document.getElementById('btnAuth');
+            const u = document.getElementById('auth-user').value.trim();
+            const p = document.getElementById('auth-pass').value;
+
+            btn.innerText = "Mengecek..."; btn.disabled = true;
+
+            try {
+                const res = await fetch(APPS_SCRIPT_URL, {
+                    method: 'POST',
+                    body: JSON.stringify({ action: "login", username: u, password: p })
+                });
+                const data = await res.json();
+
+                if(data.status === "success") {
+                    activeUser = u;
+                    document.getElementById('authSection').classList.add('hidden');
+                    document.getElementById('formSection').classList.remove('hidden');
+                    document.getElementById('namaSiswa').innerText = u.toUpperCase();
+                    
+                    if(deviceCount === 0) addDeviceField(); // Munculkan 1 box default
+                    loadInventoryData(); // Tarik data tabel
+                } else {
+                    alert("❌ " + data.message);
+                }
+            } catch(err) {
+                alert("Gagal koneksi ke server.");
+            } finally {
+                btn.innerText = "Konfirmasi Akses"; btn.disabled = false;
+            }
+        }
+
+        async function submitInventory(e) {
+            e.preventDefault();
+            const btn = document.getElementById('btnSubmitInv');
+            btn.innerText = "Menyimpan Data..."; btn.disabled = true;
+
+            const items = document.querySelectorAll('.device-item');
+            let payloadDevices = [];
+
+            items.forEach((item, index) => {
+                let radioStatus = item.querySelector(`input[type="radio"]:checked`).value;
+                let deviceType = item.querySelector('.val-device').value;
+                let spek = item.querySelector('.val-spek').value;
+                
+                payloadDevices.push({ status: radioStatus, deviceType: deviceType, specs: spek });
+            });
+
+            try {
+                const res = await fetch(APPS_SCRIPT_URL, {
+                    method: 'POST',
+                    body: JSON.stringify({ 
+                        action: "save_inventory", 
+                        username: activeUser, 
+                        devices: payloadDevices 
+                    })
+                });
+                const data = await res.json();
+                
+                if(data.status === "success") {
+                    alert("✅ Data inventaris berhasil disimpan!");
+                    document.getElementById('inventoryForm').reset();
+                    loadInventoryData(); // Refresh tabel bawah
+                }
+            } catch(err) {
+                alert("❌ Gagal menyimpan data.");
+            } finally {
+                btn.innerText = "Simpan Inventaris"; btn.disabled = false;
+            }
+        }
+
+        async function loadInventoryData() {
+            try {
+                const res = await fetch(APPS_SCRIPT_URL, {
+                    method: 'POST',
+                    body: JSON.stringify({ action: "get_inventory" })
+                });
+                const response = await res.json();
+                
+                if(response.status === "success") {
+                    const tbodyPribadi = document.getElementById('tbodyPribadi');
+                    const tbodyMahir = document.getElementById('tbodyMahir');
+                    
+                    tbodyPribadi.innerHTML = "";
+                    tbodyMahir.innerHTML = "";
+
+                    response.data.forEach(row => {
+                        let html = `<tr>
+                            <td><strong>${row.nama.toUpperCase()}</strong></td>
+                            <td style="color:var(--accent-blue);">${row.device}</td>
+                            <td>${row.spek}</td>
+                        </tr>`;
+
+                        if(row.status === "Milik Pribadi") {
+                            tbodyPribadi.innerHTML += html;
+                        } else {
+                            tbodyMahir.innerHTML += html;
+                        }
+                    });
+
+                    if(tbodyPribadi.innerHTML === "") tbodyPribadi.innerHTML = "<tr><td colspan='3' style='text-align:center;'>Belum ada data</td></tr>";
+                    if(tbodyMahir.innerHTML === "") tbodyMahir.innerHTML = "<tr><td colspan='3' style='text-align:center;'>Belum ada data</td></tr>";
+                }
+            } catch (err) {
+                console.error("Gagal memuat tabel: ", err);
+            }
+        }
+    </script>
+</body>
+</html>

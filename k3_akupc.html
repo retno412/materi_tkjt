@@ -3,136 +3,1229 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Aku dan PC - Modul Karakter & Kesehatan Kerja</title>
+    <title>Interaktif Ergonomi &amp; Simulasi Jarak PC</title>
     <link rel="stylesheet" href="style.css">
     <style>
-        .k3-page-wrapper {
-            max-width: 900px;
-            margin: 2rem auto;
-            padding: 0 1.5rem;
+        :root {
+            --indigo: #4f46e5;
+            --indigo-dark: #3730a3;
+            --indigo-deep: #1e1b4b;
+            --indigo-soft: #e0e7ff;
+            --indigo-line: #c7d2fe;
+            --page-bg: #f1f5f9;
+            --ink: #1e293b;
+            --muted: #64748b;
+            --border: #e2e8f0;
+            --state-color: #16a34a;
         }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            background: var(--page-bg);
+            color: var(--ink);
+        }
+
+        body.modal-open {
+            overflow: hidden;
+        }
+
+        [hidden] {
+            display: none !important;
+        }
+
+        .k3-page-wrapper {
+            max-width: 1020px;
+            margin: 2rem auto 3rem;
+            padding: 0 1.25rem;
+        }
+
         .btn-k3-back {
             display: inline-flex;
             align-items: center;
             gap: 0.5rem;
             background: #ffffff;
-            border: 1px solid #e2e8f0;
-            padding: 0.6rem 1.2rem;
+            border: 1px solid var(--border);
+            padding: 0.6rem 1.1rem;
             border-radius: 10px;
-            color: #1e293b;
-            font-weight: 600;
+            color: var(--ink);
+            font-family: inherit;
+            font-size: 0.85rem;
+            font-weight: 700;
             text-decoration: none;
-            transition: all 0.2s;
+            transition: all 0.2s ease;
             margin-bottom: 1.5rem;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
         }
+
         .btn-k3-back:hover {
-            background: #f1f5f9;
-            color: #4f46e5;
+            background: #eef2ff;
+            border-color: var(--indigo-line);
+            color: var(--indigo);
             transform: translateX(-3px);
         }
+
         .k3-card {
             background: #ffffff;
             border-radius: 18px;
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
-            padding: 2.5rem;
-            border: 1px solid #e2e8f0;
+            padding: 2.25rem;
+            border: 1px solid var(--border);
         }
+
         .k3-header-block {
             text-align: center;
-            margin-bottom: 2.5rem;
-            border-bottom: 2px dashed #e2e8f0;
-            padding-bottom: 2rem;
+            margin-bottom: 0;
+            padding-bottom: 0;
         }
-        .k3-header-block h1 {
-            font-size: 2.2rem;
-            color: #1e1b4b;
-            font-weight: 800;
-            margin-top: 0.5rem;
-        }
+
         .k3-badge {
-            background: #e0e7ff;
-            color: #4338ca;
+            display: inline-block;
+            background: var(--indigo-soft);
+            color: var(--indigo-dark);
             padding: 0.4rem 1rem;
             border-radius: 30px;
-            font-size: 0.8rem;
-            font-weight: 700;
+            font-size: 0.72rem;
+            font-weight: 800;
+            letter-spacing: 0.05em;
             text-transform: uppercase;
         }
-        .k3-visual-container {
+
+        .k3-header-block h1 {
+            font-size: 2.05rem;
+            line-height: 1.18;
+            color: var(--indigo-deep);
+            font-weight: 800;
+            margin: 0.7rem 0 0;
+        }
+
+        .k3-header-block h1 span {
+            color: var(--indigo);
+        }
+
+        .k3-header-block p {
+            max-width: 650px;
+            margin: 0.7rem auto 0;
+            color: var(--muted);
+            font-size: 0.93rem;
+            line-height: 1.6;
+        }
+
+        .header-chips {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 0.45rem;
+            margin-top: 1rem;
+        }
+
+        .header-chips span {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
             background: #f8fafc;
-            border: 1px dashed #cbd5e1;
-            border-radius: 14px;
-            padding: 2rem;
-            text-align: center;
-            margin: 2rem 0;
+            border: 1px solid var(--border);
+            color: #475569;
+            border-radius: 999px;
+            padding: 0.3rem 0.7rem;
+            font-size: 0.7rem;
+            font-weight: 700;
         }
-        .k3-content-section {
-            margin-bottom: 2rem;
+
+        /* ==========================================
+           SIMULASI JARAK MONITOR
+        ========================================== */
+        .sim-card {
+            margin-top: 1.5rem;
+            padding: 1.9rem;
+            background:
+                radial-gradient(circle at 100% 0%, rgba(79, 70, 229, 0.06), transparent 28%),
+                #ffffff;
         }
-        .k3-content-section h2 {
-            font-size: 1.35rem;
-            color: #1e293b;
+
+        .sim-head {
             margin-bottom: 1rem;
+        }
+
+        .sim-kicker {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+            background: var(--indigo-soft);
+            color: var(--indigo-dark);
+            border: 1px solid var(--indigo-line);
+            border-radius: 999px;
+            padding: 0.28rem 0.7rem;
+            font-size: 0.66rem;
+            font-weight: 900;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+        }
+
+        .sim-head h2 {
+            color: var(--indigo-deep);
+            font-size: 1.45rem;
+            line-height: 1.25;
+            margin: 0.45rem 0 0;
+        }
+
+        .sim-head p {
+            color: var(--muted);
+            font-size: 0.82rem;
+            line-height: 1.5;
+            margin: 0.3rem 0 0;
+        }
+
+        .sim-scene {
+            position: relative;
+            height: 245px;
+            border-radius: 16px;
+            border: 1px solid var(--indigo-line);
+            background:
+                radial-gradient(circle at 22% 24%, rgba(79, 70, 229, 0.13) 0 2px, transparent 2.5px),
+                linear-gradient(180deg, #eef2ff, #e0e7ff);
+            background-size: 24px 24px, auto;
+            overflow: hidden;
+            isolation: isolate;
+            margin-bottom: 1rem;
+        }
+
+        .scene-badge {
+            position: absolute;
+            top: 12px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 4;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+            background: rgba(255, 255, 255, 0.94);
+            border: 1px solid var(--indigo-line);
+            color: var(--indigo-dark);
+            padding: 0.35rem 0.8rem;
+            border-radius: 999px;
+            font-size: 0.76rem;
+            font-weight: 900;
+            white-space: nowrap;
+            box-shadow: 0 6px 14px rgba(30, 27, 75, 0.1);
+        }
+
+        .scene-badge::before {
+            content: "📏";
+            font-size: 0.85rem;
+        }
+
+        .desk-line {
+            position: absolute;
+            left: 0;
+            right: 0;
+            bottom: 30px;
+            height: 6px;
+            background: linear-gradient(90deg, #cbd5e1, #94a3b8, #cbd5e1);
+            border-radius: 999px;
+            z-index: 1;
+        }
+
+        .sim-person {
+            position: absolute;
+            left: 16px;
+            bottom: 38px;
+            z-index: 3;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2px;
+            transition: filter 0.2s ease;
+        }
+
+        .person-emoji {
+            font-size: 3.1rem;
+            line-height: 1;
+            filter: drop-shadow(0 8px 10px rgba(30, 27, 75, 0.18));
+        }
+
+        .person-tag {
+            background: #ffffff;
+            border: 1px solid var(--indigo-line);
+            color: var(--indigo-dark);
+            border-radius: 999px;
+            padding: 0.16rem 0.5rem;
+            font-size: 0.58rem;
+            font-weight: 900;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            box-shadow: 0 3px 8px rgba(30, 27, 75, 0.08);
+        }
+
+        .gap-line {
+            position: absolute;
+            bottom: 122px;
+            left: 0;
+            width: 0;
+            height: 0;
+            border-top: 2px dashed var(--state-color);
+            opacity: 0.7;
+            z-index: 2;
+            transition: border-color 0.2s ease;
+        }
+
+        .gap-line::before,
+        .gap-line::after {
+            content: "";
+            position: absolute;
+            top: -5px;
+            width: 8px;
+            height: 8px;
+            border-top: 2px solid var(--state-color);
+            border-right: 2px solid var(--state-color);
+        }
+
+        .gap-line::before {
+            left: 0;
+            transform: rotate(-135deg);
+        }
+
+        .gap-line::after {
+            right: 0;
+            transform: rotate(45deg);
+        }
+
+        .sim-monitor {
+            position: absolute;
+            bottom: 38px;
+            left: 100px;
+            width: 190px;
+            z-index: 3;
+        }
+
+        .monitor-frame {
+            background: var(--indigo-deep);
+            border: 2px solid #312e81;
+            border-radius: 12px;
+            padding: 7px;
+            box-shadow: 0 12px 24px rgba(30, 27, 75, 0.24);
+            transition: box-shadow 0.2s ease;
+        }
+
+        .monitor-screen {
+            position: relative;
+            height: 110px;
+            border-radius: 7px;
+            overflow: hidden;
+            display: grid;
+            place-items: center;
+            background:
+                radial-gradient(circle at 78% 18%, rgba(255, 255, 255, 0.22), transparent 34%),
+                linear-gradient(135deg, #312e81, #4f46e5);
+        }
+
+        .monitor-screen::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background-image:
+                linear-gradient(rgba(199, 210, 254, 0.14) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(199, 210, 254, 0.14) 1px, transparent 1px);
+            background-size: 18px 18px;
+        }
+
+        .screen-code {
+            position: relative;
+            z-index: 2;
+            color: #e0e7ff;
+            font-family: Consolas, Monaco, monospace;
+            font-size: 1.15rem;
+            font-weight: 800;
+            letter-spacing: 0.08em;
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+        }
+
+        .monitor-neck {
+            width: 16px;
+            height: 13px;
+            margin: 0 auto;
+            background: #312e81;
+        }
+
+        .monitor-base {
+            width: 78px;
+            height: 8px;
+            margin: 0 auto;
+            border-radius: 0 0 6px 6px;
+            background: var(--indigo-deep);
+            box-shadow: 0 5px 9px rgba(30, 27, 75, 0.16);
+        }
+
+        .monitor-tag {
+            position: absolute;
+            top: -11px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #ffffff;
+            border: 1px solid var(--indigo-line);
+            color: var(--indigo-dark);
+            border-radius: 999px;
+            padding: 0.14rem 0.48rem;
+            font-size: 0.56rem;
+            font-weight: 900;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            white-space: nowrap;
+            box-shadow: 0 3px 8px rgba(30, 27, 75, 0.08);
+        }
+
+        .sim-scene[data-state="near"] .monitor-frame {
+            box-shadow: 0 0 0 4px rgba(225, 29, 72, 0.18), 0 12px 26px rgba(159, 18, 57, 0.26);
+        }
+
+        .sim-scene[data-state="ideal"] .monitor-frame {
+            box-shadow: 0 0 0 4px rgba(22, 163, 74, 0.16), 0 12px 26px rgba(22, 101, 52, 0.22);
+        }
+
+        .sim-scene[data-state="far"] .monitor-frame {
+            box-shadow: 0 0 0 4px rgba(234, 88, 12, 0.18), 0 12px 26px rgba(154, 52, 18, 0.24);
+        }
+
+        .sim-scene[data-state="near"] .person-emoji {
+            filter: drop-shadow(0 8px 10px rgba(225, 29, 72, 0.22));
+        }
+
+        .sim-scene[data-state="far"] .person-emoji {
+            filter: drop-shadow(0 8px 10px rgba(234, 88, 12, 0.22));
+        }
+
+        .sim-readout {
+            display: grid;
+            grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.65fr);
+            gap: 0.8rem;
+            margin-bottom: 1rem;
+        }
+
+        .distance-display {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            gap: 0.1rem;
+            border-radius: 14px;
+            border: 1px solid var(--indigo-line);
+            background: #eef2ff;
+            padding: 0.9rem 1rem;
+        }
+
+        .distance-display > span {
+            color: var(--indigo-dark);
+            font-size: 0.65rem;
+            font-weight: 900;
+            letter-spacing: 0.07em;
+            text-transform: uppercase;
+        }
+
+        .distance-display strong {
+            color: var(--state-color);
+            font-size: 2.05rem;
+            line-height: 1.05;
+            font-weight: 900;
+            transition: color 0.2s ease;
+        }
+
+        .distance-display strong small {
+            font-size: 0.85rem;
+            font-weight: 800;
+            letter-spacing: 0.03em;
+        }
+
+        .status-box {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+            border-radius: 14px;
+            border: 1px solid transparent;
+            padding: 0.9rem 1rem;
+            transition: background 0.2s ease, border-color 0.2s ease;
+        }
+
+        .status-box.is-near {
+            background: #fff1f2;
+            border-color: #fecdd3;
+            color: #be123c;
+        }
+
+        .status-box.is-ideal {
+            background: #f0fdf4;
+            border-color: #bbf7d0;
+            color: #15803d;
+        }
+
+        .status-box.is-far {
+            background: #fff7ed;
+            border-color: #fed7aa;
+            color: #c2410c;
+        }
+
+        .status-icon {
+            width: 40px;
+            height: 40px;
+            flex-shrink: 0;
+            display: grid;
+            place-items: center;
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.75);
+            font-size: 1.3rem;
+            box-shadow: 0 3px 9px rgba(15, 23, 42, 0.07);
+        }
+
+        .status-copy {
+            min-width: 0;
+        }
+
+        .status-copy strong {
+            display: block;
+            font-size: 0.88rem;
+            line-height: 1.35;
+            font-weight: 900;
+        }
+
+        .status-copy p {
+            margin: 0.2rem 0 0;
+            color: #475569;
+            font-size: 0.78rem;
+            line-height: 1.5;
+        }
+
+        .slider-block {
+            border-radius: 14px;
+            border: 1px solid var(--border);
+            background: #f8fafc;
+            padding: 0.95rem 1rem 0.8rem;
+        }
+
+        .slider-label-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 0.6rem;
+            flex-wrap: wrap;
+            margin-bottom: 0.65rem;
+        }
+
+        .slider-label {
+            color: var(--ink);
+            font-size: 0.78rem;
+            font-weight: 800;
+        }
+
+        .slider-zone-legend {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.35rem;
+        }
+
+        .slider-zone-legend span {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.25rem;
+            font-size: 0.6rem;
+            font-weight: 800;
+            color: #475569;
+        }
+
+        .zone-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            display: inline-block;
+        }
+
+        .zone-dot.near { background: #fb7185; }
+        .zone-dot.ideal { background: #4ade80; }
+        .zone-dot.far { background: #fb923c; }
+
+        .slider-wrap input[type="range"] {
+            -webkit-appearance: none;
+            appearance: none;
+            display: block;
+            width: 100%;
+            height: 14px;
+            margin: 0;
+            border-radius: 999px;
+            border: 1px solid #dbe3ef;
+            background: linear-gradient(90deg, #fda4af 0 28.57%, #86efac 28.57% 57.14%, #fdba74 57.14% 100%);
+            box-shadow: inset 0 1px 2px rgba(15, 23, 42, 0.09);
+            cursor: pointer;
+            outline: none;
+        }
+
+        .slider-wrap input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background: #ffffff;
+            border: 6px solid var(--indigo);
+            box-shadow: 0 4px 12px rgba(79, 70, 229, 0.35);
+            cursor: grab;
+            transition: transform 0.15s ease, box-shadow 0.15s ease;
+        }
+
+        .slider-wrap input[type="range"]:active::-webkit-slider-thumb {
+            cursor: grabbing;
+            transform: scale(1.08);
+        }
+
+        .slider-wrap input[type="range"]::-moz-range-track {
+            height: 14px;
+            border-radius: 999px;
+            background: linear-gradient(90deg, #fda4af 0 28.57%, #86efac 28.57% 57.14%, #fdba74 57.14% 100%);
+        }
+
+        .slider-wrap input[type="range"]::-moz-range-thumb {
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: #ffffff;
+            border: 6px solid var(--indigo);
+            box-shadow: 0 4px 12px rgba(79, 70, 229, 0.35);
+            cursor: grab;
+        }
+
+        .slider-wrap input[type="range"]:focus-visible {
+            box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.2), inset 0 1px 2px rgba(15, 23, 42, 0.09);
+        }
+
+        .slider-scale {
+            position: relative;
+            height: 1.15rem;
+            margin-top: 0.55rem;
+            color: var(--muted);
+            font-size: 0.64rem;
+            font-weight: 700;
+        }
+
+        .slider-scale span {
+            position: absolute;
+            top: 0;
+            transform: translateX(-50%);
+            white-space: nowrap;
+        }
+
+        .slider-scale span:nth-child(1) {
+            left: 0;
+            transform: none;
+        }
+
+        .slider-scale span:nth-child(2) {
+            left: 28.57%;
+        }
+
+        .slider-scale span:nth-child(3) {
+            left: 57.14%;
+        }
+
+        .slider-scale span:nth-child(4) {
+            right: 0;
+            transform: none;
+        }
+
+        .sim-note {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            margin-top: 0.85rem;
+            background: #eef2ff;
+            border: 1px solid var(--indigo-line);
+            border-left: 5px solid var(--indigo);
+            border-radius: 0 11px 11px 0;
+            padding: 0.7rem 0.85rem;
+        }
+
+        .sim-note span {
+            font-size: 1.05rem;
+            flex-shrink: 0;
+        }
+
+        .sim-note p {
+            margin: 0;
+            color: var(--indigo-deep);
+            font-size: 0.78rem;
+            line-height: 1.45;
+        }
+
+        /* ==========================================
+           TOMBOL PANDUAN POSTUR
+        ========================================== */
+        .rules-card {
+            margin-top: 1.5rem;
+            padding: 1.9rem;
+        }
+
+        .section-title-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 0.75rem;
+            flex-wrap: wrap;
+            margin-bottom: 1rem;
+        }
+
+        .rules-card h2 {
             display: flex;
             align-items: center;
             gap: 0.5rem;
-            border-left: 4px solid #4f46e5;
+            font-size: 1.3rem;
+            line-height: 1.3;
+            color: var(--ink);
+            border-left: 4px solid var(--indigo);
             padding-left: 0.75rem;
+            margin: 0;
         }
-        .k3-content-section p, .k3-content-section ul {
-            font-size: 1rem;
-            color: #475569;
-            line-height: 1.65;
-            margin-bottom: 1rem;
+
+        .section-hint {
+            color: var(--muted);
+            font-size: 0.74rem;
+            font-weight: 600;
         }
-        .k3-content-section ul {
-            padding-left: 1.5rem;
+
+        .rule-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 1rem;
         }
-        .k3-content-section ul li {
-            margin-bottom: 0.5rem;
+
+        .rule-btn {
+            position: relative;
+            display: block;
+            width: 100%;
+            min-height: 190px;
+            text-align: left;
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            border-radius: 16px;
+            padding: 1.15rem;
+            color: #ffffff;
+            font-family: inherit;
+            cursor: pointer;
+            overflow: hidden;
+            isolation: isolate;
+            box-shadow: 0 8px 22px rgba(30, 27, 75, 0.16);
+            transition: transform 0.22s ease, box-shadow 0.22s ease, filter 0.22s ease;
         }
-        .callout-box {
-            background: #f0fdf4;
-            border-left: 4px solid #16a34a;
-            padding: 1.25rem;
-            border-radius: 0 12px 12px 0;
-            margin: 1.5rem 0;
+
+        .rule-btn::before {
+            content: "";
+            position: absolute;
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            right: -55px;
+            top: -65px;
+            background: rgba(255, 255, 255, 0.12);
+            z-index: -1;
         }
-        .callout-box.warn {
-            background: #fff7ed;
-            border-left-color: #ea580c;
+
+        .rule-btn::after {
+            content: "";
+            position: absolute;
+            width: 95px;
+            height: 95px;
+            border-radius: 50%;
+            right: 20px;
+            bottom: -60px;
+            background: rgba(255, 255, 255, 0.08);
+            z-index: -1;
         }
-        .callout-box h4 {
-            margin: 0 0 0.5rem 0;
-            color: #14532d;
-            font-size: 1.05rem;
+
+        .rule-btn.duduk {
+            background: linear-gradient(135deg, #4f46e5, #312e81);
         }
-        .callout-box.warn h4 {
-            color: #7c2d12;
+
+        .rule-btn.mata {
+            background: linear-gradient(135deg, #6366f1, #4338ca);
         }
-        .source-link-block {
-            margin-top: 2.5rem;
-            padding-top: 1.5rem;
-            border-top: 1px solid #e2e8f0;
+
+        .rule-btn.sop {
+            background: linear-gradient(135deg, #4338ca, #1e1b4b);
         }
-        .source-btn {
+
+        .rule-btn:hover,
+        .rule-btn:focus-visible {
+            transform: translateY(-6px);
+            box-shadow: 0 16px 32px rgba(30, 27, 75, 0.3);
+            filter: brightness(1.05);
+            outline: none;
+        }
+
+        .rule-btn:focus-visible {
+            box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.3), 0 16px 32px rgba(30, 27, 75, 0.3);
+        }
+
+        .rule-btn:active {
+            transform: translateY(-2px);
+            filter: brightness(0.97);
+        }
+
+        .rule-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 0.75rem;
+            margin-bottom: 0.8rem;
+        }
+
+        .rule-icon {
+            width: 44px;
+            height: 44px;
+            border-radius: 13px;
+            display: grid;
+            place-items: center;
+            background: rgba(255, 255, 255, 0.16);
+            border: 1px solid rgba(255, 255, 255, 0.22);
+            font-size: 1.35rem;
+            flex-shrink: 0;
+        }
+
+        .rule-arrow {
+            width: 29px;
+            height: 29px;
+            border-radius: 50%;
+            display: grid;
+            place-items: center;
+            background: rgba(255, 255, 255, 0.14);
+            font-size: 0.9rem;
+            font-weight: 800;
+            transition: transform 0.2s ease, background 0.2s ease;
+        }
+
+        .rule-btn:hover .rule-arrow {
+            transform: translate(2px, -2px);
+            background: rgba(255, 255, 255, 0.25);
+        }
+
+        .rule-btn b {
+            display: block;
+            color: #ffffff;
+            font-size: 1.02rem;
+            line-height: 1.3;
+            letter-spacing: 0.01em;
+        }
+
+        .rule-btn small {
+            display: block;
+            color: rgba(255, 255, 255, 0.86);
+            font-size: 0.76rem;
+            line-height: 1.45;
+            margin-top: 0.3rem;
+            max-width: 280px;
+        }
+
+        .rule-cta {
             display: inline-flex;
             align-items: center;
-            gap: 0.5rem;
-            background: #f8fafc;
-            border: 1px solid #cbd5e1;
-            padding: 0.5rem 1rem;
-            border-radius: 8px;
-            font-size: 0.85rem;
-            color: #475569;
-            text-decoration: none;
-            transition: all 0.2s;
+            gap: 0.25rem;
+            margin-top: 0.85rem;
+            color: #ffffff;
+            font-size: 0.7rem;
+            font-weight: 800;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.45);
+            padding-bottom: 0.1rem;
         }
-        .source-btn:hover {
-            background: #eff6ff;
-            border-color: #3b82f6;
-            color: #1d4ed8;
+
+        .golden-rule {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            background: #eef2ff;
+            border: 1px solid var(--indigo-line);
+            border-left: 5px solid var(--indigo);
+            border-radius: 0 13px 13px 0;
+            padding: 0.85rem 1rem;
+            margin-top: 1rem;
+        }
+
+        .golden-rule span {
+            font-size: 1.25rem;
+            flex-shrink: 0;
+        }
+
+        .golden-rule p {
+            margin: 0;
+            color: var(--indigo-deep);
+            font-size: 0.82rem;
+            line-height: 1.5;
+        }
+
+        /* ==========================================
+           MODAL PANDUAN
+        ========================================== */
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+            background: rgba(15, 23, 42, 0.64);
+            backdrop-filter: blur(5px);
+            overflow-y: auto;
+        }
+
+        .modal-overlay[hidden] {
+            display: none !important;
+        }
+
+        .modal-card {
+            position: relative;
+            width: min(590px, 100%);
+            max-height: calc(100dvh - 2rem);
+            overflow-y: auto;
+            background: #ffffff;
+            border-radius: 20px;
+            border-top: 6px solid var(--indigo);
+            box-shadow: 0 28px 70px rgba(2, 6, 23, 0.36);
+            padding: 1.4rem;
+            animation: modal-in 0.26s ease both;
+        }
+
+        @keyframes modal-in {
+            from { opacity: 0; transform: translateY(18px) scale(0.98); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 0.8rem;
+            right: 0.8rem;
+            z-index: 2;
+            width: 34px;
+            height: 34px;
+            display: grid;
+            place-items: center;
+            border-radius: 10px;
+            border: 1px solid var(--border);
+            background: #f8fafc;
+            color: #475569;
+            font-family: inherit;
+            font-size: 1.15rem;
+            font-weight: 800;
+            line-height: 1;
+            cursor: pointer;
+            transition: all 0.18s ease;
+        }
+
+        .modal-close:hover,
+        .modal-close:focus-visible {
+            background: #eef2ff;
+            border-color: var(--indigo-line);
+            color: var(--indigo-dark);
+            outline: none;
+            transform: rotate(4deg);
+        }
+
+        .modal-illustration {
+            position: relative;
+            display: grid;
+            place-items: center;
+            min-height: 185px;
+            border-radius: 14px;
+            border: 1px dashed var(--indigo-line);
+            background:
+                radial-gradient(circle at 18% 20%, rgba(79, 70, 229, 0.1) 0 2px, transparent 2.5px),
+                linear-gradient(135deg, #eef2ff, #e0e7ff);
+            background-size: 22px 22px, auto;
+            overflow: hidden;
+            margin-bottom: 1rem;
+        }
+
+        .modal-illustration::before {
+            content: "ILUSTRASI";
+            position: absolute;
+            top: 0.55rem;
+            left: 0.65rem;
+            color: var(--indigo-dark);
+            font-size: 0.58rem;
+            font-weight: 900;
+            letter-spacing: 0.12em;
+            opacity: 0.65;
+        }
+
+        .stickman-img {
+            display: block;
+            max-width: 100%;
+            max-height: 210px;
+            object-fit: contain;
+            padding: 0.65rem;
+        }
+
+        .stickman-fallback {
+            display: none;
+            font-size: 4.2rem;
+            line-height: 1;
+            filter: drop-shadow(0 8px 12px rgba(30, 27, 75, 0.18));
+        }
+
+        .modal-illustration.is-missing .stickman-img {
+            display: none;
+        }
+
+        .modal-illustration.is-missing .stickman-fallback {
+            display: block;
+        }
+
+        .modal-kicker {
+            display: inline-block;
+            color: var(--indigo);
+            font-size: 0.66rem;
+            font-weight: 900;
+            letter-spacing: 0.09em;
+            text-transform: uppercase;
+            margin-bottom: 0.25rem;
+        }
+
+        .modal-card h3 {
+            color: var(--indigo-deep);
+            font-size: 1.35rem;
+            line-height: 1.25;
+            margin: 0;
+            padding-right: 2rem;
+        }
+
+        .modal-lead {
+            color: #64748b;
+            font-size: 0.84rem;
+            line-height: 1.55;
+            margin: 0.4rem 0 0;
+        }
+
+        .modal-steps {
+            list-style: none;
+            counter-reset: step;
+            display: grid;
+            gap: 0.55rem;
+            padding: 0;
+            margin: 1rem 0 0;
+        }
+
+        .modal-steps li {
+            position: relative;
+            counter-increment: step;
+            min-height: auto;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 0.25rem;
+            padding: 0.75rem 0.8rem 0.75rem 2.85rem;
+            background: #eef2ff;
+            border: 1px solid var(--indigo-line);
+            border-radius: 12px;
+            color: #1e1b4b;
+            font-size: 0.85rem;
+            font-weight: 600;
+            line-height: 1.45;
+        }
+
+        .modal-steps li::before {
+            content: counter(step);
+            position: absolute;
+            left: 0.75rem;
+            top: 0.75rem;
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            display: grid;
+            place-items: center;
+            background: var(--indigo);
+            color: #ffffff;
+            font-size: 0.72rem;
+            font-weight: 900;
+            box-shadow: 0 3px 8px rgba(79, 70, 229, 0.25);
+        }
+
+        .modal-steps b {
+            display: block;
+            color: var(--indigo-dark);
+            margin-bottom: 0.2rem;
+        }
+
+        .modal-steps .step-detail {
+            display: block;
+            width: 100%;
+            font-weight: 400;
+            opacity: 0.9;
+        }
+
+        .modal-footer {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 0.8rem;
+            flex-wrap: wrap;
+            margin-top: 1rem;
+            padding-top: 0.9rem;
+            border-top: 1px solid #f1f5f9;
+        }
+
+        .modal-reminder {
+            color: var(--indigo-dark);
+            background: var(--indigo-soft);
+            border-radius: 8px;
+            padding: 0.4rem 0.6rem;
+            font-size: 0.72rem;
+            font-weight: 700;
+        }
+
+        .btn-modal-close {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.35rem;
+            border: 1px solid var(--indigo-dark);
+            background: linear-gradient(135deg, var(--indigo), var(--indigo-dark));
+            color: #ffffff;
+            border-radius: 10px;
+            padding: 0.62rem 1rem;
+            font-family: inherit;
+            font-size: 0.8rem;
+            font-weight: 800;
+            cursor: pointer;
+            box-shadow: 0 6px 15px rgba(79, 70, 229, 0.2);
+            transition: all 0.18s ease;
+        }
+
+        .btn-modal-close:hover,
+        .btn-modal-close:focus-visible {
+            background: linear-gradient(135deg, var(--indigo-dark), var(--indigo-deep));
+            transform: translateY(-1px);
+            outline: none;
+        }
+
+        .page-footer {
+            margin-top: 1.4rem;
+            text-align: center;
+            color: #64748b;
+            font-size: 0.73rem;
+            line-height: 1.6;
+        }
+
+        .page-footer p {
+            margin: 0.2rem 0;
+        }
+
+        @media (max-width: 820px) {
+            .sim-readout {
+                grid-template-columns: 1fr;
+            }
+
+            .rule-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .rule-btn {
+                min-height: 162px;
+            }
+        }
+
+        @media (max-width: 560px) {
+            .k3-page-wrapper {
+                margin: 1rem auto 2rem;
+                padding: 0 1rem;
+            }
+
+            .k3-card {
+                padding: 1.35rem;
+                border-radius: 16px;
+            }
+
+            .k3-header-block h1 {
+                font-size: 1.58rem;
+            }
+
+            .k3-header-block p {
+                font-size: 0.86rem;
+            }
+
+            .sim-card,
+            .rules-card {
+                padding: 1.3rem;
+            }
+
+            .sim-head h2 {
+                font-size: 1.25rem;
+            }
+
+            .sim-scene {
+                height: 205px;
+            }
+
+            .person-emoji {
+                font-size: 2.45rem;
+            }
+
+            .sim-monitor {
+                width: 118px;
+            }
+
+            .monitor-screen {
+                height: 84px;
+            }
+
+            .monitor-base {
+                width: 60px;
+            }
+
+            .monitor-frame {
+                padding: 5px;
+            }
+
+            .gap-line {
+                bottom: 103px;
+            }
+
+            .distance-display strong {
+                font-size: 1.75rem;
+            }
+
+            .modal-card {
+                padding: 1.1rem;
+                border-radius: 16px;
+            }
+
+            .modal-illustration {
+                min-height: 150px;
+            }
+
+            .stickman-img {
+                max-height: 170px;
+            }
+
+            .modal-card h3 {
+                font-size: 1.18rem;
+            }
+
+            .modal-steps li {
+                font-size: 0.81rem;
+            }
+
+            .modal-footer {
+                align-items: stretch;
+                flex-direction: column;
+            }
+
+            .btn-modal-close {
+                width: 100%;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *,
+            *::before,
+            *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
         }
     </style>
 </head>
@@ -140,80 +1233,437 @@
 
     <div class="k3-page-wrapper">
         <a href="index.html" class="btn-k3-back">⬅ Kembali ke Dashboard</a>
-        
-        <div class="k3-card">
-            <div class="k3-header-block">
-                <span class="k3-badge">Modul 01: Fondasi Fisik & Sikap Kerja</span>
-                <h1>🧘‍♂️ Aku dan PC: Kesehatan, Kerapihan & Sikap</h1>
+
+        <main class="k3-card">
+            <header class="k3-header-block">
+                <span class="k3-badge">Modul 01 · Interaktif Ergonomi &amp; Simulasi Jarak</span>
+                <h1>Duduk Nyaman, <span>Mata Aman.</span> Gas?</h1>
+                <p>Geser slider jarak monitor, cek statusnya, lalu hafalin tiga panduan postur lewat tombol di bawah.</p>
+                <div class="header-chips">
+                    <span>🎚️ Geser slider</span>
+                    <span>🧠 Hafalin 3 poin</span>
+                    <span>🪑 Postur aman</span>
+                </div>
+            </header>
+        </main>
+
+        <section class="k3-card sim-card" id="simulasi" aria-labelledby="sim-title">
+            <div class="sim-head">
+                <span class="sim-kicker">🎮 Simulasi Interaktif</span>
+                <h2 id="sim-title">Atur Jarak Aman Mata ke Layar</h2>
+                <p>Geser slider dari 30 cm sampai 100 cm. Lihat monitor bergerak dan cek status jaraknya.</p>
             </div>
 
-            <div class="k3-content-section">
-                <h2>1. Postur Kerja Sehat & Ergonomis (Menjaga Mata & Punggung)</h2>
-                <p>Saat berhadapan dengan komputer di Laboratorium, tubuh Anda adalah aset utama. Pembiasaan posisi duduk yang salah selama berbulan-bulan dapat menyebabkan kelelahan kronis dan gangguan saraf jangka panjang.</p>
-                
-                <div class="k3-visual-container">
-                    <svg width="400" height="220" viewBox="0 0 400 220" style="max-width:100%;">
-                        <!-- Meja dan PC -->
-                        <rect x="250" y="140" width="120" height="10" fill="#64748b"/>
-                        <rect x="300" y="100" width="10" height="40" fill="#475569"/>
-                        <rect x="280" y="50" width="15" height="50" fill="#334155"/>
-                        <!-- Monitor Screen -->
-                        <rect x="295" y="40" width="60" height="50" rx="4" fill="#1e293b"/>
-                        <rect x="300" y="45" width="50" height="40" fill="#38bdf8" opacity="0.3"/>
-                        
-                        <!-- Operator Sehat -->
-                        <circle cx="150" cy="50" r="16" fill="#cbd5e1" stroke="#4f46e5" stroke-width="3"/>
-                        <!-- Tulang Punggung Tegak -->
-                        <path d="M150 66 L150 140" stroke="#4f46e5" stroke-width="4" stroke-linecap="round"/>
-                        <!-- Lengan Duduk Siku 90 Derajat -->
-                        <path d="M150 80 L200 80 L230 110" stroke="#4f46e5" stroke-width="3" fill="none" stroke-linecap="round"/>
-                        <!-- Paha Sejajar Kursi -->
-                        <path d="M150 140 L200 140 L200 190" stroke="#4f46e5" stroke-width="4" fill="none" stroke-linecap="round"/>
-                        
-                        <!-- Jarak Pandang Line -->
-                        <path d="M166 50 L295 50" stroke="#ea580c" stroke-width="1.5" stroke-dasharray="4" fill="none"/>
-                        <text x="230" y="45" font-size="11" fill="#ea580c" font-weight="bold" text-anchor="middle">Jarak Aman 50-70 CM</text>
-                        
-                        <!-- Keterangan Label -->
-                        <text x="150" y="215" font-size="12" fill="#1e293b" font-weight="bold" text-anchor="middle">Tulang Belakang Tegak (90°)</text>
-                    </svg>
-                    <p style="font-size: 0.85rem; color:#64748b; margin-top:0.5rem;"><i>Gambar: Diagram Posisi Duduk Ergonomis Siswa Vokasi TI</i></p>
+            <div class="sim-scene" id="simScene" data-state="ideal">
+                <span class="scene-badge" id="sceneDistance">65 cm</span>
+
+                <div class="desk-line" aria-hidden="true"></div>
+
+                <div class="sim-person" id="simPerson" aria-hidden="true">
+                    <span class="person-emoji">🧑‍💻</span>
+                    <span class="person-tag">Kamu</span>
                 </div>
 
-                <ul>
-                    <li><b>Jarak Mata ke Layar:</b> Pertahankan jarak 50 sampai 70 cm untuk mengurangi beban radiasi cahaya langsung.</li>
-                    <li><b>Metode Relaksasi Aturan 20-20-20:</b> Setiap 20 menit berhadapan dengan layar monitor, wajib mengalihkan pandangan sejauh 20 kaki (6 meter) selama minimal 20 detik guna melemaskan otot siliaris mata.</li>
-                    <li><b>Posisi Kaki:</b> Kedua kaki harus menapak rata di lantai secara disiplin, dilarang melipat kaki ke atas kursi atau menyilangkan kaki dalam jangka waktu lama karena menghambat sirkulasi darah.</li>
-                </ul>
+                <div class="gap-line" id="gapLine" aria-hidden="true"></div>
+
+                <div class="sim-monitor" id="simMonitor" aria-hidden="true">
+                    <span class="monitor-tag">Monitor</span>
+                    <div class="monitor-frame">
+                        <div class="monitor-screen">
+                            <span class="screen-code">&lt;/&gt;</span>
+                        </div>
+                    </div>
+                    <div class="monitor-neck"></div>
+                    <div class="monitor-base"></div>
+                </div>
             </div>
 
-            <div class="callout-box">
-                <h4>⚡ Prosedur Operasional Baku (SOP) Daya Perangkat</h4>
-                <p><b>Menyalakan:</b> Periksa kerapihan colokan, aktifkan stavolt/UPS, baru tekan tombol power CPU dan dilanjutkan dengan tombol Monitor.<br>
-                <b>Mematikan:</b> Selesaikan seluruh pekerjaan, simpan script ke dalam folder, lalu klik menu <i>Shut Down</i> pada sistem operasi. Dilarang keras mematikan PC dengan langsung menekan tombol power fisik secara paksa!</p>
+            <div class="sim-readout">
+                <div class="distance-display">
+                    <span>Jarak mata ke layar</span>
+                    <strong><span id="distanceValue">65</span> <small>cm</small></strong>
+                </div>
+
+                <div class="status-box is-ideal" id="statusBox" role="status" aria-live="polite">
+                    <span class="status-icon" id="statusIcon" aria-hidden="true">✨</span>
+                    <div class="status-copy">
+                        <strong id="statusTitle">Mantap! Jarak ideal.</strong>
+                        <p id="statusText">Posisi ergonomis pas: mata aman, punggung tegak, siap ngoding.</p>
+                    </div>
+                </div>
             </div>
 
-            <div class="k3-content-section">
-                <h2>2. Nilai Karakter (Kedisiplinan, Tanggung Jawab & Integritas)</h2>
-                <p>Kerapihan struktur digital mencerminkan kerapihan jalan berfikir seorang programmer. Siswa diwajibkan membangun kebiasaan tertata sejak sesi pertama:</p>
-                <ul>
-                    <li><b>Struktur Penamaan Folder:</b> Semua file pekerjaan dilarang berserakan di desktop. Wajib dialokasikan ke dalam direktori khusus siswa: <code>D:/X-RPL/[Nama_Siswa]/Semester_1/Minggu_XX/</code>.</li>
-                    <li><b>Integritas Kode:</b> Mengamati dan mempelajari logika kode milik teman atau forum diskusi diperbolehkan, namun melakukan <i>Copy-Paste</i> massal tanpa memahami struktur alurnya adalah bentuk pelanggaran integritas akademik tertinggi di bidang rekayasa perangkat lunak.</li>
-                    <li><b>Peduli Teman Sejawat:</b> Mengembangkan prinsip kolaboratif. Siswa yang memiliki kecepatan pemahaman logika lebih tinggi berkewajiban membantu memberikan asistensi kepada rekan timnya yang tertinggal dalam sesi penulisan kode.</li>
-                </ul>
+            <div class="slider-block">
+                <div class="slider-label-row">
+                    <label for="distanceSlider" class="slider-label">Geser jarak mata ke layar</label>
+                    <div class="slider-zone-legend" aria-hidden="true">
+                        <span><i class="zone-dot near"></i> &lt; 50 cm</span>
+                        <span><i class="zone-dot ideal"></i> 50–70 cm</span>
+                        <span><i class="zone-dot far"></i> &gt; 70 cm</span>
+                    </div>
+                </div>
+
+                <div class="slider-wrap">
+                    <input type="range" id="distanceSlider" min="30" max="100" step="1" value="65"
+                        aria-describedby="statusText">
+                </div>
+
+                <div class="slider-scale" aria-hidden="true">
+                    <span>30 cm</span>
+                    <span>50 cm</span>
+                    <span>70 cm</span>
+                    <span>100 cm</span>
+                </div>
             </div>
 
-            <div class="callout-box warn">
-                <h4>⚠️ Catatan Kedisiplinan Guru</h4>
-                <p>Siswa yang membiarkan meja berantakan atau meletakkan file di desktop tanpa penamaan folder yang rapi akan diberikan konsekuensi penataan ulang manajemen penyimpanan komputer laboratorium secara mandiri.</p>
+            <div class="sim-note">
+                <span aria-hidden="true">💡</span>
+                <p><b>Target aman:</b> 50–70 cm. Lebih dekat bikin mata cepat lelah, lebih jauh bikin badan membungkuk.</p>
+            </div>
+        </section>
+
+        <section class="k3-card rules-card" id="panduan" aria-labelledby="panduan-title">
+            <div class="section-title-row">
+                <h2 id="panduan-title">📌 Pilih Panduan Postur</h2>
+                <span class="section-hint">Klik → baca 3 poin → hafalin</span>
             </div>
 
-            <div class="source-link-block">
-                <p style="font-size:0.85rem; color:#64748b; margin-bottom:0.5rem;">🌐 Sumber Pelajari Mandiri:</p>
-                <a href="https://www.osha.gov" target="_blank" class="source-btn">🔗 Panduan Kesehatan Ergonomis OSHA (International Standard)</a>
+            <div class="rule-grid">
+                <button type="button" class="rule-btn duduk" data-modal-target="modal-duduk" aria-haspopup="dialog">
+                    <span class="rule-top">
+                        <span class="rule-icon" aria-hidden="true">🪑</span>
+                        <span class="rule-arrow" aria-hidden="true">↗</span>
+                    </span>
+                    <b>Posisi Duduk &amp; Tulang Belakang</b>
+                    <small>Punggung tegak, kaki rata, siku nyaman. Bukan bungkuk.</small>
+                    <span class="rule-cta">Buka panduannya</span>
+                </button>
+
+                <button type="button" class="rule-btn mata" data-modal-target="modal-mata" aria-haspopup="dialog">
+                    <span class="rule-top">
+                        <span class="rule-icon" aria-hidden="true">👀</span>
+                        <span class="rule-arrow" aria-hidden="true">↗</span>
+                    </span>
+                    <b>Aturan 20-20-20 Mata</b>
+                    <small>Setiap 20 menit, lihat jauh 20 kaki selama 20 detik.</small>
+                    <span class="rule-cta">Buka panduannya</span>
+                </button>
+
+                <button type="button" class="rule-btn sop" data-modal-target="modal-sop" aria-haspopup="dialog">
+                    <span class="rule-top">
+                        <span class="rule-icon" aria-hidden="true">🖥️</span>
+                        <span class="rule-arrow" aria-hidden="true">↗</span>
+                    </span>
+                    <b>SOP Nyalakan &amp; Matikan PC</b>
+                    <small>Urutan power yang bener. Jangan asal cabut colokan.</small>
+                    <span class="rule-cta">Buka panduannya</span>
+                </button>
+            </div>
+
+            <div class="golden-rule">
+                <span aria-hidden="true">🧠</span>
+                <p><b>Aturan emas:</b> Jarak pas, punggung tegak, mata istirahat. Tiga kebiasaan, punggung dan mata selamat.</p>
+            </div>
+        </section>
+
+        <footer class="page-footer">
+            <p>⚠️ Halaman ini untuk latihan ergonomi. Saat praktik sungguhan, ikuti instruksi guru dan petugas K3 sekolah.</p>
+            <p>Mengacu pada panduan ergonomi OSHA dan UU No. 1 Tahun 1970 tentang Keselamatan Kerja Nasional.</p>
+        </footer>
+    </div>
+
+    <!-- ============================================================
+         MODAL 1: POSISI DUDUK & TULANG BELAKANG
+    ============================================================ -->
+    <div class="modal-overlay" id="modal-duduk" role="dialog" aria-modal="true" aria-labelledby="modal-duduk-title" hidden>
+        <div class="modal-card">
+            <button type="button" class="modal-close" data-close-modal aria-label="Tutup (X)">×</button>
+
+            <div class="modal-illustration">
+                <img src="stickman_duduk.png" alt="Ilustrasi" class="stickman-img">
+                <span class="stickman-fallback" aria-hidden="true">🪑</span>
+            </div>
+
+            <span class="modal-kicker">Panduan 01 · Postur</span>
+            <h3 id="modal-duduk-title">Posisi Duduk &amp; Tulang Belakang</h3>
+            <p class="modal-lead">Duduk dengan benar bukan sekadar gaya. Ini untuk melindungi tulang belakangmu saat kerja lama:</p>
+
+            <ol class="modal-steps">
+                <li><b>Duduk tegak, punggung bersandar.</b><span class="step-detail">Kedua kaki rata di lantai, jangan melipat kaki.</span></li>
+                <li><b>Siku ±90°, pergelangan lurus.</b><span class="step-detail">Atur kursi sehingga mata sejajar bagian atas layar monitor.</span></li>
+                <li><b>Jangan bungkuk atau menyilangkan kaki</b><span class="step-detail">terlalu lama. Berdiri dan regangkan badan tiap 20 menit.</span></li>
+            </ol>
+
+            <div class="modal-footer">
+                <span class="modal-reminder">🪑 Punggung tegak = fokus lancar.</span>
+                <button type="button" class="btn-modal-close" data-close-modal>Tutup (X)</button>
             </div>
         </div>
     </div>
+
+    <!-- ============================================================
+         MODAL 2: ATURAN 20-20-20
+    ============================================================ -->
+    <div class="modal-overlay" id="modal-mata" role="dialog" aria-modal="true" aria-labelledby="modal-mata-title" hidden>
+        <div class="modal-card">
+            <button type="button" class="modal-close" data-close-modal aria-label="Tutup (X)">×</button>
+
+            <div class="modal-illustration">
+                <img src="stickman_mata.png" alt="Ilustrasi" class="stickman-img">
+                <span class="stickman-fallback" aria-hidden="true">👀</span>
+            </div>
+
+            <span class="modal-kicker">Panduan 02 · Relaksasi Mata</span>
+            <h3 id="modal-mata-title">Aturan 20-20-20 Mata</h3>
+            <p class="modal-lead">Mata juga perlu istirahat. Jangan memaksa mata melotot terus-terusan:</p>
+
+            <ol class="modal-steps">
+                <li><b>Tiap 20 menit di depan layar,</b><span class="step-detail">berhenti sejenak dari pekerjaan.</span></li>
+                <li><b>Alihkan pandangan ke objek sejauh 20 kaki (±6 meter)</b><span class="step-detail">dari posisi kamu.</span></li>
+                <li><b>Tahan 20 detik sambil berkedip,</b><span class="step-detail">lalu lanjut kerja. Ulangi setiap 20 menit.</span></li>
+            </ol>
+
+            <div class="modal-footer">
+                <span class="modal-reminder">👀 20 menit · 20 kaki · 20 detik.</span>
+                <button type="button" class="btn-modal-close" data-close-modal>Tutup (X)</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================================
+         MODAL 3: SOP NYALAKAN & MATIKAN PC
+    ============================================================ -->
+    <div class="modal-overlay" id="modal-sop" role="dialog" aria-modal="true" aria-labelledby="modal-sop-title" hidden>
+        <div class="modal-card">
+            <button type="button" class="modal-close" data-close-modal aria-label="Tutup (X)">×</button>
+
+            <div class="modal-illustration">
+                <img src="stickman_sop.png" alt="Ilustrasi" class="stickman-img">
+                <span class="stickman-fallback" aria-hidden="true">🖥️</span>
+            </div>
+
+            <span class="modal-kicker">Panduan 03 · Daya Perangkat</span>
+            <h3 id="modal-sop-title">SOP Nyalakan &amp; Matikan PC</h3>
+            <p class="modal-lead">Urutan pemakaian daya yang benar membuat PC awet. Mencabut colokan sembarangan berisiko merusak perangkat:</p>
+
+            <ol class="modal-steps">
+                <li><b>Nyalakan berurutan:</b><span class="step-detail">cek colokan → stavolt/UPS → CPU → monitor.</span></li>
+                <li><b>Matikan lewat Shut Down.</b><span class="step-detail">Simpan file dulu, tunggu layar mati, baru matikan stavolt.</span></li>
+                <li><b>Jangan menekan tombol power paksa</b><span class="step-detail">atau mencabut colokan saat PC masih nyala.</span></li>
+            </ol>
+
+            <div class="modal-footer">
+                <span class="modal-reminder">🖥️ Shut Down dulu, baru matikan daya.</span>
+                <button type="button" class="btn-modal-close" data-close-modal>Tutup (X)</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        /* ============================================================
+           1. SIMULASI JARAK MONITOR
+        ============================================================ */
+        (function () {
+            "use strict";
+
+            const slider = document.getElementById("distanceSlider");
+            const simCard = document.getElementById("simulasi");
+            const scene = document.getElementById("simScene");
+            const person = document.getElementById("simPerson");
+            const monitor = document.getElementById("simMonitor");
+            const gapLine = document.getElementById("gapLine");
+            const distanceValue = document.getElementById("distanceValue");
+            const sceneDistance = document.getElementById("sceneDistance");
+            const statusBox = document.getElementById("statusBox");
+            const statusIcon = document.getElementById("statusIcon");
+            const statusTitle = document.getElementById("statusTitle");
+            const statusText = document.getElementById("statusText");
+
+            const STATUS = {
+                near: {
+                    state: "near",
+                    color: "#e11d48",
+                    icon: "⚠️",
+                    title: "Wah, terlalu dekat, bro!",
+                    text: "Radiasi layar bikin mata cepat minus dan lelah. Mundurin dikit, jangan nempel layar."
+                },
+                ideal: {
+                    state: "ideal",
+                    color: "#16a34a",
+                    icon: "✨",
+                    title: "Mantap! Jarak ideal.",
+                    text: "Posisi ergonomis pas: mata aman, punggung tegak, siap ngoding."
+                },
+                far: {
+                    state: "far",
+                    color: "#ea580c",
+                    icon: "⚠️",
+                    title: "Kepanjangan tanganmu!",
+                    text: "Terlalu jauh bikin mata melotot dan badan membungkuk. Maju sedikit, biar rileks."
+                }
+            };
+
+            function getStatus(value) {
+                if (value < 50) return STATUS.near;
+                if (value <= 70) return STATUS.ideal;
+                return STATUS.far;
+            }
+
+            function placeMonitor(value) {
+                const sceneWidth = scene.clientWidth;
+                const monitorWidth = monitor.offsetWidth;
+                const personWidth = person.offsetWidth;
+                const personLeft = person.offsetLeft;
+
+                const minLeft = personLeft + personWidth + 18;
+                const maxLeft = Math.max(minLeft, sceneWidth - monitorWidth - 18);
+                const ratio = (value - 30) / 70;
+                const left = minLeft + ratio * (maxLeft - minLeft);
+
+                monitor.style.left = left + "px";
+
+                const personRight = personLeft + personWidth;
+                const lineLeft = personRight + 8;
+                const lineWidth = Math.max(0, left - personRight - 16);
+
+                gapLine.style.left = lineLeft + "px";
+                gapLine.style.width = lineWidth + "px";
+                gapLine.style.opacity = lineWidth > 18 ? "0.7" : "0";
+            }
+
+            function updateSimulation() {
+                const value = Number(slider.value);
+                const status = getStatus(value);
+
+                distanceValue.textContent = String(value);
+                sceneDistance.textContent = value + " cm";
+                slider.setAttribute("aria-valuetext", value + " sentimeter, " + status.title);
+
+                statusBox.className = "status-box is-" + status.state;
+                statusIcon.textContent = status.icon;
+                statusTitle.textContent = status.title;
+                statusText.textContent = status.text;
+
+                scene.dataset.state = status.state;
+                simCard.style.setProperty("--state-color", status.color);
+
+                placeMonitor(value);
+            }
+
+            slider.addEventListener("input", updateSimulation);
+
+            window.addEventListener("resize", function () {
+                placeMonitor(Number(slider.value));
+            });
+
+            updateSimulation();
+        })();
+
+        /* ============================================================
+           2. MODAL PANDUAN POSTUR
+        ============================================================ */
+        (function () {
+            "use strict";
+
+            const overlays = Array.from(document.querySelectorAll(".modal-overlay"));
+            const openButtons = document.querySelectorAll("[data-modal-target]");
+            const closeButtons = document.querySelectorAll("[data-close-modal]");
+            let lastFocusedElement = null;
+
+            function getActiveOverlay() {
+                return overlays.find(function (overlay) {
+                    return !overlay.hidden;
+                }) || null;
+            }
+
+            function openModal(modalId) {
+                const target = document.getElementById(modalId);
+                if (!target) return;
+
+                lastFocusedElement = document.activeElement;
+                overlays.forEach(function (overlay) {
+                    overlay.hidden = overlay !== target;
+                });
+
+                target.hidden = false;
+                document.body.classList.add("modal-open");
+
+                const closeButton = target.querySelector(".modal-close");
+                window.setTimeout(function () {
+                    if (closeButton && !target.hidden) closeButton.focus();
+                }, 40);
+            }
+
+            function closeModal() {
+                overlays.forEach(function (overlay) {
+                    overlay.hidden = true;
+                });
+                document.body.classList.remove("modal-open");
+
+                if (lastFocusedElement && typeof lastFocusedElement.focus === "function") {
+                    lastFocusedElement.focus();
+                }
+                lastFocusedElement = null;
+            }
+
+            openButtons.forEach(function (button) {
+                button.addEventListener("click", function () {
+                    openModal(button.dataset.modalTarget);
+                });
+            });
+
+            closeButtons.forEach(function (button) {
+                button.addEventListener("click", closeModal);
+            });
+
+            overlays.forEach(function (overlay) {
+                overlay.addEventListener("click", function (event) {
+                    if (event.target === overlay) closeModal();
+                });
+            });
+
+            document.addEventListener("keydown", function (event) {
+                const activeOverlay = getActiveOverlay();
+
+                if (event.key === "Escape" && activeOverlay) {
+                    closeModal();
+                    return;
+                }
+
+                if (event.key !== "Tab" || !activeOverlay) return;
+
+                const focusable = Array.from(activeOverlay.querySelectorAll(
+                    'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+                )).filter(function (element) {
+                    return !element.disabled && element.offsetParent !== null;
+                });
+
+                if (focusable.length === 0) return;
+
+                const first = focusable[0];
+                const last = focusable[focusable.length - 1];
+
+                if (event.shiftKey && document.activeElement === first) {
+                    event.preventDefault();
+                    last.focus();
+                } else if (!event.shiftKey && document.activeElement === last) {
+                    event.preventDefault();
+                    first.focus();
+                }
+            });
+
+            /* Fallback saat file gambar stickman belum tersedia. */
+            document.querySelectorAll(".stickman-img").forEach(function (image) {
+                function markMissing() {
+                    const wrapper = image.closest(".modal-illustration");
+                    if (wrapper) wrapper.classList.add("is-missing");
+                }
+
+                image.addEventListener("error", markMissing, { once: true });
+                if (image.complete && image.naturalWidth === 0) markMissing();
+            });
+        })();
+    </script>
 
 </body>
 </html>

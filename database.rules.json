@@ -1,0 +1,23 @@
+{
+  "rules": {
+    "site_content": {
+      ".read": true,
+      ".write": "auth !== null",
+      ".indexOn": ["lastUpdated"]
+    },
+    "gallery_data": {
+      ".read": true,
+      ".write": true,
+      ".indexOn": ["timestamp"],
+      "$item": {
+        ".validate": "newData.hasChildren(['url_file', 'uploader', 'keperluan', 'datetime', 'timestamp']) && !newData.hasChildren(['admin', 'token', 'password', 'secret', 'key'])",
+        "url_file": { ".validate": "newData.isString() && newData.val().length > 0" },
+        "file_id": { ".validate": "newData.isString()" },
+        "uploader": { ".validate": "newData.isString() && newData.val().length > 0 && newData.val().length <= 80" },
+        "keperluan": { ".validate": "newData.isString() && newData.val().length > 0 && newData.val().length <= 80" },
+        "datetime": { ".validate": "newData.isString() && newData.val().length > 0" },
+        "timestamp": { ".validate": "newData.isNumber()" }
+      }
+    }
+  }
+}

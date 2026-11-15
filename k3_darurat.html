@@ -3,65 +3,1572 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Refleks Tanggap Darurat & Deteksi Bahaya Lab</title>
+    <title>Interactive Survival Guide &amp; Mini-Game K3</title>
     <link rel="stylesheet" href="style.css">
     <style>
-        .k3-page-wrapper { max-width: 900px; margin: 2rem auto; padding: 0 1.5rem; }
-        .btn-k3-back { display: inline-flex; align-items: center; gap: 0.5rem; background: #ffffff; border: 1px solid #e2e8f0; padding: 0.6rem 1.2rem; border-radius: 10px; color: #1e293b; font-weight: 600; text-decoration: none; transition: all 0.2s; margin-bottom: 1.5rem; }
-        .btn-k3-back:hover { background: #f1f5f9; color: #d97706; transform: translateX(-3px); }
-        .k3-card { background: #ffffff; border-radius: 18px; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05); padding: 2.5rem; border: 1px solid #e2e8f0; }
-        .k3-header-block { text-align: center; margin-bottom: 2.5rem; border-bottom: 2px dashed #e2e8f0; padding-bottom: 2rem; }
-        .k3-header-block h1 { font-size: 2.2rem; color: #9a3412; font-weight: 800; margin-top: 0.5rem; }
-        .k3-badge { background: #ffedd5; color: #9a3412; padding: 0.4rem 1rem; border-radius: 30px; font-size: 0.8rem; font-weight: 700; text-transform: uppercase; }
-        .k3-content-section { margin-bottom: 2rem; }
-        .k3-content-section h2 { font-size: 1.35rem; color: #1e293b; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem; border-left: 4px solid #ea580c; padding-left: 0.75rem; }
-        .k3-content-section p, .k3-content-section ul { font-size: 1rem; color: #475569; line-height: 1.65; margin-bottom: 1rem; }
-        .k3-content-section ul { padding-left: 1.5rem; }
-        .callout-box { background: #fff7ed; border-left: 4px solid #ea580c; padding: 1.25rem; border-radius: 0 12px 12px 0; margin: 1.5rem 0; }
-        .callout-box h4 { margin: 0 0 0.5rem 0; color: #7c2d12; font-size: 1.05rem; }
-        .source-link-block { margin-top: 2.5rem; padding-top: 1.5rem; border-top: 1px solid #e2e8f0; }
+        :root {
+            --darurat: #ea580c;
+            --darurat-dark: #9a3412;
+            --darurat-deep: #7c2d12;
+            --darurat-soft: #ffedd5;
+            --darurat-line: #fed7aa;
+            --page-bg: #f1f5f9;
+            --ink: #1e293b;
+            --muted: #64748b;
+            --border: #e2e8f0;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            background: var(--page-bg);
+            color: var(--ink);
+        }
+
+        body.modal-open {
+            overflow: hidden;
+        }
+
+        [hidden] {
+            display: none !important;
+        }
+
+        .k3-page-wrapper {
+            max-width: 1020px;
+            margin: 2rem auto 3rem;
+            padding: 0 1.25rem;
+        }
+
+        .btn-k3-back {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: #ffffff;
+            border: 1px solid var(--border);
+            padding: 0.6rem 1.1rem;
+            border-radius: 10px;
+            color: var(--ink);
+            font-family: inherit;
+            font-size: 0.85rem;
+            font-weight: 700;
+            text-decoration: none;
+            transition: all 0.2s ease;
+            margin-bottom: 1.5rem;
+        }
+
+        .btn-k3-back:hover {
+            background: #fff7ed;
+            border-color: var(--darurat-line);
+            color: var(--darurat-dark);
+            transform: translateX(-3px);
+        }
+
+        .k3-card {
+            background: #ffffff;
+            border-radius: 18px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+            padding: 2.25rem;
+            border: 1px solid var(--border);
+        }
+
+        .k3-header-block {
+            text-align: center;
+            margin-bottom: 2rem;
+            border-bottom: 2px dashed var(--darurat-line);
+            padding-bottom: 1.75rem;
+        }
+
+        .k3-badge {
+            display: inline-block;
+            background: var(--darurat-soft);
+            color: var(--darurat-dark);
+            padding: 0.4rem 1rem;
+            border-radius: 30px;
+            font-size: 0.72rem;
+            font-weight: 800;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+        }
+
+        .k3-header-block h1 {
+            font-size: 2.05rem;
+            line-height: 1.18;
+            color: var(--darurat-dark);
+            font-weight: 800;
+            margin: 0.7rem 0 0;
+        }
+
+        .k3-header-block h1 span {
+            color: var(--darurat);
+        }
+
+        .k3-header-block p {
+            max-width: 650px;
+            margin: 0.7rem auto 0;
+            color: var(--muted);
+            font-size: 0.93rem;
+            line-height: 1.6;
+        }
+
+        .header-chips {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 0.45rem;
+            margin-top: 1rem;
+        }
+
+        .header-chips span {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+            background: #f8fafc;
+            border: 1px solid var(--border);
+            color: #475569;
+            border-radius: 999px;
+            padding: 0.3rem 0.7rem;
+            font-size: 0.7rem;
+            font-weight: 700;
+        }
+
+        .k3-content-section {
+            margin-bottom: 0;
+        }
+
+        .section-title-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 0.75rem;
+            flex-wrap: wrap;
+            margin-bottom: 1rem;
+        }
+
+        .k3-content-section h2 {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 1.3rem;
+            line-height: 1.3;
+            color: var(--ink);
+            border-left: 4px solid var(--darurat);
+            padding-left: 0.75rem;
+            margin: 0;
+        }
+
+        .section-hint {
+            color: var(--muted);
+            font-size: 0.74rem;
+            font-weight: 600;
+        }
+
+        .emergency-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 1rem;
+        }
+
+        .emergency-btn {
+            position: relative;
+            display: block;
+            width: 100%;
+            min-height: 178px;
+            text-align: left;
+            border: 1px solid rgba(255, 255, 255, 0.16);
+            border-radius: 16px;
+            padding: 1.15rem;
+            color: #ffffff;
+            font-family: inherit;
+            cursor: pointer;
+            overflow: hidden;
+            isolation: isolate;
+            box-shadow: 0 8px 22px rgba(154, 52, 18, 0.17);
+            transition: box-shadow 0.22s ease, filter 0.22s ease;
+        }
+
+        .emergency-btn::before {
+            content: "";
+            position: absolute;
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            right: -55px;
+            top: -65px;
+            background: rgba(255, 255, 255, 0.12);
+            z-index: -1;
+        }
+
+        .emergency-btn::after {
+            content: "";
+            position: absolute;
+            width: 95px;
+            height: 95px;
+            border-radius: 50%;
+            right: 20px;
+            bottom: -60px;
+            background: rgba(255, 255, 255, 0.08);
+            z-index: -1;
+        }
+
+        .emergency-btn.fire {
+            background: linear-gradient(135deg, #ea580c, #c2410c);
+        }
+
+        .emergency-btn.alarm {
+            background: linear-gradient(135deg, #dc2626, #9a3412);
+        }
+
+        .emergency-btn.quake {
+            background: linear-gradient(135deg, #d97706, #9a3412);
+        }
+
+        .emergency-btn.shock {
+            background: linear-gradient(135deg, #f97316, #b91c1c);
+        }
+
+        .emergency-btn:hover,
+        .emergency-btn:focus-visible {
+            animation: emergency-shake 0.42s ease;
+            box-shadow: 0 14px 30px rgba(154, 52, 18, 0.3);
+            filter: brightness(1.04);
+            outline: none;
+        }
+
+        .emergency-btn:focus-visible {
+            box-shadow: 0 0 0 4px rgba(234, 88, 12, 0.3), 0 14px 30px rgba(154, 52, 18, 0.3);
+        }
+
+        .emergency-btn:active {
+            filter: brightness(0.97);
+        }
+
+        @keyframes emergency-shake {
+            0%, 100% { transform: scale(1.025) rotate(0deg); }
+            22% { transform: scale(1.035) rotate(-0.7deg); }
+            45% { transform: scale(1.035) rotate(0.7deg); }
+            68% { transform: scale(1.03) rotate(-0.4deg); }
+            84% { transform: scale(1.03) rotate(0.3deg); }
+        }
+
+        .emergency-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 0.75rem;
+            margin-bottom: 0.8rem;
+        }
+
+        .emergency-icon {
+            width: 44px;
+            height: 44px;
+            border-radius: 13px;
+            display: grid;
+            place-items: center;
+            background: rgba(255, 255, 255, 0.16);
+            border: 1px solid rgba(255, 255, 255, 0.22);
+            font-size: 1.35rem;
+            flex-shrink: 0;
+        }
+
+        .emergency-arrow {
+            width: 29px;
+            height: 29px;
+            border-radius: 50%;
+            display: grid;
+            place-items: center;
+            background: rgba(255, 255, 255, 0.14);
+            font-size: 0.9rem;
+            font-weight: 800;
+            transition: transform 0.2s ease, background 0.2s ease;
+        }
+
+        .emergency-btn:hover .emergency-arrow {
+            transform: translate(2px, -2px);
+            background: rgba(255, 255, 255, 0.25);
+        }
+
+        .emergency-btn b {
+            display: block;
+            color: #ffffff;
+            font-size: 1.02rem;
+            line-height: 1.3;
+            letter-spacing: 0.01em;
+        }
+
+        .emergency-btn small {
+            display: block;
+            color: rgba(255, 255, 255, 0.86);
+            font-size: 0.76rem;
+            line-height: 1.45;
+            margin-top: 0.3rem;
+            max-width: 280px;
+        }
+
+        .emergency-cta {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.25rem;
+            margin-top: 0.85rem;
+            color: #ffffff;
+            font-size: 0.7rem;
+            font-weight: 800;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.45);
+            padding-bottom: 0.1rem;
+        }
+
+        .golden-rule {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            background: #fff7ed;
+            border: 1px solid var(--darurat-line);
+            border-left: 5px solid var(--darurat);
+            border-radius: 0 13px 13px 0;
+            padding: 0.85rem 1rem;
+            margin-top: 1rem;
+        }
+
+        .golden-rule span {
+            font-size: 1.25rem;
+            flex-shrink: 0;
+        }
+
+        .golden-rule p {
+            margin: 0;
+            color: var(--darurat-deep);
+            font-size: 0.82rem;
+            line-height: 1.5;
+        }
+
+        /* ==========================================
+           MODAL DARURAT
+        ========================================== */
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+            background: rgba(15, 23, 42, 0.64);
+            backdrop-filter: blur(5px);
+            overflow-y: auto;
+        }
+
+        .modal-overlay[hidden] {
+            display: none !important;
+        }
+
+        .modal-card {
+            position: relative;
+            width: min(590px, 100%);
+            max-height: calc(100dvh - 2rem);
+            overflow-y: auto;
+            background: #ffffff;
+            border-radius: 20px;
+            border-top: 6px solid var(--darurat);
+            box-shadow: 0 28px 70px rgba(2, 6, 23, 0.36);
+            padding: 1.4rem;
+            animation: modal-in 0.26s ease both;
+        }
+
+        @keyframes modal-in {
+            from { opacity: 0; transform: translateY(18px) scale(0.98); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 0.8rem;
+            right: 0.8rem;
+            z-index: 2;
+            width: 34px;
+            height: 34px;
+            display: grid;
+            place-items: center;
+            border-radius: 10px;
+            border: 1px solid var(--border);
+            background: #f8fafc;
+            color: #475569;
+            font-family: inherit;
+            font-size: 1.15rem;
+            font-weight: 800;
+            line-height: 1;
+            cursor: pointer;
+            transition: all 0.18s ease;
+        }
+
+        .modal-close:hover,
+        .modal-close:focus-visible {
+            background: #fef2f2;
+            border-color: #fecaca;
+            color: #b91c1c;
+            outline: none;
+            transform: rotate(4deg);
+        }
+
+        .modal-illustration {
+            position: relative;
+            display: grid;
+            place-items: center;
+            min-height: 185px;
+            border-radius: 14px;
+            border: 1px dashed var(--darurat-line);
+            background:
+                radial-gradient(circle at 18% 20%, rgba(234, 88, 12, 0.09) 0 2px, transparent 2.5px),
+                linear-gradient(135deg, #fff7ed, #ffedd5);
+            background-size: 22px 22px, auto;
+            overflow: hidden;
+            margin-bottom: 1rem;
+        }
+
+        .modal-illustration::before {
+            content: "ILUSTRASI";
+            position: absolute;
+            top: 0.55rem;
+            left: 0.65rem;
+            color: #c2410c;
+            font-size: 0.58rem;
+            font-weight: 900;
+            letter-spacing: 0.12em;
+            opacity: 0.65;
+        }
+
+        .stickman-img {
+            display: block;
+            max-width: 100%;
+            max-height: 210px;
+            object-fit: contain;
+            padding: 0.65rem;
+        }
+
+        .stickman-fallback {
+            display: none;
+            font-size: 4.2rem;
+            line-height: 1;
+            filter: drop-shadow(0 8px 12px rgba(154, 52, 18, 0.18));
+        }
+
+        .modal-illustration.is-missing .stickman-img {
+            display: none;
+        }
+
+        .modal-illustration.is-missing .stickman-fallback {
+            display: block;
+        }
+
+        .modal-kicker {
+            display: inline-block;
+            color: var(--darurat);
+            font-size: 0.66rem;
+            font-weight: 900;
+            letter-spacing: 0.09em;
+            text-transform: uppercase;
+            margin-bottom: 0.25rem;
+        }
+
+        .modal-card h3 {
+            color: var(--darurat-deep);
+            font-size: 1.35rem;
+            line-height: 1.25;
+            margin: 0;
+            padding-right: 2rem;
+        }
+
+        .modal-lead {
+            color: #64748b;
+            font-size: 0.84rem;
+            line-height: 1.55;
+            margin: 0.4rem 0 0;
+        }
+
+        .modal-steps {
+            list-style: none;
+            counter-reset: step;
+            display: grid;
+            gap: 0.55rem;
+            padding: 0;
+            margin: 1rem 0 0;
+        }
+
+        .modal-steps li {
+            position: relative;
+            counter-increment: step;
+            min-height: auto;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 0.25rem;
+            padding: 0.75rem 0.8rem 0.75rem 2.85rem;
+            background: #fff7ed;
+            border: 1px solid var(--darurat-line);
+            border-radius: 12px;
+            color: #431407;
+            font-size: 0.85rem;
+            font-weight: 600;
+            line-height: 1.45;
+        }
+
+        .modal-steps li::before {
+            content: counter(step);
+            position: absolute;
+            left: 0.75rem;
+            top: 0.75rem;
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            display: grid;
+            place-items: center;
+            background: var(--darurat);
+            color: #ffffff;
+            font-size: 0.72rem;
+            font-weight: 900;
+            box-shadow: 0 3px 8px rgba(234, 88, 12, 0.25);
+        }
+
+        .modal-steps b {
+            display: block;
+            color: var(--darurat-deep);
+            margin-bottom: 0.2rem;
+        }
+
+        .modal-steps .step-detail {
+            display: block;
+            width: 100%;
+            font-weight: 400;
+            opacity: 0.9;
+        }
+
+        .modal-footer {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 0.8rem;
+            flex-wrap: wrap;
+            margin-top: 1rem;
+            padding-top: 0.9rem;
+            border-top: 1px solid #f1f5f9;
+        }
+
+        .modal-reminder {
+            color: #9a3412;
+            background: #ffedd5;
+            border-radius: 8px;
+            padding: 0.4rem 0.6rem;
+            font-size: 0.72rem;
+            font-weight: 700;
+        }
+
+        .btn-modal-close {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.35rem;
+            border: 1px solid #c2410c;
+            background: linear-gradient(135deg, #ea580c, #c2410c);
+            color: #ffffff;
+            border-radius: 10px;
+            padding: 0.62rem 1rem;
+            font-family: inherit;
+            font-size: 0.8rem;
+            font-weight: 800;
+            cursor: pointer;
+            box-shadow: 0 6px 15px rgba(234, 88, 12, 0.2);
+            transition: all 0.18s ease;
+        }
+
+        .btn-modal-close:hover,
+        .btn-modal-close:focus-visible {
+            background: linear-gradient(135deg, #c2410c, #9a3412);
+            transform: translateY(-1px);
+            outline: none;
+        }
+
+        /* ==========================================
+           MINI-GAME KUIS
+        ========================================== */
+        .quiz-card {
+            margin-top: 1.5rem;
+            padding: 1.9rem;
+            background:
+                radial-gradient(circle at 100% 0%, rgba(234, 88, 12, 0.06), transparent 28%),
+                #ffffff;
+        }
+
+        .quiz-head {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-bottom: 1.1rem;
+        }
+
+        .quiz-kicker {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+            background: #ffedd5;
+            color: var(--darurat-dark);
+            border: 1px solid var(--darurat-line);
+            border-radius: 999px;
+            padding: 0.28rem 0.7rem;
+            font-size: 0.66rem;
+            font-weight: 900;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+        }
+
+        .quiz-title {
+            color: var(--darurat-deep);
+            font-size: 1.45rem;
+            line-height: 1.25;
+            margin: 0.45rem 0 0;
+        }
+
+        .quiz-subtitle {
+            color: var(--muted);
+            font-size: 0.8rem;
+            line-height: 1.5;
+            margin: 0.3rem 0 0;
+        }
+
+        .quiz-score-chip {
+            display: flex;
+            align-items: center;
+            gap: 0.55rem;
+            background: #fff7ed;
+            border: 1px solid var(--darurat-line);
+            border-radius: 12px;
+            padding: 0.5rem 0.85rem;
+            flex-shrink: 0;
+        }
+
+        .quiz-score-chip span {
+            color: #9a3412;
+            font-size: 0.62rem;
+            font-weight: 900;
+            letter-spacing: 0.08em;
+        }
+
+        .quiz-score-chip b {
+            color: var(--darurat);
+            font-size: 1.3rem;
+            line-height: 1;
+        }
+
+        .quiz-progress-track {
+            height: 9px;
+            border-radius: 999px;
+            background: #ffedd5;
+            overflow: hidden;
+            margin-bottom: 0.6rem;
+        }
+
+        .quiz-progress-track span {
+            display: block;
+            width: 0;
+            height: 100%;
+            border-radius: 999px;
+            background: linear-gradient(90deg, #f97316, #ea580c);
+            transition: width 0.35s ease;
+        }
+
+        .quiz-meta {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 0.75rem;
+            color: var(--muted);
+            font-size: 0.7rem;
+            font-weight: 700;
+            margin-bottom: 1.1rem;
+        }
+
+        .quiz-question {
+            color: #1e293b;
+            font-size: 1.06rem;
+            line-height: 1.55;
+            font-weight: 700;
+            margin: 0 0 0.9rem;
+        }
+
+        .quiz-options {
+            display: grid;
+            gap: 0.6rem;
+        }
+
+        .quiz-option {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.7rem;
+            width: 100%;
+            text-align: left;
+            border: 1px solid var(--border);
+            background: #f8fafc;
+            color: #334155;
+            border-radius: 12px;
+            padding: 0.75rem 0.85rem;
+            font-family: inherit;
+            font-size: 0.86rem;
+            line-height: 1.45;
+            cursor: pointer;
+            transition: all 0.18s ease;
+        }
+
+        .quiz-option:hover:not(:disabled),
+        .quiz-option:focus-visible:not(:disabled) {
+            background: #fff7ed;
+            border-color: var(--darurat-line);
+            transform: translateX(3px);
+            outline: none;
+        }
+
+        .option-letter {
+            width: 27px;
+            height: 27px;
+            flex-shrink: 0;
+            display: grid;
+            place-items: center;
+            border-radius: 8px;
+            border: 1px solid #cbd5e1;
+            background: #ffffff;
+            color: #9a3412;
+            font-size: 0.73rem;
+            font-weight: 900;
+        }
+
+        .quiz-option:disabled {
+            cursor: default;
+        }
+
+        .quiz-option.dimmed {
+            opacity: 0.52;
+        }
+
+        .quiz-option.correct {
+            background: #f0fdf4;
+            border-color: #86efac;
+            color: #166534;
+        }
+
+        .quiz-option.correct .option-letter {
+            background: #16a34a;
+            border-color: #16a34a;
+            color: #ffffff;
+        }
+
+        .quiz-option.wrong {
+            background: #fef2f2;
+            border-color: #fca5a5;
+            color: #991b1b;
+        }
+
+        .quiz-option.wrong .option-letter {
+            background: #dc2626;
+            border-color: #dc2626;
+            color: #ffffff;
+        }
+
+        .quiz-feedback {
+            display: flex;
+            flex-direction: column;
+            gap: 0.2rem;
+            border-radius: 11px;
+            padding: 0.7rem 0.85rem;
+            margin-top: 0.85rem;
+            font-size: 0.85rem;
+            line-height: 1.45;
+            animation: feedback-pop 0.22s ease both;
+        }
+
+        .quiz-feedback.correct {
+            background: #f0fdf4;
+            border: 1px solid #bbf7d0;
+            color: #15803d;
+        }
+
+        .quiz-feedback.wrong {
+            background: #fef2f2;
+            border: 1px solid #fecaca;
+            color: #b91c1c;
+        }
+
+        .quiz-feedback strong {
+            font-weight: 900;
+        }
+
+        .quiz-feedback small {
+            color: #475569;
+            font-size: 0.76rem;
+            font-weight: 500;
+            line-height: 1.5;
+        }
+
+        @keyframes feedback-pop {
+            from { opacity: 0; transform: translateY(5px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .quiz-actions {
+            display: flex;
+            justify-content: flex-end;
+            margin-top: 0.9rem;
+        }
+
+        .btn-quiz {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.4rem;
+            border: 1px solid #c2410c;
+            background: linear-gradient(135deg, #ea580c, #c2410c);
+            color: #ffffff;
+            border-radius: 10px;
+            padding: 0.7rem 1.05rem;
+            font-family: inherit;
+            font-size: 0.82rem;
+            font-weight: 800;
+            cursor: pointer;
+            box-shadow: 0 6px 16px rgba(234, 88, 12, 0.22);
+            transition: all 0.18s ease;
+        }
+
+        .btn-quiz:hover,
+        .btn-quiz:focus-visible {
+            transform: translateY(-1px);
+            box-shadow: 0 9px 20px rgba(234, 88, 12, 0.28);
+            outline: none;
+        }
+
+        .quiz-result {
+            text-align: center;
+            padding: 1.2rem 0.5rem 0.6rem;
+            animation: feedback-pop 0.28s ease both;
+        }
+
+        .result-icon {
+            width: 76px;
+            height: 76px;
+            margin: 0 auto 0.7rem;
+            display: grid;
+            place-items: center;
+            border-radius: 50%;
+            background: #fff7ed;
+            border: 1px solid var(--darurat-line);
+            font-size: 2.35rem;
+            box-shadow: 0 10px 22px rgba(234, 88, 12, 0.12);
+        }
+
+        .result-label {
+            color: #9a3412;
+            font-size: 0.66rem;
+            font-weight: 900;
+            letter-spacing: 0.1em;
+            margin: 0;
+        }
+
+        .result-score {
+            color: var(--darurat);
+            font-size: 2.9rem;
+            line-height: 1.1;
+            font-weight: 900;
+            margin: 0.2rem 0 0.35rem;
+        }
+
+        .quiz-result h3 {
+            color: var(--darurat-deep);
+            font-size: 1.25rem;
+            margin: 0;
+        }
+
+        .quiz-result p {
+            max-width: 460px;
+            margin: 0.45rem auto 1rem;
+            color: var(--muted);
+            font-size: 0.84rem;
+            line-height: 1.55;
+        }
+
+        .page-footer {
+            margin-top: 1.4rem;
+            text-align: center;
+            color: #64748b;
+            font-size: 0.73rem;
+            line-height: 1.6;
+        }
+
+        .page-footer p {
+            margin: 0.2rem 0;
+        }
+
+        @media (max-width: 720px) {
+            .k3-page-wrapper {
+                margin: 1rem auto 2rem;
+                padding: 0 1rem;
+            }
+
+            .k3-card {
+                padding: 1.35rem;
+                border-radius: 16px;
+            }
+
+            .k3-header-block h1 {
+                font-size: 1.58rem;
+            }
+
+            .k3-header-block p {
+                font-size: 0.86rem;
+            }
+
+            .emergency-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .emergency-btn {
+                min-height: 162px;
+            }
+
+            .quiz-card {
+                padding: 1.3rem;
+            }
+
+            .quiz-title {
+                font-size: 1.25rem;
+            }
+
+            .quiz-head {
+                gap: 0.7rem;
+            }
+
+            .quiz-score-chip {
+                padding: 0.42rem 0.7rem;
+            }
+
+            .modal-card {
+                padding: 1.1rem;
+                border-radius: 16px;
+            }
+
+            .modal-illustration {
+                min-height: 150px;
+            }
+
+            .stickman-img {
+                max-height: 170px;
+            }
+
+            .modal-card h3 {
+                font-size: 1.18rem;
+            }
+
+            .modal-steps li {
+                font-size: 0.81rem;
+            }
+
+            .modal-footer {
+                align-items: stretch;
+                flex-direction: column;
+            }
+
+            .btn-modal-close {
+                width: 100%;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *,
+            *::before,
+            *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
     </style>
 </head>
 <body style="background-color: #f1f5f9;">
 
     <div class="k3-page-wrapper">
         <a href="index.html" class="btn-k3-back">⬅ Kembali ke Dashboard</a>
-        
-        <div class="k3-card">
-            <div class="k3-header-block">
-                <span class="k3-badge">Modul 04: Penanganan Krisis & Prosedur Tanggap Darurat</span>
-                <h1>🚨 Refleks Tanggap Darurat: Deteksi Dini Korsleting & Bahaya</h1>
+
+        <main class="k3-card">
+            <header class="k3-header-block">
+                <span class="k3-badge">Modul 04 · Interactive Survival Guide K3</span>
+                <h1>Darurat? <span>Tenang.</span> Klik. Hafalin. Selamat.</h1>
+                <p>Empat skenario darurat, empat refleks penyelamat. Buka tombolnya, hafalin poinnya, lalu buktiin di mini-game paling bawah.</p>
+                <div class="header-chips">
+                    <span>🖱️ Klik tombol</span>
+                    <span>🧠 Hafalin 4 poin</span>
+                    <span>🏆 Menangin game</span>
+                </div>
+            </header>
+
+            <section class="k3-content-section" aria-labelledby="situasi-darurat-title">
+                <div class="section-title-row">
+                    <h2 id="situasi-darurat-title">🚨 Pilih Situasi Darurat</h2>
+                    <span class="section-hint">Klik → baca 4 poin → hafalin</span>
+                </div>
+
+                <div class="emergency-grid">
+                    <button type="button" class="emergency-btn fire" data-modal-target="modal-api" aria-haspopup="dialog">
+                        <span class="emergency-top">
+                            <span class="emergency-icon" aria-hidden="true">🔥</span>
+                            <span class="emergency-arrow" aria-hidden="true">↗</span>
+                        </span>
+                        <b>Bau Sangit &amp; Percikan Api!</b>
+                        <small>Kabel gosong, bau plastik meleleh, atau ada percikan dari perangkat.</small>
+                        <span class="emergency-cta">Buka langkah darurat</span>
+                    </button>
+
+                    <button type="button" class="emergency-btn alarm" data-modal-target="modal-alarm" aria-haspopup="dialog">
+                        <span class="emergency-top">
+                            <span class="emergency-icon" aria-hidden="true">🚨</span>
+                            <span class="emergency-arrow" aria-hidden="true">↗</span>
+                        </span>
+                        <b>Alarm Kebakaran Bunyi!</b>
+                        <small>Alarm sekolah nyala. Semua orang harus keluar dengan tertib.</small>
+                        <span class="emergency-cta">Buka langkah darurat</span>
+                    </button>
+
+                    <button type="button" class="emergency-btn quake" data-modal-target="modal-gempa" aria-haspopup="dialog">
+                        <span class="emergency-top">
+                            <span class="emergency-icon" aria-hidden="true">🌍</span>
+                            <span class="emergency-arrow" aria-hidden="true">↗</span>
+                        </span>
+                        <b>Gempa Bumi!</b>
+                        <small>Lantai goyang, lampu bergerak, barang mulai jatuh dari rak.</small>
+                        <span class="emergency-cta">Buka langkah darurat</span>
+                    </button>
+
+                    <button type="button" class="emergency-btn shock" data-modal-target="modal-kesetrum" aria-haspopup="dialog">
+                        <span class="emergency-top">
+                            <span class="emergency-icon" aria-hidden="true">⚡</span>
+                            <span class="emergency-arrow" aria-hidden="true">↗</span>
+                        </span>
+                        <b>Teman Kesetrum!</b>
+                        <small>Ada yang kena setrum. Jangan asal tarik. Listrik harus mati dulu.</small>
+                        <span class="emergency-cta">Buka langkah darurat</span>
+                    </button>
+                </div>
+
+                <div class="golden-rule">
+                    <span aria-hidden="true">🧠</span>
+                    <p><b>Aturan emas:</b> Panik itu musuh. Guru itu partner. Titik kumpul itu tujuan.</p>
+                </div>
+            </section>
+        </main>
+
+        <section class="k3-card quiz-card" id="mini-game" aria-labelledby="quiz-title">
+            <div class="quiz-head">
+                <div>
+                    <span class="quiz-kicker">🎮 Mini-Game</span>
+                    <h2 class="quiz-title" id="quiz-title">Uji Nyali K3!</h2>
+                    <p class="quiz-subtitle">5 soal. Bahasa lo, aturan darurat beneran. Jawab jujur, jangan ngasal.</p>
+                </div>
+                <div class="quiz-score-chip" aria-label="Skor saat ini">
+                    <span>SKOR</span>
+                    <b id="quizScore">0</b>
+                </div>
             </div>
 
-            <div class="k3-content-section">
-                <h2>1. Membangun Refleks Indera Pendeteksi Dini Krisis Listrik</h2>
-                <p>Bahaya kelistrikan di laboratorium komputer dengan puluhan perangkat aktif dapat terjadi kapan saja akibat beban berlebih atau degradasi komponen. Siswa wajib melatih ketajaman bawah sadar indera penciuman dan pendengaran:</p>
-                <ul>
-                    <li><b>Indera Penciuman (Aroma Hangus):</b> Jika Anda mendeteksi aroma plastik terbakar, lapisan pembungkus kabel meleleh, atau bau sangit kimia khas dari arah komputer Anda maupun rekan sebelah, <b>JANGAN mengabaikannya!</b> Segera angkat tangan kanan dan panggil guru instruktur dengan lantang.</li>
-                    <li><b>Indera Pendengaran (Suara Percikan):</b> Suara mendesis halus, gemertak kecil, atau bunyi berderak di dalam power supply atau stopkontak dinding menandakan terjadinya lompatan arus listrik (Arc Discharge). Jangan mencoba menyentuh atau mencopot kabel tersebut sendiri.</li>
-                </ul>
+            <div class="quiz-progress-track" aria-hidden="true">
+                <span id="quizProgressBar"></span>
+            </div>
+            <div class="quiz-meta">
+                <span id="quizStep">Soal 1 dari 5</span>
+                <span id="quizRemaining">5 soal lagi</span>
             </div>
 
-            <div class="callout-box">
-                <h4>🚨 Tindakan Evakuasi Jalur Darurat Fatal (Kebakaran / Gempa)</h4>
-                <p>Ketika alarm peringatan darurat sekolah berbunyi atau guru memberikan instruksi pengosongan ruangan:<br>
-                1. Tinggalkan seluruh baris kode, pekerjaan script, dan tas bawaan Anda di meja kerja.<br>
-                2. Berdiri secara tenang, dilarang berteriak histeris yang memicu kepanikan massal.<br>
-                3. Berjalan beriringan dalam barisan rapi keluar melalui pintu evakuasi laboratorium terdekat.<br>
-                4. Ikuti rute evakuasi menuju Titik Kumpul (Assembly Point) di lapangan utama sekolah.</p>
+            <div id="quizStage">
+                <h3 class="quiz-question" id="quizQuestion" aria-live="polite"></h3>
+                <div class="quiz-options" id="quizOptions"></div>
+                <div class="quiz-feedback" id="quizFeedback" role="status" aria-live="polite" hidden></div>
+                <div class="quiz-actions">
+                    <button type="button" class="btn-quiz" id="quizNext" hidden>Soal Berikutnya →</button>
+                </div>
             </div>
 
-            <div class="k3-content-section">
-                <h2>2. Integritas Keselamatan Bersama</h2>
-                <p>Keselamatan diri Anda sangat bergantung pada kedisiplinan rekan di sebelah Anda, begitupun sebaliknya. Menegur rekan yang melakukan kecerobohan kelistrikan bukanlah tindakan mencampuri urusan orang lain, melainkan sebuah bentuk kewajiban kepedulian sosial guna melindungi keselamatan jiwa seluruh penghuni laboratorium komputer SMK AMI Deltamas.</p>
+            <div class="quiz-result" id="quizResult" hidden>
+                <div class="result-icon" id="resultIcon" aria-hidden="true">🏆</div>
+                <p class="result-label">SKOR AKHIR</p>
+                <div class="result-score" id="resultScore">0/5</div>
+                <h3 id="resultTitle"></h3>
+                <p id="resultMessage"></p>
+                <button type="button" class="btn-quiz" id="quizRestart">🔁 Main Lagi</button>
+            </div>
+        </section>
+
+        <footer class="page-footer">
+            <p>⚠️ Panduan ini untuk latihan refleks. Saat darurat sungguhan, ikuti instruksi guru dan petugas K3 sekolah.</p>
+            <p>Mengacu pada UU No. 1 Tahun 1970 tentang Keselamatan Kerja Nasional.</p>
+        </footer>
+    </div>
+
+    <!-- ============================================================
+         MODAL 1: BAU SANGIT & PERCIKAN API
+    ============================================================ -->
+    <div class="modal-overlay" id="modal-api" role="dialog" aria-modal="true" aria-labelledby="modal-api-title" hidden>
+        <div class="modal-card">
+            <button type="button" class="modal-close" data-close-modal aria-label="Tutup (X)">×</button>
+
+            <div class="modal-illustration">
+                <img src="stickman_1.png" alt="Ilustrasi" class="stickman-img">
+                <span class="stickman-fallback" aria-hidden="true">🔥</span>
             </div>
 
-            <div class="source-link-block">
-                <p style="font-size:0.85rem; color:#64748b; margin-bottom:0.5rem;">🌐 Sumber Standar Prosedur Nasional:</p>
-                <div style="font-size:0.9rem; color:#334155;">⚠️ Mematuhi Regulasi Undang-Undang No. 1 Tahun 1970 tentang Keselamatan Kerja Nasional.</div>
+            <span class="modal-kicker">Skenario 01 · Korsleting</span>
+            <h3 id="modal-api-title">Bau Sangit &amp; Percikan Api!</h3>
+            <p class="modal-lead">Nyium bau gosong atau melihat percikan api? Jangan bersikap pahlawan. Lakukan langkah-langkah ini:</p>
+
+            <ol class="modal-steps">
+                <li><b>Jangan panik</b><span class="step-detail">dan jangan sentuh kabel atau perangkat yang bau gosong.</span></li>
+                <li><b>Matikan listrik</b><span class="step-detail">lewat MCB/stopkontak pakai tangan kering. Jangan mencabut kabelnya.</span></li>
+                <li><b>Jauhkan teman-teman</b><span class="step-detail">dari area tersebut. Jangan menyalaikan api atau kipas.</span></li>
+                <li><b>Teriak memanggil guru atau laboran.</b><span class="step-detail">Sebutkan lokasi dan apa yang kamu lihat.</span></li>
+            </ol>
+
+            <div class="modal-footer">
+                <span class="modal-reminder">⚠️ Nyawa dulu, barang belakangan.</span>
+                <button type="button" class="btn-modal-close" data-close-modal>Tutup (X)</button>
             </div>
         </div>
     </div>
+
+    <!-- ============================================================
+         MODAL 2: ALARM KEBAKARAN
+    ============================================================ -->
+    <div class="modal-overlay" id="modal-alarm" role="dialog" aria-modal="true" aria-labelledby="modal-alarm-title" hidden>
+        <div class="modal-card">
+            <button type="button" class="modal-close" data-close-modal aria-label="Tutup (X)">×</button>
+
+            <div class="modal-illustration">
+                <img src="stickman_2.png" alt="Ilustrasi" class="stickman-img">
+                <span class="stickman-fallback" aria-hidden="true">🚨</span>
+            </div>
+
+            <span class="modal-kicker">Skenario 02 · Evakuasi</span>
+            <h3 id="modal-alarm-title">Alarm Kebakaran Bunyi!</h3>
+            <p class="modal-lead">Alarm nyala = segera bersiap evakuasi. Bukan saatnya menyimpan file atau mencari tas.</p>
+
+            <ol class="modal-steps">
+                <li><b>Hentikan semua aktivitas.</b><span class="step-detail">Tinggalkan file, tugas, dan tas di meja.</span></li>
+                <li><b>Berdiri tenang.</b><span class="step-detail">Jangan berteriak, jangan dorong-dorongan.</span></li>
+                <li><b>Keluar melalui pintu evakuasi</b><span class="step-detail">terdekat. Jangan kembali ke dalam lagi.</span></li>
+                <li><b>Jalankan cepat ke titik kumpul.</b><span class="step-detail">Ikuti barisan dan tunggu absensi guru.</span></li>
+            </ol>
+
+            <div class="modal-footer">
+                <span class="modal-reminder">🏃 Evakuasi rapi > lari panik.</span>
+                <button type="button" class="btn-modal-close" data-close-modal>Tutup (X)</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================================
+         MODAL 3: GEMPA BUMI
+    ============================================================ -->
+    <div class="modal-overlay" id="modal-gempa" role="dialog" aria-modal="true" aria-labelledby="modal-gempa-title" hidden>
+        <div class="modal-card">
+            <button type="button" class="modal-close" data-close-modal aria-label="Tutup (X)">×</button>
+
+            <div class="modal-illustration">
+                <img src="stickman_3.png" alt="Ilustrasi" class="stickman-img">
+                <span class="stickman-fallback" aria-hidden="true">🌍</span>
+            </div>
+
+            <span class="modal-kicker">Skenario 03 · Gempa</span>
+            <h3 id="modal-gempa-title">Gempa Bumi!</h3>
+            <p class="modal-lead">Guncangan pertama adalah waktu paling kritis. Jangan langsung lari dari bangunan.</p>
+
+            <ol class="modal-steps">
+                <li><b>Jongkok dan lindungi kepala</b><span class="step-detail">di bawah meja yang kuat. Jangan lari saat masih goyang.</span></li>
+                <li><b>Jauhi jendela, kaca, lemari,</b><span class="step-detail">dan barang yang bisa jatuh.</span></li>
+                <li><b>Jangan gunakan lift.</b><span class="step-detail">Jangan lompat dari jendela.</span></li>
+                <li><b>Setelah reda, evakuasi tertib</b><span class="step-detail">ke titik kumpul dan ikuti arahan guru.</span></li>
+            </ol>
+
+            <div class="modal-footer">
+                <span class="modal-reminder">🛡️ Drop. Cover. Hold on.</span>
+                <button type="button" class="btn-modal-close" data-close-modal>Tutup (X)</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================================
+         MODAL 4: TEMAN KESETRUM
+    ============================================================ -->
+    <div class="modal-overlay" id="modal-kesetrum" role="dialog" aria-modal="true" aria-labelledby="modal-kesetrum-title" hidden>
+        <div class="modal-card">
+            <button type="button" class="modal-close" data-close-modal aria-label="Tutup (X)">×</button>
+
+            <div class="modal-illustration">
+                <img src="stickman_4.png" alt="Ilustrasi" class="stickman-img">
+                <span class="stickman-fallback" aria-hidden="true">⚡</span>
+            </div>
+
+            <span class="modal-kicker">Skenario 04 · Sengatan Listrik</span>
+            <h3 id="modal-kesetrum-title">Teman Kesetrum!</h3>
+            <p class="modal-lead">Niat menolong itu bagus, tapi jangan sampai kamu juga menjadi korban sengatan listrik.</p>
+
+            <ol class="modal-steps">
+                <li><b>Jangan menyentuh teman atau kabelnya.</b><span class="step-detail">Matikan listrik dulu!</span></li>
+                <li><b>Geser sumber bahaya</b><span class="step-detail">dengan benda isolator kering seperti kayu atau plastik. Jangan pakai logam.</span></li>
+                <li><b>Teriak meminta bantuan</b><span class="step-detail">guru/laboran dan hubungi 119 atau petugas UKS.</span></li>
+                <li><b>Kalau aman, periksa napas korban.</b><span class="step-detail">Jangan memberikan minuman kalau korban pingsan.</span></li>
+            </ol>
+
+            <div class="modal-footer">
+                <span class="modal-reminder">⚡ Listrik mati dulu, baru nolong.</span>
+                <button type="button" class="btn-modal-close" data-close-modal>Tutup (X)</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        /* ============================================================
+           1. MODAL DARURAT
+        ============================================================ */
+        (function () {
+            "use strict";
+
+            const overlays = Array.from(document.querySelectorAll(".modal-overlay"));
+            const openButtons = document.querySelectorAll("[data-modal-target]");
+            const closeButtons = document.querySelectorAll("[data-close-modal]");
+            let lastFocusedElement = null;
+
+            function getActiveOverlay() {
+                return overlays.find(function (overlay) {
+                    return !overlay.hidden;
+                }) || null;
+            }
+
+            function openModal(modalId) {
+                const target = document.getElementById(modalId);
+                if (!target) return;
+
+                lastFocusedElement = document.activeElement;
+                overlays.forEach(function (overlay) {
+                    overlay.hidden = overlay !== target;
+                });
+
+                target.hidden = false;
+                document.body.classList.add("modal-open");
+
+                const closeButton = target.querySelector(".modal-close");
+                window.setTimeout(function () {
+                    if (closeButton && !target.hidden) closeButton.focus();
+                }, 40);
+            }
+
+            function closeModal() {
+                overlays.forEach(function (overlay) {
+                    overlay.hidden = true;
+                });
+                document.body.classList.remove("modal-open");
+
+                if (lastFocusedElement && typeof lastFocusedElement.focus === "function") {
+                    lastFocusedElement.focus();
+                }
+                lastFocusedElement = null;
+            }
+
+            openButtons.forEach(function (button) {
+                button.addEventListener("click", function () {
+                    openModal(button.dataset.modalTarget);
+                });
+            });
+
+            closeButtons.forEach(function (button) {
+                button.addEventListener("click", closeModal);
+            });
+
+            overlays.forEach(function (overlay) {
+                overlay.addEventListener("click", function (event) {
+                    if (event.target === overlay) closeModal();
+                });
+            });
+
+            document.addEventListener("keydown", function (event) {
+                const activeOverlay = getActiveOverlay();
+
+                if (event.key === "Escape" && activeOverlay) {
+                    closeModal();
+                    return;
+                }
+
+                if (event.key !== "Tab" || !activeOverlay) return;
+
+                const focusable = Array.from(activeOverlay.querySelectorAll(
+                    'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+                )).filter(function (element) {
+                    return !element.disabled && element.offsetParent !== null;
+                });
+
+                if (focusable.length === 0) return;
+
+                const first = focusable[0];
+                const last = focusable[focusable.length - 1];
+
+                if (event.shiftKey && document.activeElement === first) {
+                    event.preventDefault();
+                    last.focus();
+                } else if (!event.shiftKey && document.activeElement === last) {
+                    event.preventDefault();
+                    first.focus();
+                }
+            });
+
+            /* Fallback saat file gambar stickman belum tersedia. */
+            document.querySelectorAll(".stickman-img").forEach(function (image) {
+                function markMissing() {
+                    const wrapper = image.closest(".modal-illustration");
+                    if (wrapper) wrapper.classList.add("is-missing");
+                }
+
+                image.addEventListener("error", markMissing, { once: true });
+                if (image.complete && image.naturalWidth === 0) markMissing();
+            });
+        })();
+
+        /* ============================================================
+           2. MINI-GAME KUIS K3
+        ============================================================ */
+        (function () {
+            "use strict";
+
+            const questions = [
+                {
+                    question: "Lagi asik ngoding, tiba-tiba nyium bau kabel gosong dari CPU. Kamu ngapain ?",
+                    options: [
+                        "Lanjut ngoding, nanggung tinggal dikit.",
+                        "Cabut colokan pake tangan basah biar cepet.",
+                        "Teriak panggil guru, terus menjauh dari area."
+                    ],
+                    correct: 2,
+                    explanation: "Bau gosong itu alarm korsleting. Jangan disentuh, jangan diabaikan. Lapor guru dan jauhi area."
+                },
+                {
+                    question: "Alarm kebakaran bunyi pas kamu lagi presentasi kelompok. Prioritas pertama kamu apa?",
+                    options: [
+                        "Save file dulu, baru evakuasi.",
+                        "Tinggalin semua barang, ikut barisan evakuasi.",
+                        "Ambil tas dan HP, terus balik ke kelas."
+                    ],
+                    correct: 1,
+                    explanation: "Nyawa > nilai > file. Barang bisa diganti, nyawa nggak. Langsung ikut jalur evakuasi."
+                },
+                {
+                    question: "Gempa lagi guncang, kamu ada di lantai 2 lab komputer. Sikap paling aman?",
+                    options: [
+                        "Lompat dari jendela biar cepet turun.",
+                        "Jongkok, lindungi kepala di bawah meja kuat, tunggu reda.",
+                        "Naik lift biar turunnya cepat."
+                    ],
+                    correct: 1,
+                    explanation: "Drop, cover, hold on. Jendela dan lift justru jadi zona bahaya saat gempa."
+                },
+                {
+                    question: "Teman kamu kesetrum dan masih nempel di kabel. Apa yang kamu lakuin?",
+                    options: [
+                        "Tarik tangannya pake tangan kosong.",
+                        "Matikan listrik dulu, baru bantu pake benda isolator.",
+                        "Siram air biar sadar."
+                    ],
+                    correct: 1,
+                    explanation: "Listrik belum mati? Jangan sentuh korban. Matikan sumber listrik dulu, baru bantu dengan aman."
+                },
+                {
+                    question: "Jalan keluar lab penuh asap. Kamu ngapain?",
+                    options: [
+                        "Teriak sambil lari nabrak orang.",
+                        "Balik ke meja ambil tas.",
+                        "Bungkuk rendah, tutup hidung/mulut, ikut jalur evakuasi ke titik kumpul."
+                    ],
+                    correct: 2,
+                    explanation: "Asap naik, jadi posisi rendah bikin napas lebih aman. Jangan balik lagi ke dalam ruangan."
+                }
+            ];
+
+            const elements = {
+                score: document.getElementById("quizScore"),
+                progress: document.getElementById("quizProgressBar"),
+                step: document.getElementById("quizStep"),
+                remaining: document.getElementById("quizRemaining"),
+                stage: document.getElementById("quizStage"),
+                question: document.getElementById("quizQuestion"),
+                options: document.getElementById("quizOptions"),
+                feedback: document.getElementById("quizFeedback"),
+                next: document.getElementById("quizNext"),
+                result: document.getElementById("quizResult"),
+                resultIcon: document.getElementById("resultIcon"),
+                resultScore: document.getElementById("resultScore"),
+                resultTitle: document.getElementById("resultTitle"),
+                resultMessage: document.getElementById("resultMessage"),
+                restart: document.getElementById("quizRestart")
+            };
+
+            let currentIndex = 0;
+            let score = 0;
+            let answered = false;
+
+            function letterFor(index) {
+                return String.fromCharCode(65 + index);
+            }
+
+            function renderQuestion() {
+                const current = questions[currentIndex];
+                answered = false;
+
+                elements.stage.hidden = false;
+                elements.result.hidden = true;
+                elements.feedback.hidden = true;
+                elements.feedback.className = "quiz-feedback";
+                elements.feedback.textContent = "";
+                elements.next.hidden = true;
+                elements.next.textContent = currentIndex === questions.length - 1
+                    ? "Lihat Skor Akhir →"
+                    : "Soal Berikutnya →";
+                elements.options.innerHTML = "";
+
+                elements.question.textContent = current.question;
+                elements.step.textContent = "Soal " + (currentIndex + 1) + " dari " + questions.length;
+                elements.remaining.textContent = (questions.length - currentIndex) + " soal lagi";
+                elements.progress.style.width = ((currentIndex / questions.length) * 100) + "%";
+                elements.score.textContent = String(score);
+
+                current.options.forEach(function (optionText, index) {
+                    const button = document.createElement("button");
+                    button.type = "button";
+                    button.className = "quiz-option";
+                    button.dataset.index = String(index);
+
+                    const letter = document.createElement("span");
+                    letter.className = "option-letter";
+                    letter.textContent = letterFor(index);
+
+                    const text = document.createElement("span");
+                    text.textContent = optionText;
+
+                    button.appendChild(letter);
+                    button.appendChild(text);
+                    button.addEventListener("click", function () {
+                        answerQuestion(index);
+                    });
+
+                    elements.options.appendChild(button);
+                });
+            }
+
+            function answerQuestion(selectedIndex) {
+                if (answered) return;
+                answered = true;
+
+                const current = questions[currentIndex];
+                const isCorrect = selectedIndex === current.correct;
+                const optionButtons = Array.from(elements.options.querySelectorAll(".quiz-option"));
+
+                optionButtons.forEach(function (button, index) {
+                    button.disabled = true;
+
+                    if (index === current.correct) {
+                        button.classList.add("correct");
+                    } else if (index === selectedIndex) {
+                        button.classList.add("wrong");
+                    } else {
+                        button.classList.add("dimmed");
+                    }
+                });
+
+                if (isCorrect) {
+                    score += 1;
+                }
+
+                elements.score.textContent = String(score);
+                elements.progress.style.width = (((currentIndex + 1) / questions.length) * 100) + "%";
+                elements.feedback.hidden = false;
+                elements.feedback.className = "quiz-feedback " + (isCorrect ? "correct" : "wrong");
+
+                const title = document.createElement("strong");
+                title.textContent = isCorrect ? "Mantap! Kamu selamat!" : "Waduh, game over bro! Ulangi lagi!";
+
+                const detail = document.createElement("small");
+                detail.textContent = isCorrect
+                    ? current.explanation
+                    : "Jawaban bener: " + letterFor(current.correct) + ". " + current.explanation;
+
+                elements.feedback.innerHTML = "";
+                elements.feedback.appendChild(title);
+                elements.feedback.appendChild(detail);
+                elements.next.hidden = false;
+            }
+
+            function showResult() {
+                const verdicts = [
+                    {
+                        min: 5,
+                        icon: "🏆",
+                        title: "Sultan K3!",
+                        message: "Lo bukan cuma selamat, lo udah jadi role model K3. Respect!"
+                    },
+                    {
+                        min: 4,
+                        icon: "🛡️",
+                        title: "Aman, bro!",
+                        message: "Refleks darurat kamu udah bagus. Sedikit poles lagi, kamu siap jadi petugas K3."
+                    },
+                    {
+                        min: 2,
+                        icon: "⚠️",
+                        title: "Lumayan, tapi...",
+                        message: "Masih ada celah panik. Hafalin ulang 4 tombol darurat, terus coba lagi."
+                    },
+                    {
+                        min: 0,
+                        icon: "🚨",
+                        title: "Bahaya, bro!",
+                        message: "Jangan panik dulu. Balik baca 4 skenario di atas, terus ulangi game ini."
+                    }
+                ];
+
+                const verdict = verdicts.find(function (item) {
+                    return score >= item.min;
+                });
+
+                elements.stage.hidden = true;
+                elements.result.hidden = false;
+                elements.progress.style.width = "100%";
+                elements.step.textContent = "Selesai";
+                elements.remaining.textContent = questions.length + " soal dijawab";
+                elements.resultIcon.textContent = verdict.icon;
+                elements.resultScore.textContent = score + "/" + questions.length;
+                elements.resultTitle.textContent = verdict.title;
+                elements.resultMessage.textContent = verdict.message;
+            }
+
+            elements.next.addEventListener("click", function () {
+                if (currentIndex < questions.length - 1) {
+                    currentIndex += 1;
+                    renderQuestion();
+                    return;
+                }
+                showResult();
+            });
+
+            elements.restart.addEventListener("click", function () {
+                currentIndex = 0;
+                score = 0;
+                renderQuestion();
+            });
+
+            renderQuestion();
+        })();
+    </script>
 
 </body>
 </html>

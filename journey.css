@@ -1,0 +1,373 @@
+:root {
+    --bg-color: #0d1117;
+    --pixel-color: #ff79c6;
+    --code-color: #50fa7b;
+    --text-main: #f8f8f2;
+    --box-bg: #282a36;
+    --locked-bg: #191a21;
+}
+
+* { 
+    margin: 0; 
+    padding: 0; 
+    box-sizing: border-box; 
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-main);
+    width: 100%;
+    min-height: 100vh;
+    overflow-x: hidden;
+    display: flex;
+    justify-content: center;
+    font-family: 'Fira Code', monospace;
+}
+
+.screen-container {
+    width: 100%;
+    max-width: 800px;
+    min-height: 100vh;
+    padding: 20px 15px;
+    display: flex;
+    flex-direction: column;
+}
+
+.screen {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    min-height: 100%;
+}
+
+#welcome-screen {
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    flex-grow: 1;
+}
+
+.hidden { display: none !important; }
+.active { display: flex !important; }
+
+/* Typografi & Header */
+.text-glow { 
+    font-size: clamp(2rem, 8vw, 3.5rem); 
+    color: var(--pixel-color); 
+    text-shadow: 0 0 10px rgba(255, 121, 198, 0.6); 
+    text-align: center; 
+    margin-bottom: 5px; 
+    word-break: break-word;
+}
+
+.small-text { 
+    font-size: 0.8rem; 
+    text-align: center; 
+    color: #6272a4; 
+    margin-bottom: 20px; 
+}
+
+.dash-header { 
+    margin-bottom: 20px; 
+    text-align: center; 
+}
+
+.companion-box { 
+    background: var(--box-bg); 
+    border-left: 4px solid var(--pixel-color); 
+    padding: 12px; 
+    margin-top: 10px; 
+    border-radius: 4px; 
+    font-size: 0.85rem; 
+    text-align: left; 
+}
+
+.btn { 
+    background: transparent; 
+    color: var(--code-color); 
+    border: 2px solid var(--code-color); 
+    padding: 12px 15px; 
+    font-size: 1rem; 
+    cursor: pointer; 
+    margin: 10px 0; 
+    width: 100%; 
+    max-width: 400px;
+    font-family: 'Fira Code', monospace; 
+    transition: all 0.2s; 
+}
+
+.btn:hover { 
+    background: var(--code-color); 
+    color: var(--bg-color); 
+}
+
+.action-buttons {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* === PETA PERJALANAN RESPONSIF (MAP LAYOUT) === */
+.skills-grid {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    padding: 20px 0 60px 0;
+    gap: 30px;
+    width: 100%;
+    align-items: center;
+}
+
+.skill-card {
+    background: var(--box-bg);
+    color: var(--text-main);
+    border: 2px solid #44475a;
+    border-radius: 8px;
+    font-size: 0.85rem;
+    cursor: pointer;
+    font-family: 'Fira Code', monospace;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    width: 90%;
+    max-width: 280px;
+    padding: 15px;
+    position: relative;
+    z-index: 1;
+    white-space: pre-wrap;
+    text-align: center;
+
+    opacity: 0;
+    transform: translateY(30px) scale(0.9);
+}
+
+.skill-card.show-on-map {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+}
+
+.skill-card.locked { 
+    background: var(--locked-bg); 
+    color: #6272a4; 
+    border-color: #282a36; 
+    cursor: not-allowed; 
+    pointer-events: none; 
+}
+.skill-card.locked::after { 
+    content: "\n[LOCKED]"; 
+    display: block; 
+    font-size: 0.75rem; 
+    margin-top: 6px; 
+    color: #6272a4;
+}
+
+.skill-card.active-quest { 
+    border-color: var(--pixel-color); 
+    box-shadow: 0 0 15px rgba(255, 121, 198, 0.3); 
+}
+.skill-card.active-quest::after { 
+    content: "\n[OPEN]"; 
+    display: block; 
+    font-size: 0.75rem; 
+    color: var(--pixel-color); 
+    margin-top: 6px; 
+}
+
+.skill-card.completed { 
+    border-color: var(--code-color); 
+    color: var(--code-color); 
+}
+.skill-card.completed::after { 
+    content: "\n[DONE]"; 
+    display: block; 
+    font-size: 0.75rem; 
+    margin-top: 6px; 
+    color: var(--code-color); 
+}
+
+/* DESKTOP MEDIA QUERY (Tampilan Lebar / PC) */
+@media (min-width: 768px) {
+    .skills-grid {
+        align-items: stretch;
+    }
+    .skills-grid::before {
+        content: '';
+        position: absolute;
+        top: 0; bottom: 0; left: 50%;
+        width: 4px;
+        background: #44475a;
+        transform: translateX(-50%);
+        z-index: 0;
+    }
+    .skill-card {
+        width: 80%;
+    }
+    .skill-card:nth-child(odd) { 
+        align-self: flex-start; 
+        margin-left: 5%; 
+        text-align: right; 
+    }
+    .skill-card:nth-child(even) { 
+        align-self: flex-end; 
+        margin-right: 5%; 
+        text-align: left; 
+    }
+    .skill-card::before {
+        content: ''; 
+        position: absolute;
+        top: 50%; 
+        height: 4px; 
+        width: 150px;
+        background-color: #44475a; 
+        z-index: -1;
+        transition: background-color 0.4s;
+    }
+    .skill-card:nth-child(odd)::before { left: 100%; }
+    .skill-card:nth-child(even)::before { right: 100%; }
+    
+    .skill-card.completed::before { background-color: var(--code-color); }
+    .skill-card.active-quest::before { background-color: var(--pixel-color); }
+}
+
+.pixel-font { font-family: 'VT323', monospace; }
+.code-font { font-family: 'Fira Code', monospace; }
+
+@keyframes pulse {
+    0% { box-shadow: 0 0 0 0 rgba(255, 121, 198, 0.4); }
+    70% { box-shadow: 0 0 0 10px rgba(255, 121, 198, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(255, 121, 198, 0); }
+}
+
+/* Modal UI */
+.modal {
+    position: fixed; 
+    top: 0; 
+    left: 0; 
+    width: 100vw; 
+    height: 100vh;
+    background: rgba(0,0,0,0.85);
+    display: flex; 
+    justify-content: center; 
+    align-items: center;
+    z-index: 100;
+    padding: 15px;
+}
+
+.modal-content {
+    background: var(--box-bg);
+    padding: 20px;
+    width: 100%;
+    max-width: 450px;
+    max-height: 90vh;
+    overflow-y: auto;
+    border: 4px solid var(--pixel-color);
+    border-radius: 8px;
+}
+
+.modal-content h3 { 
+    font-size: 1.8rem; 
+    color: var(--pixel-color); 
+    margin-bottom: 10px; 
+}
+
+textarea {
+    width: 100%; 
+    background: #1e1f29; 
+    color: var(--text-main);
+    border: 1px solid #44475a; 
+    padding: 10px; 
+    margin-bottom: 15px;
+    resize: none;
+    font-family: 'Fira Code', monospace;
+    border-radius: 4px;
+}
+
+.modal-actions { 
+    display: flex; 
+    gap: 10px; 
+}
+.btn-cancel { border-color: #ff5555; color: #ff5555; }
+.btn-cancel:hover { background: #ff5555; color: white; }
+.btn-submit { border-color: var(--code-color); color: var(--code-color); }
+
+/* === KUESIONER & PROGRESS BAR UI === */
+.question-block {
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+.question-text {
+    color: var(--pixel-color);
+    font-size: 0.85rem;
+    margin-bottom: 8px;
+}
+
+.options-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.opt-btn {
+    padding: 10px;
+    font-size: 0.8rem;
+    margin: 0;
+    text-align: left;
+    border-color: #44475a;
+    color: #8be9fd;
+    width: 100%;
+}
+
+.opt-btn.selected {
+    background: #8be9fd;
+    color: var(--bg-color);
+    border-color: #8be9fd;
+}
+
+.progress-bar {
+    width: 100%;
+    height: 12px;
+    background: var(--locked-bg);
+    border: 2px solid #44475a;
+    border-radius: 4px;
+    margin-bottom: 15px;
+    overflow: hidden;
+}
+
+.progress-fill {
+    height: 100%;
+    background: var(--code-color);
+    width: 0%;
+    transition: width 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.l2l-step {
+    display: flex;
+    flex-direction: column;
+}
+
+/* Tombol Melayang Forum Diskusi */
+.floating-forum-btn {
+    position: fixed;
+    top: 15px;
+    right: 15px;
+    width: 40px;
+    height: 40px;
+    background: var(--box-bg);
+    color: var(--pixel-color);
+    border: 2px solid var(--pixel-color);
+    border-radius: 50%;
+    font-size: 1.3rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    z-index: 999;
+    box-shadow: 0 0 10px rgba(255, 121, 198, 0.4);
+    transition: transform 0.2s, background 0.2s;
+}
+
+.floating-forum-btn:hover {
+    background: var(--pixel-color);
+    color: var(--bg-color);
+    transform: scale(1.1);
+}

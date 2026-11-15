@@ -6,7 +6,6 @@
     <title>Galeri Bank Konten & Media Sosial - Pixel and Code</title>
     <link rel="stylesheet" href="style.css">
     <style>
-        /* CSS Tambahan khusus Halaman Galeri Interaktif */
         .gallery-page-container {
             max-width: 1400px;
             margin: 0 auto;
@@ -46,11 +45,17 @@
             cursor: pointer;
             border: none;
         }
-        .btn-canva { background: linear-gradient(135deg, #00c4cc 0%, #7b2cbf 100%); }
-        .btn-capcut { background: linear-gradient(135deg, #000000 0%, #333333 100%); border: 1px solid #555; }
+        .btn-tool img {
+            width: 18px;
+            height: 18px;
+            object-fit: contain;
+        }
+        .btn-canva { background: linear-gradient(135deg, #ffffff 0%, #d6aeed 100%); }
+        .btn-capcut { background: linear-gradient(135deg, #fffafa 0%, #333333 100%); border: 1px solid #555; }
+        .btn-gdrive { background: rgba(30, 41, 59, 0.8); border: 1px solid rgba(255,255,255,0.2); }
+        .btn-premiere { background: linear-gradient(135deg, #f7f7fe 0%, #6957c0 100%); }
         .btn-tool:hover { transform: translateY(-2px); filter: brightness(1.15); }
 
-        /* Grid Galeri yang Lebih Padat & Efisien */
         .interactive-gallery-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
@@ -64,6 +69,7 @@
             display: flex;
             flex-direction: column;
             transition: transform 0.2s, box-shadow 0.2s;
+            position: relative;
         }
         .interactive-card:hover {
             transform: translateY(-4px);
@@ -114,21 +120,32 @@
             width: max-content;
             text-transform: uppercase;
         }
+        .btn-delete-item {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: rgba(239, 68, 68, 0.9);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            padding: 4px 8px;
+            font-size: 0.7rem;
+            cursor: pointer;
+            display: none;
+            z-index: 10;
+        }
+        .interactive-card:hover .btn-delete-item { display: block; }
 
-        /* Styling Modern Modal Popup */
         .modal-overlay {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(10, 15, 30, 0.85);
             backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
             display: flex;
             align-items: center;
             justify-content: center;
             z-index: 9999;
-            animation: fadeIn 0.25s ease-out;
         }
-
         .modern-modal-card {
             background: linear-gradient(145deg, #1e293b 0%, #0f172a 100%);
             border: 1px solid rgba(99, 102, 241, 0.3);
@@ -139,40 +156,32 @@
             box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7);
             text-align: left;
         }
-
         .modal-header-flex {
             display: flex;
             justify-content: space-between;
             align-items: center;
             margin-bottom: 0.25rem;
         }
-
         .modern-modal-card h3 {
             font-size: 1.2rem;
             font-weight: 800;
             color: #ffffff;
         }
-
         .btn-close-modal {
             background: transparent;
             border: none;
             color: #94a3b8;
             font-size: 1.5rem;
             cursor: pointer;
-            transition: color 0.2s;
         }
-        .btn-close-modal:hover { color: #fff; }
-
         .modal-subtitle {
             font-size: 0.8rem;
             color: #94a3b8;
             margin-bottom: 1.5rem;
         }
-
         .modal-form-group {
             margin-bottom: 1rem;
         }
-
         .modal-form-group label {
             display: block;
             font-size: 0.75rem;
@@ -180,9 +189,7 @@
             color: #cbd5e1;
             margin-bottom: 0.35rem;
             text-transform: uppercase;
-            letter-spacing: 0.5px;
         }
-
         .modern-input {
             width: 100%;
             background: rgba(15, 23, 42, 0.6);
@@ -192,14 +199,8 @@
             border-radius: 10px;
             font-size: 0.9rem;
             outline: none;
-            transition: all 0.2s;
+            box-sizing: border-box;
         }
-
-        .modern-input:focus {
-            border-color: #6366f1;
-            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
-        }
-
         .file-drop-zone {
             background: rgba(15, 23, 42, 0.4);
             border: 2px dashed rgba(255, 255, 255, 0.15);
@@ -207,26 +208,21 @@
             border-radius: 10px;
             text-align: center;
         }
-
         .modal-action-row {
             display: flex;
             gap: 0.75rem;
             margin-top: 1.75rem;
         }
-
         .btn-modal-cancel {
             flex: 1;
             padding: 0.75rem;
             border-radius: 10px;
             background: rgba(51, 65, 85, 0.6);
             color: #cbd5e1;
-            border: 1px solid rgba(255, 255, 255, 0.05);
+            border: none;
             font-weight: 700;
             cursor: pointer;
-            transition: background 0.2s;
         }
-        .btn-modal-cancel:hover { background: rgba(51, 65, 85, 1); color: #fff; }
-
         .btn-modal-submit {
             flex: 1.5;
             padding: 0.75rem;
@@ -236,61 +232,57 @@
             border: none;
             font-weight: 800;
             cursor: pointer;
-            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
-            transition: transform 0.2s, filter 0.2s;
         }
-        .btn-modal-submit:hover { transform: translateY(-2px); filter: brightness(1.1); }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: scale(0.95); }
-            to { opacity: 1; transform: scale(1); }
-        }
+        .hidden { display: none !important; }
     </style>
 </head>
 <body class="landing-hero" style="justify-content: flex-start; min-height: 100vh; padding: 0;">
 
     <div class="gallery-page-container">
-        
         <!-- TOP NAVIGATION & TOOLBAR -->
         <div class="gallery-top-bar">
             <div style="display: flex; align-items: center; gap: 1rem;">
-                <button onclick="window.location.href='index.html'" class="btn-back">⬅ Menu Utama</button>
+                <button onclick="window.location.href='club-eligibility.html'" class="btn-back">⬅ Menu Utama</button>
                 <div>
-                    <h1 style="font-size: 1.25rem; font-weight: 800; letter-spacing: 0.5px; color: #fff;">📸 Bank Konten & Media Sosial</h1>
+                    <h1 style="font-size: 1.25rem; font-weight: 800; color: #fff;">📸 Bank Konten & Media Sosial</h1>
                     <p style="font-size: 0.75rem; color: #94a3b8; margin: 0;">Pusat arsip media visual cepat untuk kebutuhan publikasi harian sekolah.</p>
                 </div>
             </div>
 
-            <!-- Tombol Eksternal Editor (Canva, CapCut, dan Kontribusi) -->
+            <!-- Tombol Eksternal Editor & Kontribusi -->
             <div class="tool-btn-group">
-                <a href="https://www.canva.com/folder/FAHTjf3xcjs" target="_blank" class="btn-tool btn-canva">
-                    <span>🎨</span> Buka Folder Canva
-                </a>
-                <a href="https://www.capcut.com/" target="_blank" class="btn-tool btn-capcut">
-                    <span>🎬</span> Editor CapCut
-                </a>
-                <button onclick="bukaModalUpload()" class="btn-tool" style="background: linear-gradient(135deg, #4f46e5 0%, #3730a3 100%); border: 1px solid #818cf8;">
+                <button onclick="bukaModalUpload()" class="btn-tool" style="background: linear-gradient(135deg, #d9d8eb 0%, #3730a3 100%);">
                     <span>➕</span> Kontribusi File
                 </button>
+                <a href="https://drive.google.com/drive/folders/1p3CpTL-FhZqCOQKh0q8Popdip7J05pbQ?usp=sharing" target="_blank" class="btn-tool btn-gdrive">
+                    <img src="https://thumb.wikimedia.org/wikipedia/commons/thumb/5/5f/Google_Drive_icon_%282026%29.svg/960px-Google_Drive_icon_%282026%29.svg.png" alt="GDrive">
+                </a>
+                <a href="https://www.canva.com/folder/FAHTjf3xcjs" target="_blank" class="btn-tool btn-canva">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTvo6YXG1azr24lTLj7qbbQyUA2ifz6XNXG3vQLZmHJ9w&s=10" alt="Canva">
+                </a>
+                <a href="https://www.adobe.com/products/premiere.html" target="_blank" class="btn-tool btn-premiere">
+                    <img src="https://static.vecteezy.com/system/resources/thumbnails/073/495/227/small/adobe-premiere-pro-logo-rounded-glossy-icon-with-transparent-background-free-png.png" alt="Premiere">
+                </a>
+                <a href="https://www.capcut.com/" target="_blank" class="btn-tool btn-capcut">
+                    <img src="https://logos-world.net/wp-content/uploads/2024/01/CapCut-Symbol.png" alt="CapCut">
+                </a>
             </div>
         </div>
 
         <!-- SECTION UTAMA GALERI GRID -->
-        <div class="coding-club-section" style="width: 100%; margin: 0; padding: 1.5rem; text-align: left;">
+        <div style="width: 100%; margin: 0; padding: 1.5rem; text-align: left;">
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.25rem;">
-                <h3 style="font-size: 1rem; font-weight: 700; color: #cbd5e1; text-transform: uppercase; letter-spacing: 1px;">📁 Arsip Media Masuk (Tarik & Pakai)</h3>
+                <h3 style="font-size: 1rem; font-weight: 700; color: #cbd5e1; text-transform: uppercase;">📁 Arsip Media Masuk (Tarik & Pakai)</h3>
                 <span id="counter-galeri" style="font-size: 0.75rem; color: #6366f1; font-weight: bold;">Memuat data...</span>
             </div>
 
-            <!-- Grid Konten Dinamis -->
             <div id="galeri-container" class="interactive-gallery-grid">
-                <!-- Elemen galeri dirender otomatis dari Firebase lewat app.js -->
+                <p style="color: #94a3b8; text-align: center; grid-column: 1/-1;">Memuat arsip media...</p>
             </div>
         </div>
-
     </div>
 
-    <!-- MODAL POPUP UPLOAD MODERN -->
+    <!-- MODAL POPUP UPLOAD -->
     <div id="upload-modal" class="hidden modal-overlay">
         <div class="modern-modal-card">
             <div class="modal-header-flex">
@@ -301,14 +293,12 @@
             
             <div class="modal-form-group">
                 <label>Password Akses</label>
-                <input type="password" id="up-password" placeholder="" class="modern-input">
+                <input type="password" id="up-password" class="modern-input">
             </div>
-
             <div class="modal-form-group">
                 <label>Nama Pengunggah</label>
                 <input type="text" id="up-nama" placeholder="Contoh: Retno x RPL 1" class="modern-input">
             </div>
-            
             <div class="modal-form-group">
                 <label>Keperluan Konten</label>
                 <select id="up-keperluan" class="modern-input" onchange="cekLainnya()">
@@ -319,15 +309,13 @@
                     <option value="Lainnya">Lainnya</option>
                 </select>
             </div>
-
             <div class="modal-form-group">
-                <input type="text" id="up-keperluan-lain" placeholder="Sebutkan keperluan lainnya..." class="hidden modern-input" style="margin-top: -5px; margin-bottom: 10px;">
+                <input type="text" id="up-keperluan-lain" placeholder="Sebutkan keperluan lainnya..." class="hidden modern-input">
             </div>
-
             <div class="modal-form-group">
-                <label>Pilih File Foto / Video</label>
+                <label>Pilih File Foto / Video (Bisa Banyak Sekaligus)</label>
                 <div class="file-drop-zone">
-                    <input type="file" id="up-file" accept="image/*,video/*" style="width: 100%; color: #cbd5e1; font-size: 0.85rem;">
+                    <input type="file" id="up-file" accept="image/*,video/*" multiple style="color:#fff;">
                 </div>
             </div>
             
@@ -338,11 +326,179 @@
         </div>
     </div>
 
-    <!-- Script Utama (Terhubung dengan app.js & Firebase) -->
+    <!-- Script Utama (Terhubung dengan app.js jika diperlukan, serta logika interaktif galeri) -->
     <script type="module" src="app.js"></script>
     <script>
+        // MASUKKAN URL DEPLOYMENT APPS SCRIPT ANDA DI SINI
+        const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzexbZuGm306_9yNbTn2NkDaEebOikc2oeR76F2K-Tm6JCjJxeHKo4GLu3pzjpDBmA0qg/exec";
+
+        function bukaModalUpload() { document.getElementById('upload-modal').classList.remove('hidden'); }
+        function tutupModalUpload() { document.getElementById('upload-modal').classList.add('hidden'); }
+
+        function cekLainnya() {
+            const val = document.getElementById('up-keperluan').value;
+            const inputLain = document.getElementById('up-keperluan-lain');
+            if(val === 'Lainnya') { inputLain.classList.remove('hidden'); } 
+            else { inputLain.classList.add('hidden'); }
+        }
+
+        async function muatGaleri() {
+            const container = document.getElementById('galeri-container');
+            const counter = document.getElementById('counter-galeri');
+            
+            try {
+                const response = await fetch(APPS_SCRIPT_URL, {
+                    method: 'POST',
+                    body: JSON.stringify({ action: "get_gallery" })
+                });
+                const result = await response.json();
+
+                if(result.status === "success") {
+                    const data = result.data;
+                    counter.innerText = `${data.length} Berkas Tersedia`;
+                    container.innerHTML = "";
+
+                    if(data.length === 0) {
+                        container.innerHTML = "<p style='color:#94a3b8; text-align:center; grid-column:1/-1;'>Belum ada media yang diunggah.</p>";
+                        return;
+                    }
+
+                    data.forEach(item => {
+                        let isVideo = item.mime_type && item.mime_type.startsWith('video');
+                        let mediaPreview = isVideo ? 
+                            `<video src="${item.url}" class="card-media" controls></video>` : 
+                            `<img src="${item.url}" class="card-media" alt="${item.nama_file}" loading="lazy">`;
+
+                        let tanggalFormat = new Date(item.tanggal).toLocaleDateString('id-ID', { dateStyle: 'medium' });
+
+                        container.innerHTML += `
+                            <div class="interactive-card">
+                                <button class="btn-delete-item" onclick="hapusMedia('${item.file_id}')">Hapus 🗑️</button>
+                                <div class="card-media-wrapper">
+                                    ${mediaPreview}
+                                </div>
+                                <div class="card-body">
+                                    <div>
+                                        <span class="badge-keperluan">${item.kategori}</span>
+                                        <div class="card-title-meta" title="${item.nama_file}">${item.nama_file}</div>
+                                    </div>
+                                    <div style="display:flex; justify-content:space-between; align-items:center; margin-top:0.5rem;">
+                                        <span class="card-sub-meta">👤 ${item.pengunggah}</span>
+                                        <span class="card-sub-meta">📅 ${tanggalFormat}</span>
+                                    </div>
+                                    <a href="${item.url}" target="_blank" style="margin-top:0.5rem; display:block; text-align:center; background:rgba(56, 189, 248, 0.1); color:var(--accent-blue); padding:0.4rem; border-radius:6px; font-size:0.75rem; text-decoration:none; font-weight:bold;">🔗 Buka / Download Asli</a>
+                                </div>
+                            </div>
+                        `;
+                    });
+                } else {
+                    counter.innerText = "Gagal memuat";
+                }
+            } catch(err) {
+                console.error(err);
+                counter.innerText = "Error koneksi server";
+            }
+        }
+
+        async function prosesUpload() {
+            const pass = document.getElementById('up-password').value;
+            const nama = document.getElementById('up-nama').value.trim();
+            let kategori = document.getElementById('up-keperluan').value;
+            const fileInput = document.getElementById('up-file');
+            const btn = document.getElementById('btn-proses-upload');
+
+            if(kategori === 'Lainnya') {
+                kategori = document.getElementById('up-keperluan-lain').value.trim() || 'Lainnya';
+            }
+
+            if(!pass || !nama || !kategori || fileInput.files.length === 0) {
+                alert("⚠️ Harap lengkapi sandi, nama, kategori, dan pilih file terlebih dahulu!");
+                return;
+            }
+
+            btn.disabled = true;
+            btn.innerText = "Mengunggah Berkas...";
+
+            const files = fileInput.files;
+            
+            for(let i = 0; i < files.length; i++) {
+                let file = files[i];
+                btn.innerText = `Mengunggah (${i+1}/${files.length})...`;
+
+                try {
+                    let base64Data = await toBase64(file);
+                    
+                    let payload = {
+                        action: "upload_media",
+                        club_password: pass,
+                        uploader_name: nama,
+                        kategori: kategori,
+                        fileName: file.name,
+                        mimeType: file.type,
+                        base64: base64Data
+                    };
+
+                    let res = await fetch(APPS_SCRIPT_URL, {
+                        method: 'POST',
+                        body: JSON.stringify(payload)
+                    });
+                    let resJson = await res.json();
+
+                    if(resJson.status !== "success") {
+                        alert(`Gagal pada file ${file.name}: ${resJson.message}`);
+                        break;
+                    }
+                } catch(e) {
+                    alert(`Gagal mengunggah file ${file.name}`);
+                    break;
+                }
+            }
+
+            alert("✅ Proses unggah selesai!");
+            tutupModalUpload();
+            document.getElementById('up-file').value = "";
+            btn.disabled = false;
+            btn.innerText = "Publikasikan 🚀";
+            muatGaleri();
+        }
+
+        function toBase64(file) {
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.readAsDataURL(file);
+                reader.onload = () => resolve(reader.result);
+                reader.onerror = error => reject(error);
+            });
+        }
+
+        async function hapusMedia(fileId) {
+            const pass = prompt("Masukkan Sandi Club untuk menghapus file ini:");
+            if(!pass) return;
+
+            try {
+                const res = await fetch(APPS_SCRIPT_URL, {
+                    method: 'POST',
+                    body: JSON.stringify({
+                        action: "delete_media",
+                        club_password: pass,
+                        file_id: fileId
+                    })
+                });
+                const result = await res.json();
+
+                if(result.status === "success") {
+                    alert("🗑️ File berhasil dihapus!");
+                    muatGaleri();
+                } else {
+                    alert("❌ " + result.message);
+                }
+            } catch(e) {
+                alert("Gagal terhubung ke server untuk menghapus file.");
+            }
+        }
+
         window.addEventListener('DOMContentLoaded', () => {
-            if(window.muatGaleri) window.muatGaleri();
+            muatGaleri();
         });
     </script>
 </body>
